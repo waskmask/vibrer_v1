@@ -1,0 +1,45 @@
+<div class="_modal modal-dark" id="accountModal">
+  <div class="dialog">
+    <div class="head jcc">
+      <div class="title">Login to your account</div>
+      <div class="close-modal">+</div>
+    </div>
+    <div class="body">
+      <div class="auth _dark p-tb-4">
+        <div class="auth-wrapper">
+          <form action="" id="loginForm">
+            <div class="title">Welcome back!</div>
+            <div class="sub">Login to your Vibrer account</div>
+            <div class="mb-3">
+              <input
+                class="form-input"
+                type="email"
+                placeholder="Email address"
+                name="email"
+              />
+            </div>
+            <div class="mb-3 passInputDiv">
+              <input
+                class="form-input"
+                type="password"
+                placeholder="Password"
+                name="password"
+              />
+              <div class="passInput">
+                <img src="/public/images/icons/visibility.svg" alt="Icon" />
+              </div>
+            </div>
+            <div class="link ta-end" onclick="toForgotPass()">
+              Forgot password
+            </div>
+            <button class="btn btn-primary w-100 mt-4">Login</button>
+
+            <div class="link mt-4 ta-center" onclick="toSignUp()">
+              Don't you have an account? <span class="primary">Sign up</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

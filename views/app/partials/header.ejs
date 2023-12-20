@@ -1,0 +1,156 @@
+<header class="app_header">
+  <nav class="app_layout mediumBar">
+    <div class="app_start_menu">
+      <div class="burger_menu">
+        <img src="/public/images/icons/sidebar/menu.svg" alt="Menu icon" />
+      </div>
+      <!-- Logo -->
+      <% if (path !== '/home') { %>
+      <div class="logo" onclick="toHome('<%= path %>')">
+        <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+      </div>
+      <% } else { %>
+      <div class="logo">
+        <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+      </div>
+      <% } %>
+    </div>
+
+    <div class="app_middle_bar">
+      <ul>
+        <li>
+          <img src="/public/images/icons/search-icon.svg" alt="Icon" />
+        </li>
+        <li
+          class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
+          onclick="toHome('<%= path %>')"
+        >
+          <img src="/public/images/icons/home-icon.svg" alt="Icon" />
+        </li>
+        <li class="<%= (path == '/live-streaming') ? 'active' : '' %>">
+          <img src="/public/images/icons/live-icon.svg" alt="Icon" />
+        </li>
+        <li>
+          <img src="/public/images/icons/music.svg" alt="Icon" />
+        </li>
+        <li
+          class="<%= (path == '/contests') ? 'active' : '' %>"
+          onclick="toContests('<%= path %>')"
+        >
+          <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
+          <div class="app_n_badge"></div>
+        </li>
+        <li>
+          <img src="/public/images/icons/concert-icon.svg" alt="Icon" />
+          <div class="app_n_badge"></div>
+        </li>
+
+        <li>
+          <img src="/public/images/icons/bell.svg" alt="Icon" />
+          <div class="app_n_badge"></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="app_right_menu">
+      <div class="app_middle_bar">
+        <ul>
+          <li>
+            <img src="/public/images/icons/search-icon.svg" alt="Icon" />
+          </li>
+          <li>
+            <img src="/public/images/icons/message-text-01.svg" alt="Icon" />
+            <div class="app_n_badge"></div>
+          </li>
+          <li>
+            <img src="/public/images/icons/bell.svg" alt="Icon" />
+            <div class="app_n_badge"></div>
+          </li>
+        </ul>
+      </div>
+      <div class="profile">
+        <div class="head hphead">
+          <img
+            class="icon"
+            src="/public/images/icons/user-icon-light.svg"
+            alt="Icon"
+          />
+          <img src="/public/images/singer.png" alt="avatar" class="avatar" />
+        </div>
+        <div class="drop_down hpdd">
+          <div class="_profile">
+            <img src="/public/images/singer.png" alt="avatar" />
+            <div class="name">
+              <span>Nathan Steve</span>
+              <img
+                class="app_v_badge"
+                src="/public/images/icons/verified-badge.svg"
+                alt="Verified"
+              />
+            </div>
+            <div class="uname" id="username">@nathan_steve</div>
+          </div>
+
+          <div class="_menu">
+            <ul>
+              <li>
+                <a href="">
+                  <img src="/public/images/icons/user_icon.svg" alt="Icon" />
+                  <span>My profile</span>
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <img
+                    src="/public/images/icons/account_settings.svg"
+                    alt="Icon"
+                  />
+                  <span>Account Settings</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="">
+                  <img src="/public/images/icons/share.svg" alt="Icon" />
+                  <span>Share profile</span>
+                </a>
+              </li>
+              <li>
+                <a href="">
+                  <img src="/public/images/icons/log-off.svg" alt="Icon" />
+                  <span>Logout</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <nav class="app_layout mobileBar">
+    <div class="app_middle_bar">
+      <ul>
+        <li
+          class="<%= (path == '/home') ? 'active' : '' %>"
+          onclick="toHome('<%= path %>')"
+        >
+          <img src="/public/images/icons/home-icon.svg" alt="Icon" />
+        </li>
+        <li>
+          <img src="/public/images/icons/live-icon.svg" alt="Icon" />
+        </li>
+        <li>
+          <img src="/public/images/icons/music.svg" alt="Icon" />
+        </li>
+        <li>
+          <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
+          <div class="app_n_badge"></div>
+        </li>
+        <li>
+          <img src="/public/images/icons/concert-icon.svg" alt="Icon" />
+          <div class="app_n_badge"></div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

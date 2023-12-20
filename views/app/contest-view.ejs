@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/public/style/modal.css" />
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link rel="stylesheet" href="/public/style/contests.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main">
+        <section class="contest-header" style="padding: 1.5rem">
+          <div class="wrapper" style="position: relative; z-index: 2">
+            <div>
+              <div class="sponsor">
+                <img src="/public/images/mod_light.svg" alt="Logo" />
+                <div>MOD presents</div>
+              </div>
+              <div class="title">Vibrer Singing Contest</div>
+              <div class="sub">216 Participants • Ends in 45 days</div>
+            </div>
+            <div class="cta">
+              <button
+                class="btn btn-outlined"
+                data-toggle="_modal"
+                data-target="contest1Info"
+              >
+                Learn more
+              </button>
+              <button class="btn btn-primary" onclick="toRegister()">
+                Participate
+              </button>
+              <div
+                class="playAd"
+                data-toggle="_modal"
+                data-target="contest1Video"
+              >
+                <img src="/public/images/icons/playIconWhite.svg" alt="Icon" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="participants">
+          <div class="title mb-4">Top 3 contestants</div>
+
+          <div class="wrapper-lg-6">
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div
+                    class="user"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    Visit artist
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    Vote now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button class="btn btn-outlined">Visit artist</button>
+                  <button class="btn btn-primary">Vote now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button class="btn btn-outlined">Visit artist</button>
+                  <button class="btn btn-primary">Vote now</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- You voted -->
+            <div class="contestant mb-3">
+              <div class="head">
+                <div class="yourVote">You voted</div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button class="btn btn-outlined">Visit artist</button>
+                  <button class="btn btn-primary">Remove vote</button>
+                </div>
+              </div>
+            </div>
+            <!--  -->
+          </div>
+
+          <div class="title mb-4 mt-4">All contestants</div>
+
+          <div class="wrapper-lg-6">
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div
+                    class="user"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>20 </span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    Visit artist
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    data-target="accountModal"
+                    data-toggle="_modal"
+                  >
+                    Vote now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>15</span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button class="btn btn-outlined">Visit artist</button>
+                  <button class="btn btn-primary">Vote now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="contestant mb-3">
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span>Jessica Hub</span>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                      </div>
+                      <div class="uname">@jhub</div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                    />
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong>Votes:</strong> <span>2036</span>
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong> <span>51</span>
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button class="btn btn-outlined">Visit artist</button>
+                  <button class="btn btn-primary">Vote now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('../modals/contest1Info'); %>
+    <!--  -->
+    <%- include('../modals/contest1Video'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="/public/js/_modal.js"></script>
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

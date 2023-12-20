@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./public/images/favicon.png"
+      type="image/x-icon"
+    />
+    <title>Vibrer's Privacy policy: Charting a Musical Journey</title>
+    <meta
+      name="description"
+      content="Explore Vibrer's roadmap, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
+    />
+    <meta
+      name="keywords"
+      content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
+    />
+
+    <link rel="stylesheet" href="./public/style/theme-v01.css?v=1.2" />
+  </head>
+  <body>
+    <div id="loader">
+      <img src="./public/images/loader.gif" alt="Loading..." />
+    </div>
+    <header class="bg-dark">
+      <nav class="layout">
+        <div class="logo" onclick="toHome()">
+          <img src="./public/images/vibere-logo.svg" alt="Logo" />
+        </div>
+        <div class="burger">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <div class="menu-overlay"></div>
+        <div class="menu">
+          <div class="menu-close">+</div>
+
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/road-map">Road Map</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li>
+              <button class="btn btn-primary" onclick="scrollToGNForm()">
+                Get Notified
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="general">
+        <div class="container layout">
+          <div id="cookie-info">
+            <div class="title">Cookie Statement</div>
+
+            At Vibrer, our primary objective is to offer an intuitive and
+            meaningful user experience. To achieve this, we utilize a series of
+            small data files called cookies. These cookies help us improve your
+            browsing experience, tailor content to your preferences, understand
+            how you interact with our website, and offer you relevant
+            advertisements.
+            <br /><br />
+            <div class="subtitle">What Exactly Are Cookies?</div>
+
+            Cookies are tiny text files that are stored on your device
+            (computer, mobile phone, tablet, etc.) when you visit a website.
+            These files often include information about your browsing habits,
+            preferences, interactions, and more. They ensure websites remember
+            you, your activities, or your preferences, over a period.
+            <br /><br />
+            <div class="subtitle">Why We Use Cookies</div>
+            <strong>Essential Cookies:</strong> These are critical for the basic
+            functionalities of our website. They enable you to navigate around
+            our website and use its features. <br />
+            Without these cookies, services you've asked for (like logging in)
+            cannot be provided. <br /><br />
+            <strong>Analytics Cookies:</strong> These cookies help us understand
+            how visitors interact with our website. By collecting and reporting
+            information, they provide valuable insights into how we can improve
+            the website's performance and user experience. <br /><br />
+            <strong>Marketing Cookies:</strong> With these cookies, we can make
+            our advertisements more engaging and relevant to you, minimizing the
+            chance of displaying unnecessary ads. They remember that you've
+            visited our website and share this information with other
+            organizations such as advertisers. <br /><br />
+            <strong>Preference Cookies:</strong> These cookies allow our website
+            to remember choices you make (like your user name, language, or
+            region) and provide enhanced features. For instance, a news website
+            might use this cookie to store your location and present local news
+            relevant to you. <br /><br />
+            <strong> Social Media Cookies:</strong> Our website includes social
+            media features, such as the "Like" button and widgets, like the
+            "Share" button. These features may collect your IP address and set a
+            cookie to enable them to function properly. Your interactions with
+            these features are governed by the privacy policy of the company
+            providing it. <br /><br />
+            <div class="subtitle">Managing Your Cookies</div>
+            You have the power to control and manage cookies. You can modify
+            your browser settings to accept or reject all cookies or
+            individually by website. You can also set your browser to prompt you
+            each time a cookie is offered. Remember, disabling some cookies
+            might result in some functionalities of the website not working
+            correctly.
+          </div>
+
+          <div class="title mt-4">Manage Your Cookie Preferences</div>
+
+          <form id="cookie-settings-form">
+            <div class="mb-2">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  class="custom-checkbox"
+                  name="essential"
+                  checked
+                  disabled
+                />
+                <span class="custom-label"></span>
+                <span class="text">Essential Cookies</span>
+              </label>
+            </div>
+
+            <div class="mb-2">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  class="custom-checkbox"
+                  name="analytics"
+                />
+                <span class="custom-label"></span>
+                <span class="text">Analytics Cookies</span>
+              </label>
+            </div>
+
+            <div class="mb-2">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  class="custom-checkbox"
+                  name="marketing"
+                />
+                <span class="custom-label"></span>
+                <span class="text"> Marketing Cookies</span>
+              </label>
+            </div>
+
+            <div class="mb-2">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  class="custom-checkbox"
+                  name="preference"
+                />
+                <span class="custom-label"></span>
+                <span class="text">Preference Cookies</span>
+              </label>
+            </div>
+
+            <div class="mb-2">
+              <label class="checkbox-container">
+                <input
+                  type="checkbox"
+                  name="socialMedia"
+                  class="custom-checkbox"
+                />
+                <span class="custom-label"></span>
+                <span class="text">Social Media Cookies</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-sm mt-4 btn-primary">
+              Save Preferences
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <%- include('partials/footer'); %>
+
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/theme-v01node.js"></script>
+    <script>
+      function enableAnalytics() {
+        console.log("Analytics enabled");
+        // Your logic to enable analytics goes here
+      }
+
+      function disableAnalytics() {
+        console.log("Analytics disabled");
+        // Your logic to disable analytics goes here
+      }
+
+      function enableMarketing() {
+        console.log("Marketing enabled");
+        // Your logic to enable marketing goes here
+      }
+
+      function disableMarketing() {
+        console.log("Marketing disabled");
+        // Your logic to disable marketing goes here
+      }
+
+      function enablePreference() {
+        console.log("Preference enabled");
+        // Your logic to enable preference goes here
+      }
+
+      function disablePreference() {
+        console.log("Preference disabled");
+        // Your logic to disable preference goes here
+      }
+
+      function enableSocialMedia() {
+        console.log("Social media enabled");
+        // Your logic to enable social media goes here
+      }
+
+      function disableSocialMedia() {
+        console.log("Social media disabled");
+        // Your logic to disable social media goes here
+      }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        const form = document.getElementById("cookie-settings-form");
+
+        if (!form) {
+          console.log("Form not found");
+          return;
+        }
+        function toggleFeatures() {
+          // For analytics
+          const analyticsEnabled = localStorage.getItem("analytics") === "true";
+          if (analyticsEnabled) {
+            enableAnalytics();
+          } else {
+            disableAnalytics();
+          }
+
+          // For marketing
+          const marketingEnabled = localStorage.getItem("marketing") === "true";
+          if (marketingEnabled) {
+            enableMarketing();
+          } else {
+            disableMarketing();
+          }
+
+          // For preference
+          const preferenceEnabled =
+            localStorage.getItem("preference") === "true";
+          if (preferenceEnabled) {
+            enablePreference();
+          } else {
+            disablePreference();
+          }
+
+          // For social media
+          const socialMediaEnabled =
+            localStorage.getItem("socialMedia") === "true";
+          if (socialMediaEnabled) {
+            enableSocialMedia();
+          } else {
+            disableSocialMedia();
+          }
+        }
+
+        ["analytics", "marketing", "preference", "socialMedia"].forEach(
+          (cookieType) => {
+            const savedValue = localStorage.getItem(cookieType);
+            if (savedValue !== null) {
+              form[cookieType].checked = savedValue === "true";
+            }
+          }
+        );
+
+        // Apply feature toggles based on the loaded settings
+        toggleFeatures();
+
+        // Save cookie settings to localStorage upon form submission
+        form.addEventListener("submit", (e) => {
+          console.log("Inside submit listener"); // Debug line
+
+          e.preventDefault();
+
+          console.log("After preventDefault"); // Debug line
+
+          ["analytics", "marketing", "preference", "socialMedia"].forEach(
+            (cookieType) => {
+              if (form[cookieType].checked) {
+                localStorage.setItem(cookieType, "true");
+              } else {
+                localStorage.setItem(cookieType, "false"); // Explicitly set to "false"
+              }
+            }
+          );
+
+          // Apply feature toggles based on the new settings
+          toggleFeatures();
+          alert("Your cookie preferences have been saved.");
+          console.log("End of submit listener"); // Debug line
+        });
+      });
+    </script>
+  </body>
+</html>

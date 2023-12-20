@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <main>
+      <section class="auth auth-pages" id="register">
+        <div class="auth-container">
+          <img
+            class="bg-img"
+            src="/public/images/auth-register.jpg"
+            alt="Image"
+          />
+          <div class="overlay"></div>
+          <div class="left-col">
+            <div class="title">
+              Welcome to Vibrer, the ultimate music platform for talented
+              artists and passionate fans!
+            </div>
+          </div>
+          <div class="auth-col">
+            <div class="form-wrapper">
+              <img
+                class="logo"
+                src="/public/images/vibrer_light_logo.svg"
+                alt="Logo"
+              />
+              <div class="title">Create new account</div>
+              <div class="sub">Join the music revolution.</div>
+              <form action="">
+                <div class="label text-white">I'm an?</div>
+                <div class="custom-radio-label">
+                  <div
+                    class="label active"
+                    onclick="handleRadioClick(this, 'Artist')"
+                  >
+                    Artist
+                  </div>
+                  <div class="label" onclick="handleRadioClick(this, 'Fan')">
+                    Fan
+                  </div>
+                </div>
+                <!-- Hidden input field to store the selected value -->
+                <input type="hidden" id="type" name="type" value="Artist" />
+
+                <div class="mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="Email address"
+                    name=""
+                    id=""
+                  />
+                </div>
+                <div class="mb-3 passInputDiv">
+                  <input
+                    class="form-input"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                  />
+                  <div class="passInput">
+                    <img src="/public/images/icons/visibility.svg" alt="Icon" />
+                  </div>
+                </div>
+
+                <div class="mb-3 passInputDiv">
+                  <input
+                    class="form-input"
+                    type="password"
+                    placeholder="Confirm password"
+                    name="password"
+                  />
+                  <div class="passInput">
+                    <img src="/public/images/icons/visibility.svg" alt="Icon" />
+                  </div>
+                </div>
+
+                <div class="notice mb-4">
+                  By signing up, I agree to the
+                  <a href="" target="_blank">Privacy Policy</a> and
+                  <a href="" target="_blank">T&C</a>.
+                </div>
+                <button class="btn btn-primary w-100">Sign Up</button>
+              </form>
+
+              <div class="text-white mt-4 dfac">
+                Do have an account?
+                <a class="link-primary dfac ms-1" href="/login"
+                  >Login
+                  <img
+                    src="/public/images/icons/arrow-right-long-primary.svg"
+                    alt="icon"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/theme-v01node.js"></script>
+    <script src="/public/js/authForm.js"></script>
+    <script>
+      function handleRadioClick(clickedElement, value) {
+        // Remove the "active" class from all label elements
+        const allLabels = document.querySelectorAll(".label");
+        allLabels.forEach((label) => label.classList.remove("active"));
+
+        // Add the "active" class to the clicked label element
+        clickedElement.classList.add("active");
+
+        // Save the selected value to the hidden input field
+        const hiddenInput = document.getElementById("type");
+        hiddenInput.value = value;
+      }
+    </script>
+  </body>
+</html>

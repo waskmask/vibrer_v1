@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./public/images/favicon.png"
+      type="image/x-icon"
+    />
+    <title>Vibrer's Terms of Use: Charting a Musical Journey</title>
+    <meta
+      name="description"
+      content="Explore Vibrer's roadmap, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
+    />
+    <meta
+      name="keywords"
+      content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
+    />
+
+    <link rel="stylesheet" href="./public/style/theme-v01.css?v=1.2" />
+  </head>
+  <body>
+    <div id="loader">
+      <img src="./public/images/loader.gif" alt="Loading..." />
+    </div>
+    <header class="bg-dark">
+      <nav class="layout">
+        <div class="logo" onclick="toHome()">
+          <img src="./public/images/vibere-logo.svg" alt="Logo" />
+        </div>
+        <div class="burger">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <div class="menu-overlay"></div>
+        <div class="menu">
+          <div class="menu-close">+</div>
+
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/road-map">Road Map</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li>
+              <button class="btn btn-primary" onclick="scrollToGNForm()">
+                Get Notified
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <section class="general">
+      <div class="container layout">
+        <div class="title">Terms of Use</div>
+        <br />
+        <div class="subtitle">Introduction</div>
+
+        Welcome to Vibrer! By accessing and using our website, you agree to
+        comply with these Terms of Use and our Privacy Policy. If you do not
+        agree with these terms, please do not use our website.
+
+        <br /><br />
+        <div class="subtitle">Subscription and Email</div>
+
+        When you subscribe to our newsletter or request to be notified about the
+        launch, you provide your email address to us. You can revoke your
+        subscription at any time by clicking the "Unsubscribe" link in any email
+        you receive from us. We will promptly remove your email from our list
+        upon your request.
+
+        <br />
+        <br />
+        <div class="subtitle">Intellectual Property</div>
+
+        All content on this website, including text, images, videos, and
+        graphics, is protected by copyright and intellectual property laws. You
+        may not reproduce, distribute, or use our content without our written
+        permission.
+
+        <br />
+        <br />
+        <div class="subtitle">Limitation of Liability</div>
+
+        We strive to provide accurate and up-to-date information on our website,
+        but we make no warranties or guarantees regarding the accuracy,
+        completeness, or reliability of the content. We are not liable for any
+        damages or losses resulting from your use of our website.
+
+        <br />
+        <br />
+        <div class="subtitle">Indemnification</div>
+
+        You agree to indemnify and hold Vibrer and its affiliates harmless from
+        any claims, liabilities, or expenses arising from your use of our
+        website or violation of these Terms of Use.
+
+        <br />
+        <br />
+        <div class="subtitle">Contact Us</div>
+
+        If you have any questions or concerns about our Terms of Use, please
+        contact us at info@vibrer.com.
+      </div>
+    </section>
+
+    <%- include('partials/footer'); %>
+
+    <!-- javascript -->
+    <script src="/public/js/theme-v01node.js"></script>
+  </body>
+</html>

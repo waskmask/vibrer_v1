@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link rel="stylesheet" href="/public/style/contests.css" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main">
+        <div class="title mb-3">Ongoing contest</div>
+
+        <div class="contests-wrapper" onclick="toContest()">
+          <div class="contest">
+            <div class="status active">Active</div>
+            <img class="hinm" src="/public/images/contest1.jpg" alt="images" />
+            <img
+              class="hinb"
+              src="/public/images/contest1Mobile.jpg"
+              alt="images"
+            />
+          </div>
+        </div>
+
+        <div class="title mb-3 mt-4">Upcoming contest</div>
+        <div class="contests-wrapper">
+          <div class="contest">
+            <div class="status upcoming">Upcoming</div>
+            <img
+              class="hinm"
+              src="/public/images/upcoming_contests/danceContest.jpg"
+              alt="images"
+            />
+            <img class="hinb"
+            src="/public/images/upcoming_contests/danceContestMobile.jpg""
+            alt="images" />
+          </div>
+          <div class="contest">
+            <div class="status upcoming">Upcoming</div>
+            <img
+              class="hinm"
+              src="/public/images/upcoming_contests/rapContest.jpg"
+              alt="images"
+            />
+            <img class="hinb"
+            src="/public/images/upcoming_contests/rapContestMobile.jpg""
+            alt="images" />
+          </div>
+          <div class="contest">
+            <div class="status upcoming">Upcoming</div>
+            <img
+              class="hinm"
+              src="/public/images/upcoming_contests/djContest.jpg"
+              alt="images"
+            />
+            <img class="hinb"
+            src="/public/images/upcoming_contests/djContestMobile.jpg""
+            alt="images" />
+          </div>
+          <div class="contest">
+            <div class="status upcoming">Upcoming</div>
+            <img
+              class="hinm"
+              src="/public/images/upcoming_contests/singer-songwriter-contest.jpg"
+              alt="images"
+            />
+            <img class="hinb"
+            src="/public/images/upcoming_contests/singer-songwriter-contestMobile.jpg""
+            alt="images" />
+          </div>
+        </div>
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+  </body>
+</html>

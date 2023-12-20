@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <main>
+      <section class="auth auth-pages" id="login">
+        <div class="auth-container">
+          <img
+            class="bg-img"
+            src="/public/images/auth-register.jpg"
+            alt="Image"
+          />
+          <div class="overlay"></div>
+          <div class="left-col">
+            <div class="title">
+              Vibrer has everything you need to take your love for music to the
+              next level.
+            </div>
+          </div>
+          <div class="auth-col">
+            <div class="form-wrapper">
+              <img
+                class="logo"
+                src="/public/images/vibrer_light_logo.svg"
+                alt="Logo"
+              />
+              <div class="title">Create new account</div>
+              <div class="sub">Join the music revolution.</div>
+              <form class="w-100" action="">
+                <div class="mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="Email address"
+                    name=""
+                    id=""
+                  />
+                </div>
+                <div class="mb-3 passInputDiv">
+                  <input
+                    class="form-input"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                  />
+                  <div class="passInput">
+                    <img src="/public/images/icons/visibility.svg" alt="Icon" />
+                  </div>
+                </div>
+                <div class="link ta-end" onclick="toForgotPass()">
+                  Forgot password
+                </div>
+                <button class="btn btn-primary w-100 mt-4">Login</button>
+              </form>
+
+              <div class="text-white mt-4 dfac">
+                Don't have an account?
+                <a class="link-primary dfac ms-1" href="/register"
+                  >Create new
+                  <img
+                    src="/public/images/icons/arrow-right-long-primary.svg"
+                    alt="icon"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/theme-v01node.js"></script>
+    <script src="/public/js/authForm.js"></script>
+    <script>
+      function toForgotPass() {
+        window.location.href = "/forgot-password";
+      }
+    </script>
+  </body>
+</html>

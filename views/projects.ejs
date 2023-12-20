@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Unveiling Vibrer: Your Gateway to a Musical Odyssey</title>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="./public/style/projects.css" />
+  </head>
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <!-- Header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="projects">
+        <div class="layout">
+          <div class="title">Projects (<%= projects.length %>)</div>
+          <div class="grid-p">
+            <% projects.forEach(function(project) { %>
+            <div class="col">
+              <img src="<%= project.banner %>" alt="banner" />
+              <div class="title"><%= project.title %></div>
+              <div class="desc100">
+                <%- project.description.substring(0, 100) %>...
+              </div>
+              <div class="foot">
+                <button
+                  class="btn btn-sm btn-primary"
+                  onclick="openProject('<%= project._id %>')"
+                >
+                  View project
+                </button>
+
+                <% if (project.projectStatus === 'open') { %>
+                <div class="status <%= project.projectStatus %>">
+                  <div><%= project.projectStatus %></div>
+                </div>
+                <% } %>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('partials/footer'); %>
+
+    <div id="overlay">
+      <!-- The popup content -->
+      <div id="popup">
+        <iframe id="video" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <!-- javascript -->
+    <script src="/public/js/theme-v01node.js"></script>
+
+    <script>
+      function openProject(projectId) {
+        // Navigate to the project-specific page
+        window.location.href = "/project-view/" + projectId;
+      }
+    </script>
+  </body>
+</html>

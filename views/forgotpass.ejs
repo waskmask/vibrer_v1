@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <main>
+      <section class="auth auth-pages" id="forgot-password">
+        <div class="auth-container">
+          <img class="bg-img" src="/public/images/auth-pass.jpg" alt="Image" />
+          <div class="overlay"></div>
+          <div class="left-col">
+            <div class="title">
+              Vibrer is your one-stop destination for all things music, So what
+              are you waiting for?
+            </div>
+          </div>
+          <div class="auth-col">
+            <div class="form-wrapper">
+              <img
+                class="logo"
+                src="/public/images/vibrer_light_logo.svg"
+                alt="Logo"
+              />
+              <div class="title">Forgot password?</div>
+              <div class="sub">
+                To reset your password, please enter your registered email
+                address. We'll send a link to that email where you can reset
+                your password securely.
+              </div>
+              <div class="success-message mb-3">
+                We've just sent a reset link to your registered email address at
+                [your@email.com]. Kindly check your inbox and follow the
+                instructions to securely reset your password. If you don't find
+                the email in your inbox, please take a moment to look in your
+                spam folder as well.
+              </div>
+              <form class="w-100" action="">
+                <div class="mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="Email address"
+                    name=""
+                    id=""
+                  />
+                </div>
+
+                <button class="btn btn-primary w-100 mt-4">Login</button>
+              </form>
+
+              <div class="mt-4 dfac">
+                <a class="link-primary dfac ms-1" href="/login">
+                  <img
+                    src="./public/images/icons/arrow-left-long-primary.svg"
+                    alt="icon"
+                  />
+                  Go back to login
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/theme-v01node.js"></script>
+    <script src="/public/js/authForm.js"></script>
+    <script>
+      function toForgotPass() {
+        window.location.href = "/forgotpass";
+      }
+    </script>
+  </body>
+</html>

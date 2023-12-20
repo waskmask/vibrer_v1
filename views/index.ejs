@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+  </head>
+  <body>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="heroHome">
+        <div class="layout">
+          <div class="content">
+            <img src="/public/images/bigStar.svg" alt="Star" />
+            <div class="title">
+              <span>VIBRER</span> <br />
+              SINGING CONTEST
+            </div>
+            <div class="sub">
+              Unleash Your Inner Vocal Star, Participate, Earn Public Votes, and
+              Win a Reward of 5000 Euros, public voting will start from 1st Jan
+              2024.
+            </div>
+            <div class="cta">
+              <button class="btn btn-primary">View Contest</button>
+              <button class="btn btn-outlined" onclick="learnMore()">
+                Learn more about Vibrer
+              </button>
+            </div>
+          </div>
+          <div class="image">
+            <img src="/public/images/micHero.png" alt="Mic" />
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="sec2">
+        <div class="container">
+          <div class="title">What is Vibrer?</div>
+
+          <div class="grid">
+            <div class="col">
+              <div class="desc">
+                Vibrer is your ultimate destination for a musical journey like
+                no other. It's a dynamic platform that seamlessly blends the
+                world of music and social interaction. With Vibrer, you can
+                explore diverse genres, connect with talented artists, enjoy
+                live performances, and even participate in contests. Elevate
+                your passion for music and engage with a vibrant community of
+                music enthusiasts. Discover, connect, and experience music on a
+                whole new level with Vibrer.
+                <span class="toFeatures" onclick="scrollToFeatures() "
+                  >View features</span
+                >
+              </div>
+
+              <div class="v-wrapper" id="videoPlay">
+                <img src="./public/images/listening-to.jpg" alt="bg" />
+                <img
+                  class="play-btn"
+                  src="./public/images/play-button.svg"
+                  alt="play button"
+                />
+                <div class="title">Watch Vibrer's short promo</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="img-wrapper">
+                <img
+                  src="./public/images/skeleton-music.jpg"
+                  alt="Vibrer's realm"
+                />
+                <div class="title">
+                  Melodies <br />
+                  Beyond Time: <br />
+                  Vibrer's Realm
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="sect3">
+        <div class="layout">
+          <div class="container">
+            <div class="left">
+              <div class="title">Who is Vibrer for?</div>
+              <div class="subtitle">
+                Built Exclusively for Music Industry Artists
+              </div>
+              <div class="desc">
+                Vibrer is a platform crafted for music enthusiasts and creators
+                alike. Whether you're an aspiring singer, a talented musician,
+                or a passionate dancer, Vibrer provides a space to showcase your
+                artistry, connect with fans, and unlock opportunities. Our
+                vibrant community offers a hub for discovering new talents,
+                enjoying live performances, and engaging with your favorite
+                artists. Whether you're seeking inspiration or aiming to amplify
+                your musical journey, Vibrer empowers you to express and
+                experience the magic of music like never before.
+              </div>
+            </div>
+            <div class="right">
+              <div class="imgWrapper">
+                <div class="title">Singers</div>
+                <img src="/public/images/singer.png" alt="Singer" />
+              </div>
+              <div class="imgWrapper">
+                <div class="title">Musicains</div>
+                <img src="/public/images/musician.png" alt="Musician" />
+              </div>
+              <div class="imgWrapper">
+                <div class="title">Dancers</div>
+                <img src="/public/images/dancer.png" alt="Dancer" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec4">
+        <div class="container">
+          <div class="grid2">
+            <div class="title">
+              Explore Vibrer's <br />
+              Unique Features
+            </div>
+            <div class="mtitle">Explore Vibrer's Unique Features</div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/music_pink.svg" alt="" />
+              </div>
+              <div class="sTitle">
+                Elevate your music experience with Vibrer's cutting-edge tools.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layout">
+          <div class="grid3">
+            <div class="title">Dynamic social media inspired profile</div>
+            <div class="desc">
+              Craft a dynamic social media-inspired profile that not only
+              showcases your artistic essence but also connects you with fans.
+              This feature empowers you to thrive in the music community,
+              creating an immersive experience that goes beyond mere
+              functionality.
+            </div>
+            <img src="/public/images/Gravity-Scene.png" alt="Gravity" />
+          </div>
+
+          <div class="grid5">
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/send_pink.svg" alt="" />
+              </div>
+              <div>
+                <div class="title">Share Your Passion</div>
+
+                <div class="desc">
+                  Amplify your presence by effortlessly sharing your music,
+                  videos, and creations with a global audience. Connect,
+                  inspire, and grow through vibrant content sharing on Vibrer.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/fast-forward.svg" alt="icon" />
+              </div>
+              <div>
+                <div class="title">Browse and Connect</div>
+                <div class="desc">
+                  Explore a world of diverse musical talents and connect with
+                  like-minded enthusiasts. Discover new genres, follow your
+                  favorite artists, and build a vibrant community on Vibrer.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/message-text-01.svg" alt="" />
+              </div>
+              <div>
+                <div class="title">Seamless Communication</div>
+
+                <div class="desc">
+                  Engage in lively discussions, express your thoughts, and
+                  connect with artists and fans using Vibrer's intuitive inbuilt
+                  chat system.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/live_concert.svg" alt="" />
+              </div>
+              <div>
+                <div class="title">Exclusive Live Concerts</div>
+                <div class="desc">
+                  Immerse yourself in extraordinary live performances by
+                  celebrated artists, available exclusively on Vibrer.
+                  Experience the energy of live music from the convenience of
+                  your device.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/contest.svg" alt="" />
+              </div>
+              <div>
+                <div class="title">Online Contests</div>
+                <div class="desc">
+                  Participate in online contests on Vibrer. Step up to the
+                  challenge by participating in singing contests, dance-offs,
+                  and more, Showcase your artistry, secure votes, and win prizes
+                  on Vibrer.
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/live_stream.svg" alt="" />
+              </div>
+              <div>
+                <div class="title">Live Streaming</div>
+
+                <div class="desc">
+                  Feel the beat in real-time with Vibrer's Live Streaming.
+                  Artists go live, fans connect, and virtual gifts flow, all at
+                  your fingertips.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gnform">
+        <div class="container">
+          <div class="title">Subscribe to our news letter!</div>
+          <div class="subtitle">
+            Stay informed about Vibrer's upcoming launch by providing your
+            details. Join us on this musical adventure!
+          </div>
+
+          <form id="mailingList">
+            <div class="grid">
+              <input
+                type="hidden"
+                name="mailType"
+                value="Launch notifications"
+              />
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="First Name"
+                  name="firstName"
+                />
+                <div class="form-alert"></div>
+              </div>
+
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="Last Name"
+                  name="lastName"
+                />
+              </div>
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="col">
+                <button class="btn btn-primary ml-btn">Subscribe</button>
+              </div>
+            </div>
+            <div class="desc">
+              By submitting this form, you agree to receive updates and
+              notifications from Vibrer. We respect your privacy and won't share
+              your information with third parties.
+              <a href="./privacy">Read our privacy policy</a>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-outlined"
+              onclick="scrollToMoreFeatures()"
+            >
+              Continue Exploring Features
+              <img
+                class="img-right"
+                src="./public/images/arrow-down-circle.svg"
+                alt="circle arrow"
+              />
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="layout" id="sec5">
+        <div class="container">
+          <div class="grid2">
+            <div class="col">
+              <img
+                class="social-hub"
+                src="./public/images/edited-for-vib.png"
+                alt="social hub image"
+              />
+            </div>
+            <div class="col">
+              <div class="title">Vibrer's Social Hub</div>
+              <div class="desc">
+                Elevate your experience with Vibrer's integrated Social Hub
+                feature. Enhance your presence and empower creators to flourish
+                within a vibrant artistic community.
+              </div>
+              <div class="desc icon">
+                <img src="./public/images/check-circle.svg" alt="Check" />
+                <div>
+                  Fans engage with music, videos, live streams, concerts,
+                  contests through likes, comments, playlist, bookmarks etc.
+                </div>
+              </div>
+              <div class="desc icon">
+                <img src="./public/images/check-circle.svg" alt="Check" />
+                <div>
+                  Artists can captivate their audience with Music, images,
+                  videos, polls and earn a passive income
+                </div>
+              </div>
+              <div class="desc">
+                Join Vibrer's interconnected community, where music enthusiasts
+                and creators unite to celebrate their passion and connect like
+                never before.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="sec6">
+        <div class="container">
+          <div class="title">Earn and manage funds through inbuilt wallet</div>
+          <div class="desc">
+            "Earn a passive income on Vibrer by sharing music videos and audio
+            files, participating in contests, performing live concerts, offering
+            one-to-one performances, and live streaming. Monetize your content
+            and build a stronger relationship with your audience.
+          </div>
+        </div>
+        <img
+          class="walletimg"
+          src="./public/images/wallet.png"
+          alt="Wallet image"
+        />
+      </section>
+    </main>
+    <%- include('partials/footer'); %>
+    <div id="overlay">
+      <!-- The popup content -->
+      <div id="popup">
+        <iframe id="video" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="success-pop">
+      <div class="header">
+        <div class="success-pop-title">Thank you!</div>
+        <div class="success-pop-close">+</div>
+      </div>
+      <div class="success-pop-desc">
+        You have been added to our mailing list.
+      </div>
+    </div>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/theme-v01node.js"></script>
+    <script src="/public/js/forms.js"></script>
+    <script>
+      const allElements = document.querySelectorAll("body *");
+
+      allElements.forEach((el) => {
+        if (el.offsetWidth > document.documentElement.clientWidth) {
+          console.log("Overflowing element:", el);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Your YouTube video ID
+        var videoID = "WFlYEXkcLJ8";
+
+        // The clickable div
+        var clickableDiv = document.getElementById("videoPlay");
+
+        // The overlay
+        var overlay = document.getElementById("overlay");
+
+        // The video iframe
+        var video = document.getElementById("video");
+
+        clickableDiv.addEventListener("click", function () {
+          // Show the overlay
+          overlay.style.display = "block";
+
+          // Set the source for the iframe and autoplay
+          video.src =
+            "https://www.youtube.com/embed/" + videoID + "?autoplay=1";
+        });
+
+        // Hide overlay when clicked
+        overlay.addEventListener("click", function () {
+          overlay.style.display = "none";
+          // Stop the video
+          video.src = "";
+        });
+      });
+    </script>
+    <script>
+      function scrollToGNForm() {
+        const gnForm = document.getElementById("gnform");
+        if (gnForm) {
+          window.scrollTo({
+            top: gnForm.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      function scrollToFeatures() {
+        const sec4 = document.getElementById("sec4");
+        if (sec4) {
+          window.scrollTo({
+            top: sec4.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+      function scrollToMoreFeatures() {
+        const sec5 = document.getElementById("sec5");
+        if (sec5) {
+          window.scrollTo({
+            top: sec5.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+      function learnMore() {
+        const sec2 = document.getElementById("sec2");
+        if (sec2) {
+          window.scrollTo({
+            top: sec2.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

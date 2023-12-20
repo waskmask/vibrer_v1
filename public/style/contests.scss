@@ -1,0 +1,577 @@
+@import "./var";
+
+.contests {
+  padding: 60px 0 100px;
+  color: $white;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    font-family: $dm;
+    @include phone {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.contests-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  @include phone {
+    grid-template-columns: 1fr;
+  }
+  .contest {
+    position: relative;
+    border: solid 1px $darkBorder;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    .status {
+      position: absolute;
+      top: 1rem;
+      left: 1.75rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.2rem;
+      font-size: 0.875rem;
+      &::before {
+        content: "";
+        background-color: $white;
+        width: 8px;
+        height: 8px;
+        border-radius: 5px;
+        position: absolute;
+        left: -12px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .status.active {
+      color: #43ea7d;
+      background-color: #02a83c68;
+      &::before {
+        content: "";
+        background-color: #43ea7d;
+      }
+    }
+    .status.upcoming {
+      color: #eab543;
+      background-color: #eab5433c;
+      &::before {
+        content: "";
+        background-color: #eab543;
+      }
+    }
+    img {
+      width: 100%;
+      border-radius: 0.75rem;
+    }
+  }
+}
+
+.contest-header {
+  padding: 60px 0;
+  background-image: url("../images/contestBg.jpg");
+  background-size: cover;
+  position: relative;
+  background-position: center;
+  &::after {
+    content: "";
+    background: rgba(18, 10, 10, 0.15);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .layout {
+    position: relative;
+    z-index: 1;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .sponsor {
+    color: $white;
+    font-size: 1.1rem;
+    font-family: $dm;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+
+    img {
+      width: 110px;
+    }
+  }
+
+  .title {
+    color: $white;
+    font-size: 2rem;
+    font-family: $dm;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    @include phone {
+      font-size: 2.2rem;
+    }
+  }
+  .sub {
+    color: $white;
+  }
+
+  .cta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .playAd {
+      height: 50px;
+      cursor: pointer;
+      img {
+        height: 100%;
+      }
+    }
+  }
+}
+
+.participants {
+  padding: 40px 0 100px;
+
+  .title {
+    color: $white;
+    font-family: $dm;
+    font-weight: 700;
+    font-size: 1.4rem;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    @include medium {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include phone {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+  .wrapper-lg-6 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    @include medium {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    @include phone {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .contestant {
+    background-color: $dl;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    .head {
+      position: relative;
+      width: 100%;
+      padding-top: 65%;
+      cursor: pointer;
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100%;
+      //   height: 100%;
+      //   background-color: rgba(0, 0, 0, 0.5);
+      //   border-radius: 0.35rem 0.35rem 0 0;
+      // }
+      .video-js {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.35rem 0.35rem 0 0;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        opacity: 0.7;
+      }
+
+      .yourVote {
+        font-size: 0.875rem;
+        background-color: $success;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: $white;
+        z-index: 2;
+      }
+    }
+
+    .body {
+      padding: 1.5rem 0.95rem 1.2rem;
+      position: relative;
+      @include fold {
+        padding: 1.1rem 0.75rem 1rem;
+      }
+    }
+
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      .addToFav {
+        cursor: pointer;
+        img {
+          width: 18px;
+
+          @include fold {
+            height: 16px;
+          }
+        }
+      }
+    }
+    .user {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      width: fit-content;
+      max-width: calc(100% - 30px);
+      cursor: pointer;
+      .img img {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 25px;
+        border: solid 1px #02a83c68;
+      }
+
+      .info {
+        .title {
+          font-weight: 400;
+          font-size: 1.2rem;
+          font-family: $roboto;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+
+          img {
+            height: 18px;
+            margin-top: 2px;
+          }
+          @include fold {
+            font-size: 1rem;
+            img {
+              height: 16px;
+            }
+          }
+        }
+
+        .uname {
+          color: $light;
+          font-size: 0.875rem;
+          margin-top: 0.15rem;
+        }
+      }
+    }
+
+    .votes {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: space-between;
+      color: $white;
+      span {
+        color: lighten($primary, 5%);
+      }
+      strong {
+        font-weight: 500;
+      }
+
+      @include fold {
+        font-size: 0.875rem;
+      }
+    }
+
+    .cta {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      button {
+        height: 35px;
+        padding: 0 1rem;
+
+        @include fold {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
+.myContestCard {
+  background-color: $dl;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  @include tablet {
+    padding: 0.5rem;
+  }
+  .contestant {
+    background-color: $dl;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    .head {
+      position: relative;
+      width: 100%;
+      padding-top: 65%;
+      cursor: pointer;
+
+      .video-js {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0.35rem 0.35rem 0 0;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        opacity: 0.7;
+      }
+
+      .yourVote {
+        font-size: 0.875rem;
+        background-color: $success;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: $white;
+        z-index: 2;
+      }
+    }
+
+    .body {
+      padding: 1.5rem 0.95rem 1.2rem;
+      position: relative;
+      @include fold {
+        padding: 1.1rem 0.75rem 1rem;
+      }
+    }
+
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      .addToFav {
+        cursor: pointer;
+        img {
+          width: 18px;
+
+          @include fold {
+            height: 16px;
+          }
+        }
+      }
+    }
+    .user {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      width: fit-content;
+      max-width: calc(100% - 30px);
+      cursor: pointer;
+      .img img {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 25px;
+        border: solid 1px #02a83c68;
+      }
+
+      .info {
+        .title {
+          font-weight: 400;
+          font-size: 1.2rem;
+          font-family: $roboto;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+
+          img {
+            height: 18px;
+            margin-top: 2px;
+          }
+          @include fold {
+            font-size: 1rem;
+            img {
+              height: 16px;
+            }
+          }
+        }
+
+        .uname {
+          color: $light;
+          font-size: 0.875rem;
+          margin-top: 0.15rem;
+        }
+      }
+    }
+
+    .votes {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: space-between;
+      color: $white;
+      span {
+        color: lighten($primary, 5%);
+      }
+      strong {
+        font-weight: 500;
+      }
+
+      @include fold {
+        font-size: 0.875rem;
+      }
+    }
+
+    .cta {
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      button {
+        height: 35px;
+        padding: 0 1rem;
+
+        @include fold {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
+.contest-info {
+  color: $white;
+  .banner img {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+  .text {
+    font-weight: 300;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  ol {
+    margin-left: 1rem;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+  }
+  .olAlpha {
+    list-style: lower-alpha;
+  }
+
+  .blurb-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    @include phone {
+      grid-template-columns: 1fr;
+    }
+
+    .blurb {
+      margin: 1rem 0;
+
+      .title {
+        margin-bottom: 0.5rem;
+      }
+      .ml- {
+        margin-left: -0.3rem;
+      }
+    }
+  }
+}
+
+.video-preview {
+  position: relative;
+  width: 100%;
+  padding-top: 65%;
+  cursor: pointer;
+  margin: 0.7rem 0 1.1rem;
+  .video-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.35rem 0.35rem 0 0;
+  }
+}
+
+.postStatus {
+  position: absolute;
+  left: 0rem;
+  top: -1rem;
+  background-color: $white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+}
+.postStatus.review {
+  background-color: $info;
+  color: $white;
+}
+
+.postStatus.active {
+  background-color: $success;
+  color: $white;
+}
+.postStatus.inactive {
+  background-color: $primary;
+  color: $white;
+}

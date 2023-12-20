@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link rel="stylesheet" href="/public/style/modal.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/contests.css" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main">
+        <div class="app_page_menu">
+          <div
+            onclick="toMyContests('<%= path  %>', '<%= link %>');"
+            class="<%= (link == '/my-contests') ? 'active page_menu_link' : 'page_menu_link' %>"
+          >
+            My contests
+          </div>
+          <div
+            class="<%= (link == '/my-contest-votes') ? 'active page_menu_link' : 'page_menu_link' %>"
+            onclick="toMyVotes('<%= link %>');"
+          >
+            My votes
+          </div>
+          <div
+            class="<%= (link == '/my-contest-favs') ? 'active page_menu_link' : 'page_menu_link' %>"
+            onclick="toMyContestFavs('<%= link %>');"
+          >
+            Favorites
+          </div>
+        </div>
+
+        <div class="myContestCard mt-3 mb-3 shadow">
+          <div class="flex-title">
+            <span>Vibrer Singing Contests</span>
+            <div class="status active">Active</div>
+          </div>
+          <div class="text white">Ends in 22 days</div>
+
+          <!-- You voted -->
+          <div class="contestant mb-3">
+            <div class="head">
+              <div class="yourVote">You voted</div>
+              <video
+                controls
+                class="video-js"
+                preload="auto"
+                width="640"
+                height="264"
+                data-setup="{}"
+              >
+                <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider
+                  upgrading to a web browser that
+                  <a
+                    href="https://videojs.com/html5-video-support/"
+                    target="_blank"
+                    >supports HTML5 video</a
+                  >
+                </p>
+              </video>
+            </div>
+            <div class="body">
+              <div class="top">
+                <div class="user">
+                  <div class="img">
+                    <img src="/public/images/listening-to.jpg" alt="avatar" />
+                  </div>
+                  <div class="info">
+                    <div class="title">
+                      <span>Jessica Hub</span>
+                      <img
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Badge"
+                      />
+                    </div>
+                    <div class="uname">@jhub</div>
+                  </div>
+                </div>
+
+                <div class="addToFav">
+                  <img src="/public/images/icons/bookmark.svg" alt="Bookmark" />
+                </div>
+              </div>
+
+              <div class="votes">
+                <div class="count">
+                  <strong>Votes:</strong> <span>2036</span>
+                </div>
+                <div class="rank">
+                  <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                </div>
+              </div>
+
+              <div class="cta">
+                <button class="btn btn-outlined">Visit artist</button>
+                <button class="btn btn-primary">Remove vote</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../modals/shareModal'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="/public/js/_modal.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Event listener for WhatsApp share buttons
+        var whatsappButtons = document.querySelectorAll(".btn-whatsapp");
+        whatsappButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            var url = this.getAttribute("data-url");
+            window.open(url, "_blank");
+
+            // Close the modal after 1 second
+            setTimeout(() => closeCurrentModal(this), 1000);
+          });
+        });
+
+        // Event listener for Copy URL buttons
+        var copyButtons = document.querySelectorAll(".copy-url-btn");
+        copyButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            // Copy URL to clipboard
+            var url = this.getAttribute("data-url");
+            navigator.clipboard
+              .writeText(url)
+              .then(() => {
+                // Store the original button text
+                var originalText = button.textContent;
+
+                // Change button text to 'Copied!'
+                button.textContent = "Copied!";
+
+                // Change the text back to the original after 2 seconds
+                setTimeout(function () {
+                  button.textContent = originalText;
+                }, 2000);
+
+                // Close the modal after 1 second
+                setTimeout(() => closeCurrentModal(this), 1000);
+              })
+              .catch((err) => {
+                console.error("Could not copy text: ", err);
+              });
+          });
+        });
+
+        // Function to close the current modal
+        function closeCurrentModal(button) {
+          var modal = button.closest("._modal");
+          if (modal) {
+            closeModal(modal);
+          }
+        }
+      });
+      // Your existing closeModal function
+      function closeModal(modal) {
+        var dialog = modal.querySelector(".dialog");
+        if (dialog) {
+          dialog.classList.remove("show");
+          dialog.addEventListener(
+            "transitionend",
+            function () {
+              modal.classList.remove("d-block");
+              document.body.classList.remove("modal-open");
+            },
+            { once: true }
+          );
+        }
+      }
+    </script>
+
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

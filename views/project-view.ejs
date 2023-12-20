@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= project.title %></title>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/projects.css" />
+  </head>
+  <body>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="project">
+        <div class="conatainer layout">
+          <div class="grid1">
+            <div class="title"><%= project.title %></div>
+            <% if (project.projectStatus === 'open') { %>
+            <div class="status <%= project.projectStatus %>">
+              <div><%= project.projectStatus %></div>
+              <span class="text">Singers can participate</span>
+            </div>
+            <% } %>
+          </div>
+          <div class="grid2">
+            <div class="video-container">
+              <iframe
+                width="100%"
+                height="100%"
+                src="<%= project.mediaUrl %>"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+
+            <div class="content">
+              <div class="subtitle">About this project:</div>
+              <%- project.description %>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="content">
+              <div class="subtitle">Requirements:</div>
+              <div class="rq-container">
+                <div class="rq-item">
+                  <strong>Project type:</strong> <%-
+                  project.requirements.ProjectType %>
+                </div>
+                <div class="rq-item">
+                  <strong>Artist type:</strong> <%=
+                  project.requirements.ArtistType %>
+                </div>
+                <div class="rq-item">
+                  <strong>Gender:</strong> <%= project.requirements.Gender %>
+                </div>
+                <div class="rq-item">
+                  <strong>Country:</strong> <%= project.requirements.Country %>
+                </div>
+                <div class="rq-item">
+                  <strong>Language:</strong> <%= project.requirements.Language
+                  %>
+                </div>
+              </div>
+              <div class="desc"><%= project.requirements.message %></div>
+            </div>
+            <div class="content">
+              <div class="subtitle">Apply to this project</div>
+              <form id="applForm" autocomplete="off">
+                <div class="grid">
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="First Name"
+                      name="firstName"
+                    />
+                  </div>
+
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="Last Name"
+                      name="lastName"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid">
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="email"
+                      placeholder="Email address"
+                      name="email"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="tel"
+                      placeholder="Phone number"
+                      name="phone"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid">
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="City"
+                      name="city"
+                      id="city-input"
+                    />
+                  </div>
+                  <div class="col">
+                    <input
+                      class="form-input"
+                      type="text"
+                      placeholder="Country"
+                      name="country"
+                      id="country-input"
+                      readonly
+                    />
+                  </div>
+                </div>
+
+                <div class="col">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="YouTube, Instagram or video link"
+                    name="link"
+                  />
+                </div>
+
+                <div class="col mt-3">
+                  <textarea
+                    name="message"
+                    class="form-input"
+                    rows="3"
+                    placeholder="Message (optional)"
+                  ></textarea>
+                </div>
+
+                <div class="desc mt-1">
+                  By sending this form, you are agree to our
+                  <a href="/privacy" target="_blank">Privacy policy</a> and
+                  <a href="/terms" target="_blank">Terms of use</a>.
+                </div>
+
+                <div class="success-message mt-3 d-none">
+                  Your application has been sent successfully. <br />
+                  We have received your application and will contact you soon.
+                  <br />
+                  You will receive a confirmation email shortly, if not found,
+                  check spam folder.
+                </div>
+
+                <div class="col mt-4">
+                  <button class="btn btn-primary w200 ml-btn">Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include('partials/footer'); %>
+
+    <div id="overlay">
+      <!-- The popup content -->
+      <div id="popup">
+        <iframe id="video" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <!-- javascript -->
+    <script src="/public/js/theme-v01node.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
+    <script src="/public/js/applForm.js"></script>
+    <script>
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("city-input")
+      );
+
+      autocomplete.setOptions({
+        types: ["(cities)"],
+        disableHistory: true,
+      });
+      autocomplete.addListener("place_changed", function () {
+        var place = autocomplete.getPlace();
+        var country, city;
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (addressType === "country") {
+            country = place.address_components[i].long_name;
+          } else if (
+            addressType === "locality" ||
+            addressType === "administrative_area_level_3"
+          ) {
+            city = place.address_components[i].long_name;
+          }
+        }
+
+        if (country && city) {
+          document.getElementById("country-input").value = country;
+          document.getElementById("city-input").value = city;
+        }
+      });
+    </script>
+  </body>
+</html>

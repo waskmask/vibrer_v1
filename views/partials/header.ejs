@@ -1,0 +1,62 @@
+<!-- <header class="<%= (path !== '/') ? 'bg-dark' : '' %>"> -->
+<header class="bg-dark">
+  <nav class="layout">
+    <!-- Logo tes -->
+    <% if (path !== '/') { %>
+    <div class="logo" onclick="toHome()">
+      <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+    </div>
+    <% } else { %>
+    <div class="logo">
+      <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+    </div>
+    <% } %>
+
+    <div class="burger">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="menu-overlay"></div>
+    <div class="menu">
+      <div class="menu-close">+</div>
+
+      <ul>
+        <li>
+          <a
+            class="<%= (path == '/') ? 'active' : '' %>"
+            href="<%= (path == '/') ? 'javascript:void(0)' : '/' %>"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            class="<%= (path == '/road-map') ? 'active' : '' %>"
+            href="<%= (path == '/road-map') ? 'javascript:void(0)' : '/road-map' %>"
+            >Road Map</a
+          >
+        </li>
+        <li>
+          <a
+            class="<%= (path == '/contests') ? 'active' : '' %>"
+            href="<%= (path == '/contests') ? 'javascript:void(0)' : '/contests' %>"
+            >Contests</a
+          >
+        </li>
+        <li>
+          <a
+            class="<%= (path == '/Allprojects') ? 'active' : '' %>"
+            href="<%= (path == '/Allprojects') ? 'javascript:void(0)' : '/projects' %>"
+            >Projects</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="hcta">
+      <button class="btn btn-outlined" onclick="toRegister()">Sign up</button>
+      <button class="btn btn-primary" onclick="toLogin()">Login</button>
+    </div>
+  </nav>
+</header>
