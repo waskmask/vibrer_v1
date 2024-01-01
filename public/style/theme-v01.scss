@@ -1623,3 +1623,50 @@ iframe {
     height: 100%;
   }
 }
+
+.email-verified {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  color: $white;
+  text-align: center;
+  .cont {
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .title {
+    font-size: 1.8rem;
+    color: $green;
+    font-family: $dm;
+    font-weight: 600;
+    margin: 0.725rem 0 0.25rem;
+  }
+
+  .sub {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .desc {
+    margin-bottom: 1.5rem;
+    color: $light;
+  }
+  @include phone {
+    .title {
+      font-size: 1.5rem;
+    }
+    .sub {
+      font-size: 1.2rem;
+    }
+    .desc {
+      font-size: 1rem;
+    }
+  }
+
+  img {
+    height: 50px;
+  }
+}
