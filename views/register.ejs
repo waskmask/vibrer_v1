@@ -40,7 +40,12 @@
               />
               <div class="title">Create new account</div>
               <div class="sub">Join the music revolution.</div>
-              <form action="">
+              <form
+                action="javascript:void(0)"
+                id="registrationForm"
+                method="POST"
+                autocomplete="off"
+              >
                 <div class="label text-white">I'm an?</div>
                 <div class="custom-radio-label">
                   <div
@@ -54,15 +59,22 @@
                   </div>
                 </div>
                 <!-- Hidden input field to store the selected value -->
-                <input type="hidden" id="type" name="type" value="Artist" />
+                <input
+                  type="hidden"
+                  id="type"
+                  name="user_type"
+                  value="Artist"
+                />
 
                 <div class="mb-3">
                   <input
                     class="form-input"
                     type="email"
                     placeholder="Email address"
-                    name=""
-                    id=""
+                    name="email"
+                    id="registerEmail"
+                    required
+                    autocomplete="off"
                   />
                 </div>
                 <div class="mb-3 passInputDiv">
@@ -71,6 +83,9 @@
                     type="password"
                     placeholder="Password"
                     name="password"
+                    required
+                    autocomplete="off"
+                    id="registerPassword"
                   />
                   <div class="passInput">
                     <img src="/public/images/icons/visibility.svg" alt="Icon" />
@@ -82,7 +97,8 @@
                     class="form-input"
                     type="password"
                     placeholder="Confirm password"
-                    name="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
                   />
                   <div class="passInput">
                     <img src="/public/images/icons/visibility.svg" alt="Icon" />
@@ -94,7 +110,16 @@
                   <a href="" target="_blank">Privacy Policy</a> and
                   <a href="" target="_blank">T&C</a>.
                 </div>
-                <button class="btn btn-primary w-100">Sign Up</button>
+                <div class="error-message mt-3 d-none"></div>
+                <div class="success-message mt-3 d-none">
+                  Your have registered successfully.
+                  <br />
+                  You will receive a verification email shortly, if not found,
+                  check spam folder.
+                </div>
+                <button class="btn btn-primary w-100 submitBtn" type="submit">
+                  Sign Up
+                </button>
               </form>
 
               <div class="text-white mt-4 dfac">
@@ -115,6 +140,7 @@
     <script src="/public/js/cookieBanner.js"></script>
     <script src="/public/js/theme-v01node.js"></script>
     <script src="/public/js/authForm.js"></script>
+    <script src="/public/js/config.js"></script>
     <script>
       function handleRadioClick(clickedElement, value) {
         // Remove the "active" class from all label elements
@@ -127,6 +153,130 @@
         // Save the selected value to the hidden input field
         const hiddenInput = document.getElementById("type");
         hiddenInput.value = value;
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("registrationForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+        // Disable HTML5 validation
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = "Loading...";
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            // Validation
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const { type, email, password, confirmPassword } = formDataJSON;
+
+            if (
+              !email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+            ) {
+              isValid = false;
+              customErrors.email = !email
+                ? "Email is required"
+                : "Please enter a valid email";
+            }
+
+            if (!isStrongPassword(password)) {
+              isValid = false;
+              customErrors.password =
+                "Password must be strong and contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
+            }
+
+            if (password !== confirmPassword) {
+              isValid = false;
+              customErrors.confirmPassword = "Passwords do not match";
+            }
+
+            // Clear previous error alerts
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}registerUser`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    successPop.style.display = "block";
+                    localStorage.setItem(
+                      "appUserToken",
+                      responseData.result.token
+                    );
+                    await fetch("/store-token-in-session", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        token: responseData.result.token,
+                      }),
+                    });
+                    setTimeout(() => {
+                      successPop.style.display = "none";
+                      window.location.href = "/new-profile";
+                    }, 5000);
+                    form.reset();
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  console.log(response);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = "Sign Up";
+          }, 1000); // 1-second delay
+        });
+      });
+
+      function isStrongPassword(password) {
+        // Check for strong password criteria
+        const strongPasswordRegex =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return strongPasswordRegex.test(password);
       }
     </script>
   </body>

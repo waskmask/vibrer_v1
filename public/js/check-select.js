@@ -4,6 +4,8 @@ window.addEventListener("DOMContentLoaded", function () {
   customCheckSelects.forEach(function (customCheckSelect) {
     const checkOptions = customCheckSelect.querySelector(".check-options");
     const closeOptions = customCheckSelect.querySelector(".close-options");
+    const hiddenField = checkOptions.querySelector('input[type="hidden"]');
+
     const checkboxContainerInputs = customCheckSelect.querySelectorAll(
       ".checkbox-container input"
     );
@@ -30,14 +32,16 @@ window.addEventListener("DOMContentLoaded", function () {
     checkOptions.addEventListener("click", function (event) {
       event.stopPropagation();
     });
-
+    const selectedValues = [];
     checkboxContainerInputs.forEach(function (input) {
       input.addEventListener("change", function () {
         const itemName = this.value;
+        const itemRealName = this.getAttribute("data-value");
         if (this.checked) {
+          selectedValues.push(itemName);
           selectedItems.innerHTML += `
                         <div class="item">
-                            <div class="item-name">${itemName}</div>
+                            <div class="item-name">${itemRealName}</div>
                         </div>
                     `;
         } else {
@@ -50,6 +54,8 @@ window.addEventListener("DOMContentLoaded", function () {
             selectedItems.removeChild(itemToRemove);
           }
         }
+
+        hiddenField.value = selectedValues;
 
         if (selectedItems.querySelector(".item")) {
           selectedItems.style.display = "flex";

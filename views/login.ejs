@@ -40,14 +40,20 @@
               />
               <div class="title">Create new account</div>
               <div class="sub">Join the music revolution.</div>
-              <form class="w-100" action="">
+              <form
+                action="javascript:void(0)"
+                id="loginForm"
+                method="POST"
+                autocomplete="off"
+                class="w-100"
+              >
                 <div class="mb-3">
                   <input
                     class="form-input"
                     type="email"
                     placeholder="Email address"
-                    name=""
-                    id=""
+                    name="email"
+                    id="loginEmail"
                   />
                 </div>
                 <div class="mb-3 passInputDiv">
@@ -56,6 +62,7 @@
                     type="password"
                     placeholder="Password"
                     name="password"
+                    id="loginPassword"
                   />
                   <div class="passInput">
                     <img src="/public/images/icons/visibility.svg" alt="Icon" />
@@ -64,7 +71,13 @@
                 <div class="link ta-end" onclick="toForgotPass()">
                   Forgot password
                 </div>
-                <button class="btn btn-primary w-100 mt-4">Login</button>
+                <div class="error-message mt-3 d-none"></div>
+                <button
+                  class="btn btn-primary w-100 mt-4 submitBtn"
+                  type="submit"
+                >
+                  Login
+                </button>
               </form>
 
               <div class="text-white mt-4 dfac">
@@ -85,10 +98,118 @@
     <script src="/public/js/cookieBanner.js"></script>
     <script src="/public/js/theme-v01node.js"></script>
     <script src="/public/js/authForm.js"></script>
+    <script src="/public/js/config.js"></script>
     <script>
       function toForgotPass() {
         window.location.href = "/forgot-password";
       }
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("loginForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = "Loading...";
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const { email, password } = formDataJSON;
+
+            if (
+              !email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+            ) {
+              isValid = false;
+              customErrors.email = !email
+                ? "Email is required"
+                : "Please enter a valid email";
+            }
+            if (!password) {
+              isValid = false;
+              customErrors.password = "Password is required.";
+            }
+
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}loginUser`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    localStorage.setItem(
+                      "appUserToken",
+                      responseData.result.token
+                    );
+                    await fetch("/store-token-in-session", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        token: responseData.result.token,
+                      }),
+                    });
+                    form.reset();
+                    window.location.href = "/new-profile";
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  errorPop.style.display = "block";
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = "Login";
+          }, 1000); // 1-second delay
+        });
+      });
     </script>
   </body>
 </html>

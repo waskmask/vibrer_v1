@@ -12,6 +12,7 @@
       content="music platform, music community, music discovery, artist connection, music enthusiasts"
     />
     <%- include('../partials/head'); %>
+    <script src="/public/js/config.js"></script>
     <link rel="stylesheet" href="/public/style/app.css" />
     <link rel="stylesheet" href="/public/style/contests.css" />
   </head>
@@ -29,17 +30,27 @@
       <div class="app_main">
         <div class="title mb-3">Ongoing contest</div>
 
-        <div class="contests-wrapper" onclick="toContest()">
+        <% if (onGoingContestsData.result && onGoingContestsData.result.length >
+        0) { onGoingContestsData.result.forEach(onGoingContests => { %>
+        <a
+          class="contests-wrapper"
+          href="contest-view/<%- onGoingContests._id %>"
+        >
           <div class="contest">
-            <div class="status active">Active</div>
-            <img class="hinm" src="/public/images/contest1.jpg" alt="images" />
+            <div class="status active"><%- onGoingContests.status %></div>
+            <img
+              class="hinm"
+              src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.xl  %>"
+              alt="images"
+            />
             <img
               class="hinb"
-              src="/public/images/contest1Mobile.jpg"
+              src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.m  %>"
               alt="images"
             />
           </div>
-        </div>
+        </a>
+        <% }); } %>
 
         <div class="title mb-3 mt-4">Upcoming contest</div>
         <div class="contests-wrapper">
