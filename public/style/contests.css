@@ -276,6 +276,7 @@
   background-color: #1e2750;
   padding: 0.25rem;
   border-radius: 0.5rem;
+  position: relative;
 }
 .participants .contestant .head {
   position: relative;

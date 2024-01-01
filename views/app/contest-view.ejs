@@ -66,6 +66,22 @@
 
           <div class="wrapper-lg-6">
             <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
               <div class="head">
                 <video
                   controls
@@ -689,6 +705,45 @@
           }
         });
       }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add click event listener to the entire document
+        document.addEventListener("click", function (event) {
+          var reportIcon = event.target.closest(".reportIcon");
+          var dropdown = event.target
+            .closest(".report_dd")
+            ?.querySelector(".drop_down");
+
+          // Check if a report icon was clicked
+          if (reportIcon) {
+            // Toggle the active class on the corresponding dropdown
+            dropdown.classList.toggle("active");
+          } else if (!event.target.closest(".drop_down")) {
+            // If the click was outside all dropdowns, close any active dropdown
+            document
+              .querySelectorAll(".drop_down.active")
+              .forEach(function (activeDropdown) {
+                activeDropdown.classList.remove("active");
+              });
+          }
+        });
+
+        // Find all elements with the class 'report_link'
+        document
+          .querySelectorAll(".report_link")
+          .forEach(function (reportLink) {
+            reportLink.addEventListener("click", function () {
+              var reportId = this.getAttribute("data-id");
+              if (reportId) {
+                window.open(
+                  "https://vibrer.com/report?id=" + reportId,
+                  "_blank"
+                );
+              }
+            });
+          });
+      });
     </script>
   </body>
 </html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/style/table.css" />
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main app_main_large">
+        <div class="page_flex max600">
+          <div class="flex-title mb-3">
+            <img
+              class="backIcon"
+              src="/public/images/icons/arrow-left.svg"
+              alt="back icon"
+            />
+
+            ID: 0326sufds
+          </div>
+          <div class="status open">Open</div>
+        </div>
+
+        <div class="report_container mt-3">
+          <div class="left max600">
+            <div class="report_notice">
+              <div class="title">Report reason</div>
+              <div class="text white mb-3">Explicit adult content</div>
+
+              <div class="title">Report description</div>
+              <div class="text white">
+                Lorem ipsum dolor. autem, illo sed sunt molestias recusandae
+                voluptatibus veniam expedita eaque!
+              </div>
+            </div>
+
+            <div class="light mt-4">Reported content</div>
+            <div class="title mt-1 mb-1">Ariana grande cover</div>
+            <div class="white mb-4">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, id
+              magnam. A, laudantium saepe. Ad, repellendus molestias incidunt
+              ipsa eligendi suscipit voluptas voluptatum blanditiis nemo tempora
+              odio nesciunt accusamus dolor?
+            </div>
+
+            <div class="video-head">
+              <video
+                controls
+                class="video-js"
+                preload="auto"
+                width="640"
+                height="264"
+                data-setup="{}"
+              >
+                <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider
+                  upgrading to a web browser that
+                  <a
+                    href="https://videojs.com/html5-video-support/"
+                    target="_blank"
+                    >supports HTML5 video</a
+                  >
+                </p>
+              </video>
+              <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+            </div>
+
+            <div class="white mt-3">
+              <div class="mb-3"><strong>Content type:</strong> Video</div>
+              <div>
+                <strong>Content ID:</strong> 0326sufds5548929sdf9ds849dfsd
+              </div>
+            </div>
+
+            <button class="btn btn-primary mt-4">Remove content</button>
+          </div>
+          <div class="right">
+            <div class="title">Send message to admin</div>
+
+            <form action="" class="form fborder">
+              <div class="mt-3 mb-4">
+                <div id="message" style="height: auto; min-height: 100px"></div>
+              </div>
+              <button class="btn btn-primary mt-4">Send message</button>
+            </form>
+
+            <div class="title mt-4">Messages</div>
+            <div class="light d-none">No messages to show</div>
+
+            <div class="r_message you mt-3">
+              <div class="title">You</div>
+              <div class="white">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                nulla maxime, ad dignissimos quaerat ullam vitae non unde ab,
+                soluta maiores dolorem asperiores ipsam aut, libero adipisci
+                nihil voluptate odio!
+              </div>
+            </div>
+            <div class="r_message admin mt-3">
+              <div class="title">Admin</div>
+              <div class="white">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                nulla maxime, ad dignissimos quaerat ullam vitae non unde ab,
+                soluta maiores dolorem asperiores ipsam aut, libero adipisci
+                nihil voluptate odio!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- app main end -->
+      </div>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var backIcon = document.querySelector(".backIcon");
+
+        backIcon.addEventListener("click", function () {
+          window.history.back();
+        });
+        var quill = new Quill("#message", {
+          modules: {
+            toolbar: false,
+          },
+          placeholder: "Type message here..*",
+          theme: "snow",
+        });
+      });
+    </script>
+  </body>
+</html>

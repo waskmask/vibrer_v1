@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/style/table.css" />
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main app_main_large">
+        <div class="title mb-3">Reports (1)</div>
+        <div class="app_page_menu">
+          <div
+            onclick="toReports('<%= path  %>', '<%= link %>');"
+            class="<%= (link == 'allreports') ? 'active page_menu_link' : 'page_menu_link' %>"
+          >
+            All reports
+          </div>
+          <div
+            onclick="toActiveReports('<%= path  %>', '<%= link %>');"
+            class="<%= (link == 'active') ? 'active page_menu_link' : 'page_menu_link' %>"
+          >
+            Active
+          </div>
+          <div
+            onclick="youReported('<%= path  %>', '<%= link %>');"
+            class="<%= (link == 'youreported') ? 'active page_menu_link' : 'page_menu_link' %>"
+          >
+            You reported
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="table table-light">
+            <thead>
+              <tr>
+                <th>Reported on</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th><div class="flex-end">Action</div></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  03.08.2023 <br />
+                  <small>12.09</small>
+                </td>
+                <td class="max80">
+                  Copyright content Lorem ipsum dolor sit, amet consectetur
+                  adipisicing elit. Placeat illo sint laboriosam perspiciatis ab
+                  illum voluptatem, fuga, ea perferendis asperiores quia esse?
+                  Voluptatem debitis incidunt nobis quaerat amet magnam ipsam.
+                </td>
+                <td>
+                  <div class="status open">Open</div>
+                </td>
+                <td>
+                  <div class="flex-end">
+                    <button class="btn btn-primary btn-xs">View</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  03.08.2023 <br />
+                  <small>12.09</small>
+                </td>
+                <td>Copyright content</td>
+                <td>
+                  <div class="status closed">Closed</div>
+                </td>
+                <td>
+                  <div class="flex-end">
+                    <button class="btn btn-primary btn-xs">View</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  03.08.2023 <br />
+                  <small>12.09</small>
+                </td>
+                <td>Copyright content</td>
+                <td>
+                  <div class="status processing">Under process</div>
+                </td>
+                <td>
+                  <div class="flex-end">
+                    <button class="btn btn-primary btn-xs">View</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- app main end -->
+      </div>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var quill = new Quill("#other_issue", {
+          modules: {
+            toolbar: false,
+          },
+          placeholder: "Describe the issue in detail *",
+          theme: "snow",
+        });
+      });
+    </script>
+  </body>
+</html>

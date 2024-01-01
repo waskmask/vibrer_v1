@@ -75,7 +75,10 @@
   </div>
 
   <div class="link">
-    <a href="/app/home">
+    <a
+      href="<%= (path == '/reports') ? 'javascript:void(0)' : '/app/reports' %>"
+      class="<%= (path == '/reports') ? 'active' : '' %>"
+    >
       <img src="/public/images/icons/sidebar/reports.svg" alt="Reports icon" />
       Reports
     </a>

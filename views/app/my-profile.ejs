@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link rel="stylesheet" href="/public/style/modal.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/contests.css" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="profile_main">
+        <div class="profile_header">
+          <div class="_action">
+            <div class="title">My profile</div>
+            <div class="_options">
+              <div class="head" id="myProfile_options">
+                <img src="/public/images/icons/more-vertical.svg" alt="Icon" />
+              </div>
+              <div class="drop_down">
+                <div class="_link" id="changeCover">
+                  <img src="/public/images/icons/camera.svg" alt="Camera" />
+                  <div>Change cover</div>
+                </div>
+                <div class="_link" onclick="editProfile(id)">
+                  <img src="/public/images/icons/edit.svg" alt="Edit" />
+                  <div>Edit profile</div>
+                </div>
+                <div
+                  class="_link"
+                  onclick="copyLink()"
+                  data-url="https://vibrer.com/@waska"
+                >
+                  <img src="/public/images/icons/copy.svg" alt="Camera" />
+                  <div>Copy profile link</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cover">
+            <img src="/uploads/coverDemo.jpeg" alt="Cover" />
+          </div>
+        </div>
+
+        <div class="profile_wrapper">
+          <div class="_profile_left">
+            <div class="avatar">
+              <img src="/uploads/profileDemo.png" alt="avatar" />
+            </div>
+            <div class="profile_top_details">
+              <div class="name">
+                <span>Nathan Steve</span>
+                <img
+                  class="app_v_badge"
+                  src="/public/images/icons/verified-badge.svg"
+                  alt="Verified"
+                />
+              </div>
+              <div class="info">Singer, Song writer, Music director</div>
+            </div>
+          </div>
+
+          <div class="profile_action">
+            <button class="btn btn-primary btn-sm">Edit profile</button>
+          </div>
+        </div>
+
+        <div class="profile_stats">
+          <div class="_stats_item">
+            <span>16</span> <br />
+            <small>Posts</small>
+          </div>
+          <div class="_stats_item">
+            <span>30</span> <br />
+            <small>Music</small>
+          </div>
+          <div class="_stats_item">
+            <span>200K</span> <br />
+            <small>Followers</small>
+          </div>
+          <div class="_stats_item">
+            <span>305</span> <br />
+            <small>Following</small>
+          </div>
+        </div>
+
+        <div class="profile_content_tabs">
+          <div class="_tab_menu">
+            <div class="_item active" target="#videoPost">
+              <img src="/public/images/icons/video_post.svg" alt="Videos" />
+            </div>
+            <div class="_item" target="#musicPost">
+              <img src="/public/images/icons/music.svg" alt="Music" />
+            </div>
+            <div class="_item" target="#userInfo">
+              <img src="/public/images/icons/info.svg" alt="Info" />
+            </div>
+          </div>
+
+          <div class="_tab_content active" id="videoPost">
+            <div class="grid_video_posts">
+              <div class="content_post">
+                <div class="video-head">
+                  <video
+                    controls
+                    class="video-js"
+                    preload="auto"
+                    width="640"
+                    height="264"
+                    data-setup="{}"
+                  >
+                    <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                    <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  </video>
+                </div>
+                <div class="content">
+                  <div class="title">
+                    Enrique Iglesias - Hero Acoustic Cover
+                  </div>
+                  <div class="desc">
+                    One of the best cover of me, it took me 2 weeks to record
+                    it, please listen to it guys.
+                  </div>
+                  <button class="more-btn">More</button>
+                </div>
+                <div class="_action"></div>
+              </div>
+
+              <div class="content_post">
+                <div class="video-head">
+                  <video
+                    controls
+                    class="video-js"
+                    preload="auto"
+                    width="640"
+                    height="264"
+                    data-setup="{}"
+                  >
+                    <source src="/uploads/inescapable.mp4" type="video/mp4" />
+                    <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  </video>
+                </div>
+                <div class="content">
+                  <div class="title">
+                    Enrique Iglesias - Hero Acoustic Cover
+                  </div>
+                  <div class="desc">
+                    One of the best cover of me, it took me 2 weeks to record
+                    it, please listen to it guys.
+                  </div>
+                  <button class="more-btn">More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="_tab_content" id="musicPost">
+            <div class="title">Music</div>
+          </div>
+          <div class="_tab_content" id="userInfo">
+            <div class="title">Info</div>
+          </div>
+        </div>
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../modals/shareModal'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="/public/js/_modal.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var headElement = document.getElementById("myProfile_options");
+        var dropdown = headElement.nextElementSibling;
+
+        // Toggle dropdown on clicking the head element
+        headElement.addEventListener("click", function (event) {
+          dropdown.classList.toggle("active");
+          event.stopPropagation(); // Prevent the document click event from firing immediately
+        });
+
+        // Close dropdown when clicking anywhere outside
+        document.addEventListener("click", function (event) {
+          if (
+            !headElement.contains(event.target) &&
+            !dropdown.contains(event.target)
+          ) {
+            dropdown.classList.remove("active");
+          }
+        });
+
+        // tab menu
+        var tabItems = document.querySelectorAll("._tab_menu ._item");
+
+        tabItems.forEach(function (item) {
+          item.addEventListener("click", function () {
+            // Remove active class from all items
+            tabItems.forEach(function (i) {
+              i.classList.remove("active");
+            });
+
+            // Add active class to clicked item
+            item.classList.add("active");
+
+            // Get target content ID
+            var target = item.getAttribute("target");
+
+            // Hide all tab contents
+            document
+              .querySelectorAll("._tab_content")
+              .forEach(function (content) {
+                content.classList.remove("active");
+              });
+
+            // Show target tab content
+            var targetContent = document.querySelector(target);
+            if (targetContent) {
+              targetContent.classList.add("active");
+            }
+          });
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var moreButtons = document.querySelectorAll(".more-btn");
+
+        moreButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            var contentDiv = this.closest(".content");
+            contentDiv.classList.toggle("expanded");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

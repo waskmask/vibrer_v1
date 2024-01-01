@@ -44,3 +44,21 @@ function toPreHome(currentPath) {
     window.location.href = "/app/pre-home";
   }
 }
+
+function toReports(currentPath, currentLink) {
+  if (currentLink !== "allreports") {
+    window.location.href = "/app/reports";
+  }
+}
+
+function toActiveReports(currentPath, currentLink) {
+  if (currentPath !== "/reports" || currentLink !== "active") {
+    window.location.href = "/app/active-reports";
+  }
+}
+
+function youReported(currentPath, currentLink) {
+  if (currentPath !== "/reports" || currentLink !== "youreported") {
+    window.location.href = "/app/you-reported";
+  }
+}

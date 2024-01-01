@@ -66,4 +66,48 @@ router.get("/app/pre-home", function (req, res) {
   });
 });
 
+router.get("/app/report", function (req, res) {
+  res.render("app/report", {
+    title: "Report",
+    path: "/report",
+  });
+});
+
+router.get("/app/reports", function (req, res) {
+  res.render("app/reports", {
+    title: "Reports",
+    path: "/reports",
+    link: "allreports",
+  });
+});
+router.get("/app/active-reports", function (req, res) {
+  res.render("app/active-reports", {
+    title: "Reports",
+    path: "/reports",
+    link: "active",
+  });
+});
+router.get("/app/you-reported", function (req, res) {
+  res.render("app/you-reported", {
+    title: "You reported",
+    path: "/reports",
+    link: "youreported",
+  });
+});
+
+router.get("/app/report-view", function (req, res) {
+  res.render("app/report-view", {
+    title: "report ID",
+    path: "/reports",
+  });
+});
+
+// my profile
+router.get("/app/my-profile", function (req, res) {
+  res.render("app/my-profile", {
+    title: "My Profile",
+    path: "/my-profile",
+  });
+});
+
 module.exports = router;

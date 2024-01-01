@@ -133,6 +133,12 @@ a {
   color: $white !important;
 }
 
+.btn-xs {
+  height: auto;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
 .form-input {
   width: 100%;
   height: 45px;

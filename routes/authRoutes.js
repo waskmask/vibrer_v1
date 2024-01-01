@@ -10,7 +10,24 @@ router.get("/login", function (req, res) {
 });
 
 router.get("/forgot-password", function (req, res) {
-  res.render("forgotpass", { title: "Login", path: "/login" });
+  res.render("forgotpass", {
+    title: "Forgot password",
+    path: "/forgot-password",
+  });
+});
+
+router.get("/reset-password", function (req, res) {
+  res.render("reset-password", {
+    title: "Reset password",
+    path: "/reset-password",
+  });
+});
+
+router.get("/email-verified", function (req, res) {
+  res.render("email-verified", {
+    title: "Reset password",
+    path: "/reset-password",
+  });
 });
 
 module.exports = router;

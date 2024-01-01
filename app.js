@@ -50,6 +50,9 @@ app.use("/", authRoutes);
 app.use("/", profileRoutes);
 app.use("/", postApplicants);
 
+app.get("/register-email", (req, res) => {
+  res.render("email-templates/registration");
+});
 // app routes
 app.use("/", getRoutes);
 
