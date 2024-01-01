@@ -109,10 +109,12 @@
         <% if(isParticipated) { %>
         <div class="myContestCard mt-3 mb-3 shadow">
           <div class="flex-title">
-            <span>Vibrer Singing Contests</span>
+            <span><%- contestDetailsData.result.title %></span>
             <div class="status active">Active</div>
           </div>
-          <div class="text white">Ends in 22 days</div>
+          <div class="text white">
+            Ends in <%- contestDetailsData.result.endDays %> days
+          </div>
           <div class="text primary mt-2">Your submission</div>
           <div class="contestant">
             <div class="head">
@@ -124,8 +126,14 @@
                 height="264"
                 data-setup="{}"
               >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/mp4"
+                />
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/webm"
+                />
                 <p class="vjs-no-js">
                   To view this video please enable JavaScript, and consider
                   upgrading to a web browser that
@@ -142,28 +150,36 @@
               <div class="postStatus active">Active</div>
               <div class="votes">
                 <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
+                  <strong>Votes:</strong>
+                  <span><%- participatedParticipantData.votes.length %></span>
                 </div>
                 <div class="rank">
-                  <strong>Current Rank:</strong> <span>20 </span>
+                  <strong>Current Rank:</strong>
+                  <span><%- participatedParticipantData.rank %> </span>
                 </div>
               </div>
 
               <div class="cta">
                 <button
                   class="btn btn-outlined"
-                  onclick="confirmDelete('1234533444')"
+                  onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
                 >
                   Withdraw
                 </button>
                 <button
-                  class="btn btn-outlined"
+                  class="btn btn-outlined d-none"
                   data-toggle="_modal"
                   data-target="shareModal"
                 >
                   Share
                 </button>
-                <button class="btn btn-primary">Visit contest</button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  onclick="toPreHome('<%= path %>')"
+                >
+                  Visit contest
+                </button>
               </div>
             </div>
           </div>
@@ -186,7 +202,22 @@
             before submitting.
           </div>
 
-          <form class="form fborder" action="">
+          <form
+            class="form fborder"
+            action="javascript:void(0)"
+            method="POST"
+            id="mediaPostForm"
+            autocomplete="off"
+            enctype="multipart/form-data"
+          >
+            <div class="mb-3">
+              <input
+                type="hidden"
+                name="contest_id"
+                value="<%- contestDetailsData.result._id %>"
+                autocomplete="off"
+              />
+            </div>
             <div class="mb-3">
               <input
                 class="form-input"
@@ -200,7 +231,7 @@
               <input
                 class="form-input"
                 type="file"
-                name="media_file"
+                name="media_video"
                 id="media_file"
               />
               <div id="uploadProgress" class="progress-bar d-none">
@@ -218,8 +249,8 @@
                 height="264"
                 data-setup="{}"
               >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <!-- <source src="/uploads/inescapable.mp4" type="video/mp4" />
+              <source src="/uploads/inescapable.mp4" type="video/webm" /> -->
                 <p class="vjs-no-js">
                   To view this video please enable JavaScript, and consider
                   upgrading to a web browser that
@@ -237,126 +268,27 @@
                 <div class="placeholder">Genre *</div>
                 <div class="check-options">
                   <div class="check-list cs-scroll grid-2-sm">
+                    <% if (genreData && genreData.length > 0) {
+                    genreData.forEach(genre => { %>
                     <label class="checkbox-container">
-                      Pop
-                      <input type="checkbox" id="Pop" value="Pop" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Rock
-                      <input type="checkbox" id="Rock" value="Rock" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Jazz
-                      <input type="checkbox" id="Jazz" value="Jazz" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Blues
-                      <input type="checkbox" id="Blues" value="Blues" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Classical
-                      <input type="checkbox" id="Classical" value="Classical" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Country
-                      <input type="checkbox" id="Country" value="Country" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Reggae
-                      <input type="checkbox" id="Reggae" value="Reggae" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Hip Hop
-                      <input type="checkbox" id="HipHop" value="Hip Hop" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Heavy Metal
+                      <%= genre.name %>
                       <input
                         type="checkbox"
-                        id="HeavyMetal"
-                        value="Heavy Metal"
+                        value="<%= genre._id %>"
+                        data-value="<%= genre.name %>"
                       />
                       <span class="checkmark"></span>
                     </label>
-                    <label class="checkbox-container">
-                      Punk
-                      <input type="checkbox" id="Punk" value="Punk" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Electronic Dance Music
-                      <input
-                        type="checkbox"
-                        id="EDM"
-                        value="Electronic Dance Music"
-                      />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Rhythm and Blues
-                      <input
-                        type="checkbox"
-                        id="RandB"
-                        value="Rhythm and Blues"
-                      />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Soul
-                      <input type="checkbox" id="Soul" value="Soul" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Funk
-                      <input type="checkbox" id="Funk" value="Funk" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Folk
-                      <input type="checkbox" id="Folk" value="Folk" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Disco
-                      <input type="checkbox" id="Disco" value="Disco" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Latin
-                      <input type="checkbox" id="Latin" value="Latin" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Indie Rock
-                      <input
-                        type="checkbox"
-                        id="IndieRock"
-                        value="Indie Rock"
-                      />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Techno
-                      <input type="checkbox" id="Techno" value="Techno" />
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">
-                      Alternative Rock
-                      <input
-                        type="checkbox"
-                        id="AlternativeRock"
-                        value="Alternative Rock"
-                      />
-                      <span class="checkmark"></span>
-                    </label>
+                    <% }); } %>
+                  </div>
+                  <div class="mb-3">
+                    <input
+                      type="hidden"
+                      id="genres"
+                      name="genres"
+                      value=""
+                      autocomplete="off"
+                    />
                   </div>
                   <div class="divider w-100 mt-4"></div>
                   <div class="ccs-foter dfjcfe">
@@ -375,9 +307,14 @@
             <div class="mb-4">
               <div id="desc" style="height: auto; min-height: 100px"></div>
             </div>
-
+            <div class="error-message mt-3 d-none"></div>
+            <div class="success-message mt-3 d-none">
+              Your have posted as participate successfully.
+            </div>
             <div class="mb-3">
-              <button class="btn btn-primary">Submit</button>
+              <button class="btn btn-primary submitBtn" type="submit">
+                Submit
+              </button>
             </div>
           </form>
         </div>
@@ -392,8 +329,10 @@
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/public/js/_modal.js"></script>
     <script src="/public/js/check-select.js"></script>
+    <script src="/public/js/config.js"></script>
     <script>
       var players = [];
 
@@ -441,6 +380,9 @@
         .getElementById("media_file")
         .addEventListener("change", function (event) {
           // Display the progress bar
+          var fileInput = event.target;
+          var files = fileInput.files;
+
           var progressBar = document.getElementById("uploadProgress");
           var progressBarFill = progressBar.querySelector(".progress-bar-fill");
           progressBar.classList.remove("d-none");
@@ -457,9 +399,34 @@
               // Update the video source and display it
               var videoElement = document.querySelector(".video-preview video");
               var videoSource = videoElement.getElementsByTagName("source");
-              videoSource[0].src = "/uploads/your-uploaded-video.mp4"; // Static URL for demonstration
-              videoSource[1].src = "/uploads/your-uploaded-video.webm"; // Static URL for demonstration
-              videoElement.load();
+              if (files.length > 0) {
+                var file = files[0];
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  if (file.type === "video/mp4") {
+                    videoElement.innerHTML +=
+                      '<source src="' + e.target.result + '" type="video/mp4">';
+                  } else if (file.type === "video/webm") {
+                    videoElement.innerHTML +=
+                      '<source src="' +
+                      e.target.result +
+                      '" type="video/webm">';
+                  }
+                };
+
+                // Read the file as data URL
+                reader.readAsDataURL(file);
+
+                // videoSource[0].src = "/uploads/your-uploaded-video.mp4"; // Static URL for demonstration
+                // videoSource[1].src = "/uploads/your-uploaded-video.webm"; // Static URL for demonstration
+                videoElement.load();
+                videoElement.addEventListener("canplay", function () {
+                  videoElement.play();
+                });
+                videoElement.autoplay = true;
+                videoElement.controls = true;
+              }
 
               // Display the video player and title
               document
@@ -473,52 +440,174 @@
             }
           }, 200); // Adjust the interval time as needed
         });
-    </script>
-    <!-- <script>
-      document
-        .getElementById("media_file")
-        .addEventListener("change", function (event) {
-          var file = event.target.files[0];
-          var formData = new FormData();
-          formData.append("media_file", file);
 
-          // Display the progress bar
-          var progressBar = document.getElementById("uploadProgress");
-          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
-          progressBar.classList.remove("d-none");
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("mediaPostForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
 
-          // AJAX request to upload the file
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/path-to-upload-handler", true);
+        // Disable HTML5 validation
+        form.setAttribute("novalidate", "");
 
-          xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
-              var percentComplete = (event.loaded / event.total) * 100;
-              progressBarFill.style.width = percentComplete + "%";
-              progressBarFill.textContent = Math.round(percentComplete) + "%";
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Change button text to "Submitting..."
+          btn.textContent = "Submitting...";
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            formData.append("description", quill.getText());
+
+            const media_video = document.getElementById("media_file").files[0];
+
+            if (!media_video) {
+              isValid = false;
+              customErrors.media_video = "Please choose a video file";
+            } else if (!isValidVideoFile(media_video)) {
+              isValid = false;
+              customErrors.media_video =
+                "Please choose a valid video file (MP4 or WebM)";
             }
-          };
 
-          xhr.onload = function () {
-            if (xhr.status === 200) {
-              // Update the video source and display it
-              var videoElement = document.querySelector(".video-preview video");
-              var videoSource = videoElement.getElementsByTagName("source");
-              videoSource[0].src = xhr.responseText; // Assuming the response is the video URL
-              videoElement.load();
+            const genresInput = document.querySelector('[name="genres"]');
+            const genresArray = genresInput.value;
+            formData.append("genres", genresArray);
 
-              // Display the video player and title
-              document
-                .querySelector(".video-preview")
-                .classList.remove("d-none");
-              document.querySelector(".sub").classList.remove("d-none");
+            // Clear previous error alerts
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              // You can add your form submission logic here
+              const url = `${API_URL}add/MediaPost`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                      "appUserToken"
+                    )}`,
+                  },
+                  body: formData,
+                });
+
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    // Handle success
+                    successPop.style.display = "block";
+                    successPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      successPop.style.display = "none";
+                      window.location.href = window.location.href;
+                    }, 5000);
+                    form.reset();
+                  } else {
+                    // Handle API response with an error status
+                    errorPop.style.display = "block";
+                    if (responseData.error) {
+                      responseData.message = responseData.error;
+                    }
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  // Handle HTTP error
+                  errorPop.style.display = "block";
+                  if (responseData.error) {
+                    responseData.message = responseData.error;
+                  }
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                // Handle fetch error
+                console.error("An error occurred", err);
+                errorPop.style.display = "block";
+                errorPop.innerHTML =
+                  "An error occurred while submitting the form.";
+                setTimeout(() => {
+                  errorPop.style.display = "none";
+                }, 5000);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
             }
-            // Hide the progress bar
-            progressBar.classList.add("d-none");
-          };
 
-          xhr.send(formData);
+            // Reset the button text
+            btn.textContent = "Submit";
+          }, 1000); // 1-second delay
         });
-    </script> -->
+
+        function isValidVideoFile(file) {
+          const allowedTypes = ["video/mp4", "video/webm"];
+          return allowedTypes.includes(file.type);
+        }
+      });
+    </script>
+
+    <script>
+      async function confirmDelete(postId) {
+        try {
+          const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to withdraw from this contest? You'll lose your votes, and you won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#fb6580",
+            cancelButtonColor: "#4b5891",
+            confirmButtonText: "Yes, delete it!",
+          });
+
+          if (result.isConfirmed) {
+            const response = await fetch(
+              `${API_URL}remove/MediaPost/${postId}`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+              }
+            );
+
+            if (response.ok) {
+              await Swal.fire(
+                "Deleted!",
+                "Your post has been deleted.",
+                "success"
+              );
+              // Refresh page or update UI accordingly
+              window.location.reload();
+            } else {
+              await Swal.fire("Error!", "Something went wrong.", "error");
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire("Error!", "Something went wrong.", "error");
+        }
+      }
+    </script>
   </body>
 </html>

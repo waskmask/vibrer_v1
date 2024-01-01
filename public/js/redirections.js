@@ -33,9 +33,9 @@ function toMyContestFavs(currentLink) {
   }
 }
 
-function toPreMyContests(currentPath) {
+function toPreMyContests(currentPath, contest_id) {
   if (currentPath !== "/my-contests") {
-    window.location.href = "/app/pre-my-contests";
+    window.location.href = "/app/pre-participate/" + contest_id;
   }
 }
 

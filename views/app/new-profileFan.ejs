@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <style>
+      :root {
+        --dd-radius: 4px !important;
+        --dd-shadow: 0 0 2.5em rgba(0, 0, 0, 0.1);
+        --dd-overlay: rgba(0, 0, 0, 0.75);
+        --dd-background: #ffffff;
+        --dd-text1: #080813;
+        --dd-text2: #ffffff;
+        --dd-primary: #f32377;
+        --dd-gradient: linear-gradient(45deg, #fb6580, #f32377) !important;
+        --dd-monthBackground: var(--dd-gradient);
+        --dd-monthText: var(--dd-text2);
+        --dd-monthBorder: transparent;
+        --dd-confirmButtonBackground: var(--dd-gradient);
+        --dd-confirmButtonText: var(--dd-text2);
+        --dd-selectedBackground: var(--dd-gradient);
+        --dd-selectedText: var(--dd-text2);
+      }
+      .dd__dropdown:not(.dd-inline).dd-shown {
+        transform: translateY(-5%) translateX(-50%) !important;
+      }
+    </style>
+  </head>
+
+  <body class="body-dark">
+    <!-- Loader -->
+    <%- include('../partials/loader'); %>
+    <main>
+      <section class="edit-profile layout">
+        <div class="profile_wrapper">
+          <div class="logo">
+            <img src="/public/images/vibrer_light_logo.svg" alt="Logo" />
+          </div>
+
+          <form
+            class="form"
+            id="stepForm"
+            action="javascript:void(0)"
+            method="post"
+            autocomplete="off"
+          >
+            <!-- Step 1 -->
+            <div class="step step-1">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title">Personal Info</div>
+                <div class="sub">Add your information</div>
+              </div>
+              <div class="grid-2-sm">
+                <div>
+                  <input
+                    type="text"
+                    id="fname"
+                    placeholder="First name *"
+                    name="first_name"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    id="lname"
+                    placeholder="Last name *"
+                    name="last_name"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+                <div class="genderInputWrapper">
+                  <div class="custom-select dfac" id="gender-opt">
+                    <div class="placeholder">Gender *</div>
+                    <div class="options">
+                      <div class="option" value="Male">Male</div>
+                      <div class="option" value="Female">Female</div>
+                    </div>
+                    <input
+                      type="hidden"
+                      name="gender"
+                      value=""
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+                <div id="dateInputWrapper">
+                  <div class="date-input w-100">
+                    <input
+                      type="date"
+                      name="date_of_birth"
+                      id="dob"
+                      placeholder="Date of Birth *"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    autocomplete="off"
+                    placeholder="City *"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="country"
+                    placeholder="Country *"
+                    name="country"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="dfjcfe ac g-3 mt-4">
+                <button
+                  type="button"
+                  data-action="next"
+                  class="btn btn-primary next-btn"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+
+            <div class="step step-2">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title">Profile Media</div>
+                <div class="sub">Complete your profile</div>
+              </div>
+              <div class="avatar-upload">
+                <input type="file" id="avatar" autocomplete="off" />
+              </div>
+              <input
+                type="hidden"
+                name="profile_img"
+                id="profile_img"
+                value=""
+              />
+              <div class="small text-center mt-1 mb-4">
+                Choose profile photo
+              </div>
+              <div class="cover-upload">
+                <div class="cover-holder">
+                  <div class="label mb-0">
+                    Add a cover photo <span>Upload</span>
+                  </div>
+                </div>
+                <input type="file" id="coverImg" autocomplete="off" />
+              </div>
+              <input
+                type="hidden"
+                name="profile_cover"
+                id="profile_cover"
+                value=""
+              />
+              <div class="small mt-1">
+                To optimally fit, use an image of 800x300 pixels.
+              </div>
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary next-btn"
+                  data-action="next"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step step-3">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title">Profile Info</div>
+                <div class="sub">Complete final step</div>
+              </div>
+
+              <div class="mb-4">
+                <div id="bio" style="height: auto; min-height: 100px"></div>
+              </div>
+
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="YouTube"
+                  autocomplete="off"
+                  name="youtube"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="Instagram"
+                  autocomplete="off"
+                  name="instagram"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="Facebook"
+                  autocomplete="off"
+                  name="facebook"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="Twitter"
+                  autocomplete="off"
+                  name="twitter"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="Website"
+                  autocomplete="off"
+                  name="website"
+                />
+              </div>
+              <div class="error-message mt-3 d-none"></div>
+              <div class="success-message mt-3 d-none"></div>
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  Back
+                </button>
+                <button type="submit" class="btn btn-primary next-btn">
+                  Finish
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="/public/js/select.js"></script>
+    <script src="/public/js/check-select.js"></script>
+    <script src="/public/plugins/datedropper/datedropper-javascript.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="/public/js/config.js"></script>
+    <script>
+      function toForgotPass() {
+        window.location.href = "/forgot-password";
+      }
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        function initCoverUpload(coverUpload) {
+          const coverHolder = coverUpload.querySelector(".cover-holder");
+          const fileInput = coverUpload.querySelector('input[type="file"]');
+          const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.heic|\.heif)$/i;
+
+          coverHolder.addEventListener("click", function () {
+            fileInput.click();
+          });
+
+          fileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!allowedExtensions.exec(file.name)) {
+              const alertDiv = document.createElement("div");
+              alertDiv.classList.add("form-alert");
+              alertDiv.classList.add("error");
+              alertDiv.classList.add("text-center");
+              alertDiv.classList.add("mb-2");
+              alertDiv.textContent =
+                "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
+              coverUpload.parentNode.insertBefore(alertDiv, coverUpload);
+              return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              coverHolder.innerHTML = '<div class="loader">Loading...</div>';
+              setTimeout(function () {
+                coverHolder.style.backgroundImage = `url(${e.target.result})`;
+                coverHolder.innerHTML =
+                  '<div class="label mb-0">Add a cover photo <span>Change</span></div>';
+                // Assuming apiUrl is the endpoint for cover photo upload
+                uploadCoverPhotoToServer(file);
+              }, 1000); // simulate loading time for the image
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+
+        function uploadCoverPhotoToServer(file) {
+          const apiUrl = `${API_URL}upload/profile-cover-image`;
+          const formData = new FormData();
+          formData.append("profile_cover_image", file);
+
+          fetch(apiUrl, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 1) {
+                const coverImage = data.result;
+                document.getElementById("profile_cover").value = coverImage;
+              }
+            })
+            .catch((error) => {
+              console.error("Error uploading cover photo:", error);
+            });
+        }
+
+        const coverUploads = document.querySelectorAll(".cover-upload");
+        coverUploads.forEach((coverUpload) => {
+          initCoverUpload(coverUpload);
+        });
+      });
+    </script>
+    <script>
+      (function () {
+        const avatarUpload = document.querySelector(".avatar-upload");
+
+        const allowedExtensions = ["jpg", "jpeg", "png", "gif", "heic", "heif"];
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+
+        const avatarError = document.createElement("div");
+        avatarError.classList.add(
+          "form-alerts",
+          "error",
+          "text-center",
+          "mb-2"
+        );
+        avatarUpload.parentNode.insertBefore(avatarError, avatarUpload);
+
+        const avatarHolder = document.createElement("div");
+        avatarHolder.classList.add("avatar-holder");
+
+        const avatarPreview = document.createElement("img");
+        avatarPreview.src = "/public/images/icons/camera.svg";
+        avatarPreview.alt = "Avatar";
+        avatarPreview.id = "avatarPreview";
+        avatarHolder.appendChild(avatarPreview);
+
+        const changeAvatar = document.createElement("div");
+        changeAvatar.classList.add("change-avatar");
+        changeAvatar.innerText = "...";
+        avatarHolder.appendChild(changeAvatar);
+
+        avatarUpload.appendChild(avatarHolder);
+
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.id = "avatar";
+        avatarUpload.appendChild(fileInput);
+
+        const loader = document.createElement("div");
+        loader.classList.add("loader");
+        loader.style.display = "none";
+        loader.innerText = "Loading...";
+        avatarHolder.appendChild(loader);
+
+        avatarHolder.addEventListener("click", function () {
+          fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function () {
+          const file = this.files[0];
+          if (file) {
+            const fileExtension = file.name.split(".").pop().toLowerCase();
+            if (
+              !file.type.startsWith("image/") ||
+              !allowedExtensions.includes(fileExtension)
+            ) {
+              avatarError.innerHTML =
+                "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
+              return;
+            }
+
+            avatarError.innerHTML = "";
+
+            const reader = new FileReader();
+
+            // Show loader and hide preview when reading starts
+            loader.style.display = "block";
+            avatarPreview.style.display = "none";
+
+            reader.onloadend = function () {
+              // Hide loader when reading ends
+              loader.style.display = "none";
+
+              avatarHolder.style.backgroundImage =
+                'url("' + reader.result + '")';
+              changeAvatar.style.display = "block";
+
+              // Upload the image to the server
+              uploadImageToServer(file);
+            };
+
+            reader.readAsDataURL(file);
+          }
+        });
+
+        function uploadImageToServer(file) {
+          const formData = new FormData();
+          formData.append("profile_cover_image", file);
+
+          fetch(apiUrl, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 1) {
+                const profileImage = data.result;
+                document.getElementById("profile_img").value = profileImage;
+              }
+            })
+            .catch((error) => {
+              console.error("Error uploading image:", error);
+            });
+        }
+      })();
+    </script>
+
+    <script>
+      //   date
+
+      function calculateMaxYear() {
+        const currentDate = new Date();
+        const maxYear = currentDate.getFullYear() - 14;
+        return maxYear;
+      }
+
+      const maxYear = calculateMaxYear();
+
+      new dateDropper({
+        selector: "#dob",
+        format: "y-mm-dd",
+        lang: "en",
+        showArrowsOnHover: true,
+        overlay: false,
+        expandable: false,
+        expandedOnly: false,
+        doubleView: false,
+        startFromMonday: false,
+        maxYear: maxYear.toString(),
+        minYear: "1900",
+        // jump: "10",
+        range: false,
+      });
+
+      var quill = new Quill("#bio", {
+        modules: {
+          toolbar: false, // This hides the toolbar
+        },
+        placeholder: "Bio *",
+        theme: "snow",
+      });
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        // Get all steps, buttons, and inputs
+        const steps = Array.from(document.querySelectorAll(".step"));
+        const nextButtons = Array.from(
+          document.querySelectorAll('button[data-action="next"]')
+        );
+        const backButtons = Array.from(
+          document.querySelectorAll('button[data-action="back"]')
+        );
+        const requiredInputs = Array.from(
+          document.querySelectorAll("input[required], select[required]")
+        );
+
+        // Initialize steps
+        steps.forEach((step, index) => {
+          step.style.display = index === 0 ? "block" : "none";
+        });
+
+        // Next button functionality
+        nextButtons.forEach((button, index) => {
+          button.addEventListener("click", () => {
+            const currentStep = steps[index];
+            if (checkRequiredInputs(currentStep)) {
+              currentStep.style.display = "none";
+              steps[index + 1].style.display = "block";
+            }
+          });
+        });
+
+        // Back button functionality
+        backButtons.forEach((button, index) => {
+          button.addEventListener("click", () => {
+            steps[index + 1].style.display = "none";
+            steps[index].style.display = "block";
+          });
+        });
+
+        // Hide error message when user starts typing/selecting
+        requiredInputs.forEach((input) => {
+          input.addEventListener("input", () => {
+            clearError(input);
+          });
+        });
+
+        // Check required inputs in a step
+        function checkRequiredInputs(step) {
+          let allValid = true;
+          const stepRequiredInputs = Array.from(
+            step.querySelectorAll("input[required], select[required]")
+          );
+
+          stepRequiredInputs.forEach((input) => {
+            let wrapper = input.closest(
+              ".genderInputWrapper, #dateInputWrapper"
+            );
+            let errorDiv = wrapper
+              ? wrapper.querySelector(".form-alert")
+              : input.nextElementSibling;
+
+            if (!errorDiv) {
+              errorDiv = document.createElement("div");
+              errorDiv.classList.add("form-alert");
+              if (wrapper) {
+                wrapper.appendChild(errorDiv);
+              } else {
+                input.insertAdjacentElement("afterend", errorDiv);
+              }
+            }
+
+            if (input.value.trim() === "") {
+              errorDiv.textContent = "This field is required";
+              errorDiv.classList.add("error");
+              allValid = false;
+            } else {
+              errorDiv.textContent = "";
+              errorDiv.classList.remove("error");
+            }
+          });
+
+          return allValid;
+        }
+        // Stop form from being submitted normally
+        document
+          .querySelector("#stepForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const errorPop = document.querySelector(".error-message");
+            const successPop = document.querySelector(".success-message");
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Convert FormData to JSON
+            const formDataJSON = {};
+            formData.forEach((value, key) => {
+              formDataJSON[key] = value.trim(); // Trim each value
+            });
+
+            formDataJSON.bio = quill.getText();
+
+            const url = `${API_URL}update/appUser`;
+
+            try {
+              const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+                body: JSON.stringify(formDataJSON),
+              });
+
+              const responseData = await response.json();
+              if (response.status === 201 || response.status === 200) {
+                if (responseData.status === 1) {
+                  // Handle success
+                  successPop.style.display = "block";
+                  successPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    successPop.style.display = "none";
+                    window.location.href = "/app/pre-home";
+                  }, 5000);
+                  form.reset();
+                } else {
+                  // Handle API response with an error status
+                  errorPop.style.display = "block";
+                  if (responseData.error) {
+                    responseData.message = responseData.error;
+                  }
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } else {
+                // Handle HTTP error
+                errorPop.style.display = "block";
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+                errorPop.innerHTML = responseData.message;
+                setTimeout(() => {
+                  errorPop.style.display = "none";
+                }, 5000);
+              }
+            } catch (err) {
+              // Handle fetch error
+              console.error("An error occurred", err);
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

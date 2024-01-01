@@ -52,7 +52,7 @@
 
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
-              onclick="toPreMyContests('<%= path %>')"
+              onclick="toPreMyContests('<%= path %>', '<%= onGoingContestsData.result._id %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
@@ -77,20 +77,27 @@
               <div class="_profile">
                 <img src="/public/images/singer.png" alt="avatar" />
                 <div class="name">
-                  <span>Nathan Steve</span>
+                  <span
+                    ><%- profileData.name.first_name %><%-
+                    profileData.name.last_name %></span
+                  >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@nathan_steve</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
                 <ul>
                   <li>
-                    <a href="">
+                    <a href="javascript:void(0)" onclick="logoutAppUser();">
                       <img src="/public/images/icons/log-off.svg" alt="Icon" />
                       <span>Logout</span>
                     </a>
@@ -113,8 +120,14 @@
                 <img src="/public/images/mod_light.svg" alt="Logo" />
                 <div>MOD presents</div>
               </div>
-              <div class="title">Vibrer Singing Contest</div>
-              <div class="sub">216 Participants • Ends in 45 days</div>
+              <div class="title"><%- onGoingContestsData.result.title %></div>
+              <div class="sub">
+                <%- onGoingContestsData.result.participates.length %>
+                Participants • <% if (onGoingContestsData.result.endDays > 0) {
+                %> Ends in <%= onGoingContestsData.result.endDays %> days <% }
+                else { %> Over <%= Math.abs(onGoingContestsData.result.endDays)
+                %> days before <% } %>
+              </div>
             </div>
             <div class="cta">
               <button
@@ -126,7 +139,7 @@
               </button>
               <button
                 class="btn btn-primary"
-                onclick="toPreMyContests('<% path %>')"
+                onclick="toPreMyContests('<%= path %>','<%- onGoingContestsData.result._id %>')"
               >
                 <% if (isParticipated) { %> View my Post <% } else { %>
                 Participate <% } %>
@@ -281,5 +294,32 @@
           xhr.send(formData);
         });
     </script> -->
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
+      }
+    </script>
   </body>
 </html>
