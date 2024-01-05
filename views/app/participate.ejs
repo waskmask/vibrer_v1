@@ -33,8 +33,87 @@
 
       <!-- main body of the app -->
       <div class="app_main">
+        <% if(isParticipated) { %>
+        <div class="myContestCard mt-3 mb-3 shadow">
+          <div class="flex-title">
+            <span><%- contestDetailsData.result.title %></span>
+            <div class="status active">Active</div>
+          </div>
+          <div class="text white">
+            Ends in <%- contestDetailsData.result.endDays %> days
+          </div>
+          <div class="text primary mt-2">Your submission</div>
+          <div class="contestant">
+            <div class="head">
+              <video
+                controls
+                class="video-js"
+                preload="auto"
+                width="640"
+                height="264"
+                data-setup="{}"
+              >
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/mp4"
+                />
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/webm"
+                />
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider
+                  upgrading to a web browser that
+                  <a
+                    href="https://videojs.com/html5-video-support/"
+                    target="_blank"
+                    >supports HTML5 video</a
+                  >
+                </p>
+              </video>
+            </div>
+            <div class="body">
+              <!-- inactive | active | review -->
+              <div class="postStatus active">Active</div>
+              <div class="votes">
+                <div class="count">
+                  <strong>Votes:</strong>
+                  <span><%- participatedParticipantData.votes.length %></span>
+                </div>
+                <div class="rank">
+                  <strong>Current Rank:</strong>
+                  <span><%- participatedParticipantData.rank %> </span>
+                </div>
+              </div>
+
+              <div class="cta">
+                <button
+                  class="btn btn-outlined"
+                  onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
+                >
+                  Withdraw
+                </button>
+                <button
+                  class="btn btn-outlined d-none"
+                  data-toggle="_modal"
+                  data-target="shareModal"
+                >
+                  Share
+                </button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  onclick="toPreHome('<%= path %>')"
+                >
+                  Visit contest
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } else { %>
         <div class="title mb-3">
-          Enter the <%- contestDetailData.result.title %> Now!
+          Enter the <%- contestDetailsData.result.title %> Now!
         </div>
 
         <div class="app_form_container shadow">
@@ -64,7 +143,7 @@
               <input
                 type="hidden"
                 name="contest_id"
-                value="<%- contestDetailData.result._id %>"
+                value="<%- contestDetailsData.result._id %>"
                 autocomplete="off"
               />
             </div>
@@ -168,6 +247,7 @@
             </div>
           </form>
         </div>
+        <% } %>
       </div>
       <!-- right side section of the app -->
       <div class="app_right cs-scroll">
@@ -252,6 +332,7 @@
     <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/public/js/_modal.js"></script>
     <script src="/public/js/check-select.js"></script>
     <script src="/public/js/config.js"></script>
@@ -485,6 +566,50 @@
           return allowedTypes.includes(file.type);
         }
       });
+    </script>
+    <script>
+      async function confirmDelete(postId) {
+        try {
+          const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "Do you want to withdraw from this contest? You'll lose your votes, and you won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#fb6580",
+            cancelButtonColor: "#4b5891",
+            confirmButtonText: "Yes, delete it!",
+          });
+
+          if (result.isConfirmed) {
+            const response = await fetch(
+              `${API_URL}remove/MediaPost/${postId}`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+              }
+            );
+
+            if (response.ok) {
+              await Swal.fire(
+                "Deleted!",
+                "Your post has been deleted.",
+                "success"
+              );
+              // Refresh page or update UI accordingly
+              window.location.reload();
+            } else {
+              await Swal.fire("Error!", "Something went wrong.", "error");
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire("Error!", "Something went wrong.", "error");
+        }
+      }
     </script>
   </body>
 </html>

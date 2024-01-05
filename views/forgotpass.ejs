@@ -136,7 +136,7 @@
             prevAlerts.forEach((alert) => alert.remove());
 
             if (isValid) {
-              const url = `${API_URL}user-artist/forgot-password`;
+              const url = `${API_URL}appUser/forgot-password`;
               try {
                 const response = await fetch(url, {
                   method: "POST",

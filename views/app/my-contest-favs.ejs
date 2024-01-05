@@ -50,16 +50,36 @@
             Favorites
           </div>
         </div>
-
+        <% if (favouritesData.result && favouritesData.result.length > 0) {
+        favouritesData.result.forEach(favouritesData => { %>
         <div class="myContestCard mt-3 mb-3 shadow">
           <div class="flex-title">
-            <span>Vibrer Singing Contests</span>
+            <span><%- favouritesData.contest_details.title %></span>
             <div class="status active">Active</div>
           </div>
-          <div class="text white mb-3">Ends in 22 days</div>
-
+          <div class="text white mb-3">
+            <% if (favouritesData.contest_details.endDays > 0) { %> Ends in <%=
+            favouritesData.contest_details.endDays %> days <% } else { %> Over
+            <%= Math.abs(favouritesData.contest_details.endDays) %> days before
+            <% } %>
+          </div>
+          <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+          "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20) %
+          10] || suffixes[v] || suffixes[0]); }; if (favouritesData.participants
+          && favouritesData.participants.length > 0) { let c = 0; let
+          alreadyVoted = ""; favouritesData.participants.forEach(participants =>
+          { c++; %>
           <div class="contestant mb-3">
             <div class="head">
+              <div
+                class="yourVote<%- favouritesData.contest_id %>"
+                id="yourVote<%- favouritesData.contest_id %><%- participants.user_id._id %>"
+              >
+                <% if(participants.is_voted){ alreadyVoted =
+                participants.user_id._id; %>
+                <div class="yourVote">You voted</div>
+                <% } %>
+              </div>
               <video
                 controls
                 class="video-js"
@@ -68,8 +88,7 @@
                 height="264"
                 data-setup="{}"
               >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <source src="<%- participants.media %>" type="video/mp4" />
                 <p class="vjs-no-js">
                   To view this video please enable JavaScript, and consider
                   upgrading to a web browser that
@@ -81,6 +100,11 @@
                 </p>
               </video>
               <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              <input
+                type="hidden"
+                id="alreadyVoted<%- favouritesData.contest_id %>"
+                value="<%- alreadyVoted %>"
+              />
             </div>
             <div class="body">
               <div class="top">
@@ -94,30 +118,53 @@
                   </div>
                   <div class="info">
                     <div class="title">
-                      <span>Jessica Hub</span>
+                      <span
+                        ><%- participants.user_id.name.first_name %> <%-
+                        participants.user_id.name.last_name %></span
+                      >
+                      <% if(participants.user_id.verified){ %>
                       <img
                         src="/public/images/icons/verified-badge.svg"
                         alt="Badge"
                       />
+                      <% } %>
                     </div>
-                    <div class="uname">@jhub</div>
+                    <div class="uname">
+                      @<%- participants.user_id.username %>
+                    </div>
                   </div>
                 </div>
 
                 <div class="addToFav">
-                  <img
-                    src="/public/images/icons/bookmark1.svg"
-                    alt="Bookmark"
-                  />
+                  <a
+                    href="javascript:void(0)"
+                    id="favouriteBtn<%- favouritesData.contest_id %><%- participants.user_id._id %>"
+                    onclick="addParticipateToFavourite('<%- favouritesData.contest_id %>', '<%- participants.user_id._id %>');"
+                  >
+                    <img
+                      src="/public/images/icons/bookmark1.svg"
+                      alt="Bookmark"
+                      id="favouriteIcon<%- favouritesData.contest_id %><%- participants.user_id._id %>"
+                    />
+                  </a>
                 </div>
               </div>
 
               <div class="votes">
                 <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
+                  <strong>Votes:</strong>
+                  <span
+                    id="countVotes<%- favouritesData.contest_id %><%- participants.user_id._id %>"
+                    ><%- participants.votes.length %></span
+                  >
                 </div>
                 <div class="rank">
-                  <strong>Current Rank:</strong> <span>20 </span>
+                  <strong>Current Rank:</strong>
+                  <span
+                    ><%- participants.rank %><sup
+                      ><%- getOrdinalSuffix(participants.rank) %></sup
+                    ></span
+                  >
                 </div>
               </div>
 
@@ -130,306 +177,20 @@
                   Visit artist
                 </button>
                 <button
-                  class="btn btn-primary"
-                  data-target="accountModal"
-                  data-toggle="_modal"
+                  class="btn btn-primary submitVoteBtn<%- favouritesData.contest_id %>"
+                  type="button"
+                  id="submitVoteBtn<%- favouritesData.contest_id %><%- participants.user_id._id %>"
+                  onclick="addParticipateVote('<%- participants.user_id._id %>','<%- favouritesData.contest_id %>');"
                 >
-                  Vote now
+                  <% if(participants.is_voted){ %>Remove vote<% } else { %> Vote
+                  now <% } %>
                 </button>
               </div>
             </div>
           </div>
-
-          <!-- You voted -->
-          <div class="contestant mb-3">
-            <div class="head">
-              <div class="yourVote">You voted</div>
-              <video
-                controls
-                class="video-js"
-                preload="auto"
-                width="640"
-                height="264"
-                data-setup="{}"
-              >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider
-                  upgrading to a web browser that
-                  <a
-                    href="https://videojs.com/html5-video-support/"
-                    target="_blank"
-                    >supports HTML5 video</a
-                  >
-                </p>
-              </video>
-            </div>
-            <div class="body">
-              <div class="top">
-                <div class="user">
-                  <div class="img">
-                    <img src="/public/images/listening-to.jpg" alt="avatar" />
-                  </div>
-                  <div class="info">
-                    <div class="title">
-                      <span>Jessica Hub</span>
-                      <img
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Badge"
-                      />
-                    </div>
-                    <div class="uname">@jhub</div>
-                  </div>
-                </div>
-
-                <div class="addToFav">
-                  <img
-                    src="/public/images/icons/bookmark1.svg"
-                    alt="Bookmark"
-                  />
-                </div>
-              </div>
-
-              <div class="votes">
-                <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
-                </div>
-                <div class="rank">
-                  <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
-                </div>
-              </div>
-
-              <div class="cta">
-                <button class="btn btn-outlined">Visit artist</button>
-                <button class="btn btn-primary">Remove vote</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="contestant mb-3">
-            <div class="head">
-              <video
-                controls
-                class="video-js"
-                preload="auto"
-                width="640"
-                height="264"
-                data-setup="{}"
-              >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider
-                  upgrading to a web browser that
-                  <a
-                    href="https://videojs.com/html5-video-support/"
-                    target="_blank"
-                    >supports HTML5 video</a
-                  >
-                </p>
-              </video>
-              <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
-            </div>
-            <div class="body">
-              <div class="top">
-                <div class="user">
-                  <div class="img">
-                    <img src="/public/images/listening-to.jpg" alt="avatar" />
-                  </div>
-                  <div class="info">
-                    <div class="title">
-                      <span>Jessica Hub</span>
-                      <img
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Badge"
-                      />
-                    </div>
-                    <div class="uname">@jhub</div>
-                  </div>
-                </div>
-
-                <div class="addToFav">
-                  <img
-                    src="/public/images/icons/bookmark1.svg"
-                    alt="Bookmark"
-                  />
-                </div>
-              </div>
-
-              <div class="votes">
-                <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
-                </div>
-                <div class="rank">
-                  <strong>Current Rank:</strong> <span>51</span>
-                </div>
-              </div>
-
-              <div class="cta">
-                <button class="btn btn-outlined">Visit artist</button>
-                <button class="btn btn-primary">Vote now</button>
-              </div>
-            </div>
-          </div>
+          <% }); } %>
         </div>
-
-        <div class="myContestCard mt-3 mb-3 shadow">
-          <div class="flex-title">
-            <span>Vibrer Singing Contests</span>
-            <div class="status active">Active</div>
-          </div>
-          <div class="text white mb-3">Ends in 22 days</div>
-
-          <div class="contestant mb-3">
-            <div class="head">
-              <video
-                controls
-                class="video-js"
-                preload="auto"
-                width="640"
-                height="264"
-                data-setup="{}"
-              >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider
-                  upgrading to a web browser that
-                  <a
-                    href="https://videojs.com/html5-video-support/"
-                    target="_blank"
-                    >supports HTML5 video</a
-                  >
-                </p>
-              </video>
-              <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
-            </div>
-            <div class="body">
-              <div class="top">
-                <div
-                  class="user"
-                  data-target="accountModal"
-                  data-toggle="_modal"
-                >
-                  <div class="img">
-                    <img src="/public/images/listening-to.jpg" alt="avatar" />
-                  </div>
-                  <div class="info">
-                    <div class="title">
-                      <span>Jessica Hub</span>
-                      <img
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Badge"
-                      />
-                    </div>
-                    <div class="uname">@jhub</div>
-                  </div>
-                </div>
-
-                <div class="addToFav">
-                  <img
-                    src="/public/images/icons/bookmark1.svg"
-                    alt="Bookmark"
-                  />
-                </div>
-              </div>
-
-              <div class="votes">
-                <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
-                </div>
-                <div class="rank">
-                  <strong>Current Rank:</strong> <span>20 </span>
-                </div>
-              </div>
-
-              <div class="cta">
-                <button
-                  class="btn btn-outlined"
-                  data-target="accountModal"
-                  data-toggle="_modal"
-                >
-                  Visit artist
-                </button>
-                <button
-                  class="btn btn-primary"
-                  data-target="accountModal"
-                  data-toggle="_modal"
-                >
-                  Vote now
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- You voted -->
-          <div class="contestant mb-3">
-            <div class="head">
-              <div class="yourVote">You voted</div>
-              <video
-                controls
-                class="video-js"
-                preload="auto"
-                width="640"
-                height="264"
-                data-setup="{}"
-              >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider
-                  upgrading to a web browser that
-                  <a
-                    href="https://videojs.com/html5-video-support/"
-                    target="_blank"
-                    >supports HTML5 video</a
-                  >
-                </p>
-              </video>
-            </div>
-            <div class="body">
-              <div class="top">
-                <div class="user">
-                  <div class="img">
-                    <img src="/public/images/listening-to.jpg" alt="avatar" />
-                  </div>
-                  <div class="info">
-                    <div class="title">
-                      <span>Jessica Hub</span>
-                      <img
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Badge"
-                      />
-                    </div>
-                    <div class="uname">@jhub</div>
-                  </div>
-                </div>
-
-                <div class="addToFav">
-                  <img
-                    src="/public/images/icons/bookmark1.svg"
-                    alt="Bookmark"
-                  />
-                </div>
-              </div>
-
-              <div class="votes">
-                <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
-                </div>
-                <div class="rank">
-                  <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
-                </div>
-              </div>
-
-              <div class="cta">
-                <button class="btn btn-outlined">Visit artist</button>
-                <button class="btn btn-primary">Remove vote</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <% }); } %>
 
         <!-- app main end -->
       </div>
@@ -516,6 +277,7 @@
     <script src="/public/js/_modal.js"></script>
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="/public/js/config.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -618,6 +380,154 @@
             player.pause();
           }
         });
+      }
+
+      async function addParticipateVote(participate_id, contest_id) {
+        const submitBtn = document.getElementById(
+          "submitVoteBtn" + contest_id + participate_id + ""
+        );
+        const voteBtn = document.getElementById(
+          "yourVote" + contest_id + participate_id + ""
+        );
+
+        const submitBtnAll = document.getElementsByClassName(
+          "submitVoteBtn" + contest_id + ""
+        );
+        const voteBtnAll = document.getElementsByClassName(
+          "yourVote" + contest_id + ""
+        );
+        let countVotes = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        ).innerHTML;
+        let countVotesElement = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        );
+        const alreadyVoted = document.getElementById(
+          "alreadyVoted" + contest_id + ""
+        ).value;
+
+        submitBtn.textContent = "Loading...";
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}add/contestParticipateVote`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  Array.from(submitBtnAll).forEach((btn) => {
+                    btn.innerHTML = "Vote now";
+                  });
+
+                  Array.from(voteBtnAll).forEach((btn) => {
+                    btn.innerHTML = "";
+                  });
+                  if (alreadyVoted !== "") {
+                    let countVotesAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    ).innerHTML;
+                    let countVotesElementAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    );
+                    countVotesAlready = +countVotesAlready - 1;
+                    countVotesElementAlready.innerHTML = countVotesAlready;
+                  }
+
+                  submitBtn.innerHTML = "Remove vote";
+                  voteBtn.innerHTML = `<div class="yourVote">You voted</div>`;
+                  countVotes = +countVotes + 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = participate_id;
+                } else {
+                  submitBtn.innerHTML = "Vote now";
+                  voteBtn.innerHTML = "";
+                  countVotes = +countVotes - 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = "";
+                }
+                countVotesElement.innerHTML = countVotes;
+              } else {
+              }
+            } else {
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          }
+          // submitBtn.textContent = "Vote now";
+        }, 1000);
+      }
+
+      //   Add to favourite
+
+      async function addParticipateToFavourite(contest_id, participate_id) {
+        const favouriteIcon = document.getElementById(
+          "favouriteIcon" + contest_id + participate_id + ""
+        );
+        const favouriteBtn = document.getElementById(
+          "favouriteBtn" + contest_id + participate_id + ""
+        );
+
+        // Disable the button
+        favouriteBtn.disabled = true;
+
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}addContestParticipantToFavourite`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  favouriteIcon.src = "/public/images/icons/bookmark1.svg";
+                } else {
+                  favouriteIcon.src = "/public/images/icons/bookmark.svg";
+                }
+              } else {
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+              }
+            } else {
+              errorPop.style.display = "block";
+              if (responseData.error) {
+                responseData.message = responseData.error;
+              }
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          } finally {
+            // Enable the button after the API call is complete
+            favouriteBtn.disabled = false;
+          }
+        }, 1000);
       }
     </script>
   </body>
