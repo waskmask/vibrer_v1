@@ -24,9 +24,13 @@ router.get("/forgot-password", function (req, res) {
 });
 
 router.get("/reset-password", function (req, res) {
-  res.render("reset-password", {
+  if (!req.query.token) {
+    return res.redirect("/login");
+  }
+  return res.render("reset-password", {
     title: "Reset password",
     path: "/reset-password",
+    token: req.query.token,
   });
 });
 

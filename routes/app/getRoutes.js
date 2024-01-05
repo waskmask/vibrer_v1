@@ -69,6 +69,68 @@ router.get("/app/contest-view/:id", async function (req, res) {
     return res.redirect("/login");
   }
 
+  const profileResponse = await axios.get(
+    `${process.env.API_URL}getappUserProfile`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.appUserToken}`,
+      },
+    }
+  );
+
+  const profileData = profileResponse.data.result;
+  const userId = profileData._id;
+
+  const contestDetailResponse = await axios.get(
+    `${process.env.API_URL}contest-details/${contest_id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.appUserToken}`,
+      },
+    }
+  );
+  const contestDetailData = contestDetailResponse.data;
+  let isParticipated = false;
+
+  if (contestDetailData.result.participates) {
+    const userIdExists = contestDetailData.result.participates.some(
+      (participant) => participant.user._id === userId
+    );
+
+    if (userIdExists) {
+      isParticipated = true;
+    }
+  }
+  if (contestDetailData.status === 0) {
+    return res.redirect("/app/home");
+  }
+
+  res.render("app/contest-view", {
+    title: "Contests",
+    path: "/contests",
+    contestDetailData: contestDetailData,
+    isParticipated,
+  });
+});
+
+router.get("/app/participate/:id", async function (req, res) {
+  const contest_id = req.params.id;
+  if (!req.session.appUserToken) {
+    return res.redirect("/login");
+  }
+
+  const profileResponse = await axios.get(
+    `${process.env.API_URL}getappUserProfile`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.appUserToken}`,
+      },
+    }
+  );
+
+  const profileData = profileResponse.data.result;
+  const userId = profileData._id;
+
   const contestDetailResponse = await axios.get(
     `${process.env.API_URL}contest-details/${contest_id}`,
     {
@@ -82,37 +144,40 @@ router.get("/app/contest-view/:id", async function (req, res) {
     return res.redirect("/app/home");
   }
 
-  res.render("app/contest-view", {
-    title: "Contests",
-    path: "/contests",
-    contestDetailData: contestDetailData,
-  });
-});
-
-router.get("/app/participate/:id", async function (req, res) {
-  const contest_id = req.params.id;
-  if (!req.session.appUserToken) {
-    return res.redirect("/login");
-  }
-
-  const contestDetailResponse = await axios.get(
-    `${process.env.API_URL}contest/${contest_id}`
-  );
-  const contestDetailData = contestDetailResponse.data;
-  if (contestDetailData.status === 0) {
-    return res.redirect("/app/home");
-  }
-
   const genreApiResponse = await axios.get(`${process.env.API_URL}all/genre`);
 
   const genreData = genreApiResponse.data.result;
 
-  res.render("app/participate", {
-    title: "Participate",
-    path: "/contests",
-    contestDetailData: contestDetailData,
-    genreData: genreData,
-  });
+  let isParticipated = false;
+
+  const userIdExists = contestDetailData.result.participates.some(
+    (participant) => participant.user._id === userId
+  );
+  if (userIdExists) {
+    isParticipated = true;
+    const participatedParticipant = contestDetailData.result.participates.find(
+      (participant) => participant.user._id === userId
+    );
+
+    res.render("app/participate", {
+      title: "Participate",
+      path: "/contests",
+      isParticipated: isParticipated,
+      participatedParticipantData: participatedParticipant,
+      contestDetailsData: contestDetailData,
+      genreData: genreData,
+      profileData: profileData,
+    });
+  } else {
+    res.render("app/participate", {
+      title: "Participate",
+      path: "/contests",
+      isParticipated: isParticipated,
+      contestDetailsData: contestDetailData,
+      genreData: genreData,
+      profileData: profileData,
+    });
+  }
 });
 
 router.get("/app/contests", async function (req, res) {
@@ -139,9 +204,7 @@ router.get("/app/contests", async function (req, res) {
     const onGoingContestsResponse = await axios.post(
       `${process.env.API_URL}all/contest`,
       {
-        data: {
-          type: "ongoing",
-        },
+        type: "ongoing",
       }
     );
 
@@ -150,9 +213,7 @@ router.get("/app/contests", async function (req, res) {
     const upComingContestsResponse = await axios.post(
       `${process.env.API_URL}all/contest`,
       {
-        data: {
-          type: "upcoming",
-        },
+        type: "upcoming",
       }
     );
 
@@ -181,20 +242,94 @@ router.get("/app/my-contests", function (req, res) {
   });
 });
 
-router.get("/app/my-votes", function (req, res) {
-  res.render("app/my-votes", {
-    title: "My Votes",
-    path: "/my-contests",
-    link: "/my-contest-votes",
-  });
+router.get("/app/my-votes", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const votedDataResponse = await axios.get(
+      `${process.env.API_URL}getVotedContestParticipants`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+    const votedData = votedDataResponse.data;
+
+    res.render("app/my-votes", {
+      title: "My Votes",
+      path: "/my-contests",
+      link: "/my-contest-votes",
+      profileData: profileData,
+      votedData: votedData,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Handle error, e.g., redirect to an error page
+    res.status(500).render("error", {
+      title: "Error",
+      message: "An error occurred while fetching data.",
+    });
+  }
 });
 
-router.get("/app/my-contest-favs", function (req, res) {
-  res.render("app/my-contest-favs", {
-    title: "My Contest favorites",
-    path: "/my-contests",
-    link: "/my-contest-favs",
-  });
+router.get("/app/my-contest-favs", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const favouritesDataResponse = await axios.get(
+      `${process.env.API_URL}getAllFavouriteContestParticipants`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+    const favouritesData = favouritesDataResponse.data;
+
+    const userId = profileData._id;
+
+    res.render("app/my-contest-favs", {
+      title: "My Contest favorites",
+      path: "/my-contests",
+      link: "/my-contest-favs",
+      profileData: profileData,
+      favouritesData: favouritesData,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Handle error, e.g., redirect to an error page
+    res.status(500).render("error", {
+      title: "Error",
+      message: "An error occurred while fetching data.",
+    });
+  }
 });
 
 router.get("/app/pre-participate/:contest_id", async function (req, res) {
@@ -277,7 +412,7 @@ router.get("/app/pre-home", async function (req, res) {
     if (!req.session.appUserToken) {
       return res.redirect("/login");
     }
-    const contest_id = "64d4a16ec4292ce3c4cd47a0";
+    const contest_id = process.env.PRE_CONTEST_ID;
 
     const profileResponse = await axios.get(
       `${process.env.API_URL}getappUserProfile`,
@@ -312,11 +447,14 @@ router.get("/app/pre-home", async function (req, res) {
     // const isParticipated = contestDetailsData.result.isParticipated;
     let isParticipated = false;
 
-    const userIdExists = contestDetailsData.result.participates.some(
-      (participant) => participant.user._id === userId
-    );
-    if (userIdExists) {
-      isParticipated = true;
+    if (contestDetailsData.result.participates) {
+      const userIdExists = contestDetailsData.result.participates.some(
+        (participant) => participant.user._id === userId
+      );
+
+      if (userIdExists) {
+        isParticipated = true;
+      }
     }
 
     res.render("app/pre_home", {

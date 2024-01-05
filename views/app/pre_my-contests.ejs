@@ -90,7 +90,7 @@
               <div class="_menu">
                 <ul>
                   <li>
-                    <a href="">
+                    <a href="javascript:void(0)" onclick="logoutAppUser();">
                       <img src="/public/images/icons/log-off.svg" alt="Icon" />
                       <span>Logout</span>
                     </a>
@@ -606,6 +606,33 @@
         } catch (error) {
           console.error("Error:", error);
           Swal.fire("Error!", "Something went wrong.", "error");
+        }
+      }
+    </script>
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
         }
       }
     </script>

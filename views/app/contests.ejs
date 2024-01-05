@@ -28,10 +28,11 @@
 
       <!-- main body of the app -->
       <div class="app_main">
+        <% if (onGoingContestsData.result && onGoingContestsData.result.length >
+        0) { %>
         <div class="title mb-3">Ongoing contest</div>
 
-        <% if (onGoingContestsData.result && onGoingContestsData.result.length >
-        0) { onGoingContestsData.result.forEach(onGoingContests => { %>
+        <% onGoingContestsData.result.forEach(onGoingContests => { %>
         <a
           class="contests-wrapper"
           href="contest-view/<%- onGoingContests._id %>"
@@ -50,22 +51,27 @@
             />
           </div>
         </a>
-        <% }); } %>
-
+        <% }); } %> <% if (upComingContestsData.result &&
+        upComingContestsData.result.length > 0) { %>
         <div class="title mb-3 mt-4">Upcoming contest</div>
         <div class="contests-wrapper">
+          <% upComingContestsData.result.forEach(upComingContests => { %>
           <div class="contest">
             <div class="status upcoming">Upcoming</div>
             <img
               class="hinm"
-              src="/public/images/upcoming_contests/danceContest.jpg"
+              src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.xl  %>"
               alt="images"
             />
-            <img class="hinb"
-            src="/public/images/upcoming_contests/danceContestMobile.jpg""
-            alt="images" />
+            <img
+              class="hinb"
+              src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.m  %>"
+              alt="images"
+            />
           </div>
-          <div class="contest">
+          <% }); %>
+
+          <!-- <div class="contest">
             <div class="status upcoming">Upcoming</div>
             <img
               class="hinm"
@@ -97,8 +103,9 @@
             <img class="hinb"
             src="/public/images/upcoming_contests/singer-songwriter-contestMobile.jpg""
             alt="images" />
-          </div>
+          </div> -->
         </div>
+        <% } %>
         <!-- app main end -->
       </div>
 

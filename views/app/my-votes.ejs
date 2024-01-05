@@ -51,17 +51,37 @@
           </div>
         </div>
 
-        <div class="myContestCard mt-3 mb-3 shadow">
+        <% if (votedData.result && votedData.result.length > 0) {
+        votedData.result.forEach(votedData => { %>
+        <div
+          class="myContestCard mt-3 mb-3 shadow"
+          id="yourContestVote<%- votedData.contest_id %>"
+        >
           <div class="flex-title">
-            <span>Vibrer Singing Contests</span>
+            <span><%- votedData.contest_details.title %></span>
             <div class="status active">Active</div>
           </div>
-          <div class="text white">Ends in 22 days</div>
-
-          <!-- You voted -->
+          <div class="text white mb-3">
+            <% if (votedData.contest_details.endDays > 0) { %> Ends in <%=
+            votedData.contest_details.endDays %> days <% } else { %> Over <%=
+            Math.abs(votedData.contest_details.endDays) %> days before <% } %>
+          </div>
+          <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+          "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20) %
+          10] || suffixes[v] || suffixes[0]); }; if (votedData.participants &&
+          votedData.participants.length > 0) { let c = 0; let alreadyVoted = "";
+          votedData.participants.forEach(participants => { c++; %>
           <div class="contestant mb-3">
             <div class="head">
-              <div class="yourVote">You voted</div>
+              <div
+                class="yourVote<%- votedData.contest_id %>"
+                id="yourVote<%- votedData.contest_id %><%- participants.user_id._id %>"
+              >
+                <% if(participants.is_voted){ alreadyVoted =
+                participants.user_id._id; %>
+                <div class="yourVote">You voted</div>
+                <% } %>
+              </div>
               <video
                 controls
                 class="video-js"
@@ -70,8 +90,7 @@
                 height="264"
                 data-setup="{}"
               >
-                <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                <source src="/uploads/inescapable.mp4" type="video/webm" />
+                <source src="<%- participants.media %>" type="video/mp4" />
                 <p class="vjs-no-js">
                   To view this video please enable JavaScript, and consider
                   upgrading to a web browser that
@@ -82,6 +101,11 @@
                   >
                 </p>
               </video>
+              <input
+                type="hidden"
+                id="alreadyVoted<%- votedData.contest_id %>"
+                value="<%- alreadyVoted %>"
+              />
             </div>
             <div class="body">
               <div class="top">
@@ -91,37 +115,81 @@
                   </div>
                   <div class="info">
                     <div class="title">
-                      <span>Jessica Hub</span>
+                      <span
+                        ><%- participants.user_id.name.first_name %> <%-
+                        participants.user_id.name.last_name %></span
+                      >
+                      <% if(participants.user_id.verified){ %>
                       <img
                         src="/public/images/icons/verified-badge.svg"
                         alt="Badge"
                       />
+                      <% } %>
                     </div>
-                    <div class="uname">@jhub</div>
+                    <div class="uname">
+                      @<%- participants.user_id.username %>
+                    </div>
                   </div>
                 </div>
 
                 <div class="addToFav">
-                  <img src="/public/images/icons/bookmark.svg" alt="Bookmark" />
+                  <a
+                    href="javascript:void(0)"
+                    id="favouriteBtn<%- votedData.contest_id %><%- participants.user_id._id %>"
+                    onclick="addParticipateToFavourite('<%- votedData.contest_id %>', '<%- participants.user_id._id %>');"
+                  >
+                    <% if(participants.is_favourite){ %>
+                    <img
+                      src="/public/images/icons/bookmark1.svg"
+                      alt="Bookmark"
+                      id="favouriteIcon<%- votedData.contest_id %><%- participants.user_id._id %>"
+                    />
+                    <% } else { %>
+                    <img
+                      src="/public/images/icons/bookmark.svg"
+                      alt="Bookmark"
+                      id="favouriteIcon<%- votedData.contest_id %><%- participants.user_id._id %>"
+                    />
+                    <% } %>
+                  </a>
                 </div>
               </div>
 
               <div class="votes">
                 <div class="count">
-                  <strong>Votes:</strong> <span>2036</span>
+                  <strong>Votes:</strong>
+                  <span
+                    id="countVotes<%- votedData.contest_id %><%- participants.user_id._id %>"
+                    ><%- participants.votes.length %></span
+                  >
                 </div>
                 <div class="rank">
-                  <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                  <strong>Current Rank:</strong>
+                  <span
+                    ><%- participants.rank %><sup
+                      ><%- getOrdinalSuffix(participants.rank) %></sup
+                    ></span
+                  >
                 </div>
               </div>
 
               <div class="cta">
                 <button class="btn btn-outlined">Visit artist</button>
-                <button class="btn btn-primary">Remove vote</button>
+                <button
+                  class="btn btn-primary submitVoteBtn<%- votedData.contest_id %>"
+                  type="button"
+                  id="submitVoteBtn<%- votedData.contest_id %><%- participants.user_id._id %>"
+                  onclick="addParticipateVote('<%- participants.user_id._id %>','<%- votedData.contest_id %>');"
+                >
+                  <% if(participants.is_voted){ %>Remove vote<% } else { %> Vote
+                  now <% } %>
+                </button>
               </div>
             </div>
           </div>
+          <% }); } %>
         </div>
+        <% }); } %>
 
         <!-- app main end -->
       </div>
@@ -208,6 +276,7 @@
     <script src="/public/js/_modal.js"></script>
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="/public/js/config.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -310,6 +379,127 @@
             player.pause();
           }
         });
+      }
+      async function addParticipateVote(participate_id, contest_id) {
+        const submitBtn = document.getElementById(
+          "submitVoteBtn" + contest_id + participate_id + ""
+        );
+        const voteBtn = document.getElementById(
+          "yourVote" + contest_id + participate_id + ""
+        );
+
+        const voteBtnAll = document.getElementsByClassName(
+          "yourVote" + contest_id + ""
+        );
+        let countVotes = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        ).innerHTML;
+        let countVotesElement = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        );
+
+        const yourContestVote = document.getElementById(
+          "yourContestVote" + contest_id + ""
+        );
+
+        submitBtn.textContent = "Loading...";
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}add/contestParticipateVote`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                } else {
+                  submitBtn.innerHTML = "Vote now";
+                  voteBtn.innerHTML = "";
+
+                  countVotes = +countVotes - 1;
+
+                  yourContestVote.remove();
+                }
+                countVotesElement.innerHTML = countVotes;
+              } else {
+              }
+            } else {
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          }
+          // submitBtn.textContent = "Vote now";
+        }, 1000);
+      }
+
+      //   Add to favourite
+
+      async function addParticipateToFavourite(contest_id, participate_id) {
+        const favouriteIcon = document.getElementById(
+          "favouriteIcon" + contest_id + participate_id + ""
+        );
+        const favouriteBtn = document.getElementById(
+          "favouriteBtn" + contest_id + participate_id + ""
+        );
+
+        // Disable the button
+        favouriteBtn.disabled = true;
+
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}addContestParticipantToFavourite`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  favouriteIcon.src = "/public/images/icons/bookmark1.svg";
+                } else {
+                  favouriteIcon.src = "/public/images/icons/bookmark.svg";
+                }
+              } else {
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+              }
+            } else {
+              errorPop.style.display = "block";
+              if (responseData.error) {
+                responseData.message = responseData.error;
+              }
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          } finally {
+            // Enable the button after the API call is complete
+            favouriteBtn.disabled = false;
+          }
+        }, 1000);
       }
     </script>
   </body>
