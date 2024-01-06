@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>500 Server Error</title>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
   </head>
   <body>
-    <h1>500</h1>
-    <button>Vibrer Home page</button>
+    <main>
+      <section
+        class="error-page"
+        style="background-image: url('/public/images/404.webp')"
+      >
+        <div class="wrapper">
+          <div class="title">500</div>
+          <div class="sub">Internal server error!</div>
+          <button class="btn btn-primary shadow">Vibrer Home page</button>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
