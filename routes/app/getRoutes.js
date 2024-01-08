@@ -514,5 +514,18 @@ router.get("/app/my-profile", function (req, res) {
     path: "/my-profile",
   });
 });
+// my profile
+router.get("/404", function (req, res) {
+  res.render("404", {
+    title: "404 page not found!",
+    path: "/404",
+  });
+});
+router.get("/500", function (req, res) {
+  res.render("500", {
+    title: "500 Server error!",
+    path: "/500",
+  });
+});
 
 module.exports = router;

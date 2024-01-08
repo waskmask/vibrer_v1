@@ -1758,3 +1758,50 @@ iframe {
 .email-verified img {
   height: 50px;
 }
+
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
+}
+.error-page::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(47, 47, 75, 0.324);
+  z-index: 0;
+}
+.error-page .wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+.error-page .title {
+  font-size: 18vw;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1;
+}
+@media (max-width: 576px) {
+  .error-page .title {
+    font-size: 25vw;
+  }
+}
+.error-page .sub {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+@media (max-width: 576px) {
+  .error-page .sub {
+    font-size: 1.5rem;
+  }
+}
