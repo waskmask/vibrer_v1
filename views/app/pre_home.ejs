@@ -49,13 +49,14 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-
+            <% if(profileData.user_type === 'Artist'){ %>
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
               onclick="toPreMyContests('<%= path %>', '<%= onGoingContestsData.result._id %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
+            <% } %>
           </ul>
         </div>
 
@@ -137,6 +138,7 @@
               >
                 Learn more
               </button>
+              <% if(profileData.user_type === 'Artist'){ %>
               <button
                 class="btn btn-primary"
                 onclick="toPreMyContests('<%= path %>','<%- onGoingContestsData.result._id %>')"
@@ -144,6 +146,7 @@
                 <% if (isParticipated) { %> View my Post <% } else { %>
                 Participate <% } %>
               </button>
+              <% } %>
               <div
                 class="playAd"
                 data-toggle="_modal"
