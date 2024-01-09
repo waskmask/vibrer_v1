@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./public/images/favicon.png"
-      type="image/x-icon"
-    />
-    <title>Vibrer's Terms of Use: Charting a Musical Journey</title>
+    <%- include('partials/head'); %>
     <meta
       name="description"
       content="Explore Vibrer's roadmap, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
@@ -17,91 +10,353 @@
       name="keywords"
       content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
     />
-
-    <link rel="stylesheet" href="./public/style/theme-v01.css?v=1.2" />
   </head>
   <body>
-    <div id="loader">
-      <img src="./public/images/loader.gif" alt="Loading..." />
-    </div>
-    <header class="bg-dark">
-      <nav class="layout">
-        <div class="logo" onclick="toHome()">
-          <img src="./public/images/vibere-logo.svg" alt="Logo" />
-        </div>
-        <div class="burger">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>
-        <div class="menu-overlay"></div>
-        <div class="menu">
-          <div class="menu-close">+</div>
-
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/road-map">Road Map</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li>
-              <button class="btn btn-primary" onclick="scrollToGNForm()">
-                Get Notified
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
     <section class="general">
       <div class="container layout">
-        <div class="title">Terms of Use</div>
+        <div class="title">General terms and conditions</div>
         <br />
-        <div class="subtitle">Introduction</div>
+        <div class="subtitle">
+          1. Subject matter of contract and scope of application
+        </div>
 
-        Welcome to Vibrer! By accessing and using our website, you agree to
-        comply with these Terms of Use and our Privacy Policy. If you do not
-        agree with these terms, please do not use our website.
+        Vibrer is an online service for streaming selected international music
+        content that can be used via the Vibrer website &quot;https://. <br />
+        <br />
+        The following General Terms and Conditions (GTC) apply to the use of the
+        Internet portal operated under the URL https://..... (hereinafter
+        referred to as the "Vibrer portal") service"). <br />
+        <br />The provider of the portal is based in and has the following
+        address… <br /><br />
+        These GTC on the use of contain the basic rules for the user
+        relationship between Vibrer as provider and the users of Vibrer (User)
+        <br />
+        They apply to all content, functions and other services that Vibrer has
+        made available to the user on the basis of the user relationship
+        (subscription, free user account) through Vibrer. <br /><br />
+        Vibrer provides all services in connection with the use of the Vibrer
+        service exclusively on the basis of these General Terms and Conditions
+        (GTC). As of January 05, 2024. <br /><br />
+        Any contractual terms and conditions of users that conflict with and/or
+        deviate from these GTC are not valid, even if Vibrer does not expressly
+        object to them.
 
         <br /><br />
-        <div class="subtitle">Subscription and Email</div>
+        <div class="subtitle">2. User account and user contract</div>
 
-        When you subscribe to our newsletter or request to be notified about the
-        launch, you provide your email address to us. You can revoke your
-        subscription at any time by clicking the "Unsubscribe" link in any email
-        you receive from us. We will promptly remove your email from our list
-        upon your request.
+        2.1 user account. <br /><br />
+        The use of the functions offered via the Vibrer portal is only possible
+        for registered users (subscribers, free users). For this purpose, it is
+        necessary to register with Vibrer by providing an e-mail address and a
+        password. Registration is completed by confirming these General Terms
+        and Conditions and Data Protection as well as age verification (AVS).
+        <br /><br />
+        The Vibrer service is (currently) only available to subscribers and free
+        users worldwide and exclusively for private use. <br /><br />
+        When registering for a user account, the user is obliged to provide
+        truthful, accurate, currently valid and complete information as
+        specified in the registration form. The user can change his password in
+        the settings of his user account at any time. <br /><br />
+        User accounts are non-transferable and non-inheritable. <br /><br />
+        2.2 changes to the gtc <br /><br />
+        Vibrer reserves the right to amend these GTC at any time, either
+        immediately or with effect for the future. <br /><br />
+        Where possible, Vibrer will inform users of planned and necessary
+        changes to the GTC in good time before they come into effect. If changes
+        are made to the disadvantage of the users, they are entitled to
+        terminate their contractual relationship with Vibrer regarding the use
+        of the Vibrer service at the time the changes come into effect with a
+        notice period of one month from receipt of the notification of the scope
+        and time of entry into force of the respective changes. The changes will
+        take effect for all contractual relationships that the user has not
+        terminated in accordance with the <br /><br />
+        above provision. 2.3 user contract <br /><br />
+        In order to gain access to the content offered via the Vibrer service,
+        the user and Vibrer must either apply for a free user account or take
+        out a paid subscription in each individual case. Such a &quot;free user
+        account&quot; or subscription comes into existence when Vibrer accepts a
+        corresponding order from the user. By completing the registration
+        process for a Vibrer account, the user submits an offer to conclude a
+        contract for the use of the Vibrer service. Acceptance takes place
+        through an express declaration by Vibrer or through the provision of the
+        service by Vibrer. <br />
+        This does not automatically apply if age verification (AVS) is required
+        in accordance with Section 6. <br /><br />
+        The contract is concluded in English. (Can be in German, French or
+        Arabic) <br /><br />
+
+        2.4 Right of refusal <br /><br />
+
+        The user has no right to take out a subscription or to free use without
+        registering as a user of the Vibrerportal. <br /><br />
+        Vibrer is free to accept potential users and may refuse use/subscription
+        for objective reasons.
 
         <br />
         <br />
-        <div class="subtitle">Intellectual Property</div>
+        <div class="subtitle">3. Scope of services</div>
 
         All content on this website, including text, images, videos, and
         graphics, is protected by copyright and intellectual property laws. You
         may not reproduce, distribute, or use our content without our written
         permission.
 
+        <br /><br />
+        <strong>3.1 Provision of content</strong> <br /><br />
+        The Vibrer service offers digital international music titels and videos
+        of professional and amateur sources as well as digital music titles.
+        <br /><br />
+        Registration is necessary and possible on 2 different Accounts:
+        <br />
+        <ul class="demi">
+          <li>Account for Artists (professional).</li>
+          <li>Account for Users.</li>
+        </ul>
+        <li>
+          Terms and conditions for both accounts are published in a separate
+          paper (leaflet).
+        </li>
+        <li>
+          The Account ARTISTS includes the option to present programmes on
+          VIBRER , to earn royalties and to practice transfers of money. Please
+          have a look on details which are valid for the current use of the
+          Vibrer services.
+        </li>
         <br />
         <br />
-        <div class="subtitle">Limitation of Liability</div>
+        <div class="subtitle">3.2 License for use.</div>
 
-        We strive to provide accurate and up-to-date information on our website,
-        but we make no warranties or guarantees regarding the accuracy,
-        completeness, or reliability of the content. We are not liable for any
-        damages or losses resulting from your use of our website.
+        The content made available to the user by Vibrer is legally protected,
+        in particular by the applicable copyright and ancillary copyright laws.
+        <br /><br />
+        By subscribing, the subscriber acquires a simple, non-exclusive,
+        non-transferable, non- sublicensable right to use the Vibrer service in
+        the non-public area exclusively for private, non-commercial purposes,
+        taking into account the other provisions of the contractual
+        relationship. The free user is also granted such a right. <br /><br />
+        Vibrer is entitled and also obliged vis-à-vis its licensors to prevent
+        the retrieval of content from other territories through the use of
+        commercially available geolocation technologies.
 
         <br />
         <br />
-        <div class="subtitle">Indemnification</div>
+        <div class="subtitle">3.3 Rights of use.</div>
 
-        You agree to indemnify and hold Vibrer and its affiliates harmless from
-        any claims, liabilities, or expenses arising from your use of our
-        website or violation of these Terms of Use.
+        The user is not granted any further rights of use to the streamed music
+        titels. In particular, the user is not entitled to edit or change the
+        content in any way, to make copies of the content outside the limits of
+        section 3.2, to make the content available to third parties or publicly
+        accessible, to copy (&quot;burn&quot;) content onto physical media
+        and/or to copy or transfer it to portable players. <br /><br />
 
+        Vibrer is generally not liable for the content it offers, but assumes
+        that its providers (e.g. the filmmakers) have submitted the programs to
+        Vibrer without any legal encumbrances. <br /><br />
+
+        <div class="subtitle">
+          4. Special duties and obligations of the user
+        </div>
+
+        <strong>4.1 registration data</strong>
         <br />
+        The User is obliged to provide truthful and complete answers to the
+        information requested during registration (Section 2.1) and ordering
+        (Section 2.3) and is responsible for entering his/her data correctly.
+        The user must make any changes to this data themselves without delay, if
+        possible online in their user account or in text form. <br /><br />
+        The registration and Use of the Vibrer services is permitted and
+        possible beginning with an age of 13. <br /><br />
+
+        <div class="subtitle">4.2 misuse of the service</div>
+        The user must ensure that his user account is only used by himself and
+        must keep his login name and password secret for this purpose. The user
+        is obliged to inform Vibrer immediately as soon as he/she becomes aware
+        that the Vibrer service is being used by an unauthorized third party
+        using their login name or password. <br /><br />
+        The user may not misuse the Vibrer service; in particular, the user may
         <br />
+        <ul>
+          not take any measures to circumvent the functions of the Vibrer
+          portal; ● use the retrieved content exclusively for retrieval in the
+          private sphere for non- commercial purposes and only within the scope
+          of the uses agreed upon with these GTC;
+          <li>
+            not access the Vibrer service through other technologies or means or
+            from other websites, redirect it or make it publicly available
+            through other channels;
+          </li>
+          <li>
+            not to publicly perform, make publicly available, permanently and/or
+            locally store, broadcast, edit, reproduce, distribute, publicly
+            reproduce, advertise, support such uses or otherwise use the
+            retrieved content in any form outside the contractually agreed
+            purpose.
+          </li>
+          <li>
+            use the retrieved content only in compliance with national and
+            international copyright law within the scope of the rights of use
+            granted and not to reproduce the content.
+          </li>
+          <li>
+            not to remove or alter any copyright or proprietary notices for the
+            content. The user shall protect the content from any use by
+            unauthorized persons and from any other misuse.
+          </li>
+          <li>
+            The user shall only show, allow to be shown or otherwise make
+            available to children or adolescents content that has been approved
+            for the respective age group.
+          </li>
+          <li>
+            Any use or posting and presenting of extremist, racist,sexist,
+            antisemitic and anti democratic content will be prosecuted by
+            Vibrer.
+          </li>
+        </ul>
+
+        Vibrer expressly reserves the right to prosecute any cases of misuse or
+        other legal violations under criminal and civil law without delay.
+        <br /><br />
+        The user agrees to refrain from marketing access to the Vibrer portal or
+        the Vibrer service, especially via other online offers. <br /><br />
+
+        <div class="subtitle">4.3 Right of withholding, blocking</div>
+        <strong>4.3 Right of retention, blocking.</strong> <br /><br />
+        In the event of a significant breach of duty by the user, as well as in
+        the event of justified suspicion of a significant breach of duty or a
+        breach of the law, Vibrer is entitled to withhold the respective service
+        or the availability of the functionality to which the breach of duty
+        relates by immediately blocking it for the user. Vibrer will resume the
+        service immediately if it turns out that the suspicion was unfounded and
+        there was no significant breach of duty by the user. Vibrer will ensure
+        that the user can use the agreed service in accordance with the
+        concluded subscription. This does not affect Vibrer&#39;s right to
+        terminate the contract for good cause. Clause 9.3 remains unaffected.
+        <br /><br />
+
+        <div class="subtitle">5. Liability</div>
+
+        The user is fully responsible for all activities that he/she carries out
+        via his/her user account. Vibrer accepts no liability for misuse by
+        third parties, provided that the use of the Vibrer service has been
+        properly requested, i.e. by entering the correct login name and the
+        corresponding password. This does not apply if the user can prove that
+        he has acted with due care and is not responsible for the misuse of his
+        user account. <br /><br />
+        Vibrer&#39;s liability is generally limited to intent and gross
+        negligence. <br /><br />
+        Vibrer assumes that the rights holders of the licensed music titles or
+        music videoshave acquired and clarified all third-party rights with
+        regard to content and persons and that the content of the programs in no
+        way violates applicable law. <br /><br />
+        Vibrer is not liable for any rights of third parties that may not have
+        been obtained or licensed and is also not liable for any content of the
+        films violating applicable laws. <br /><br />
+        Vibrer is liable without limitation in the following cases <br /><br />
+        - for damages resulting from injury to life, limb or health caused by a
+        breach of duty by Vibrer, a legal representative or vicarious agent, -
+        for damages caused by fraudulent conduct or by the absence of a quality
+        guaranteed by Vibrer, <br />
+        <br />
+        - for damages caused intentionally or through gross negligence by
+        Vibrer, a legal representative or a vicarious agent of Vibrer, and
+        <br /><br />
+        - for claims by the user under the Product Liability Act. <br /><br />
+        In the event of a slightly negligent breach of material contractual
+        obligations, Vibrer&#39;s liability shall be limited to the foreseeable
+        damage typical of the contract. Essential contractual obligations are
+        those which are necessary for the achievement of the purpose of the
+        contract and on the fulfillment of which the contractual partner may
+        regularly rely. Liability is otherwise excluded. If and insofar as
+        liability is excluded, this also applies to the personal liability of
+        Vibrer&#39;s employees, representatives and vicarious agents.
+        <br /><br />
+
+        <div class="subtitle">6. Term and termination of the contracts</div>
+        <strong>6.1 Term of notice</strong> <br /><br />
+        The creation of a user account on the Vibrer portal is for an indefinite
+        period of time. The user may terminate the legal relationship
+        established with Vibrer for the use of the Vibrer service and the Vibrer
+        portal at any time in writing or by e-mail without notice. The user will
+        continue to have access to all films offered until the current payment
+        cycle has ended. Vibrer is entitled to terminate the contractual
+        relationship via the user account in writing or by e-mail with a notice
+        period of 4 weeks to the end of the month. <br /><br />
+        Upon termination of the user account contract, the user&#39;s right to
+        use the Vibrer service and to access the content provided via the
+        service also expires immediately. Any rights of use revert to Vibrer
+        with immediate effect. The User is not entitled to compensation or
+        repayment of the fees paid for the acquired and reverting rights of use.
+        <br /><br />
+
+        <div class="subtitle">6.2 temporary surrender.</div>
+        The contract for a usage license (Section 3.2.) ends automatically at
+        the end of the agreed period of temporary use, without the need for a
+        separate or additional termination. <br /><br />
+
+        <div class="subtitle">6.3 termination for cause.</div>
+        Both parties reserve the right to terminate for good cause (BGB). ???
+        <br /><br />
+
+        <div class="subtitle">7. Right of withdrawal</div>
+        If you take out a paid subscription, you have the following right of
+        withdrawal: <br />
+        <div class="subtitle">7.1 Right of withdrawal</div>
+        You have the right to cancel this contract within fourteen days without
+        giving any reason. The withdrawal period is fourteen days from the date
+        of conclusion of the contract. To exercise your right of withdrawal, you
+        must inform ….., by means of a clear statement (e.g. a letter sent by
+        post, of your decision to withdraw from this contract. You can use the
+        attached sample withdrawal form, but this is not mandatory. To meet the
+        withdrawal deadline, it is sufficient for you to send your notification
+        of exercising your right of withdrawal before the withdrawal period has
+        expired (by post or electronically).
+        <br /><br />
+        <div class="subtitle">7.2 Consequences of the withdrawal</div>
+        If you withdraw from this subscription or the user agreement, we shall
+        reimburse to you all payments received from you, including the costs of
+        delivery (with the exception of the supplementary costs resulting from
+        your choice of a type of delivery other than the least expensive type of
+        standard delivery offered by us), without undue delay and in any event
+        not later than 14 days from the day on which we are informed about your
+        decision to withdraw from this contract. For this refund, we will use
+        the same means of payment that you used for the original transaction,
+        unless expressly agreed otherwise with you; under no circumstances will
+        you be charged any fees for this refund. <br /><br />
+
+        <div class="subtitle">
+          7.3 early expiration of the right of revocation
+        </div>
+        Your right of withdrawal expires prematurely in the case of a contract
+        for the delivery of digital content that is not on a physical data
+        carrier, if you have expressly agreed that we begin with the execution
+        of the contract before the expiry of the withdrawal period and you have
+        confirmed your knowledge that you lose your right of withdrawal by your
+        consent with the <br /><br />
+        (*) Delete where not applicable. <br /><br />
+        <div class="subtitle">8. Online dispute resolution</div>
+        In case of complaints about Vibrer the user can contact in Europe the
+        European platform for online dispute or any other similar institution
+        which is responsibe for the country of the user. <br /><br />
+        <div class="subtitle">9. miscellaneous</div>
+        Applicable law is the law which is valid in the country where the User
+        has his residence. <br /><br />
+
+        <div class="subtitle">10. Severability clause</div>
+        Should one or more clauses of these GTC be invalid in whole or in part
+        this shall not affect the validity of the remaining provisions.
+        <br /><br />
+
         <div class="subtitle">Contact Us</div>
 
         If you have any questions or concerns about our Terms of Use, please
-        contact us at info@vibrer.com.
+        contact us at info [at] vibrer.com. <br /><br />
+
+        Berlin, 05.01.2024
       </div>
     </section>
 
