@@ -86,6 +86,10 @@ app.post("/clear-token-in-session", (req, res) => {
   });
 });
 
+app.use((req, res) => {
+  res.status(404).sendFile(__dirname + "/public/404.html");
+});
+
 // Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

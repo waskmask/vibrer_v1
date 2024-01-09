@@ -51,8 +51,12 @@ router.get("/new-profile", async function (req, res) {
     }
   } catch (error) {
     console.error("Error fetching data from API:", error);
-    // Handle the error appropriately, e.g., render an error page
-    res.status(500).send("Internal Server Error");
+
+    // res.status(500).send("Internal Server Error");
+    res.render("500", {
+      title: "500 Server error!",
+      path: "/500",
+    });
   }
 });
 
