@@ -428,11 +428,13 @@
                 videoElement.controls = true;
               }
 
-              // Display the video player and title
-              document
-                .querySelector(".video-preview")
-                .classList.remove("d-none");
-              document.querySelector(".pr-title").classList.remove("d-none");
+              if (file.type === "video/webm" || file.type === "video/mp4") {
+                // Display the video player and title
+                document
+                  .querySelector(".video-preview")
+                  .classList.remove("d-none");
+                document.querySelector(".pr-title").classList.remove("d-none");
+              }
             } else {
               uploadPercentage += 5; // Incrementing the percentage by 5
               progressBarFill.style.width = uploadPercentage + "%";
@@ -559,8 +561,18 @@
         });
 
         function isValidVideoFile(file) {
-          const allowedTypes = ["video/mp4", "video/webm"];
-          return allowedTypes.includes(file.type);
+          const allowedExtensions = [
+            ".mp4",
+            ".avi",
+            ".mov",
+            ".mkv",
+            ".webm",
+            ".m4v",
+            ".flv",
+          ];
+          const fileExtension = file.name.split(".").pop().toLowerCase();
+
+          return allowedExtensions.some((ext) => ext === `.${fileExtension}`);
         }
       });
     </script>
