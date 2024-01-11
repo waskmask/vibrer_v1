@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="./public/images/favicon.png"
-      type="image/x-icon"
-    />
-    <title>Vibrer's Privacy policy: Charting a Musical Journey</title>
+    <%- include('partials/head'); %>
     <meta
       name="description"
       content="Explore Vibrer's roadmap, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
@@ -17,45 +10,19 @@
       name="keywords"
       content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
     />
-
-    <link rel="stylesheet" href="./public/style/theme-v01.css?v=1.2" />
   </head>
   <body>
-    <div id="loader">
-      <img src="./public/images/loader.gif" alt="Loading..." />
-    </div>
-    <header class="bg-dark">
-      <nav class="layout">
-        <div class="logo" onclick="toHome()">
-          <img src="./public/images/vibere-logo.svg" alt="Logo" />
-        </div>
-        <div class="burger">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
-        </div>
-        <div class="menu-overlay"></div>
-        <div class="menu">
-          <div class="menu-close">+</div>
-
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/road-map">Road Map</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li>
-              <button class="btn btn-primary" onclick="scrollToGNForm()">
-                Get Notified
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
 
     <main>
       <section class="general">
         <div class="container layout">
-          <div class="title">Privacy Policy</div>
+          <div class="title">
+            1. Data protection VIBRER MUSIC streaming at a glance
+          </div>
 
           Privacy Policy of Vibrer Last Updated: August 28, 2023 Introduction
           Vibrer ("we," "us," or "our") is committed to safeguarding your
