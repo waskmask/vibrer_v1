@@ -492,8 +492,20 @@ router.get("/app/pre-home", async function (req, res) {
       title: "500 Server error!",
       path: "/500",
     });
-    // res.status(500).send("Internal Server Error");
   }
+});
+
+router.get("/app/prehome", function (req, res) {
+  res.render("app/pre-home-content", {
+    title: "Home",
+    path: "/home",
+  });
+});
+router.get("/imprint", function (req, res) {
+  res.render("imprint", {
+    title: "Imprint",
+    path: "/imprint",
+  });
 });
 
 // router.get("/app/report", function (req, res) {

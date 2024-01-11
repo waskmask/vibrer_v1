@@ -1412,6 +1412,13 @@ input:-webkit-autofill:active {
     }
   }
 }
+
+.app_main.preMain {
+  margin-left: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 700px;
+}
 .app_form_container {
   background: $dl;
   border-radius: 0.25rem;
@@ -1954,4 +1961,119 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     max-width: 100%;
     max-height: none;
   }
+}
+
+.app_posts {
+  .post_header {
+    .title {
+      color: $white;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+    .desc {
+      font-size: 1rem;
+      color: lighten($light, 15%);
+      margin-bottom: 1rem;
+    }
+  }
+
+  .posted_user {
+    margin-bottom: 0.75rem;
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      .avatar {
+        height: 45px;
+        width: 45px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .name {
+        color: $white;
+        font-size: 1.1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        line-height: 1.1;
+        span {
+          max-width: 100px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        img {
+          width: 17px;
+          height: 17px;
+          object-fit: contain;
+          margin-left: 0.25rem;
+        }
+      }
+
+      .uname {
+        color: $light;
+        font-size: 0.875rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .post_body {
+    .media {
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  a {
+    color: $primary;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.temp_footer {
+  padding: 3rem 0 2rem;
+  border-top: 1px $dl solid;
+  margin-top: 3rem;
+  .top {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    .link a {
+      font-size: 0.875rem;
+      color: $light;
+    }
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    img {
+      height: 20px;
+    }
+  }
+
+  .bottom {
+    font-size: 0.8rem;
+    color: $light;
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
+
+.linkBlue {
+  color: #007bff;
 }

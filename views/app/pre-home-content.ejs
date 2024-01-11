@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/public/style/modal.css" />
+    <link rel="stylesheet" href="/public/style/app.css" />
+    <link rel="stylesheet" href="/public/style/contests.css" />
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <header class="app_header">
+      <nav class="app_layout">
+        <div class="app_start_menu">
+          <!-- Logo -->
+          <% if (path !== '/home') { %>
+          <div class="logo" onclick="toPreHome('<%= path %>')">
+            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+          </div>
+          <% } else { %>
+          <div class="logo">
+            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+          </div>
+          <% } %>
+        </div>
+
+        <div class="app_middle_bar force_mobile">
+          <ul>
+            <li
+              class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
+              onclick="toPreHome('<%= path %>')"
+            >
+              <img src="/public/images/icons/home-icon.svg" alt="Icon" />
+            </li>
+          </ul>
+        </div>
+
+        <div class="app_right_menu">
+          <div class="profile">
+            <div class="head hphead">
+              <img
+                class="icon"
+                src="/public/images/icons/user-icon-light.svg"
+                alt="Icon"
+              />
+              <img
+                src="/public/images/singer.png"
+                alt="avatar"
+                class="avatar"
+              />
+            </div>
+            <div class="drop_down hpdd">
+              <div class="_profile">
+                <img src="/public/images/singer.png" alt="avatar" />
+                <div class="name">
+                  <span>Abdul Waseem</span>
+
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="Verified"
+                  />
+                </div>
+                <div class="uname" id="username">@waskmask</div>
+              </div>
+
+              <div class="_menu">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)" onclick="logoutAppUser();">
+                      <img src="/public/images/icons/log-off.svg" alt="Icon" />
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="app_layout app_wrapper">
+      <!-- main body of the app -->
+      <div class="app_main preMain">
+        <section class="contest-header" style="padding: 1.5rem">
+          <div class="wrapper" style="position: relative; z-index: 2">
+            <div>
+              <div class="sponsor">
+                <img src="/public/images/mod_light.svg" alt="Logo" />
+                <div>MOD presents</div>
+              </div>
+              <div class="title">Vibrer Singing Contest</div>
+              <div class="sub">30 days left | 209 participants</div>
+            </div>
+            <div class="cta">
+              <button
+                class="btn btn-outlined"
+                data-toggle="_modal"
+                data-target="contest1Info"
+              >
+                Learn more
+              </button>
+
+              <div
+                class="playAd"
+                data-toggle="_modal"
+                data-target="contest1Video"
+              >
+                <img src="/public/images/icons/playIconWhite.svg" alt="Icon" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="app_posts">
+          <div class="post mt-5">
+            <div class="post_header">
+              <div class="posted_user">
+                <div class="left">
+                  <div class="avatar">
+                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
+                  </div>
+                  <div>
+                    <div class="name">
+                      <span>Vibrer</span>
+                      <img
+                        class="app_v_badge"
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Verified"
+                      />
+                    </div>
+                    <div class="uname">@vibrer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title" onclick="toContest()">
+                Vibrer Singing Contest: Chapter 1
+              </div>
+              <div class="desc" onclick="toContest()">
+                Hello users, if you are an artist you can participate and for
+                fans, you can vote your favorite artists from 1st February 2024.
+              </div>
+            </div>
+            <div class="post_body" onclick="toContest()">
+              <div class="media pointer">
+                <img
+                  class="hinm"
+                  src="/public/images/contest1.jpg"
+                  alt="images"
+                />
+                <img
+                  class="hinb"
+                  src="/public/images/contest1Mobile.jpg"
+                  alt="images"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="post mt-4">
+            <div class="post_header">
+              <div class="posted_user">
+                <div class="left">
+                  <div class="avatar">
+                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
+                  </div>
+                  <div>
+                    <div class="name">
+                      <span>Vibrer</span>
+                      <img
+                        class="app_v_badge"
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Verified"
+                      />
+                    </div>
+                    <div class="uname">@vibrer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title">
+                Discover Vibrer: Your Music Community Awaits
+              </div>
+              <div class="desc">
+                Welcome to Vibrer, the ultimate music community where artists
+                and fans connect.
+              </div>
+            </div>
+            <div class="post_body">
+              <div class="media">
+                <div class="video-container-169">
+                  <video
+                    class="video-js vjs-default-skin"
+                    controls
+                    data-setup='{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=WFlYEXkcLJ8"}]}'
+                  ></video>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="post mt-4">
+            <div class="post_header">
+              <div class="posted_user">
+                <div class="left">
+                  <div class="avatar">
+                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
+                  </div>
+                  <div>
+                    <div class="name">
+                      <span>Vibrer</span>
+                      <img
+                        class="app_v_badge"
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Verified"
+                      />
+                    </div>
+                    <div class="uname">@vibrer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title">Vibrer Music: Inescapable</div>
+              <div class="desc">
+                Introducing "Inescapable" – our powerful and inspiring music
+                project brought to life on Vibrer! 🌟 This incredible song tells
+                the story of resilience, growth, and the unstoppable force
+                within us all.
+              </div>
+            </div>
+            <div class="post_body">
+              <div class="media">
+                <div class="video-container-169">
+                  <video
+                    class="video-js vjs-default-skin"
+                    controls
+                    data-setup='{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=KBe1qi-cgiE"}]}'
+                  ></video>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="post mt-4">
+            <div class="post_header">
+              <div class="posted_user">
+                <div class="left">
+                  <div class="avatar">
+                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
+                  </div>
+                  <div>
+                    <div class="name">
+                      <span>Vibrer</span>
+                      <img
+                        class="app_v_badge"
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Verified"
+                      />
+                    </div>
+                    <div class="uname">@vibrer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title">What's next on Vibrer?</div>
+              <div class="desc">
+                We will introduce more modules on Vibrer Platform from 1st of
+                February 2024, visit our
+                <a target="_blank" href="/road-map">Road map</a> page or follow
+                us on
+                <a target="_blank" href="https:instagram.com/vibrer_official"
+                  >Instagram</a
+                >
+              </div>
+            </div>
+            <div class="post_body">
+              <div class="media">
+                <img src="/public/images/profileImageTab.png" alt="Images" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint">Imprint</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy">Privacy policy</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms">Terms of use</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">Cookie settings</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/home">Vibrer Home page</a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+          <div class="bottom">
+            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
+            2024
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('../modals/contest1Info'); %>
+    <!--  -->
+    <%- include('../modals/contest1Video'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js"></script>
+    <script src="/public/js/general.js"></script>
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
+    <script src="/public/js/_modal.js"></script>
+    <script src="/public/js/check-select.js"></script>
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+      var quill = new Quill("#desc", {
+        modules: {
+          toolbar: false,
+        },
+        placeholder: "Description (optional)", //
+        theme: "snow",
+      });
+    </script>
+    <script>
+      document
+        .getElementById("media_file")
+        .addEventListener("change", function (event) {
+          // Display the progress bar
+          var progressBar = document.getElementById("uploadProgress");
+          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
+          progressBar.classList.remove("d-none");
+
+          // Simulate file upload progress
+          var uploadPercentage = 0;
+          var simulateUpload = setInterval(function () {
+            if (uploadPercentage >= 100) {
+              clearInterval(simulateUpload);
+
+              // Hide the progress bar
+              progressBar.classList.add("d-none");
+
+              // Update the video source and display it
+              var videoElement = document.querySelector(".video-preview video");
+              var videoSource = videoElement.getElementsByTagName("source");
+              videoSource[0].src = "/uploads/your-uploaded-video.mp4"; // Static URL for demonstration
+              videoSource[1].src = "/uploads/your-uploaded-video.webm"; // Static URL for demonstration
+              videoElement.load();
+
+              // Display the video player and title
+              document
+                .querySelector(".video-preview")
+                .classList.remove("d-none");
+              document.querySelector(".pr-title").classList.remove("d-none");
+            } else {
+              uploadPercentage += 5; // Incrementing the percentage by 5
+              progressBarFill.style.width = uploadPercentage + "%";
+              progressBarFill.textContent = uploadPercentage + "%";
+            }
+          }, 200); // Adjust the interval time as needed
+        });
+    </script>
+    <!-- <script>
+      document
+        .getElementById("media_file")
+        .addEventListener("change", function (event) {
+          var file = event.target.files[0];
+          var formData = new FormData();
+          formData.append("media_file", file);
+
+          // Display the progress bar
+          var progressBar = document.getElementById("uploadProgress");
+          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
+          progressBar.classList.remove("d-none");
+
+          // AJAX request to upload the file
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/path-to-upload-handler", true);
+
+          xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+              var percentComplete = (event.loaded / event.total) * 100;
+              progressBarFill.style.width = percentComplete + "%";
+              progressBarFill.textContent = Math.round(percentComplete) + "%";
+            }
+          };
+
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              // Update the video source and display it
+              var videoElement = document.querySelector(".video-preview video");
+              var videoSource = videoElement.getElementsByTagName("source");
+              videoSource[0].src = xhr.responseText; // Assuming the response is the video URL
+              videoElement.load();
+
+              // Display the video player and title
+              document
+                .querySelector(".video-preview")
+                .classList.remove("d-none");
+              document.querySelector(".sub").classList.remove("d-none");
+            }
+            // Hide the progress bar
+            progressBar.classList.add("d-none");
+          };
+
+          xhr.send(formData);
+        });
+    </script> -->
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -50,7 +50,9 @@ function toTerms() {
 function toCookies() {
   window.location.href = "/cookies";
 }
-
+function toImprint() {
+  window.location.href = "/imprint";
+}
 function toHome() {
   window.location.href = "/";
 }
