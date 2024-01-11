@@ -49,6 +49,14 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
+            <% if(profileData.user_type === 'Artist'){ %>
+            <li
+              class="<%= (path == '/contest') ? 'active' : '' %>"
+              onclick="toPreMyContests('<%= path %>', '<%= onGoingContestsData.result._id %>')"
+            >
+              <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
+            </li>
+            <% } %>
           </ul>
         </div>
 
@@ -70,15 +78,21 @@
               <div class="_profile">
                 <img src="/public/images/singer.png" alt="avatar" />
                 <div class="name">
-                  <span>Abdul Waseem</span>
-
+                  <span
+                    ><%- profileData.name.first_name %><%-
+                    profileData.name.last_name %></span
+                  >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@waskmask</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
@@ -107,8 +121,14 @@
                 <img src="/public/images/mod_light.svg" alt="Logo" />
                 <div>MOD presents</div>
               </div>
-              <div class="title">Vibrer Singing Contest</div>
-              <div class="sub">30 days left | 209 participants</div>
+              <div class="title"><%- onGoingContestsData.result.title %></div>
+              <div class="sub">
+                <%- onGoingContestsData.result.participates.length %>
+                Participants • <% if (onGoingContestsData.result.endDays > 0) {
+                %> Ends in <%= onGoingContestsData.result.endDays %> days <% }
+                else { %> Over <%= Math.abs(onGoingContestsData.result.endDays)
+                %> days before <% } %>
+              </div>
             </div>
             <div class="cta">
               <button
@@ -118,7 +138,15 @@
               >
                 Learn more
               </button>
-
+              <% if(profileData.user_type === 'Artist'){ %>
+              <button
+                class="btn btn-primary"
+                onclick="toPreMyContests('<%= path %>','<%- onGoingContestsData.result._id %>')"
+              >
+                <% if (isParticipated) { %> View my Post <% } else { %>
+                Participate <% } %>
+              </button>
+              <% } %>
               <div
                 class="playAd"
                 data-toggle="_modal"
@@ -129,209 +157,6 @@
             </div>
           </div>
         </section>
-
-        <div class="app_posts">
-          <div class="post mt-5">
-            <div class="post_header">
-              <div class="posted_user">
-                <div class="left">
-                  <div class="avatar">
-                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
-                  </div>
-                  <div>
-                    <div class="name">
-                      <span>Vibrer</span>
-                      <img
-                        class="app_v_badge"
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Verified"
-                      />
-                    </div>
-                    <div class="uname">@vibrer</div>
-                  </div>
-                </div>
-              </div>
-              <div class="title" onclick="toContest()">
-                Vibrer Singing Contest: Chapter 1
-              </div>
-              <div class="desc" onclick="toContest()">
-                Hello users, if you are an artist you can participate and for
-                fans, you can vote your favorite artists from 1st February 2024.
-              </div>
-            </div>
-            <div class="post_body" onclick="toContest()">
-              <div class="media pointer">
-                <img
-                  class="hinm"
-                  src="/public/images/contest1.jpg"
-                  alt="images"
-                />
-                <img
-                  class="hinb"
-                  src="/public/images/contest1Mobile.jpg"
-                  alt="images"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="post mt-4">
-            <div class="post_header">
-              <div class="posted_user">
-                <div class="left">
-                  <div class="avatar">
-                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
-                  </div>
-                  <div>
-                    <div class="name">
-                      <span>Vibrer</span>
-                      <img
-                        class="app_v_badge"
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Verified"
-                      />
-                    </div>
-                    <div class="uname">@vibrer</div>
-                  </div>
-                </div>
-              </div>
-              <div class="title">
-                Discover Vibrer: Your Music Community Awaits
-              </div>
-              <div class="desc">
-                Welcome to Vibrer, the ultimate music community where artists
-                and fans connect.
-              </div>
-            </div>
-            <div class="post_body">
-              <div class="media">
-                <div class="video-container-169">
-                  <video
-                    class="video-js vjs-default-skin"
-                    controls
-                    data-setup='{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=WFlYEXkcLJ8"}]}'
-                  ></video>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="post mt-4">
-            <div class="post_header">
-              <div class="posted_user">
-                <div class="left">
-                  <div class="avatar">
-                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
-                  </div>
-                  <div>
-                    <div class="name">
-                      <span>Vibrer</span>
-                      <img
-                        class="app_v_badge"
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Verified"
-                      />
-                    </div>
-                    <div class="uname">@vibrer</div>
-                  </div>
-                </div>
-              </div>
-              <div class="title">Vibrer Music: Inescapable</div>
-              <div class="desc">
-                Introducing "Inescapable" – our powerful and inspiring music
-                project brought to life on Vibrer! 🌟 This incredible song tells
-                the story of resilience, growth, and the unstoppable force
-                within us all.
-              </div>
-            </div>
-            <div class="post_body">
-              <div class="media">
-                <div class="video-container-169">
-                  <video
-                    class="video-js vjs-default-skin"
-                    controls
-                    data-setup='{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=KBe1qi-cgiE"}]}'
-                  ></video>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="post mt-4">
-            <div class="post_header">
-              <div class="posted_user">
-                <div class="left">
-                  <div class="avatar">
-                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
-                  </div>
-                  <div>
-                    <div class="name">
-                      <span>Vibrer</span>
-                      <img
-                        class="app_v_badge"
-                        src="/public/images/icons/verified-badge.svg"
-                        alt="Verified"
-                      />
-                    </div>
-                    <div class="uname">@vibrer</div>
-                  </div>
-                </div>
-              </div>
-              <div class="title">What's next on Vibrer?</div>
-              <div class="desc">
-                We will introduce more modules on Vibrer Platform from 1st of
-                February 2024, visit our
-                <a target="_blank" href="/road-map">Road map</a> page or follow
-                us on
-                <a target="_blank" href="https:instagram.com/vibrer_official"
-                  >Instagram</a
-                >
-              </div>
-            </div>
-            <div class="post_body">
-              <div class="media">
-                <img src="/public/images/profileImageTab.png" alt="Images" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="temp_footer">
-          <div class="top">
-            <div class="link">
-              <a target="_blank" href="/imprint">Imprint</a>
-            </div>
-            <div class="link">
-              <a target="_blank" href="/privacy">Privacy policy</a>
-            </div>
-            <div class="link">
-              <a target="_blank" href="/terms">Terms of use</a>
-            </div>
-            <div class="link">
-              <a target="_blank" href="/cookies">Cookie settings</a>
-            </div>
-            <div class="link">
-              <a target="_blank" href="/home">Vibrer Home page</a>
-            </div>
-          </div>
-          <div class="social-icons">
-            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
-              <img
-                class="yti"
-                src="/public/images/youtube.svg"
-                alt="Youtube icon"
-            /></a>
-            <a
-              href="https://www.instagram.com/vibrer_official/"
-              target="_blank"
-            >
-              <img src="/public/images/instagram.svg" alt="Instagram icon"
-            /></a>
-          </div>
-          <div class="bottom">
-            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
-            2024
-          </div>
-        </div>
       </div>
     </main>
 

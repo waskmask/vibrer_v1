@@ -495,11 +495,71 @@ router.get("/app/pre-home", async function (req, res) {
   }
 });
 
-router.get("/app/prehome", function (req, res) {
-  res.render("app/pre-home-content", {
-    title: "Home",
-    path: "/home",
-  });
+router.get("/app/pre-contest", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const contest_id = process.env.PRE_CONTEST_ID;
+
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+    const userId = profileData._id;
+
+    if (
+      !profileData.name &&
+      !profileData.name.first_name &&
+      !profileData.name.last_name
+    ) {
+      return res.redirect("/new-profile");
+    }
+
+    const contestDetailsResponse = await axios.get(
+      `${process.env.API_URL}contest-details/${contest_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const contestDetailsData = contestDetailsResponse.data;
+    // const isParticipated = contestDetailsData.result.isParticipated;
+    let isParticipated = false;
+
+    if (contestDetailsData.result.participates) {
+      const userIdExists = contestDetailsData.result.participates.some(
+        (participant) => participant.user._id === userId
+      );
+
+      if (userIdExists) {
+        isParticipated = true;
+      }
+    }
+
+    res.render("app/pre-home-content", {
+      title: "Contest",
+      path: "/contest",
+      isParticipated,
+      onGoingContestsData: contestDetailsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error("Error fetching profile:", error);
+    return res.render("500", {
+      title: "500 Server error!",
+      path: "/500",
+    });
+  }
 });
 router.get("/imprint", function (req, res) {
   res.render("imprint", {

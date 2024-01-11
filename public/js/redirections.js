@@ -39,6 +39,12 @@ function toPreMyContests(currentPath, contest_id) {
   }
 }
 
+function toTheContest(currentPath) {
+  if (currentPath !== "/contest") {
+    window.location.href = "/app/pre-contest/";
+  }
+}
+
 function toPreHome(currentPath) {
   if (currentPath !== "/my-contests" || currentLink !== "/my-contests") {
     window.location.href = "/app/pre-home";
