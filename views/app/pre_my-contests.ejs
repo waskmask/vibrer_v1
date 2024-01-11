@@ -110,7 +110,9 @@
         <div class="myContestCard mt-3 mb-3 shadow">
           <div class="flex-title">
             <span><%- contestDetailsData.result.title %></span>
-            <div class="status active">Active</div>
+            <div class="status active">
+              <%- contestDetailsData.result.status %>
+            </div>
           </div>
           <div class="text white">
             Ends in <%- contestDetailsData.result.endDays %> days
@@ -147,7 +149,9 @@
             </div>
             <div class="body">
               <!-- inactive | active | review -->
-              <div class="postStatus active">Active</div>
+              <div class="postStatus active">
+                <%- participatedParticipantData.status %>
+              </div>
               <div class="votes">
                 <div class="count">
                   <strong>Votes:</strong>
