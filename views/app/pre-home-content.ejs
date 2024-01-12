@@ -123,11 +123,13 @@
               </div>
               <div class="title"><%- onGoingContestsData.result.title %></div>
               <div class="sub">
-                <%- onGoingContestsData.result.participates.length %>
+                <!-- <%- onGoingContestsData.result.participates.length %>
                 Participants • <% if (onGoingContestsData.result.endDays > 0) {
                 %> Ends in <%= onGoingContestsData.result.endDays %> days <% }
                 else { %> Over <%= Math.abs(onGoingContestsData.result.endDays)
-                %> days before <% } %>
+                %> days before <% } %> -->
+                Voting will start from 1<sup>st</sup> February 2024 00:00 AM
+                (CEST).
               </div>
             </div>
             <div class="cta">
@@ -157,6 +159,63 @@
             </div>
           </div>
         </section>
+        <div class="title mt-4 mb-3">Voting Begins In:</div>
+        <div class="contestTimer" id="Contest1timer">
+          <div class="t_card">
+            <div class="title" id="days"></div>
+            <div class="_label">Days</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="hours"></div>
+            <div class="_label">Hours</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="minutes"></div>
+            <div class="_label">Minutes</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="seconds"></div>
+            <div class="_label">Seconds</div>
+          </div>
+        </div>
+
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint">Imprint</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy">Privacy policy</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms">Terms of use</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">Cookie settings</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/home">Vibrer Home page</a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+          <div class="bottom">
+            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
+            2024
+          </div>
+        </div>
       </div>
     </main>
 
@@ -323,6 +382,42 @@
           // Handle the error as needed
         }
       }
+
+      // Set the date we're counting down to
+      var countDownDate = new Date("Feb 1, 2024 00:00:00").getTime();
+
+      // Update the count down every 1 second
+      var x = setInterval(function () {
+        // Get today's date and time in the Berlin timezone
+        var now = new Date().toLocaleString("en-US", {
+          timeZone: "Europe/Berlin",
+        });
+        now = new Date(now).getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes, and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the elements with respective ids
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("Contest1timer").innerHTML =
+            "Voting Period Over";
+        }
+      }, 1000);
     </script>
   </body>
 </html>

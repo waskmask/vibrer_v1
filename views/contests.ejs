@@ -22,41 +22,50 @@
     <main>
       <section class="contests bg-dark">
         <div class="layout">
-          <div class="title">Active contests (1)</div>
-
+          <% if (onGoingContestsData.result && onGoingContestsData.result.length
+          > 0) { %>
+          <div class="title">
+            Active contests (<%- onGoingContestsData.result.length %>)
+          </div>
+          <% onGoingContestsData.result.forEach(onGoingContests => { %>
           <div class="contests-wrapper" onclick="toContest()">
             <div class="contest">
-              <div class="status active">Active</div>
+              <div class="status active"><%- onGoingContests.status %></div>
               <img
                 class="hinm"
-                src="/public/images/contest1.jpg"
+                src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.xl  %>"
                 alt="images"
               />
               <img
                 class="hinb"
-                src="/public/images/contest1Mobile.jpg"
+                src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.m  %>"
                 alt="images"
               />
             </div>
           </div>
-
+          <% }); } %> <% if (upComingContestsData.result &&
+          upComingContestsData.result.length > 0) { %>
           <div class="title" style="margin-top: 60px">
-            Upcoming contests (4)
+            Upcoming contests (<%- upComingContestsData.result.length %>)
           </div>
 
-          <div class="contests-wrapper">
+          <div class="contests-wrapper" onclick="toContest()">
+            <% upComingContestsData.result.forEach(upComingContests => { %>
             <div class="contest">
               <div class="status upcoming">Upcoming</div>
               <img
                 class="hinm"
-                src="/public/images/upcoming_contests/danceContest.jpg"
+                src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.xl  %>"
                 alt="images"
               />
-              <img class="hinb"
-              src="/public/images/upcoming_contests/danceContestMobile.jpg""
-              alt="images" />
+              <img
+                class="hinb"
+                src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.m  %>"
+                alt="images"
+              />
             </div>
-            <div class="contest">
+            <% }); %>
+            <!-- <div class="contest">
               <div class="status upcoming">Upcoming</div>
               <img
                 class="hinm"
@@ -88,8 +97,9 @@
               <img class="hinb"
               src="/public/images/upcoming_contests/singer-songwriter-contestMobile.jpg""
               alt="images" />
-            </div>
+            </div> -->
           </div>
+          <% } %>
         </div>
       </section>
     </main>

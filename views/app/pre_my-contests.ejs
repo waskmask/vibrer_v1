@@ -44,18 +44,19 @@
         <div class="app_middle_bar force_mobile">
           <ul>
             <li
-              class="<%= (path == '/home') ? 'active' : 'mdb_item' %>"
+              class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
               onclick="toPreHome('<%= path %>')"
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-
+            <% if(profileData.user_type === 'Artist'){ %>
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
-              onclick="toMyPreContests('<%= path %>')"
+              onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
+            <% } %>
           </ul>
         </div>
 
@@ -77,14 +78,21 @@
               <div class="_profile">
                 <img src="/public/images/singer.png" alt="avatar" />
                 <div class="name">
-                  <span>Nathan Steve</span>
+                  <span
+                    ><%- profileData.name.first_name %><%-
+                    profileData.name.last_name %></span
+                  >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@nathan_steve</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
@@ -105,7 +113,7 @@
 
     <main class="app_layout app_wrapper">
       <!-- main body of the app -->
-      <div class="app_main">
+      <div class="app_main preMain">
         <% if(isParticipated) { %>
         <div class="myContestCard mt-3 mb-3 shadow">
           <div class="flex-title">
@@ -323,6 +331,44 @@
           </form>
         </div>
         <% } %>
+
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint">Imprint</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy">Privacy policy</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms">Terms of use</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">Cookie settings</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/home">Vibrer Home page</a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+          <div class="bottom">
+            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
+            2024
+          </div>
+        </div>
       </div>
     </main>
 
