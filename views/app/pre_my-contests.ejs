@@ -63,23 +63,36 @@
         <div class="app_right_menu">
           <div class="profile">
             <div class="head hphead">
+              <% if (profileData.profile_img === '') { %>
               <img
-                class="icon"
-                src="/public/images/icons/user-icon-light.svg"
-                alt="Icon"
-              />
-              <img
-                src="/public/images/singer.png"
-                alt="avatar"
+                src="/public/images/default-avatar.png"
+                alt="Default Avatar"
                 class="avatar"
               />
+              <% } else { %>
+              <img
+                src="<%- profileData.profile_img %>"
+                alt="User Profile Image"
+                class="avatar"
+              />
+              <% } %>
             </div>
             <div class="drop_down hpdd">
               <div class="_profile">
-                <img src="/public/images/singer.png" alt="avatar" />
+                <% if (profileData.profile_img === '') { %>
+                <img
+                  src="/public/images/default-avatar.png"
+                  alt="Default Avatar"
+                />
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                />
+                <% } %>
                 <div class="name">
                   <span
-                    ><%- profileData.name.first_name %><%-
+                    ><%- profileData.name.first_name %> <%-
                     profileData.name.last_name %></span
                   >
                   <% if(profileData.verified === true){ %>
@@ -157,7 +170,9 @@
             </div>
             <div class="body">
               <!-- inactive | active | review -->
-              <div class="postStatus active">
+              <div
+                class="postStatus <%= (participatedParticipantData.status === 'Under Review') ? 'review' : (participatedParticipantData.status === 'Active') ? 'active' : 'inactive' %>"
+              >
                 <%- participatedParticipantData.status %>
               </div>
               <div class="votes">
@@ -506,7 +521,8 @@
           e.preventDefault();
 
           // Change button text to "Submitting..."
-          btn.textContent = "Submitting...";
+          btn.textContent = "Submitting, please wait..";
+          btn.disabled = true;
 
           // Implement the timeout function
           setTimeout(async () => {
@@ -554,8 +570,10 @@
                   if (responseData.status === 1) {
                     // Handle success
                     successPop.style.display = "block";
-                    successPop.innerHTML = responseData.message;
+                    successPop.innerHTML = "Entry submitted successfully.";
                     setTimeout(() => {
+                      // const loader = document.getElementById("loader");
+                      // loader.style.display = "block";
                       successPop.style.display = "none";
                       window.location.href = window.location.href;
                     }, 5000);
@@ -607,6 +625,7 @@
 
             // Reset the button text
             btn.textContent = "Submit";
+            btn.disabled = false;
           }, 1000); // 1-second delay
         });
 

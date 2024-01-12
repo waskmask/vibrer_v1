@@ -314,7 +314,6 @@
                 <input
                   type="text"
                   placeholder="YouTube"
-                  required
                   autocomplete="off"
                   name="youtube"
                 />
@@ -323,7 +322,6 @@
                 <input
                   type="text"
                   placeholder="Instagram"
-                  required
                   autocomplete="off"
                   name="instagram"
                 />
@@ -332,7 +330,6 @@
                 <input
                   type="text"
                   placeholder="Facebook"
-                  required
                   autocomplete="off"
                   name="facebook"
                 />
@@ -341,7 +338,6 @@
                 <input
                   type="text"
                   placeholder="Twitter"
-                  required
                   autocomplete="off"
                   name="twitter"
                 />
@@ -350,7 +346,6 @@
                 <input
                   type="text"
                   placeholder="Website"
-                  required
                   autocomplete="off"
                   name="website"
                 />
@@ -736,7 +731,7 @@
                 if (responseData.status === 1) {
                   // Handle success
                   successPop.style.display = "block";
-                  successPop.innerHTML = responseData.message;
+                  successPop.innerHTML = "Profile completed successfully";
                   setTimeout(() => {
                     successPop.style.display = "none";
                     window.location.href = "/app/pre-home";

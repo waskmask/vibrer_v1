@@ -63,23 +63,41 @@
         <div class="app_right_menu">
           <div class="profile">
             <div class="head hphead">
-              <img
+              <!-- <img
                 class="icon"
                 src="/public/images/icons/user-icon-light.svg"
                 alt="Icon"
-              />
+              /> -->
+              <% if (profileData.profile_img === '') { %>
               <img
-                src="/public/images/singer.png"
-                alt="avatar"
+                src="/public/images/default-avatar.png"
+                alt="Default Avatar"
                 class="avatar"
               />
+              <% } else { %>
+              <img
+                src="<%- profileData.profile_img %>"
+                alt="User Profile Image"
+                class="avatar"
+              />
+              <% } %>
             </div>
             <div class="drop_down hpdd">
               <div class="_profile">
-                <img src="/public/images/singer.png" alt="avatar" />
+                <% if (profileData.profile_img === '') { %>
+                <img
+                  src="/public/images/default-avatar.png"
+                  alt="Default Avatar"
+                />
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                />
+                <% } %>
                 <div class="name">
                   <span
-                    ><%- profileData.name.first_name %><%-
+                    ><%- profileData.name.first_name %> <%-
                     profileData.name.last_name %></span
                   >
                   <% if(profileData.verified === true){ %>
