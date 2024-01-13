@@ -107,6 +107,7 @@
 
           // Change button text to "Sending..."
           btn.textContent = "Loading...";
+          btn.disabled = true;
 
           // Implement the timeout function
           setTimeout(async () => {
@@ -157,14 +158,16 @@
                     form.reset();
                   } else {
                     errorPop.style.display = "block";
-                    errorPop.innerHTML = responseData.message;
+                    errorPop.innerHTML =
+                      "Invalid email. Please enter a valid email address.";
                     setTimeout(() => {
                       errorPop.style.display = "none";
                     }, 5000);
                   }
                 } else {
                   errorPop.style.display = "block";
-                  errorPop.innerHTML = responseData.message;
+                  errorPop.innerHTML =
+                    "Invalid email. Please enter a valid email address.";
                   setTimeout(() => {
                     errorPop.style.display = "none";
                   }, 5000);
@@ -187,6 +190,7 @@
 
             // Reset the button text
             btn.textContent = "Send Email";
+            btn.disabled = false;
           }, 1000); // 1-second delay
         });
       });
