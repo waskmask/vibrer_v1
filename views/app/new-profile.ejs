@@ -357,7 +357,10 @@
                 >
                   Back
                 </button>
-                <button type="submit" class="btn btn-primary next-btn">
+                <button
+                  type="submit"
+                  class="btn btn-primary next-btn submitBtn"
+                >
                   Finish
                 </button>
               </div>
@@ -590,7 +593,7 @@
         modules: {
           toolbar: false, // This hides the toolbar
         },
-        placeholder: "Bio *",
+        placeholder: "Bio",
         theme: "snow",
       });
     </script>
@@ -684,6 +687,10 @@
             e.preventDefault();
             const errorPop = document.querySelector(".error-message");
             const successPop = document.querySelector(".success-message");
+            const btn = document.querySelector(".submitBtn");
+
+            btn.textContent = "Loading...";
+            btn.disabled = true;
 
             const form = e.target;
             const formData = new FormData(form);
@@ -756,9 +763,13 @@
                   errorPop.style.display = "none";
                 }, 5000);
               }
+              btn.textContent = "Finish";
+              btn.disabled = false;
             } catch (err) {
               // Handle fetch error
               console.error("An error occurred", err);
+              btn.textContent = "Finish";
+              btn.disabled = false;
             }
           });
       });
