@@ -55,8 +55,14 @@
       </ul>
     </div>
     <div class="hcta">
+      <% if (typeof profileData !== 'undefined' && profileData) { %>
+      <button class="btn btn-primary" onclick="toLogin()">App</button>
+
+      <% } else { %>
       <button class="btn btn-outlined" onclick="toRegister()">Sign up</button>
       <button class="btn btn-primary" onclick="toLogin()">Login</button>
+
+      <% } %>
     </div>
   </nav>
 </header>

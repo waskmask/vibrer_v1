@@ -28,11 +28,13 @@
             </div>
             <div class="sub">
               Unleash Your Inner Vocal Star, Participate, Earn Public Votes, and
-              Win a Reward of 5000 Euros, public voting will start from 1st Jan
+              Win a Reward of 5000 Euros, public voting will start from 1st Feb
               2024.
             </div>
             <div class="cta">
-              <button class="btn btn-primary">View Contest</button>
+              <button class="btn btn-primary" onclick="toContest();">
+                View Contest
+              </button>
               <button class="btn btn-outlined" onclick="learnMore()">
                 Learn more about Vibrer
               </button>
@@ -391,9 +393,9 @@
       </div>
     </div>
     <!-- javascript -->
-    <script src="/public/js/cookieBanner.js"></script>
-    <script src="/public/js/theme-v01node.js"></script>
-    <script src="/public/js/forms.js"></script>
+    <script src="/public/js/cookieBanner.js?v=2.0"></script>
+    <script src="/public/js/theme-v01node.js?v=2.0"></script>
+    <script src="/public/js/forms.js?v=2.0"></script>
     <script>
       const allElements = document.querySelectorAll("body *");
 
@@ -471,6 +473,11 @@
             behavior: "smooth",
           });
         }
+      }
+    </script>
+    <script>
+      function toContest() {
+        window.location.href = "/contest";
       }
     </script>
   </body>

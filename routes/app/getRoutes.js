@@ -26,10 +26,8 @@ const router = express.Router();
 //     const onGoingContestsResponse = await axios.post(
 //       `${process.env.API_URL}all/contest`,
 //       {
-//         data: {
 //           type: "ongoing",
 //         },
-//       }
 //     );
 
 //     const onGoingContestsData = onGoingContestsResponse.data;
@@ -37,10 +35,8 @@ const router = express.Router();
 //     const upComingContestsResponse = await axios.post(
 //       `${process.env.API_URL}all/contest`,
 //       {
-//         data: {
 //           type: "upcoming",
 //         },
-//       }
 //     );
 
 //     const upComingContestsData = upComingContestsResponse.data;
@@ -495,11 +491,71 @@ router.get("/app/pre-home", async function (req, res) {
   }
 });
 
-router.get("/app/prehome", function (req, res) {
-  res.render("app/pre-home-content", {
-    title: "Home",
-    path: "/home",
-  });
+router.get("/app/pre-contest", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const contest_id = process.env.PRE_CONTEST_ID;
+
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+    const userId = profileData._id;
+
+    if (
+      !profileData.name &&
+      !profileData.name.first_name &&
+      !profileData.name.last_name
+    ) {
+      return res.redirect("/new-profile");
+    }
+
+    const contestDetailsResponse = await axios.get(
+      `${process.env.API_URL}contest-details/${contest_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const contestDetailsData = contestDetailsResponse.data;
+    // const isParticipated = contestDetailsData.result.isParticipated;
+    let isParticipated = false;
+
+    if (contestDetailsData.result.participates) {
+      const userIdExists = contestDetailsData.result.participates.some(
+        (participant) => participant.user._id === userId
+      );
+
+      if (userIdExists) {
+        isParticipated = true;
+      }
+    }
+
+    res.render("app/pre-home-content", {
+      title: "Contest",
+      path: "/contest",
+      isParticipated,
+      onGoingContestsData: contestDetailsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error("Error fetching profile:", error);
+    return res.render("500", {
+      title: "500 Server error!",
+      path: "/500",
+    });
+  }
 });
 router.get("/imprint", function (req, res) {
   res.render("imprint", {
@@ -543,6 +599,81 @@ router.get("/imprint", function (req, res) {
 //     path: "/reports",
 //   });
 // });
+
+router.get("/contest", async function (req, res) {
+  const contest_id = process.env.PRE_CONTEST_ID;
+  let isParticipated = false;
+
+  if (req.session.appUserToken) {
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+    const userId = profileData._id;
+
+    const contestDetailResponse = await axios.get(
+      `${process.env.API_URL}contest-details/${contest_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+    const contestDetailData = contestDetailResponse.data;
+
+    if (contestDetailData.status === 0) {
+      return res.redirect("/contests");
+    }
+
+    if (contestDetailData.result.participates) {
+      const userIdExists = contestDetailData.result.participates.some(
+        (participant) => participant.user._id === userId
+      );
+
+      if (userIdExists) {
+        isParticipated = true;
+      }
+    }
+
+    if (
+      !profileData.name &&
+      !profileData.name.first_name &&
+      !profileData.name.last_name
+    ) {
+      return res.redirect("/new-profile");
+    }
+    return res.render("contest", {
+      title: "Contest",
+      path: "/contest",
+      contestDetailData: contestDetailData,
+      ADMIN_URL: process.env.ADMIN_URL,
+      isParticipated,
+      profileData: profileData,
+    });
+  } else {
+    const contestDetailResponse = await axios.get(
+      `${process.env.API_URL}contest/${contest_id}`
+    );
+    const contestDetailData = contestDetailResponse.data;
+
+    if (contestDetailData.status === 0) {
+      return res.redirect("/contests");
+    }
+    return res.render("contest", {
+      title: "Contest",
+      path: "/contest",
+      contestDetailData: contestDetailData,
+      ADMIN_URL: process.env.ADMIN_URL,
+      isParticipated,
+    });
+  }
+});
 
 // my profile
 // router.get("/app/my-profile", function (req, res) {

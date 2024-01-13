@@ -12,14 +12,11 @@
       content="music platform, music community, music discovery, artist connection, music enthusiasts"
     />
     <%- include('../partials/head'); %>
-    <link
-      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/public/style/modal.css" />
-    <link rel="stylesheet" href="/public/style/app.css" />
-    <link rel="stylesheet" href="/public/style/contests.css" />
-    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+    <link href="/public/style/quill.snow.css?v=2.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=2.0" />
+    <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
   </head>
   <body class="body-dark _pr">
     <!-- loader -->
@@ -44,47 +41,68 @@
         <div class="app_middle_bar force_mobile">
           <ul>
             <li
-              class="<%= (path == '/home') ? 'active' : 'mdb_item' %>"
+              class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
               onclick="toPreHome('<%= path %>')"
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-
+            <% if(profileData.user_type === 'Artist'){ %>
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
-              onclick="toMyPreContests('<%= path %>')"
+              onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
+            <% } %>
           </ul>
         </div>
 
         <div class="app_right_menu">
           <div class="profile">
             <div class="head hphead">
+              <% if (profileData.profile_img === '') { %>
               <img
-                class="icon"
-                src="/public/images/icons/user-icon-light.svg"
-                alt="Icon"
-              />
-              <img
-                src="/public/images/singer.png"
-                alt="avatar"
+                src="/public/images/default-avatar.png"
+                alt="Default Avatar"
                 class="avatar"
               />
+              <% } else { %>
+              <img
+                src="<%- profileData.profile_img %>"
+                alt="User Profile Image"
+                class="avatar"
+              />
+              <% } %>
             </div>
             <div class="drop_down hpdd">
               <div class="_profile">
-                <img src="/public/images/singer.png" alt="avatar" />
+                <% if (profileData.profile_img === '') { %>
+                <img
+                  src="/public/images/default-avatar.png"
+                  alt="Default Avatar"
+                />
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                />
+                <% } %>
                 <div class="name">
-                  <span>Nathan Steve</span>
+                  <span
+                    ><%- profileData.name.first_name %> <%-
+                    profileData.name.last_name %></span
+                  >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@nathan_steve</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
@@ -105,7 +123,7 @@
 
     <main class="app_layout app_wrapper">
       <!-- main body of the app -->
-      <div class="app_main">
+      <div class="app_main preMain">
         <% if(isParticipated) { %>
         <div class="myContestCard mt-3 mb-3 shadow">
           <div class="flex-title">
@@ -149,7 +167,9 @@
             </div>
             <div class="body">
               <!-- inactive | active | review -->
-              <div class="postStatus active">
+              <div
+                class="postStatus <%= (participatedParticipantData.status === 'Under Review') ? 'review' : (participatedParticipantData.status === 'Active') ? 'active' : 'inactive' %>"
+              >
                 <%- participatedParticipantData.status %>
               </div>
               <div class="votes">
@@ -323,20 +343,58 @@
           </form>
         </div>
         <% } %>
+
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint">Imprint</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy">Privacy policy</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms">Terms of use</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">Cookie settings</a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/home">Vibrer Home page</a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+          <div class="bottom">
+            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
+            2024
+          </div>
+        </div>
       </div>
     </main>
 
     <%- include('../modals/contest1tandc'); %>
     <!-- javascript -->
-    <script src="/public/js/redirections.js"></script>
-    <script src="/public/js/general.js"></script>
-    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/public/js/_modal.js"></script>
-    <script src="/public/js/check-select.js"></script>
-    <script src="/public/js/config.js"></script>
+    <script src="/public/js/redirections.js?v=2.0"></script>
+    <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/quill.min.js?v=2.0"></script>
+    <script src="/public/js/video.min.js?v=2.0"></script>
+    <script src="/public/js/Youtube.min.js?v=2.0"></script>
+    <script src="/public/js/sweetalert2@11.js?v=2.0"></script>
+    <script src="/public/js/_modal.js?v=2.0"></script>
+    <script src="/public/js/check-select.js?v=2.0"></script>
+    <script src="/public/js/config.js?v=2.0"></script>
     <script>
       var players = [];
 
@@ -460,7 +518,8 @@
           e.preventDefault();
 
           // Change button text to "Submitting..."
-          btn.textContent = "Submitting...";
+          btn.textContent = "Submitting, please wait..";
+          btn.disabled = true;
 
           // Implement the timeout function
           setTimeout(async () => {
@@ -508,8 +567,10 @@
                   if (responseData.status === 1) {
                     // Handle success
                     successPop.style.display = "block";
-                    successPop.innerHTML = responseData.message;
+                    successPop.innerHTML = "Entry submitted successfully.";
                     setTimeout(() => {
+                      // const loader = document.getElementById("loader");
+                      // loader.style.display = "block";
                       successPop.style.display = "none";
                       window.location.href = window.location.href;
                     }, 5000);
@@ -561,6 +622,7 @@
 
             // Reset the button text
             btn.textContent = "Submit";
+            btn.disabled = false;
           }, 1000); // 1-second delay
         });
 

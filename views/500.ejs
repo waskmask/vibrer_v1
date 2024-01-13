@@ -20,9 +20,20 @@
         <div class="wrapper">
           <div class="title">500</div>
           <div class="sub">Internal server error!</div>
-          <button class="btn btn-primary shadow">Vibrer Home page</button>
+          <button
+            class="btn btn-primary shadow"
+            type="button"
+            onclick="toLogin()"
+          >
+            Vibrer Home page
+          </button>
         </div>
       </section>
     </main>
+    <script>
+      function toLogin() {
+        window.location.href = "/login";
+      }
+    </script>
   </body>
 </html>
