@@ -2077,3 +2077,29 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 .linkBlue {
   color: #007bff;
 }
+
+.contestTimer {
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  .title {
+    font-size: 3rem;
+
+    @include phone {
+      font-size: 1.5rem;
+    }
+  }
+
+  .t_card {
+    background-color: #2b3254;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+
+    ._label {
+      font-size: 0.6rem;
+    }
+  }
+}

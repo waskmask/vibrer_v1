@@ -130,6 +130,26 @@
           </div>
         </section>
 
+        <div class="title mt-4 mb-3">Voting Begins In:</div>
+        <div class="contestTimer" id="Contest1timer">
+          <div class="t_card">
+            <div class="title" id="days"></div>
+            <div class="_label">Days</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="hours"></div>
+            <div class="_label">Hours</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="minutes"></div>
+            <div class="_label">Minutes</div>
+          </div>
+          <div class="t_card">
+            <div class="title" id="seconds"></div>
+            <div class="_label">Seconds</div>
+          </div>
+        </div>
+
         <div class="app_posts">
           <div class="post mt-5">
             <div class="post_header">
@@ -293,6 +313,12 @@
               </div>
             </div>
           </div>
+
+          <div>
+            <button onclick="playSound()">Play</button>
+            <button onclick="pauseSound()">Pause</button>
+          </div>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js"></script>
         </div>
 
         <div class="temp_footer">
@@ -388,6 +414,44 @@
         theme: "snow",
       });
     </script>
+
+    <script>
+      // Set the date we're counting down to
+      var countDownDate = new Date("Feb 1, 2024 00:00:00").getTime();
+
+      // Update the count down every 1 second
+      var x = setInterval(function () {
+        // Get today's date and time in the Berlin timezone
+        var now = new Date().toLocaleString("en-US", {
+          timeZone: "Europe/Berlin",
+        });
+        now = new Date(now).getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes, and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the elements with respective ids
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("Contest1timer").innerHTML =
+            "Voting Period Over";
+        }
+      }, 1000);
+    </script>
     <script>
       document
         .getElementById("media_file")
@@ -426,52 +490,7 @@
           }, 200); // Adjust the interval time as needed
         });
     </script>
-    <!-- <script>
-      document
-        .getElementById("media_file")
-        .addEventListener("change", function (event) {
-          var file = event.target.files[0];
-          var formData = new FormData();
-          formData.append("media_file", file);
 
-          // Display the progress bar
-          var progressBar = document.getElementById("uploadProgress");
-          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
-          progressBar.classList.remove("d-none");
-
-          // AJAX request to upload the file
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", "/path-to-upload-handler", true);
-
-          xhr.upload.onprogress = function (event) {
-            if (event.lengthComputable) {
-              var percentComplete = (event.loaded / event.total) * 100;
-              progressBarFill.style.width = percentComplete + "%";
-              progressBarFill.textContent = Math.round(percentComplete) + "%";
-            }
-          };
-
-          xhr.onload = function () {
-            if (xhr.status === 200) {
-              // Update the video source and display it
-              var videoElement = document.querySelector(".video-preview video");
-              var videoSource = videoElement.getElementsByTagName("source");
-              videoSource[0].src = xhr.responseText; // Assuming the response is the video URL
-              videoElement.load();
-
-              // Display the video player and title
-              document
-                .querySelector(".video-preview")
-                .classList.remove("d-none");
-              document.querySelector(".sub").classList.remove("d-none");
-            }
-            // Hide the progress bar
-            progressBar.classList.add("d-none");
-          };
-
-          xhr.send(formData);
-        });
-    </script> -->
     <script>
       async function logoutAppUser() {
         try {
