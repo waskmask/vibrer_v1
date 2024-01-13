@@ -19,9 +19,12 @@ const router = express.Router();
 
 //     const profileData = profileResponse.data.result;
 
-//     if (!profileData.name.first_name && !profileData.name.last_name) {
-//       return res.redirect("/new-profile");
-//     }
+// if (
+//   !profileData.name ||
+//   (!profileData.name.first_name && !profileData.name.last_name)
+// ) {
+//   return res.redirect("/new-profile");
+// }
 
 //     const onGoingContestsResponse = await axios.post(
 //       `${process.env.API_URL}all/contest`,
@@ -194,9 +197,12 @@ const router = express.Router();
 
 //     const profileData = profileResponse.data.result;
 
-//     if (!profileData.name.first_name && !profileData.name.last_name) {
-//       return res.redirect("/new-profile");
-//     }
+// if (
+//   !profileData.name ||
+//   (!profileData.name.first_name && !profileData.name.last_name)
+// ) {
+//   return res.redirect("/new-profile");
+// }
 
 //     const onGoingContestsResponse = await axios.post(
 //       `${process.env.API_URL}all/contest`,
@@ -361,7 +367,10 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
     const profileData = profileResponse.data.result;
     const userId = profileData._id;
 
-    if (!profileData.name.first_name && !profileData.name.last_name) {
+    if (
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
+    ) {
       return res.redirect("/new-profile");
     }
 
@@ -444,9 +453,8 @@ router.get("/app/pre-home", async function (req, res) {
     const userId = profileData._id;
 
     if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
     ) {
       return res.redirect("/new-profile");
     }
@@ -511,9 +519,8 @@ router.get("/app/pre-contest", async function (req, res) {
     const userId = profileData._id;
 
     if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
     ) {
       return res.redirect("/new-profile");
     }
@@ -642,9 +649,8 @@ router.get("/contest", async function (req, res) {
     }
 
     if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
     ) {
       return res.redirect("/new-profile");
     }
