@@ -373,6 +373,37 @@ input:-webkit-autofill:active {
     color: $info;
   }
 }
+.edit-my-profile {
+  .title {
+    font: normal normal 500 1.5rem $roboto;
+    opacity: 1;
+    margin-bottom: 0.25rem;
+    color: $white;
+  }
+  .sub {
+    font-size: 0.875rem;
+    color: $white;
+    margin-bottom: 0.5rem;
+  }
+
+  .small {
+    color: $white;
+    font-size: 0.83rem;
+  }
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="date"],
+  input[type="file"],
+  button,
+  .custom-select,
+  .custom-check-select {
+    height: 50px;
+  }
+  a {
+    color: $info;
+  }
+}
 .avatar-upload {
   display: flex;
   justify-content: center;
@@ -1810,11 +1841,27 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     img {
       width: 145px;
       height: 145px;
       object-fit: cover;
       border-radius: 100%;
+    }
+
+    #change_avatar {
+      position: absolute;
+      background-color: $primary;
+      left: 0.25rem;
+      bottom: 0.25rem;
+      padding: 0.35rem 0.35rem 0;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      img {
+        border-radius: 0;
+        width: 20px;
+        height: auto;
+      }
     }
     @include phone {
       width: 85px;
@@ -1856,6 +1903,24 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   .info {
     color: $light;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    .g_age {
+      display: flex;
+      align-items: center;
+
+      img {
+        border: none;
+        border-radius: 0;
+        height: 15px;
+        width: 20px;
+        object-fit: contain;
+        cursor: pointer;
+        margin-right: 0.25rem;
+      }
+    }
   }
 }
 
@@ -2102,4 +2167,32 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
       font-size: 0.6rem;
     }
   }
+}
+
+.toast {
+  font-size: 0.875rem;
+  font-weight: 500;
+  position: fixed;
+  z-index: 999999;
+  background-color: $dl;
+  top: 1rem;
+  right: -1rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 2px #000;
+  border: 1px solid transparent;
+  transform: scale3d(0.8, 0.8, 0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show {
+  right: 1rem;
+  transform: scale3d(1, 1, 1);
+  transition: all 0.3s ease-in-out;
+  pointer-events: all;
+  opacity: 1;
+}
+.toast.success {
+  color: $green;
+  border-color: $green;
 }

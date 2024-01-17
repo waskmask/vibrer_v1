@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+
+    <link href="/public/style/quill.snow.css?v=2.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
+    <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=2.0" />
+
+    <style>
+      :root {
+        --dd-radius: 4px !important;
+        --dd-shadow: 0 0 2.5em rgba(0, 0, 0, 0.1);
+        --dd-overlay: rgba(0, 0, 0, 0.75);
+        --dd-background: #ffffff;
+        --dd-text1: #080813;
+        --dd-text2: #ffffff;
+        --dd-primary: #f32377;
+        --dd-gradient: linear-gradient(45deg, #fb6580, #f32377) !important;
+        --dd-monthBackground: var(--dd-gradient);
+        --dd-monthText: var(--dd-text2);
+        --dd-monthBorder: transparent;
+        --dd-confirmButtonBackground: var(--dd-gradient);
+        --dd-confirmButtonText: var(--dd-text2);
+        --dd-selectedBackground: var(--dd-gradient);
+        --dd-selectedText: var(--dd-text2);
+      }
+      .dd__dropdown:not(.dd-inline).dd-shown {
+        transform: translateY(-5%) translateX(-50%) !important;
+      }
+    </style>
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main">
+        <div class="title">Edit your profile</div>
+        <form
+          class="form edit-my-profile"
+          id="stepForm"
+          action="javascript:void(0)"
+          method="post"
+          autocomplete="off"
+        >
+          <div class="grid-2-sm mt-3">
+            <div>
+              <input
+                type="text"
+                id="userName"
+                placeholder="Username"
+                name="userName"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="grid-2-sm mt-4">
+            <div>
+              <input
+                type="text"
+                id="fname"
+                placeholder="First name *"
+                name="first_name"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                id="lname"
+                placeholder="Last name *"
+                name="last_name"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="genderInputWrapper">
+              <div class="custom-select dfac" id="gender-opt">
+                <div class="placeholder">Gender *</div>
+                <div class="options">
+                  <div class="option" value="Male">Male</div>
+                  <div class="option" value="Female">Female</div>
+                </div>
+                <input
+                  type="hidden"
+                  name="gender"
+                  value=""
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+            <div id="dateInputWrapper">
+              <div class="date-input w-100">
+                <input
+                  type="date"
+                  name="date_of_birth"
+                  id="dob"
+                  placeholder="Date of Birth *"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="city-input"
+                name="city"
+                autocomplete="off"
+                placeholder="City *"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                id="country-input"
+                placeholder="Country *"
+                name="country"
+                autocomplete="off"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="custom-select-wrapper mt-4 mb-4">
+            <div class="custom-check-select dfac" id="artists">
+              <div class="placeholder">I am a? *</div>
+              <div class="check-options">
+                <div class="check-list grid-2-sm">
+                  <label class="checkbox-container">
+                    Singer
+                    <input type="checkbox" value="Singer" data-value="Singer" />
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="checkbox-container">
+                    Dancer
+                    <input type="checkbox" value="Dancer" data-value="Dancer" />
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="checkbox-container">
+                    Musician
+                    <input
+                      type="checkbox"
+                      value="Musician"
+                      data-value="Musician"
+                    />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <input
+                  type="hidden"
+                  id="artist_categories"
+                  name="artist_categories"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="divider w-100 mt-4"></div>
+                <div class="ccs-foter dfjcfe">
+                  <button
+                    class="btn btn-primary h-auto close-options"
+                    type="button"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="selected-items"></div>
+          </div>
+
+          <div class="custom-select-wrapper mb-4">
+            <div class="custom-check-select dfac" id="genre">
+              <div class="placeholder">Genre *</div>
+              <div class="check-options">
+                <div class="check-list grid-2-sm">
+                  <label class="checkbox-container">
+                    HipHop
+                    <input type="checkbox" value="HipHop" data-value="HipHop" />
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+                <input
+                  type="hidden"
+                  id="genres"
+                  name="genres"
+                  value=""
+                  autocomplete="off"
+                />
+                <div class="divider w-100 mt-4"></div>
+                <div class="ccs-foter dfjcfe">
+                  <button
+                    class="btn btn-primary h-auto close-options"
+                    type="button"
+                  >
+                    Done
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="selected-items"></div>
+          </div>
+
+          <div class="mb-4">
+            <div id="bio" style="height: auto; min-height: 100px"></div>
+          </div>
+
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="YouTube"
+              autocomplete="off"
+              name="youtube"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Instagram"
+              autocomplete="off"
+              name="instagram"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Facebook"
+              autocomplete="off"
+              name="facebook"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Twitter"
+              autocomplete="off"
+              name="twitter"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="Website"
+              autocomplete="off"
+              name="website"
+            />
+          </div>
+          <div class="error-message mt-3 d-none"></div>
+          <div class="success-message mt-3 d-none"></div>
+
+          <div class="mt-4">
+            <button class="btn btn-primary">Update information</button>
+          </div>
+        </form>
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../modals/shareModal'); %>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=2.0"></script>
+    <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/_modal.js?v=2.0"></script>
+    <script src="/public/js/video.min.js?v=2.0"></script>
+    <script src="/public/js/Youtube.min.js?v=2.0"></script>
+    <script src="/public/js/cookieBanner.js?v=2.0"></script>
+    <script src="/public/js/select.js?v=2.0"></script>
+    <script src="/public/js/check-select.js?v=2.0"></script>
+    <script src="/public/plugins/datedropper/datedropper-javascript.js?v=2.0"></script>
+    <script src="/public/js/quill.min.js?v=2.0"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
+    <script src="/public/js/config.js?v=2.0"></script>
+
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+    </script>
+    <script>
+      //   date
+
+      function calculateMaxYear() {
+        const currentDate = new Date();
+        const maxYear = currentDate.getFullYear() - 14;
+        return maxYear;
+      }
+
+      const maxYear = calculateMaxYear();
+
+      new dateDropper({
+        selector: "#dob",
+        format: "dd-mm-y",
+        lang: "en",
+        showArrowsOnHover: true,
+        overlay: false,
+        expandable: false,
+        expandedOnly: false,
+        doubleView: false,
+        startFromMonday: false,
+        maxYear: maxYear.toString(),
+        minYear: "1900",
+        // jump: "10",
+        range: false,
+      });
+
+      var quill = new Quill("#bio", {
+        modules: {
+          toolbar: false, // This hides the toolbar
+        },
+        placeholder: "Bio *",
+        theme: "snow",
+      });
+    </script>
+    <script>
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("city-input")
+      );
+
+      autocomplete.setOptions({
+        types: ["(cities)"],
+        disableHistory: true,
+      });
+      autocomplete.addListener("place_changed", function () {
+        var place = autocomplete.getPlace();
+        var country, city;
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (addressType === "country") {
+            country = place.address_components[i].long_name;
+          } else if (
+            addressType === "locality" ||
+            addressType === "administrative_area_level_3"
+          ) {
+            city = place.address_components[i].long_name;
+          }
+        }
+
+        if (country && city) {
+          document.getElementById("country-input").value = country;
+          document.getElementById("city-input").value = city;
+        }
+      });
+    </script>
+  </body>
+</html>
