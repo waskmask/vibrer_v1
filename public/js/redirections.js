@@ -51,6 +51,13 @@ function toPreHome(currentPath) {
   }
 }
 
+function toEditProfile() {
+  window.location.href = "/app/pre-edit-profile";
+}
+function toMyProfile() {
+  window.location.href = "/app/pre-my-profile";
+}
+
 function toReports(currentPath, currentLink) {
   if (currentLink !== "allreports") {
     window.location.href = "/app/reports";

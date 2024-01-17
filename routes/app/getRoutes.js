@@ -676,13 +676,34 @@ router.get("/contest", async function (req, res) {
 });
 
 // my profile
-// router.get("/app/my-profile", function (req, res) {
-//   res.render("app/my-profile", {
-//     title: "My Profile",
-//     path: "/my-profile",
-//   });
-// });
-// my profile
+router.get("/app/my-profile", function (req, res) {
+  res.render("app/my-profile", {
+    title: "My Profile",
+    path: "/my-profile",
+  });
+});
+
+// edit profile
+router.get("/app/edit-profile", function (req, res) {
+  res.render("app/edit-profile", {
+    title: "Edit Profile",
+    path: "/edit-profile",
+  });
+});
+
+router.get("/app/pre-my-profile", function (req, res) {
+  res.render("app/pre-my-profile", {
+    title: "My Profile",
+    path: "/my-profile",
+  });
+});
+router.get("/app/pre-edit-profile", function (req, res) {
+  res.render("app/pre-edit-profile", {
+    title: "edit Profile",
+    path: "/edit-profile",
+  });
+});
+
 router.get("/500", function (req, res) {
   res.render("500", {
     title: "500 Server error!",

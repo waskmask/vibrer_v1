@@ -14,9 +14,21 @@
     <%- include('../partials/head'); %>
 
     <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=2.0" />
     <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
     <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
     <link rel="stylesheet" href="/public/style/contests.css?v=2.0" />
+    <style>
+      #profile_cover,
+      #profile_avatar,
+      #add_gallery,
+      .hidden {
+        display: none;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+      }
+    </style>
   </head>
   <body class="body-dark _pr">
     <!-- loader -->
@@ -38,7 +50,11 @@
                 <img src="/public/images/icons/more-vertical.svg" alt="Icon" />
               </div>
               <div class="drop_down">
-                <div class="_link" id="changeCover">
+                <div
+                  class="_link"
+                  id="changeCover"
+                  onclick="triggerFileInput()"
+                >
                   <img src="/public/images/icons/camera.svg" alt="Camera" />
                   <div>Change cover</div>
                 </div>
@@ -58,14 +74,27 @@
             </div>
           </div>
           <div class="cover">
-            <img src="/uploads/coverDemo.jpeg" alt="Cover" />
+            <form action="">
+              <input type="file" name="profile_cover" id="profile_cover" />
+            </form>
+            <img src="/uploads/coverDemo.jpeg" alt="Cover" id="my_cover" />
           </div>
         </div>
 
         <div class="profile_wrapper">
           <div class="_profile_left">
             <div class="avatar">
-              <img src="/uploads/profileDemo.png" alt="avatar" />
+              <img src="/uploads/profileDemo.png" id="p_avatar" alt="avatar" />
+              <div id="change_avatar" onclick="triggerAvatarInput()">
+                <img src="/public/images/icons/camera.svg" alt="camera" />
+                <form action="">
+                  <input
+                    type="file"
+                    name="profile_avatar"
+                    id="profile_avatar"
+                  />
+                </form>
+              </div>
             </div>
             <div class="profile_top_details">
               <div class="name">
@@ -177,7 +206,117 @@
             <div class="title">Music</div>
           </div>
           <div class="_tab_content" id="userInfo">
-            <div class="title">Info</div>
+            <div class="profile_top_details">
+              <div class="name">
+                <span>Nathan Steve</span>
+                <img
+                  class="app_v_badge"
+                  src="/public/images/icons/verified-badge.svg"
+                  alt="Verified"
+                />
+              </div>
+              <div class="info mt-1">
+                <div class="g_age">
+                  <img
+                    src="/public/images/icons/gender-male.svg"
+                    alt="Gender"
+                    title="Male"
+                  />
+                  <div>32,</div>
+                </div>
+                <span>Frankfurt, Germany</span>
+              </div>
+            </div>
+
+            <div class="title mt-3">Username:</div>
+            <div class="data">waskmask</div>
+
+            <div class="title mt-3">Genre:</div>
+            <div class="data">Pop, R&B, HipHop</div>
+
+            <div class="title mt-3">Other links:</div>
+            <div class="p_social_links mt-2">
+              <div class="link">
+                <div class="title">Instagram</div>
+                <a href="" target="_blank"
+                  ><img
+                    src="/public/images/icons/instagram_link.svg"
+                    alt="instagram link"
+                /></a>
+              </div>
+              <div class="link">
+                <div class="title">YouTube</div>
+                <a href="" target="_blank"
+                  ><img
+                    src="/public/images/icons/Youtube_link.svg"
+                    alt="youtube link"
+                /></a>
+              </div>
+              <div class="link">
+                <div class="title">Facebook</div>
+                <a href="" target="_blank"
+                  ><img
+                    src="/public/images/icons/facebook_link.svg"
+                    alt="facebook link"
+                /></a>
+              </div>
+              <div class="link">
+                <div class="title">Twitter</div>
+                <a href="" target="_blank"
+                  ><img
+                    src="/public/images/icons/twitter_link.svg"
+                    alt="twitter link"
+                /></a>
+              </div>
+              <div class="link">
+                <div class="title">Website</div>
+                <a href="" target="_blank"
+                  ><img
+                    src="/public/images/icons/website_link.svg"
+                    alt="website link"
+                /></a>
+              </div>
+            </div>
+
+            <div class="title mt-3">Bio:</div>
+            <div class="data">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. A
+              aspernatur facilis repellendus deleniti mollitia ratione? Autem,
+              ab a. Unde repudiandae quae quis, placeat neque incidunt cumque
+              velit delectus tempora possimus.
+            </div>
+
+            <div class="p_gallery mt-4 mb-3">
+              <div class="title">Gallery:</div>
+              <button
+                class="btn btn-sm btn-primary"
+                onclick="triggerGalleryInput()"
+              >
+                Add images
+              </button>
+              <form action="" class="hidden">
+                <input
+                  type="file"
+                  name="add_gallery"
+                  id="add_gallery"
+                  multiple
+                />
+              </form>
+            </div>
+            <div class="p_gallery_data" id="galleryData">
+              <div class="item">
+                <div class="remove">+</div>
+                <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+              </div>
+              <div class="item">
+                <div class="remove">+</div>
+                <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+              </div>
+              <div class="item">
+                <div class="remove">+</div>
+                <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+              </div>
+            </div>
           </div>
         </div>
         <!-- app main end -->
@@ -259,6 +398,7 @@
       </div>
     </main>
     <%- include('../modals/shareModal'); %>
+
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
@@ -365,6 +505,91 @@
           });
         });
       });
+    </script>
+    <script>
+      function triggerFileInput() {
+        document.getElementById("profile_cover").click();
+
+        document.getElementById("profile_cover").onchange = function (event) {
+          if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("my_cover").src = e.target.result;
+              showToastSuccess("Cover image uploaded successfully!");
+            };
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        };
+      }
+
+      function triggerAvatarInput() {
+        document.getElementById("profile_avatar").click();
+
+        document.getElementById("profile_avatar").onchange = function (event) {
+          if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("p_avatar").src = e.target.result;
+              showToastSuccess("Avatar uploaded successfully!");
+            };
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        };
+      }
+
+      function triggerGalleryInput() {
+        document.getElementById("add_gallery").click();
+
+        document.getElementById("add_gallery").onchange = function (event) {
+          if (event.target.files) {
+            Array.from(event.target.files).forEach((file) => {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                const galleryData = document.getElementById("galleryData");
+                const item = document.createElement("div");
+                item.className = "item";
+                item.innerHTML = `
+                <div class="remove">+</div>
+                <img src="${e.target.result}" alt="gallery" />
+              `;
+                galleryData.appendChild(item);
+                showToastSuccess("image uploaded successfully!");
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+        };
+      }
+
+      function showToastSuccess(message) {
+        let toast = document.querySelector(".toast");
+
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.className = "toast success";
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+      document
+        .getElementById("galleryData")
+        .addEventListener("click", function (event) {
+          if (event.target.classList.contains("remove")) {
+            removeItem(event.target);
+          }
+        });
+
+      function removeItem(element) {
+        element.parentElement.remove();
+        showToastSuccess("Image removed from gallery");
+      }
     </script>
   </body>
 </html>

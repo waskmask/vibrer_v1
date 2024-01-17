@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+
+    <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
+    <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=2.0" />
+    <style>
+      #profile_cover,
+      #profile_avatar,
+      #add_gallery,
+      .hidden {
+        display: none;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+      }
+    </style>
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <header class="app_header">
+      <nav class="app_layout">
+        <div class="app_start_menu">
+          <!-- Logo -->
+          <% if (path !== '/home') { %>
+          <div class="logo" onclick="toPreHome('<%= path %>')">
+            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+          </div>
+          <% } else { %>
+          <div class="logo">
+            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
+          </div>
+          <% } %>
+        </div>
+
+        <div class="app_middle_bar force_mobile">
+          <ul>
+            <li
+              class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
+              onclick="toPreHome('<%= path %>')"
+            >
+              <img src="/public/images/icons/home-icon.svg" alt="Icon" />
+            </li>
+
+            <li
+              class="<%= (path == '/contests') ? 'active' : '' %>"
+              onclick="toTheContest('<%- path %>')"
+            >
+              <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
+            </li>
+          </ul>
+        </div>
+
+        <div class="app_right_menu">
+          <div class="profile">
+            <div class="head hphead">
+              <img
+                src="/public/images/default-avatar.png"
+                alt="Default Avatar"
+                class="avatar"
+              />
+            </div>
+            <div class="drop_down hpdd">
+              <div class="_profile">
+                <img
+                  src="/public/images/default-avatar.png"
+                  alt="Default Avatar"
+                />
+
+                <div class="name">
+                  <span>Waseem Mohammed</span>
+
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="Verified"
+                  />
+                </div>
+                <div class="uname" id="username">@waskmask</div>
+              </div>
+
+              <div class="_menu">
+                <ul>
+                  <li>
+                    <a href="javascript:void(0)">
+                      <img
+                        src="/public/images/icons/user_icon.svg"
+                        alt="Icon"
+                      />
+                      <span>My profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0)" onclick="logoutAppUser();">
+                      <img src="/public/images/icons/log-off.svg" alt="Icon" />
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="app_layout app_wrapper">
+      <!-- main body of the app -->
+      <div class="app_main preMain">
+        <div class="profile_main">
+          <div class="profile_header">
+            <div class="_action">
+              <div class="title">My profile</div>
+              <div class="_options">
+                <div class="head" id="myProfile_options">
+                  <img
+                    src="/public/images/icons/more-vertical.svg"
+                    alt="Icon"
+                  />
+                </div>
+                <div class="drop_down">
+                  <div
+                    class="_link"
+                    id="changeCover"
+                    onclick="triggerFileInput()"
+                  >
+                    <img src="/public/images/icons/camera.svg" alt="Camera" />
+                    <div>Change cover</div>
+                  </div>
+                  <div class="_link" onclick="toEditProfile()">
+                    <img src="/public/images/icons/edit.svg" alt="Edit" />
+                    <div>Edit profile</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cover">
+              <form action="">
+                <input type="file" name="profile_cover" id="profile_cover" />
+              </form>
+              <img src="/uploads/coverDemo.jpeg" alt="Cover" id="my_cover" />
+            </div>
+          </div>
+
+          <div class="profile_wrapper">
+            <div class="_profile_left">
+              <div class="avatar">
+                <img
+                  src="/uploads/profileDemo.png"
+                  id="p_avatar"
+                  alt="avatar"
+                />
+                <div id="change_avatar" onclick="triggerAvatarInput()">
+                  <img src="/public/images/icons/camera.svg" alt="camera" />
+                  <form action="">
+                    <input
+                      type="file"
+                      name="profile_avatar"
+                      id="profile_avatar"
+                    />
+                  </form>
+                </div>
+              </div>
+              <div class="profile_top_details">
+                <div class="name">
+                  <span>Nathan Steve</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="Verified"
+                  />
+                </div>
+                <div class="info">Singer, Song writer, Music director</div>
+              </div>
+            </div>
+
+            <div class="profile_action">
+              <button class="btn btn-primary btn-sm" onclick="toEditProfile()">
+                Edit profile
+              </button>
+            </div>
+          </div>
+
+          <div class="profile_content_tabs" style="margin-top: 1rem">
+            <div class="_tab_content active" id="userInfo">
+              <div class="profile_top_details">
+                <div class="name">
+                  <span>Nathan Steve</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="Verified"
+                  />
+                </div>
+                <div class="info mt-1">
+                  <div class="g_age">
+                    <img
+                      src="/public/images/icons/gender-male.svg"
+                      alt="Gender"
+                      title="Male"
+                    />
+                    <div>32,</div>
+                  </div>
+                  <span>Frankfurt, Germany</span>
+                </div>
+              </div>
+
+              <div class="title mt-3">Username:</div>
+              <div class="data">waskmask</div>
+
+              <div class="title mt-3">Genre:</div>
+              <div class="data">Pop, R&B, HipHop</div>
+
+              <div class="title mt-3">Other links:</div>
+              <div class="p_social_links mt-2">
+                <div class="link">
+                  <div class="title">Instagram</div>
+                  <a href="" target="_blank"
+                    ><img
+                      src="/public/images/icons/instagram_link.svg"
+                      alt="instagram link"
+                  /></a>
+                </div>
+                <div class="link">
+                  <div class="title">YouTube</div>
+                  <a href="" target="_blank"
+                    ><img
+                      src="/public/images/icons/Youtube_link.svg"
+                      alt="youtube link"
+                  /></a>
+                </div>
+                <div class="link">
+                  <div class="title">Facebook</div>
+                  <a href="" target="_blank"
+                    ><img
+                      src="/public/images/icons/facebook_link.svg"
+                      alt="facebook link"
+                  /></a>
+                </div>
+                <div class="link">
+                  <div class="title">Twitter</div>
+                  <a href="" target="_blank"
+                    ><img
+                      src="/public/images/icons/twitter_link.svg"
+                      alt="twitter link"
+                  /></a>
+                </div>
+                <div class="link">
+                  <div class="title">Website</div>
+                  <a href="" target="_blank"
+                    ><img
+                      src="/public/images/icons/website_link.svg"
+                      alt="website link"
+                  /></a>
+                </div>
+              </div>
+
+              <div class="title mt-3">Bio:</div>
+              <div class="data">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. A
+                aspernatur facilis repellendus deleniti mollitia ratione? Autem,
+                ab a. Unde repudiandae quae quis, placeat neque incidunt cumque
+                velit delectus tempora possimus.
+              </div>
+
+              <div class="p_gallery mt-4 mb-3">
+                <div class="title">Gallery:</div>
+                <button
+                  class="btn btn-sm btn-primary"
+                  onclick="triggerGalleryInput()"
+                >
+                  Add images
+                </button>
+                <form action="" class="hidden">
+                  <input
+                    type="file"
+                    name="add_gallery"
+                    id="add_gallery"
+                    multiple
+                  />
+                </form>
+              </div>
+              <div class="p_gallery_data" id="galleryData">
+                <div class="item">
+                  <div class="remove">+</div>
+                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+                </div>
+                <div class="item">
+                  <div class="remove">+</div>
+                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+                </div>
+                <div class="item">
+                  <div class="remove">+</div>
+                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- app main end -->
+        </div>
+      </div>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=2.0"></script>
+    <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/_modal.js?v=2.0"></script>
+    <script src="/public/js/video.min.js?v=2.0"></script>
+    <script src="/public/js/Youtube.min.js?v=2.0"></script>
+
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var headElement = document.getElementById("myProfile_options");
+        var dropdown = headElement.nextElementSibling;
+
+        // Toggle dropdown on clicking the head element
+        headElement.addEventListener("click", function (event) {
+          dropdown.classList.toggle("active");
+          event.stopPropagation(); // Prevent the document click event from firing immediately
+        });
+
+        // Close dropdown when clicking anywhere outside
+        document.addEventListener("click", function (event) {
+          if (
+            !headElement.contains(event.target) &&
+            !dropdown.contains(event.target)
+          ) {
+            dropdown.classList.remove("active");
+          }
+        });
+
+        // tab menu
+        var tabItems = document.querySelectorAll("._tab_menu ._item");
+
+        tabItems.forEach(function (item) {
+          item.addEventListener("click", function () {
+            // Remove active class from all items
+            tabItems.forEach(function (i) {
+              i.classList.remove("active");
+            });
+
+            // Add active class to clicked item
+            item.classList.add("active");
+
+            // Get target content ID
+            var target = item.getAttribute("target");
+
+            // Hide all tab contents
+            document
+              .querySelectorAll("._tab_content")
+              .forEach(function (content) {
+                content.classList.remove("active");
+              });
+
+            // Show target tab content
+            var targetContent = document.querySelector(target);
+            if (targetContent) {
+              targetContent.classList.add("active");
+            }
+          });
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var moreButtons = document.querySelectorAll(".more-btn");
+
+        moreButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            var contentDiv = this.closest(".content");
+            contentDiv.classList.toggle("expanded");
+          });
+        });
+      });
+    </script>
+    <script>
+      function triggerFileInput() {
+        document.getElementById("profile_cover").click();
+
+        document.getElementById("profile_cover").onchange = function (event) {
+          if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("my_cover").src = e.target.result;
+              showToastSuccess("Cover image uploaded successfully!");
+            };
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        };
+      }
+
+      function triggerAvatarInput() {
+        document.getElementById("profile_avatar").click();
+
+        document.getElementById("profile_avatar").onchange = function (event) {
+          if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              document.getElementById("p_avatar").src = e.target.result;
+              showToastSuccess("Avatar uploaded successfully!");
+            };
+            reader.readAsDataURL(event.target.files[0]);
+          }
+        };
+      }
+
+      function triggerGalleryInput() {
+        document.getElementById("add_gallery").click();
+
+        document.getElementById("add_gallery").onchange = function (event) {
+          if (event.target.files) {
+            Array.from(event.target.files).forEach((file) => {
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                const galleryData = document.getElementById("galleryData");
+                const item = document.createElement("div");
+                item.className = "item";
+                item.innerHTML = `
+                <div class="remove">+</div>
+                <img src="${e.target.result}" alt="gallery" />
+              `;
+                galleryData.appendChild(item);
+                showToastSuccess("image uploaded successfully!");
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+        };
+      }
+
+      function showToastSuccess(message) {
+        let toast = document.querySelector(".toast");
+
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.className = "toast success";
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+      document
+        .getElementById("galleryData")
+        .addEventListener("click", function (event) {
+          if (event.target.classList.contains("remove")) {
+            removeItem(event.target);
+          }
+        });
+
+      function removeItem(element) {
+        element.parentElement.remove();
+        showToastSuccess("Image removed from gallery");
+      }
+    </script>
+  </body>
+</html>
