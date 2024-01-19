@@ -697,17 +697,98 @@ router.get("/app/edit-profile", function (req, res) {
   });
 });
 
-router.get("/app/pre-my-profile", function (req, res) {
-  res.render("app/pre-my-profile", {
-    title: "My Profile",
-    path: "/my-profile",
-  });
+router.get("/app/pre-my-profile", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+
+    if (
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
+    ) {
+      return res.redirect("/new-profile");
+    }
+
+    const artistCategoriesapiResponse = await axios.get(
+      `${process.env.API_URL}all/artist-category`
+    );
+    const genreApiResponse = await axios.get(`${process.env.API_URL}all/genre`);
+
+    const artistCategoriesData = artistCategoriesapiResponse.data.result;
+    const genreData = genreApiResponse.data.result;
+    res.render("app/pre-my-profile", {
+      title: "My Profile",
+      path: "/my-profile",
+      profileData: profileData,
+      artistCategoriesData: artistCategoriesData,
+      genreData: genreData,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error("Error fetching profile:", error);
+    return res.render("500", {
+      title: "500 Server error!",
+      path: "/500",
+    });
+  }
 });
-router.get("/app/pre-edit-profile", function (req, res) {
-  res.render("app/pre-edit-profile", {
-    title: "edit Profile",
-    path: "/edit-profile",
-  });
+router.get("/app/pre-edit-profile", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+
+    if (
+      !profileData.name ||
+      (!profileData.name.first_name && !profileData.name.last_name)
+    ) {
+      return res.redirect("/new-profile");
+    }
+
+    const artistCategoriesapiResponse = await axios.get(
+      `${process.env.API_URL}all/artist-category`
+    );
+    const genreApiResponse = await axios.get(`${process.env.API_URL}all/genre`);
+
+    const artistCategoriesData = artistCategoriesapiResponse.data.result;
+    const genreData = genreApiResponse.data.result;
+
+    res.render("app/pre-edit-profile", {
+      title: "edit Profile",
+      path: "/edit-profile",
+      profileData: profileData,
+      artistCategoriesData: artistCategoriesData,
+      genreData: genreData,
+    });
+  } catch (error) {
+    // Handle errors gracefully
+    console.error("Error fetching profile:", error);
+    return res.render("500", {
+      title: "500 Server error!",
+      path: "/500",
+    });
+  }
 });
 
 router.get("/500", function (req, res) {

@@ -48,8 +48,8 @@
             </li>
             <% if(profileData.user_type === 'Artist'){ %>
             <li
-              class="<%= (path == '/contest') ? 'active' : '' %>"
-              onclick="toPreMyContests('<%= path %>', '<%= onGoingContestsData.result._id %>')"
+              class="<%= (path == '/contests') ? 'active' : '' %>"
+              onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>

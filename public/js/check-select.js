@@ -5,11 +5,34 @@ window.addEventListener("DOMContentLoaded", function () {
     const checkOptions = customCheckSelect.querySelector(".check-options");
     const closeOptions = customCheckSelect.querySelector(".close-options");
     const hiddenField = checkOptions.querySelector('input[type="hidden"]');
+    const attributeExists = hiddenField.hasAttribute("selectedValues");
+    let selectedValuesArray = [];
+    let selectedItemsArray = [];
+
+    if (attributeExists) {
+      const alreadyselectedValues = hiddenField.getAttribute("value");
+      selectedValuesArray = alreadyselectedValues.split(",");
+
+      const alreadyselectedItems = hiddenField.getAttribute("selectedValues");
+      selectedItemsArray = alreadyselectedItems.split(",");
+    }
 
     const checkboxContainerInputs = customCheckSelect.querySelectorAll(
       ".checkbox-container input"
     );
     const selectedItems = customCheckSelect.nextElementSibling;
+
+    function updateSelectedItems() {
+      selectedItems.innerHTML = selectedItemsArray
+        .map(
+          (itemName) => `
+            <div class="item">
+                <div class="item-name">${itemName}</div>
+            </div>
+          `
+        )
+        .join("");
+    }
 
     customCheckSelect.addEventListener("click", function (event) {
       event.stopPropagation();
@@ -32,32 +55,31 @@ window.addEventListener("DOMContentLoaded", function () {
     checkOptions.addEventListener("click", function (event) {
       event.stopPropagation();
     });
-    const selectedValues = [];
+
     checkboxContainerInputs.forEach(function (input) {
       input.addEventListener("change", function () {
         const itemName = this.value;
         const itemRealName = this.getAttribute("data-value");
+
         if (this.checked) {
-          selectedValues.push(itemName);
-          selectedItems.innerHTML += `
-                        <div class="item">
-                            <div class="item-name">${itemRealName}</div>
-                        </div>
-                    `;
+          selectedValuesArray.push(itemName);
+          selectedItemsArray.push(itemRealName);
         } else {
-          const itemToRemove = Array.from(
-            selectedItems.querySelectorAll(".item")
-          ).find(function (item) {
-            return item.querySelector(".item-name").textContent === itemName;
-          });
-          if (itemToRemove) {
-            selectedItems.removeChild(itemToRemove);
+          const itemToRemove = selectedItemsArray.indexOf(itemRealName);
+          if (itemToRemove !== -1) {
+            selectedItemsArray.splice(itemToRemove, 1);
+          }
+          const indexToRemove = selectedValuesArray.indexOf(itemName);
+          if (indexToRemove !== -1) {
+            selectedValuesArray.splice(indexToRemove, 1);
           }
         }
 
-        hiddenField.value = selectedValues;
+        updateSelectedItems();
+        hiddenField.value = selectedValuesArray.join(",");
+        hiddenField.dataset.selectedValues = selectedItemsArray.join(",");
 
-        if (selectedItems.querySelector(".item")) {
+        if (selectedValuesArray.length > 0) {
           selectedItems.style.display = "flex";
         } else {
           selectedItems.style.display = "none";

@@ -71,42 +71,68 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-
+            <% if(profileData.user_type === 'Artist'){ %>
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
               onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
+            <% } %>
           </ul>
         </div>
 
         <div class="app_right_menu">
           <div class="profile">
             <div class="head hphead">
+              <!-- <img
+                class="icon"
+                src="/public/images/icons/user-icon-light.svg"
+                alt="Icon"
+              /> -->
+              <% if (profileData.profile_img === '') { %>
               <img
                 src="/public/images/default-avatar.png"
                 alt="Default Avatar"
                 class="avatar"
               />
+              <% } else { %>
+              <img
+                src="<%- profileData.profile_img %>"
+                alt="User Profile Image"
+                class="avatar"
+              />
+              <% } %>
             </div>
             <div class="drop_down hpdd">
               <div class="_profile">
+                <% if (profileData.profile_img === '') { %>
                 <img
                   src="/public/images/default-avatar.png"
                   alt="Default Avatar"
                 />
-
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                />
+                <% } %>
                 <div class="name">
-                  <span>Waseem Mohammed</span>
-
+                  <span
+                    ><%- profileData.name.first_name %> <%-
+                    profileData.name.last_name %></span
+                  >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@waskmask</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
@@ -150,8 +176,9 @@
                 type="text"
                 id="userName"
                 placeholder="Username"
-                name="userName"
+                name="username"
                 autocomplete="off"
+                value="<%- profileData.username %>"
               />
             </div>
           </div>
@@ -164,6 +191,7 @@
                 name="first_name"
                 autocomplete="off"
                 required
+                value="<%- profileData.name.first_name %>"
               />
             </div>
 
@@ -175,11 +203,12 @@
                 name="last_name"
                 autocomplete="off"
                 required
+                value="<%- profileData.name.last_name %>"
               />
             </div>
             <div class="genderInputWrapper">
               <div class="custom-select dfac" id="gender-opt">
-                <div class="placeholder">Gender *</div>
+                <div class="select-value dark"><%- profileData.gender %></div>
                 <div class="options">
                   <div class="option" value="Male">Male</div>
                   <div class="option" value="Female">Female</div>
@@ -187,7 +216,7 @@
                 <input
                   type="hidden"
                   name="gender"
-                  value=""
+                  value="<%- profileData.gender %>"
                   autocomplete="off"
                   required
                 />
@@ -202,6 +231,7 @@
                   placeholder="Date of Birth *"
                   autocomplete="off"
                   required
+                  value="<%- (profileData.date_of_birth && new Date(profileData.date_of_birth).toISOString().split('T')[0]) || '' %>"
                 />
               </div>
             </div>
@@ -213,6 +243,7 @@
                 autocomplete="off"
                 placeholder="City *"
                 required
+                value="<%- profileData.city %>"
               />
             </div>
             <div>
@@ -223,6 +254,7 @@
                 name="country"
                 autocomplete="off"
                 required
+                value="<%- profileData.country %>"
               />
             </div>
           </div>
@@ -232,33 +264,25 @@
               <div class="placeholder">I am a? *</div>
               <div class="check-options">
                 <div class="check-list grid-2-sm">
+                  <% if (artistCategoriesData && artistCategoriesData.length >
+                  0) { artistCategoriesData.forEach(artistCategory => { const
+                  isChecked = profileData.artist_categories.some( category =>
+                  category._id === artistCategory._id ); %>
                   <label class="checkbox-container">
-                    Singer
-                    <input type="checkbox" value="Singer" data-value="Singer" />
+                    <%= artistCategory.name %> <input type="checkbox" <% if
+                    (isChecked) { // prettier-ignore %>checked<% } %> value="<%=
+                    artistCategory._id %>" data-value="<%= artistCategory.name
+                    %>" />
                     <span class="checkmark"></span>
                   </label>
-
-                  <label class="checkbox-container">
-                    Dancer
-                    <input type="checkbox" value="Dancer" data-value="Dancer" />
-                    <span class="checkmark"></span>
-                  </label>
-
-                  <label class="checkbox-container">
-                    Musician
-                    <input
-                      type="checkbox"
-                      value="Musician"
-                      data-value="Musician"
-                    />
-                    <span class="checkmark"></span>
-                  </label>
+                  <% }); } %>
                 </div>
                 <input
                   type="hidden"
                   id="artist_categories"
                   name="artist_categories"
-                  value=""
+                  value="<%= profileData.artist_categories.map(category => category._id).join(',') %>"
+                  selectedValues="<%= profileData.artist_categories.map(category => category.name).join(',') %>"
                   autocomplete="off"
                 />
                 <div class="divider w-100 mt-4"></div>
@@ -272,7 +296,15 @@
                 </div>
               </div>
             </div>
-            <div class="selected-items"></div>
+            <div class="selected-items" style="display: flex">
+              <% if (profileData.artist_categories &&
+              profileData.artist_categories.length > 0) {
+              profileData.artist_categories.forEach(selectedCategory => { %>
+              <div class="item">
+                <div class="item-name"><%= selectedCategory.name %></div>
+              </div>
+              <% }); } %>
+            </div>
           </div>
 
           <div class="custom-select-wrapper mb-4">
@@ -280,17 +312,24 @@
               <div class="placeholder">Genre *</div>
               <div class="check-options">
                 <div class="check-list grid-2-sm">
+                  <% if (genreData && genreData.length > 0) {
+                  genreData.forEach(genre => { const isChecked =
+                  profileData.genres.some( genres => genres._id === genre._id );
+                  %>
                   <label class="checkbox-container">
-                    HipHop
-                    <input type="checkbox" value="HipHop" data-value="HipHop" />
+                    <%= genre.name %> <input type="checkbox" <% if (isChecked) {
+                    // prettier-ignore %>checked<% } %> value="<%= genre._id %>"
+                    data-value="<%= genre.name %>" />
                     <span class="checkmark"></span>
                   </label>
+                  <% }); } %>
                 </div>
                 <input
                   type="hidden"
                   id="genres"
                   name="genres"
-                  value=""
+                  value="<%= profileData.genres.map(genre => genre._id).join(',') %>"
+                  selectedValues="<%= profileData.genres.map(genre => genre.name).join(',') %>"
                   autocomplete="off"
                 />
                 <div class="divider w-100 mt-4"></div>
@@ -304,11 +343,20 @@
                 </div>
               </div>
             </div>
-            <div class="selected-items"></div>
+            <div class="selected-items" style="display: flex">
+              <% if (profileData.genres && profileData.genres.length > 0) {
+              profileData.genres.forEach(genres => { %>
+              <div class="item">
+                <div class="item-name"><%= genres.name %></div>
+              </div>
+              <% }); } %>
+            </div>
           </div>
 
           <div class="mb-4">
-            <div id="bio" style="height: auto; min-height: 100px"></div>
+            <div id="bio" style="height: auto; min-height: 100px">
+              <%- profileData.bio %>
+            </div>
           </div>
 
           <div class="mb-4">
@@ -317,6 +365,7 @@
               placeholder="YouTube"
               autocomplete="off"
               name="youtube"
+              value="<%- profileData.link.youtube %>"
             />
           </div>
           <div class="mb-4">
@@ -325,6 +374,7 @@
               placeholder="Instagram"
               autocomplete="off"
               name="instagram"
+              value="<%- profileData.link.instagram %>"
             />
           </div>
           <div class="mb-4">
@@ -333,6 +383,7 @@
               placeholder="Facebook"
               autocomplete="off"
               name="facebook"
+              value="<%- profileData.link.facebook %>"
             />
           </div>
           <div class="mb-4">
@@ -341,6 +392,7 @@
               placeholder="Twitter"
               autocomplete="off"
               name="twitter"
+              value="<%- profileData.link.twitter %>"
             />
           </div>
           <div class="mb-4">
@@ -349,13 +401,16 @@
               placeholder="Website"
               autocomplete="off"
               name="website"
+              value="<%- profileData.link.website %>"
             />
           </div>
           <div class="error-message mt-3 d-none"></div>
           <div class="success-message mt-3 d-none"></div>
 
           <div class="mt-4">
-            <button class="btn btn-primary">Update information</button>
+            <button class="btn btn-primary submitBtn" type="submit">
+              Update information
+            </button>
           </div>
         </form>
         <!-- app main end -->
@@ -377,41 +432,6 @@
     <script src="/public/js/config.js?v=2.0"></script>
 
     <script>
-      var players = [];
-
-      var videoElements = document.querySelectorAll(".video-js");
-
-      for (var i = 0; i < videoElements.length; i++) {
-        var player = videojs(videoElements[i]);
-
-        // Store the player instance in the array
-        players.push(player);
-
-        // Add event listener to each player
-        player.on("play", function () {
-          pauseOtherPlayers(this);
-        });
-        player.on("seeking", function () {
-          player.muted(true);
-        });
-
-        player.on("seeked", function () {
-          player.muted(false);
-        });
-      }
-      function pauseVideo() {
-        player.pause();
-      }
-      // Function to pause all players except the currently playing one
-      function pauseOtherPlayers(currentPlayer) {
-        players.forEach(function (player) {
-          if (player !== currentPlayer) {
-            player.pause();
-          }
-        });
-      }
-    </script>
-    <script>
       //   date
 
       function calculateMaxYear() {
@@ -424,7 +444,7 @@
 
       new dateDropper({
         selector: "#dob",
-        format: "dd-mm-y",
+        format: "y-mm-dd",
         lang: "en",
         showArrowsOnHover: true,
         overlay: false,
@@ -447,34 +467,128 @@
       });
     </script>
     <script>
-      var autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("city-input")
-      );
+      // var autocomplete = new google.maps.places.Autocomplete(
+      //   document.getElementById("city-input")
+      // );
 
-      autocomplete.setOptions({
-        types: ["(cities)"],
-        disableHistory: true,
-      });
-      autocomplete.addListener("place_changed", function () {
-        var place = autocomplete.getPlace();
-        var country, city;
+      // autocomplete.setOptions({
+      //   types: ["(cities)"],
+      //   disableHistory: true,
+      // });
+      // autocomplete.addListener("place_changed", function () {
+      //   var place = autocomplete.getPlace();
+      //   var country, city;
 
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0];
-          if (addressType === "country") {
-            country = place.address_components[i].long_name;
-          } else if (
-            addressType === "locality" ||
-            addressType === "administrative_area_level_3"
-          ) {
-            city = place.address_components[i].long_name;
-          }
-        }
+      //   for (var i = 0; i < place.address_components.length; i++) {
+      //     var addressType = place.address_components[i].types[0];
+      //     if (addressType === "country") {
+      //       country = place.address_components[i].long_name;
+      //     } else if (
+      //       addressType === "locality" ||
+      //       addressType === "administrative_area_level_3"
+      //     ) {
+      //       city = place.address_components[i].long_name;
+      //     }
+      //   }
 
-        if (country && city) {
-          document.getElementById("country-input").value = country;
-          document.getElementById("city-input").value = city;
-        }
+      //   if (country && city) {
+      //     document.getElementById("country-input").value = country;
+      //     document.getElementById("city-input").value = city;
+      //   }
+      // });
+
+      window.addEventListener("DOMContentLoaded", (event) => {
+        document
+          .querySelector("#stepForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const errorPop = document.querySelector(".error-message");
+            const successPop = document.querySelector(".success-message");
+            const btn = document.querySelector(".submitBtn");
+
+            btn.textContent = "Loading...";
+            btn.disabled = true;
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Convert FormData to JSON
+            const formDataJSON = {};
+            formData.forEach((value, key) => {
+              formDataJSON[key] = value.trim(); // Trim each value
+            });
+
+            const genresString = formDataJSON.genres;
+            if (genresString) {
+              formDataJSON.genres = genresString
+                .split(",")
+                .map((genre) => genre.trim());
+            }
+
+            const artistCategoriesString = formDataJSON.artist_categories;
+            if (artistCategoriesString) {
+              formDataJSON.artist_categories = artistCategoriesString
+                .split(",")
+                .map((category) => category.trim());
+            }
+            formDataJSON.bio = quill.getText();
+
+            const url = `${API_URL}update/appUser`;
+
+            try {
+              const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+                body: JSON.stringify(formDataJSON),
+              });
+
+              const responseData = await response.json();
+              if (response.status === 201 || response.status === 200) {
+                if (responseData.status === 1) {
+                  // Handle success
+                  successPop.style.display = "block";
+                  successPop.innerHTML = "Profile completed successfully";
+                  setTimeout(() => {
+                    successPop.style.display = "none";
+                    // window.location.href = window.location.href;
+                  }, 5000);
+                  form.reset();
+                } else {
+                  // Handle API response with an error status
+                  errorPop.style.display = "block";
+                  if (responseData.error) {
+                    responseData.message = responseData.error;
+                  }
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } else {
+                // Handle HTTP error
+                errorPop.style.display = "block";
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+                errorPop.innerHTML = responseData.message;
+                setTimeout(() => {
+                  errorPop.style.display = "none";
+                }, 5000);
+              }
+              btn.textContent = "Update information";
+              btn.disabled = false;
+            } catch (err) {
+              // Handle fetch error
+              console.error("An error occurred", err);
+              btn.textContent = "Update information";
+              btn.disabled = false;
+            }
+          });
       });
     </script>
   </body>
