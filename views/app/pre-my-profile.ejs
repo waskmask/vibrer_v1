@@ -28,6 +28,10 @@
         width: 0;
         height: 0;
       }
+      .toast.error {
+        color: rgb(179, 15, 15);
+        border-color: rgb(179, 15, 15);
+      }
     </style>
   </head>
   <body class="body-dark _pr">
@@ -213,11 +217,13 @@
                     ><%= profileData.name.first_name %> <%=
                     profileData.name.last_name %></span
                   >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
                 <div class="info">
                   <%= profileData.artist_categories.map(category =>
@@ -241,20 +247,29 @@
                     ><%= profileData.name.first_name %> <%=
                     profileData.name.last_name %></span
                   >
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
                 <div class="info mt-1">
                   <div class="g_age">
                     <img
-                      src="/public/images/icons/gender-male.svg"
+                      src="/public/images/icons/gender-<%= profileData.gender.toLowerCase() %>.svg"
                       alt="Gender"
-                      title="Male"
+                      title="%= profileData.gender %>"
                     />
-                    <div>32,</div>
+                    <% function calculateAge(dateOfBirth) { const birthDate =
+                    new Date(dateOfBirth); const currentDate = new Date(); let
+                    age = currentDate.getFullYear() - birthDate.getFullYear();
+                    if ( currentDate.getMonth() < birthDate.getMonth() ||
+                    (currentDate.getMonth() === birthDate.getMonth() &&
+                    currentDate.getDate() < birthDate.getDate()) ) { age--; }
+                    return age; } %>
+                    <div><%= calculateAge(profileData.date_of_birth) %>,</div>
                   </div>
                   <span
                     ><%= profileData.city %>, <%= profileData.country %></span
@@ -307,7 +322,14 @@
                   />
                 </form>
               </div>
-              <div class="p_gallery_data" id="galleryData"></div>
+              <div class="p_gallery_data" id="galleryData">
+                <% profileData.gallery.forEach(image => { %>
+                <div class="item">
+                  <div class="remove" data-gallery-id="<%= image._id %>">+</div>
+                  <img src="<%= image.media_url %>" alt="<%= image.title %>" />
+                </div>
+                <% }); %>
+              </div>
             </div>
           </div>
         </div>
@@ -320,42 +342,8 @@
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
     <script src="/public/js/Youtube.min.js?v=2.0"></script>
+    <script src="/public/js/config.js?v=2.0"></script>
 
-    <script>
-      var players = [];
-
-      var videoElements = document.querySelectorAll(".video-js");
-
-      for (var i = 0; i < videoElements.length; i++) {
-        var player = videojs(videoElements[i]);
-
-        // Store the player instance in the array
-        players.push(player);
-
-        // Add event listener to each player
-        player.on("play", function () {
-          pauseOtherPlayers(this);
-        });
-        player.on("seeking", function () {
-          player.muted(true);
-        });
-
-        player.on("seeked", function () {
-          player.muted(false);
-        });
-      }
-      function pauseVideo() {
-        player.pause();
-      }
-      // Function to pause all players except the currently playing one
-      function pauseOtherPlayers(currentPlayer) {
-        players.forEach(function (player) {
-          if (player !== currentPlayer) {
-            player.pause();
-          }
-        });
-      }
-    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var headElement = document.getElementById("myProfile_options");
@@ -423,18 +411,81 @@
     </script>
     <script>
       function triggerFileInput() {
-        document.getElementById("profile_cover").click();
+        const profileCoverInput = document.getElementById("profile_cover");
 
-        document.getElementById("profile_cover").onchange = function (event) {
+        profileCoverInput.click();
+
+        profileCoverInput.onchange = function (event) {
           if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
+            const reader = new FileReader();
+
             reader.onload = function (e) {
               document.getElementById("my_cover").src = e.target.result;
-              showToastSuccess("Cover image uploaded successfully!");
+              const file = event.target.files[0];
+              uploadCoverPhotoToServer(file, "profile_cover");
             };
+
             reader.readAsDataURL(event.target.files[0]);
           }
         };
+      }
+
+      function uploadCoverPhotoToServer(file, column) {
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+        const formData = new FormData();
+        formData.append("profile_cover_image", file);
+
+        fetch(apiUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              const coverImage = data.result;
+              saveCoverImageURL(coverImage, column);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! ${error}`);
+          });
+      }
+
+      function saveCoverImageURL(coverImageURL, column) {
+        const apiUrlSaveCoverPhoto = `${API_URL}update/appUserSpecificColumn`;
+
+        const payload = {
+          id: "<%- profileData._id %>",
+          column: column,
+          value: coverImageURL,
+        };
+
+        fetch(apiUrlSaveCoverPhoto, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              if (column === "profile_cover") {
+                showToastSuccess("Cover image uploaded successfully!");
+              } else {
+                showToastSuccess("Avatar image uploaded successfully!");
+              }
+            } else {
+              showToastError(`Error! ${data.message}`);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! Something went wrong`);
+          });
       }
 
       function triggerAvatarInput() {
@@ -445,7 +496,8 @@
             var reader = new FileReader();
             reader.onload = function (e) {
               document.getElementById("p_avatar").src = e.target.result;
-              showToastSuccess("Avatar uploaded successfully!");
+              const file = event.target.files[0];
+              uploadCoverPhotoToServer(file, "profile_img");
             };
             reader.readAsDataURL(event.target.files[0]);
           }
@@ -468,12 +520,38 @@
                 <img src="${e.target.result}" alt="gallery" />
               `;
                 galleryData.appendChild(item);
-                showToastSuccess("image uploaded successfully!");
+                const file = event.target.files[0];
+                uploadGalleryImageToServer(file);
               };
               reader.readAsDataURL(file);
             });
           }
         };
+      }
+
+      function uploadGalleryImageToServer(file) {
+        const apiUrl = `${API_URL}upload/gallery-image`;
+        const formData = new FormData();
+        formData.append("gallery_img", file);
+
+        fetch(apiUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              showToastSuccess("image uploaded successfully!");
+            } else {
+              showToastError(`Error! ${data.message}`);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! ${error}`);
+          });
       }
 
       function showToastSuccess(message) {
@@ -493,17 +571,57 @@
           toast.classList.remove("show");
         }, 2000);
       }
+      function showToastError(message) {
+        let toast = document.querySelector(".toast");
+
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.className = "toast error";
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+
       document
         .getElementById("galleryData")
         .addEventListener("click", function (event) {
           if (event.target.classList.contains("remove")) {
-            removeItem(event.target);
+            const galleryId = event.target.getAttribute("data-gallery-id");
+            removeItem(event.target, galleryId);
           }
         });
 
-      function removeItem(element) {
-        element.parentElement.remove();
-        showToastSuccess("Image removed from gallery");
+      function removeItem(element, galleryId) {
+        const url = `${API_URL}remove/gallery-image/${galleryId}`;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Check the API response and handle success
+            element.parentElement.remove();
+            showToastSuccess("Image removed from gallery");
+          })
+          .catch((error) => {
+            console.error("Error removing gallery image:", error);
+            showToastError("Failed to remove image from gallery");
+          });
       }
     </script>
   </body>
