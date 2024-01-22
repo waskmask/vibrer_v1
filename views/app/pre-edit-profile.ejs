@@ -179,8 +179,15 @@
                 name="username"
                 autocomplete="off"
                 value="<%- profileData.username %>"
+                oninput="validateUsername(this.value)"
+                onblur="handleBlurEvent(this)"
               />
             </div>
+            <div
+              id="usernameErrorMessage"
+              class="form-alert error"
+              style="display: none"
+            ></div>
           </div>
           <div class="grid-2-sm mt-4">
             <div>
@@ -590,6 +597,79 @@
             }
           });
       });
+    </script>
+    <script>
+      let isUserLeftInputBox = false;
+
+      function handleBlurEvent(inputElement) {
+        isUserLeftInputBox = true;
+        validateUsername(inputElement.value.trim());
+      }
+
+      function validateUsername(username) {
+        const usernameRegex = /^[a-zA-Z0-9 _.-]+$/;
+        const minLength = 3;
+        const errorMessageContainer = document.getElementById(
+          "usernameErrorMessage"
+        );
+
+        if (!username.trim()) {
+          displayError("Username cannot be empty");
+        } else if (username.length < minLength) {
+          displayError(
+            `Username must be at least ${minLength} characters long`
+          );
+        } else if (!usernameRegex.test(username)) {
+          displayError(
+            "Username must only contain alphabets, numbers, spaces, underscores, hyphens, and dots"
+          );
+        } else {
+          clearError();
+          if (isUserLeftInputBox) {
+            // Call the API only if the user has left the input box
+            checkUsernameAvailability(username);
+          }
+        }
+      }
+
+      function displayError(message) {
+        const errorMessageContainer = document.getElementById(
+          "usernameErrorMessage"
+        );
+        errorMessageContainer.textContent = message;
+        errorMessageContainer.style.display = "block";
+      }
+
+      function clearError() {
+        const errorMessageContainer = document.getElementById(
+          "usernameErrorMessage"
+        );
+        errorMessageContainer.textContent = "";
+        errorMessageContainer.style.display = "none";
+      }
+
+      async function checkUsernameAvailability(username) {
+        try {
+          const url = "http://localhost:3000/check/username";
+
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+            body: JSON.stringify({ username }),
+          });
+
+          const data = await response.json();
+
+          if (data && data.status === 0 && data.result.is_exists) {
+            displayError("Username is already taken");
+          }
+        } catch (error) {
+          console.error("Error checking username availability:", error);
+        }
+      }
     </script>
   </body>
 </html>
