@@ -650,7 +650,7 @@
 
       async function checkUsernameAvailability(username) {
         try {
-          const url = "http://localhost:3000/check/username";
+          const url = `${API_URL}/check/username`;
 
           const response = await fetch(url, {
             method: "POST",
