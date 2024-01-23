@@ -18,11 +18,7 @@ router.get("/new-profile", async function (req, res) {
     );
     const profileData = profileResponse.data.result;
 
-    if (
-      profileData.name &&
-      profileData.name.first_name &&
-      profileData.name.last_name
-    ) {
+    if (profileData.full_name) {
       res.redirect("/app/pre-home");
     }
 

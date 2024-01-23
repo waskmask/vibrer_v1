@@ -16,11 +16,7 @@ exports.showProjects = async (req, res) => {
 
       const profileData = profileResponse.data.result;
 
-      if (
-        !profileData.name &&
-        !profileData.name.first_name &&
-        !profileData.name.last_name
-      ) {
+      if (!profileData.full_name) {
         return res.redirect("/new-profile");
       }
       return res.render("projects", {
@@ -60,11 +56,7 @@ exports.viewProject = async (req, res) => {
 
       const profileData = profileResponse.data.result;
 
-      if (
-        !profileData.name &&
-        !profileData.name.first_name &&
-        !profileData.name.last_name
-      ) {
+      if (!profileData.full_name) {
         return res.redirect("/new-profile");
       }
       return res.render("project-view", {

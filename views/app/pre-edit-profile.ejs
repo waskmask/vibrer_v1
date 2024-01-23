@@ -118,10 +118,7 @@
                 />
                 <% } %>
                 <div class="name">
-                  <span
-                    ><%- profileData.name.first_name %> <%-
-                    profileData.name.last_name %></span
-                  >
+                  <span><%- profileData.full_name %></span>
                   <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
@@ -193,24 +190,12 @@
             <div>
               <input
                 type="text"
-                id="fname"
-                placeholder="First name *"
-                name="first_name"
+                id="full_name"
+                placeholder="Full name *"
+                name="full_name"
                 autocomplete="off"
                 required
-                value="<%- profileData.name.first_name %>"
-              />
-            </div>
-
-            <div>
-              <input
-                type="text"
-                id="lname"
-                placeholder="Last name *"
-                name="last_name"
-                autocomplete="off"
-                required
-                value="<%- profileData.name.last_name %>"
+                value="<%- profileData.full_name %>"
               />
             </div>
             <div class="genderInputWrapper">

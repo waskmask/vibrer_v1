@@ -93,10 +93,7 @@
                 />
                 <% } %>
                 <div class="name">
-                  <span
-                    ><%- profileData.name.first_name %> <%-
-                    profileData.name.last_name %></span
-                  >
+                  <span><%- profileData.full_name %></span>
                   <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
