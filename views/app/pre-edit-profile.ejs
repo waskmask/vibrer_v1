@@ -169,6 +169,7 @@
         >
           <div class="grid-2-sm mt-3">
             <div>
+              <label for="userName" class="i_label">Username</label>
               <input
                 type="text"
                 id="userName"
@@ -179,26 +180,28 @@
                 oninput="validateUsername(this.value)"
                 onblur="handleBlurEvent(this)"
               />
+              <div
+                id="usernameErrorMessage"
+                class="form-alert error"
+                style="display: none"
+              ></div>
             </div>
-            <div
-              id="usernameErrorMessage"
-              class="form-alert error"
-              style="display: none"
-            ></div>
           </div>
-          <div class="grid-2-sm mt-4">
-            <div>
-              <input
-                type="text"
-                id="full_name"
-                placeholder="Full name *"
-                name="full_name"
-                autocomplete="off"
-                required
-                value="<%- profileData.full_name %>"
-              />
-            </div>
+          <div class="mt-3">
+            <label for="full_name" class="i_label">Full name</label>
+            <input
+              type="text"
+              id="full_name"
+              placeholder="Full name *"
+              name="full_name"
+              autocomplete="off"
+              required
+              value="<%- profileData.full_name %>"
+            />
+          </div>
+          <div class="grid-2-sm g-3 mt-3">
             <div class="genderInputWrapper">
+              <label for="gender" class="i_label">Gender</label>
               <div class="custom-select dfac" id="gender-opt">
                 <div class="select-value dark"><%- profileData.gender %></div>
                 <div class="options">
@@ -216,6 +219,7 @@
             </div>
             <div id="dateInputWrapper">
               <div class="date-input w-100">
+                <label for="dob" class="i_label">Date of Birth</label>
                 <input
                   type="date"
                   name="date_of_birth"
@@ -228,6 +232,7 @@
               </div>
             </div>
             <div>
+              <label for="city-input" class="i_label">City</label>
               <input
                 type="text"
                 id="city-input"
@@ -239,6 +244,7 @@
               />
             </div>
             <div>
+              <label for="country-input" class="i_label">Country</label>
               <input
                 type="text"
                 id="country-input"
@@ -252,6 +258,7 @@
           </div>
 
           <div class="custom-select-wrapper mt-4 mb-4">
+            <label for="artist_categories" class="i_label">I am a?</label>
             <div class="custom-check-select dfac" id="artists">
               <div class="placeholder">I am a? *</div>
               <div class="check-options">
@@ -300,6 +307,7 @@
           </div>
 
           <div class="custom-select-wrapper mb-4">
+            <label for="genres" class="i_label">Genre</label>
             <div class="custom-check-select dfac" id="genre">
               <div class="placeholder">Genre *</div>
               <div class="check-options">
@@ -345,13 +353,15 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="bio" class="i_label">Bio</label>
             <div id="bio" style="height: auto; min-height: 100px">
               <%- profileData.bio %>
             </div>
           </div>
 
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="youtube" class="i_label">YouTube</label>
             <input
               type="text"
               placeholder="YouTube"
@@ -360,7 +370,8 @@
               value="<%- profileData.link.youtube %>"
             />
           </div>
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="instagram" class="i_label">Instagram</label>
             <input
               type="text"
               placeholder="Instagram"
@@ -369,7 +380,8 @@
               value="<%- profileData.link.instagram %>"
             />
           </div>
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="facebook" class="i_label">Facebook</label>
             <input
               type="text"
               placeholder="Facebook"
@@ -378,7 +390,8 @@
               value="<%- profileData.link.facebook %>"
             />
           </div>
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="twitter" class="i_label">Twitter</label>
             <input
               type="text"
               placeholder="Twitter"
@@ -387,7 +400,8 @@
               value="<%- profileData.link.twitter %>"
             />
           </div>
-          <div class="mb-4">
+          <div class="mb-3">
+            <label for="website" class="i_label">Website</label>
             <input
               type="text"
               placeholder="Website"
@@ -459,35 +473,35 @@
       });
     </script>
     <script>
-      // var autocomplete = new google.maps.places.Autocomplete(
-      //   document.getElementById("city-input")
-      // );
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("city-input")
+      );
 
-      // autocomplete.setOptions({
-      //   types: ["(cities)"],
-      //   disableHistory: true,
-      // });
-      // autocomplete.addListener("place_changed", function () {
-      //   var place = autocomplete.getPlace();
-      //   var country, city;
+      autocomplete.setOptions({
+        types: ["(cities)"],
+        disableHistory: true,
+      });
+      autocomplete.addListener("place_changed", function () {
+        var place = autocomplete.getPlace();
+        var country, city;
 
-      //   for (var i = 0; i < place.address_components.length; i++) {
-      //     var addressType = place.address_components[i].types[0];
-      //     if (addressType === "country") {
-      //       country = place.address_components[i].long_name;
-      //     } else if (
-      //       addressType === "locality" ||
-      //       addressType === "administrative_area_level_3"
-      //     ) {
-      //       city = place.address_components[i].long_name;
-      //     }
-      //   }
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (addressType === "country") {
+            country = place.address_components[i].long_name;
+          } else if (
+            addressType === "locality" ||
+            addressType === "administrative_area_level_3"
+          ) {
+            city = place.address_components[i].long_name;
+          }
+        }
 
-      //   if (country && city) {
-      //     document.getElementById("country-input").value = country;
-      //     document.getElementById("city-input").value = city;
-      //   }
-      // });
+        if (country && city) {
+          document.getElementById("country-input").value = country;
+          document.getElementById("city-input").value = city;
+        }
+      });
 
       window.addEventListener("DOMContentLoaded", (event) => {
         document
@@ -549,7 +563,7 @@
                     successPop.style.display = "none";
                     // window.location.href = window.location.href;
                   }, 5000);
-                  form.reset();
+                  // form.reset();
                 } else {
                   // Handle API response with an error status
                   errorPop.style.display = "block";
