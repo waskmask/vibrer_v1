@@ -2,83 +2,89 @@ let isPageLoaded = false;
 let isTimerDone = false;
 
 const loader = document.getElementById("loader");
-
-// Function to hide the loader
-function hideLoader() {
-  if (isPageLoaded && isTimerDone) {
-    loader.style.display = "none";
+if (loader) {
+  // Function to hide the loader
+  function hideLoader() {
+    if (isPageLoaded && isTimerDone) {
+      loader.style.display = "none";
+    }
   }
+
+  // Hide the loader after 1 second
+  setTimeout(function () {
+    isTimerDone = true;
+    hideLoader();
+  }, 1000); // 1 second
+
+  // Hide the loader when the page is fully loaded
+  window.addEventListener("load", function () {
+    isPageLoaded = true;
+    hideLoader();
+  });
 }
 
-// Hide the loader after 1 second
-setTimeout(function () {
-  isTimerDone = true;
-  hideLoader();
-}, 100); // 1 second
+const usernameElement = document.getElementById("username");
+if (usernameElement) {
+  usernameElement.addEventListener("click", function () {
+    const text = this.innerText.replace("@", "");
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        const alertDiv = document.createElement("div");
+        alertDiv.setAttribute("class", "copyUname");
+        alertDiv.innerText = "Copied!";
+        this.appendChild(alertDiv);
+        setTimeout(() => {
+          alertDiv.remove();
+        }, 700);
+      })
+      .catch((error) => {
+        console.error("Copy failed", error);
+      });
+  });
+}
 
-// Hide the loader when the page is fully loaded
-window.addEventListener("load", function () {
-  isPageLoaded = true;
-  hideLoader();
-});
-
-document.getElementById("username").addEventListener("click", function () {
-  // Get the text and remove the '@' character
-  const text = this.innerText.replace("@", "");
-
-  // Copy the modified text to Clipboard
-  navigator.clipboard
-    .writeText(text)
-    .then(() => {
-      // Create and show the copied notification
-      const alertDiv = document.createElement("div");
-      alertDiv.setAttribute("class", "copyUname");
-      alertDiv.innerText = "Copied!";
-
-      // Append the alert div to the username div
-      this.appendChild(alertDiv);
-
-      // Hide and remove the notification after 1 second
-      setTimeout(() => {
-        alertDiv.remove();
-      }, 700);
-    })
-    .catch((error) => {
-      console.error("Copy failed", error);
-    });
-});
-
-// profile dropdown
-document.querySelector(".hphead").addEventListener("click", function (event) {
-  let dropDown = document.querySelector(".hpdd");
-  dropDown.classList.toggle("show");
-  event.stopPropagation(); // Prevents the document click listener from immediately executing
-});
+const hpHeadElement = document.querySelector(".hphead");
+if (hpHeadElement) {
+  hpHeadElement.addEventListener("click", function (event) {
+    let dropDown = document.querySelector(".hpdd");
+    if (dropDown) {
+      dropDown.classList.toggle("show");
+      event.stopPropagation();
+    }
+  });
+}
 
 document.addEventListener("click", function (event) {
   let dropDown = document.querySelector(".hpdd");
-  if (!dropDown.contains(event.target)) {
+  if (dropDown && !dropDown.contains(event.target)) {
     dropDown.classList.remove("show");
   }
 });
 
 // Function to toggle sidebar
 function toggleSidebar() {
-  document.querySelector(".app_sidebar").classList.toggle("show");
-  document.querySelector(".app_sb_overlay").style.display = document
-    .querySelector(".app_sidebar")
-    .classList.contains("show")
-    ? "block"
-    : "none";
+  let appSidebar = document.querySelector(".app_sidebar");
+  let appSbOverlay = document.querySelector(".app_sb_overlay");
+  if (appSidebar && appSbOverlay) {
+    appSidebar.classList.toggle("show");
+    appSbOverlay.style.display = appSidebar.classList.contains("show")
+      ? "block"
+      : "none";
+  }
 }
 
-// Event listener for burger menu
-document.querySelector(".burger_menu").addEventListener("click", toggleSidebar);
+const burgerMenuElement = document.querySelector(".burger_menu");
+if (burgerMenuElement) {
+  burgerMenuElement.addEventListener("click", toggleSidebar);
+}
 
-// Event listener for closing the sidebar
-document
-  .querySelector(".app_sb_overlay")
-  .addEventListener("click", toggleSidebar);
-document
-  .querySelector(".close_sidebar")
-  .addEventListener("click", toggleSidebar);
+const appSbOverlay = document.querySelector(".app_sb_overlay");
+if (appSbOverlay) {
+  appSbOverlay.addEventListener("click", toggleSidebar);
+}
+
+const closeSidebarElement = document.querySelector(".close_sidebar");
+if (closeSidebarElement) {
+  closeSidebarElement.addEventListener("click", toggleSidebar);
+}

@@ -710,6 +710,31 @@ router.get("/app/pre-edit-profile", function (req, res) {
   });
 });
 
+// new post routes
+router.get("/app/new-post", function (req, res) {
+  res.render("app/new-post", {
+    title: "Create new post",
+    path: "/new-post",
+    link: "/video",
+  });
+});
+
+router.get("/app/new-post-music", function (req, res) {
+  res.render("app/new-post-music", {
+    title: "Add music to your profile | new post",
+    path: "/new-post-music",
+    link: "/music",
+  });
+});
+router.get("/app/new-post-image", function (req, res) {
+  res.render("app/new-post-image", {
+    title: "Add music to your profile | new post",
+    path: "/new-post-music",
+    link: "/image",
+  });
+});
+// new post routes end
+
 router.get("/500", function (req, res) {
   res.render("500", {
     title: "500 Server error!",

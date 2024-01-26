@@ -73,3 +73,81 @@
     }
   }
 }
+
+.tag_wrapper {
+  .tag_list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+    .tags {
+      background-color: $primary;
+      padding: 0.25rem 0.75rem;
+      color: $white;
+      font-size: 0.875rem;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+  }
+}
+
+#cover_song_input {
+  display: none;
+}
+
+.file_input_wrapper {
+  .label {
+    background-color: $form;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .form-input {
+    display: none !important;
+  }
+
+  .img_wrapper {
+    width: 100%;
+    height: auto !important;
+    max-height: 250px;
+    background-color: $form;
+    border-radius: 0.25rem;
+    position: relative;
+
+    p {
+      color: $primary;
+      text-align: center !important;
+      padding: 0.5rem 1rem;
+    }
+
+    .removeBanner {
+      background-color: $primary;
+      color: $white;
+      font-size: 1.1rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 1rem;
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 0.25rem;
+    }
+  }
+}

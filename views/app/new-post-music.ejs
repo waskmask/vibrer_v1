@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+
+    <link href="/public/style/quill.snow.css?v=2.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
+    <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
+    <link href="/public/style/audio.css?v=1.0" rel="stylesheet" />
+
+    <style>
+      .add_post_wrapper {
+        border: solid #fff 1px;
+        border-radius: 5px;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <!-- main body of the app -->
+      <div class="app_main preMain">
+        <div class="title mb-3">Create new post</div>
+        <div class="app_page_menu">
+          <div
+            class="<%= (link == '/video') ? 'active' : '' %> page_menu_link"
+            onclick="toAddPost('<%= path %>')"
+          >
+            Video
+          </div>
+          <div
+            class="<%= (link == '/music') ? 'active' : '' %> page_menu_link"
+            onclick="toAddMusic('<%= path %>')"
+          >
+            Music
+          </div>
+          <div
+            class="<%= (link == '/image') ? 'active' : '' %>page_menu_link"
+            onclick="toAddImages('<%= path %>')"
+          >
+            Image
+          </div>
+        </div>
+
+        <div class="page_content" id="videoPost">
+          <form id="videoPostform" action="" class="form edit-my-profile">
+            <div class="grid-2-sm mt-3">
+              <div class="form-col">
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    id="title"
+                    placeholder="Title *"
+                    name="title"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+                <div class="mb-4">
+                  <div
+                    id="Description"
+                    style="height: auto; min-height: 100px"
+                  ></div>
+                </div>
+
+                <div class="mb-3 tag_wrapper">
+                  <input
+                    type="text"
+                    class="add_tags"
+                    placeholder="Tags"
+                    autocomplete="off"
+                  />
+                  <div class="small light mt-1">
+                    You can add multiple tags comma separated.
+                  </div>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="mb-4">
+                  <div class="audio-player">
+                    <div class="audio-top">
+                      <button type="button" class="playPauseBtn">
+                        <img
+                          src="/public/images/icons/playIconWhite.svg"
+                          alt="Icon"
+                        />
+                      </button>
+                      <div class="audio-body">
+                        <div class="progress-container">
+                          <div class="progress"></div>
+                        </div>
+                        <div class="duration-wrapper">
+                          <div class="duration">0:00</div>
+                          <div class="full-duration">0:00</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="volume">
+                      <input
+                        type="range"
+                        class="volumeControl"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="1"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="file_input_wrapper">
+                    <label class="label" for="media_video">Upload video</label>
+                    <input
+                      class="form-input"
+                      type="file"
+                      name="media"
+                      id="media_video"
+                      accept="video/*"
+                    />
+
+                    <div id="uploadProgress" class="progress-bar d-none">
+                      <div class="progress-bar-fill"></div>
+                    </div>
+                    <div class="sub pr-title mt-2 d-none">
+                      Your video preview
+                    </div>
+                    <div class="video-preview d-none">
+                      <video
+                        id="my_video_player"
+                        class="video-js"
+                        preload="auto"
+                        width="640"
+                        height="264"
+                        data-setup="{}"
+                      >
+                        <p class="vjs-no-js">
+                          To view this video please enable JavaScript, and
+                          consider upgrading to a web browser that
+                          <a
+                            href="https://videojs.com/html5-video-support/"
+                            target="_blank"
+                            >supports HTML5 video</a
+                          >
+                        </p>
+                      </video>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="custom-select-wrapper mb-4">
+                  <div class="custom-check-select dfac" id="genre">
+                    <div class="placeholder">Genre</div>
+                    <div class="check-options">
+                      <div class="check-list grid-2-sm">
+                        <label class="checkbox-container">
+                          Hip Hop
+                          <input
+                            type="checkbox"
+                            value="hipHop"
+                            data-value="HipHop"
+                          />
+                          <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox-container">
+                          Pop
+                          <input type="checkbox" value="Pop" data-value="Pop" />
+                          <span class="checkmark"></span>
+                        </label>
+                      </div>
+                      <input
+                        type="hidden"
+                        id="genres"
+                        name="genres"
+                        value=""
+                        autocomplete="off"
+                      />
+                      <div class="divider w-100 mt-4"></div>
+                      <div class="ccs-foter dfjcfe">
+                        <button
+                          class="btn btn-primary h-auto close-options"
+                          type="button"
+                        >
+                          Done
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="selected-items"></div>
+                </div>
+
+                <div class="mb-4 assign_cover" style="padding-top: 5px">
+                  <label class="checkbox-container white">
+                    <span class="mr-2">It's a cover song</span>
+                    <input type="checkbox" id="is_cover" name="is_cover" />
+                    <span class="checkmark"></span>
+                  </label>
+                  <input
+                    type="text"
+                    id="cover_song_input"
+                    placeholder="Original song title and artist name *"
+                    name="cover_song"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="mb-4">
+                  <div class="file_input_wrapper">
+                    <label for="media_banner" class="label"
+                      >Upload banner</label
+                    >
+                    <input
+                      class="form-input"
+                      type="file"
+                      name="media_banner"
+                      id="media_banner"
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+                <div class="dfjcfe">
+                  <button type="button" class="btn btn-primary">Publish</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=2.0"></script>
+    <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/_modal.js?v=2.0"></script>
+    <script src="/public/js/video.min.js?v=2.0"></script>
+    <script src="/public/js/quill.min.js?v=2.0"></script>
+    <script src="/public/js/taginput.js"></script>
+    <script src="/public/js/check-select.js?v=2.0"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+      integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var soundObjects = [];
+
+        // Function to initialize sound objects
+        function initSounds() {
+          if (soundObjects.length === 0) {
+            document
+              .querySelectorAll(".audio-player")
+              .forEach(function (player, index) {
+                var sound = new Howl({
+                  src: ["/uploads/audiosample.mp3"], // Replace with your file path
+                  html5: true,
+                  onload: function () {
+                    var fullDurationDisplay =
+                      player.querySelector(".full-duration");
+                    fullDurationDisplay.textContent = formatTime(
+                      this.duration()
+                    );
+                  },
+                  onplay: function () {
+                    updatePlayPauseButton(player, true);
+                    updateProgress(player, this);
+                    updateDuration(player, this);
+                  },
+                  onpause: function () {
+                    updatePlayPauseButton(player, false);
+                  },
+                  onstop: function () {
+                    updatePlayPauseButton(player, false);
+                  },
+                  onend: function () {
+                    updatePlayPauseButton(player, false);
+                  },
+                });
+
+                soundObjects.push({ player: player, sound: sound });
+
+                player
+                  .querySelector(".playPauseBtn")
+                  .addEventListener("click", function () {
+                    if (sound.playing()) {
+                      sound.pause();
+                    } else {
+                      sound.play();
+                    }
+                  });
+
+                player
+                  .querySelector(".volumeControl")
+                  .addEventListener("input", function () {
+                    sound.volume(this.value);
+                  });
+
+                player
+                  .querySelector(".progress-container")
+                  .addEventListener("click", function (e) {
+                    var progressWidth = this.clientWidth;
+                    var offsetX = e.offsetX;
+                    var duration = sound.duration();
+                    sound.seek(duration * (offsetX / progressWidth));
+                  });
+              });
+          }
+        }
+
+        // Initialize sounds immediately
+        initSounds();
+
+        function updatePlayPauseButton(player, isPlaying) {
+          var playPauseBtn = player.querySelector(".playPauseBtn img");
+          playPauseBtn.src = isPlaying
+            ? "/public/images/icons/play-pause.svg"
+            : "/public/images/icons/playIconWhite.svg";
+        }
+
+        function updateProgress(player, sound) {
+          if (sound.playing()) {
+            requestAnimationFrame(function () {
+              updateProgress(player, sound);
+            });
+            var progress = player.querySelector(".progress");
+            var seek = sound.seek() || 0;
+            progress.style.width = ((seek / sound.duration()) * 100 || 0) + "%";
+          }
+        }
+
+        function updateDuration(player, sound) {
+          if (sound.playing()) {
+            var durationDisplay = player.querySelector(".duration");
+            var seek = sound.seek() || 0;
+            durationDisplay.textContent = formatTime(seek);
+            setTimeout(function () {
+              updateDuration(player, sound);
+            }, 1000);
+          }
+        }
+
+        function formatTime(secs) {
+          var minutes = Math.floor(secs / 60) || 0;
+          var seconds = Math.floor(secs - minutes * 60) || 0;
+          return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
+      });
+    </script>
+
+    <script>
+      var quill = new Quill("#Description", {
+        modules: {
+          toolbar: false, // This hides the toolbar
+        },
+        placeholder: "Description",
+        theme: "snow",
+      });
+
+      document
+        .getElementById("is_cover")
+        .addEventListener("change", function () {
+          var coverSongInput = document.getElementById("cover_song_input");
+          if (this.checked) {
+            coverSongInput.style.display = "block";
+            coverSongInput.required = true;
+          } else {
+            coverSongInput.style.display = "none";
+            coverSongInput.required = false;
+            coverSongInput.value = "";
+          }
+        });
+    </script>
+
+    <script>
+      document
+        .querySelectorAll('.file_input_wrapper input[type="file"]')
+        .forEach(function (fileInput) {
+          if (
+            fileInput.getAttribute("name") === "media" &&
+            fileInput.getAttribute("accept").includes("video/*")
+          ) {
+            fileInput.addEventListener("change", function (event) {
+              var files = event.target.files;
+              if (files.length === 0) return;
+
+              var file = files[0];
+              var wrapper = event.target.closest(".file_input_wrapper");
+              var label = wrapper.querySelector(".label");
+              label.textContent =
+                files.length > 0
+                  ? files[0].name.length > 25
+                    ? "..." + files[0].name.slice(-23)
+                    : files[0].name
+                  : "Upload video";
+              label.classList.toggle("text-white", files.length > 0);
+
+              var previewContainer = wrapper.querySelector(".video-preview");
+              var prTitle = wrapper.querySelector(".pr-title");
+              var progressBar = wrapper.querySelector(".progress-bar");
+              var progressBarFill =
+                progressBar.querySelector(".progress-bar-fill");
+
+              if (file.type === "video/quicktime") {
+                previewContainer.innerHTML =
+                  "<p>Preview not available for this video format. For a better experience, please upload an MP4 video.</p>";
+                previewContainer.classList.remove("d-none");
+                prTitle.classList.add("d-none");
+              } else {
+                previewContainer.innerHTML = "";
+                previewContainer.classList.remove("d-none");
+                prTitle.classList.remove("d-none");
+
+                progressBar.classList.remove("d-none");
+                var uploadPercentage = 0;
+                var simulateUpload = setInterval(function () {
+                  if (uploadPercentage >= 100) {
+                    clearInterval(simulateUpload);
+                    progressBar.classList.add("d-none");
+
+                    var blobUrl = URL.createObjectURL(file);
+                    var newVideoHtml = `
+                        <video id="my_video_player" class="video-js" preload="auto" width="640" height="264" data-setup="{}" controls>
+                            <source src="${blobUrl}" type="${file.type}">
+                            <p class="vjs-no-js">
+                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                            </p>
+                        </video>
+                        `;
+                    previewContainer.innerHTML = newVideoHtml;
+                    videojs(document.getElementById("my_video_player"));
+                  } else {
+                    uploadPercentage += 5;
+                    progressBarFill.style.width = uploadPercentage + "%";
+                    progressBarFill.textContent = uploadPercentage + "%";
+                  }
+                }, 200);
+              }
+            });
+          }
+        });
+    </script>
+
+    <script>
+      document
+        .querySelectorAll('.file_input_wrapper input[type="file"]')
+        .forEach(function (fileInput) {
+          if (fileInput.getAttribute("name") === "media_banner") {
+            fileInput.addEventListener("change", function (event) {
+              var files = fileInput.files;
+              var fileInputWrapper = fileInput.closest(".file_input_wrapper");
+
+              if (files.length === 0) {
+                return;
+              }
+
+              var file = files[0];
+              var label = fileInputWrapper.querySelector(".label");
+
+              // Clear existing img_wrapper if it exists
+              var existingWrapper =
+                fileInputWrapper.querySelector(".img_wrapper");
+              if (existingWrapper) {
+                existingWrapper.remove();
+              }
+
+              // Create img_wrapper element
+              var imgWrapper = document.createElement("div");
+              imgWrapper.className = "img_wrapper";
+
+              // Get file extension
+              var fileExtension = file.name.split(".").pop().toLowerCase();
+
+              // Supported file types and extensions
+              var supportedTypes = [
+                "image/jpeg",
+                "image/jpg",
+                "image/png",
+                "image/heic",
+              ];
+              var supportedExtensions = ["jpeg", "jpg", "png", "heic"];
+
+              if (
+                !supportedTypes.includes(file.type) &&
+                !supportedExtensions.includes(fileExtension)
+              ) {
+                // Show error message for unsupported file types
+                var errorMsg = document.createElement("p");
+                errorMsg.textContent =
+                  fileExtension +
+                  " files are not supported, upload jpeg, jpg, png, or heic images.";
+                imgWrapper.appendChild(errorMsg);
+              } else {
+                // Update label text for supported file types
+                label.textContent = file.name;
+
+                if (fileExtension === "heic" || file.type === "image/heic") {
+                  // Handle HEIC files
+                  var heicMsg = document.createElement("p");
+                  heicMsg.textContent =
+                    "HEIC images are not possible for preview, but you can still upload.";
+                  imgWrapper.appendChild(heicMsg);
+                } else {
+                  // Show image preview for supported file types
+                  var img = document.createElement("img");
+                  img.src = URL.createObjectURL(file);
+                  img.alt = "Banner";
+                  imgWrapper.appendChild(img);
+                }
+
+                // Create and append removeBanner button
+                var removeBanner = document.createElement("div");
+                removeBanner.className = "removeBanner";
+                removeBanner.textContent = "+";
+                removeBanner.addEventListener("click", function () {
+                  imgWrapper.remove();
+                  fileInput.value = "";
+                  label.textContent = "Upload banner";
+                });
+                imgWrapper.appendChild(removeBanner);
+              }
+
+              // Append img_wrapper to the file_input_wrapper
+              fileInputWrapper.appendChild(imgWrapper);
+            });
+          }
+        });
+    </script>
+  </body>
+</html>

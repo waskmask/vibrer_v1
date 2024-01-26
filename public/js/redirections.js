@@ -58,6 +58,10 @@ function toMyProfile() {
   window.location.href = "/app/pre-my-profile";
 }
 
+function toNewPost() {
+  window.open("/app/new-post", "_blank");
+}
+
 function toReports(currentPath, currentLink) {
   if (currentLink !== "allreports") {
     window.location.href = "/app/reports";
@@ -73,5 +77,21 @@ function toActiveReports(currentPath, currentLink) {
 function youReported(currentPath, currentLink) {
   if (currentPath !== "/reports" || currentLink !== "youreported") {
     window.location.href = "/app/you-reported";
+  }
+}
+
+function toAddPost(currentPath) {
+  if (currentPath !== "/new-post") {
+    window.location.href = "/app/new-post";
+  }
+}
+function toAddMusic(currentPath) {
+  if (currentPath !== "/new-post-music") {
+    window.location.href = "/app/new-post-music";
+  }
+}
+function toAddImages(currentPath) {
+  if (currentPath !== "/new-post-image") {
+    window.location.href = "/app/new-post-image";
   }
 }
