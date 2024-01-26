@@ -53,7 +53,12 @@
   font-style: normal;
   font-weight: 100;
   src: url("../fonts/roboto-v30-latin-100.eot"); /* IE9 Compat Modes */
-  src: url("../fonts/roboto-v30-latin-100.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v30-latin-100.woff2") format("woff2"), url("../fonts/roboto-v30-latin-100.woff") format("woff"), url("../fonts/roboto-v30-latin-100.ttf") format("truetype"), url("../fonts/roboto-v30-latin-100.svg#Roboto") format("svg"); /* Legacy iOS */
+  src: url("../fonts/roboto-v30-latin-100.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/roboto-v30-latin-100.woff2") format("woff2"),
+    url("../fonts/roboto-v30-latin-100.woff") format("woff"),
+    url("../fonts/roboto-v30-latin-100.ttf") format("truetype"),
+    url("../fonts/roboto-v30-latin-100.svg#Roboto") format("svg"); /* Legacy iOS */
 }
 /* roboto-300 - latin */
 @font-face {
@@ -62,7 +67,12 @@
   font-style: normal;
   font-weight: 300;
   src: url("../fonts/roboto-v30-latin-300.eot"); /* IE9 Compat Modes */
-  src: url("../fonts/roboto-v30-latin-300.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v30-latin-300.woff2") format("woff2"), url("../fonts/roboto-v30-latin-300.woff") format("woff"), url("../fonts/roboto-v30-latin-300.ttf") format("truetype"), url("../fonts/roboto-v30-latin-300.svg#Roboto") format("svg"); /* Legacy iOS */
+  src: url("../fonts/roboto-v30-latin-300.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/roboto-v30-latin-300.woff2") format("woff2"),
+    url("../fonts/roboto-v30-latin-300.woff") format("woff"),
+    url("../fonts/roboto-v30-latin-300.ttf") format("truetype"),
+    url("../fonts/roboto-v30-latin-300.svg#Roboto") format("svg"); /* Legacy iOS */
 }
 /* roboto-regular - latin */
 @font-face {
@@ -71,7 +81,12 @@
   font-style: normal;
   font-weight: 400;
   src: url("../fonts/roboto-v30-latin-regular.eot"); /* IE9 Compat Modes */
-  src: url("../fonts/roboto-v30-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v30-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v30-latin-regular.woff") format("woff"), url("../fonts/roboto-v30-latin-regular.ttf") format("truetype"), url("../fonts/roboto-v30-latin-regular.svg#Roboto") format("svg"); /* Legacy iOS */
+  src: url("../fonts/roboto-v30-latin-regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/roboto-v30-latin-regular.woff2") format("woff2"),
+    url("../fonts/roboto-v30-latin-regular.woff") format("woff"),
+    url("../fonts/roboto-v30-latin-regular.ttf") format("truetype"),
+    url("../fonts/roboto-v30-latin-regular.svg#Roboto") format("svg"); /* Legacy iOS */
 }
 /* roboto-500 - latin */
 @font-face {
@@ -80,7 +95,12 @@
   font-style: normal;
   font-weight: 500;
   src: url("../fonts/roboto-v30-latin-500.eot"); /* IE9 Compat Modes */
-  src: url("../fonts/roboto-v30-latin-500.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v30-latin-500.woff2") format("woff2"), url("../fonts/roboto-v30-latin-500.woff") format("woff"), url("../fonts/roboto-v30-latin-500.ttf") format("truetype"), url("../fonts/roboto-v30-latin-500.svg#Roboto") format("svg"); /* Legacy iOS */
+  src: url("../fonts/roboto-v30-latin-500.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/roboto-v30-latin-500.woff2") format("woff2"),
+    url("../fonts/roboto-v30-latin-500.woff") format("woff"),
+    url("../fonts/roboto-v30-latin-500.ttf") format("truetype"),
+    url("../fonts/roboto-v30-latin-500.svg#Roboto") format("svg"); /* Legacy iOS */
 }
 /* roboto-700 - latin */
 @font-face {
@@ -89,10 +109,16 @@
   font-style: normal;
   font-weight: 700;
   src: url("../fonts/roboto-v30-latin-700.eot"); /* IE9 Compat Modes */
-  src: url("../fonts/roboto-v30-latin-700.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v30-latin-700.woff2") format("woff2"), url("../fonts/roboto-v30-latin-700.woff") format("woff"), url("../fonts/roboto-v30-latin-700.ttf") format("truetype"), url("../fonts/roboto-v30-latin-700.svg#Roboto") format("svg"); /* Legacy iOS */
+  src: url("../fonts/roboto-v30-latin-700.eot?#iefix")
+      format("embedded-opentype"),
+    url("../fonts/roboto-v30-latin-700.woff2") format("woff2"),
+    url("../fonts/roboto-v30-latin-700.woff") format("woff"),
+    url("../fonts/roboto-v30-latin-700.ttf") format("truetype"),
+    url("../fonts/roboto-v30-latin-700.svg#Roboto") format("svg"); /* Legacy iOS */
 }
 .body-dark {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
   background: rgb(8, 8, 19);
   background: linear-gradient(50deg, rgb(8, 8, 19) 0%, rgb(24, 33, 75) 100%);
   min-height: 100vh;
@@ -188,7 +214,7 @@
   height: 100vh;
   width: 50vw;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   position: fixed;
   left: 0;
   top: 0;
@@ -205,12 +231,30 @@
   position: fixed;
   left: 0;
   top: 0;
-  background: transparent linear-gradient(269deg, #18214b 0%, #12193b 51%, rgba(24, 33, 75, 0.831372549) 58%, rgba(9, 9, 22, 0.2196078431) 70%, rgba(8, 8, 19, 0) 100%) 0% 0% no-repeat padding-box;
+  background: transparent
+    linear-gradient(
+      269deg,
+      #18214b 0%,
+      #12193b 51%,
+      rgba(24, 33, 75, 0.831372549) 58%,
+      rgba(9, 9, 22, 0.2196078431) 70%,
+      rgba(8, 8, 19, 0) 100%
+    )
+    0% 0% no-repeat padding-box;
   z-index: -1;
 }
 @media (max-width: 576px) {
   .auth-pages .overlay {
-    background: rgba(18, 21, 53, 0.6588235294) linear-gradient(269deg, rgba(24, 33, 75, 0.8588235294) 50%, rgba(24, 33, 75, 0.86) 51%, rgba(24, 33, 75, 0.86) 58%, rgba(20, 29, 60, 0.91) 70%, rgba(20, 29, 60, 0.91) 100%) 0% 0% no-repeat padding-box;
+    background: rgba(18, 21, 53, 0.6588235294)
+      linear-gradient(
+        269deg,
+        rgba(24, 33, 75, 0.8588235294) 50%,
+        rgba(24, 33, 75, 0.86) 51%,
+        rgba(24, 33, 75, 0.86) 58%,
+        rgba(20, 29, 60, 0.91) 70%,
+        rgba(20, 29, 60, 0.91) 100%
+      )
+      0% 0% no-repeat padding-box;
   }
 }
 .auth-pages .left-col {
@@ -291,30 +335,36 @@
 .auth-pages .notice {
   color: #8b8a8a;
 }
-.auth-pages input[type=text],
-.auth-pages input[type=password],
-.auth-pages input[type=email],
-.auth-pages input[type=date],
-.auth-pages input[type=file],
+.auth-pages input[type="text"],
+.auth-pages input[type="password"],
+.auth-pages input[type="email"],
+.auth-pages input[type="date"],
+.auth-pages input[type="file"],
 .auth-pages .custom-select,
 .auth-pages .custom-check-select {
   background-clip: padding-box;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   padding: 0.55rem 0.75rem;
   color: #fff;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
 }
-.auth-pages input[type=text]::-moz-placeholder, .auth-pages input[type=password]::-moz-placeholder, .auth-pages input[type=email]::-moz-placeholder, .auth-pages input[type=date]::-moz-placeholder, .auth-pages input[type=file]::-moz-placeholder, .auth-pages .custom-select::-moz-placeholder, .auth-pages .custom-check-select::-moz-placeholder {
+.auth-pages input[type="text"]::-moz-placeholder,
+.auth-pages input[type="password"]::-moz-placeholder,
+.auth-pages input[type="email"]::-moz-placeholder,
+.auth-pages input[type="date"]::-moz-placeholder,
+.auth-pages input[type="file"]::-moz-placeholder,
+.auth-pages .custom-select::-moz-placeholder,
+.auth-pages .custom-check-select::-moz-placeholder {
   color: #8b8a8a;
 }
-.auth-pages input[type=text]::placeholder,
-.auth-pages input[type=password]::placeholder,
-.auth-pages input[type=email]::placeholder,
-.auth-pages input[type=date]::placeholder,
-.auth-pages input[type=file]::placeholder,
+.auth-pages input[type="text"]::placeholder,
+.auth-pages input[type="password"]::placeholder,
+.auth-pages input[type="email"]::placeholder,
+.auth-pages input[type="date"]::placeholder,
+.auth-pages input[type="file"]::placeholder,
 .auth-pages .custom-select::placeholder,
 .auth-pages .custom-check-select::placeholder {
   color: #8b8a8a;
@@ -449,11 +499,11 @@ input:-webkit-autofill:active {
   color: #fff;
   font-size: 0.83rem;
 }
-.edit-profile input[type=text],
-.edit-profile input[type=password],
-.edit-profile input[type=email],
-.edit-profile input[type=date],
-.edit-profile input[type=file],
+.edit-profile input[type="text"],
+.edit-profile input[type="password"],
+.edit-profile input[type="email"],
+.edit-profile input[type="date"],
+.edit-profile input[type="file"],
 .edit-profile button,
 .edit-profile .custom-select,
 .edit-profile .custom-check-select {
@@ -478,11 +528,11 @@ input:-webkit-autofill:active {
   color: #fff;
   font-size: 0.83rem;
 }
-.edit-my-profile input[type=text],
-.edit-my-profile input[type=password],
-.edit-my-profile input[type=email],
-.edit-my-profile input[type=date],
-.edit-my-profile input[type=file],
+.edit-my-profile input[type="text"],
+.edit-my-profile input[type="password"],
+.edit-my-profile input[type="email"],
+.edit-my-profile input[type="date"],
+.edit-my-profile input[type="file"],
 .edit-my-profile button,
 .edit-my-profile .custom-select,
 .edit-my-profile .custom-check-select {
@@ -531,7 +581,7 @@ input:-webkit-autofill:active {
   height: 60px;
   width: 60px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   cursor: pointer;
 }
 .avatar-upload input {
@@ -794,11 +844,11 @@ input:-webkit-autofill:active {
   height: auto !important;
 }
 
-.fborder input[type=text],
-.fborder input[type=password],
-.fborder input[type=email],
-.fborder input[type=date],
-.fborder input[type=file],
+.fborder input[type="text"],
+.fborder input[type="password"],
+.fborder input[type="email"],
+.fborder input[type="date"],
+.fborder input[type="file"],
 .fborder .custom-select,
 .fborder .custom-check-select {
   border-color: #585858 !important;
@@ -825,11 +875,11 @@ input:-webkit-autofill:active {
 .form .notice {
   color: #8b8a8a;
 }
-.form input[type=text],
-.form input[type=password],
-.form input[type=email],
-.form input[type=date],
-.form input[type=file],
+.form input[type="text"],
+.form input[type="password"],
+.form input[type="email"],
+.form input[type="date"],
+.form input[type="file"],
 .form .custom-select,
 .form .custom-check-select {
   width: 100%;
@@ -837,8 +887,8 @@ input:-webkit-autofill:active {
   border: solid 1px #2f2f4b;
   background-clip: padding-box;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   display: block;
   border-radius: 4px;
   padding: 0.55rem 0.75rem;
@@ -847,23 +897,29 @@ input:-webkit-autofill:active {
   font-weight: 400;
   transition: all 0.3s ease-in-out;
 }
-.form input[type=text]::-moz-placeholder, .form input[type=password]::-moz-placeholder, .form input[type=email]::-moz-placeholder, .form input[type=date]::-moz-placeholder, .form input[type=file]::-moz-placeholder, .form .custom-select::-moz-placeholder, .form .custom-check-select::-moz-placeholder {
+.form input[type="text"]::-moz-placeholder,
+.form input[type="password"]::-moz-placeholder,
+.form input[type="email"]::-moz-placeholder,
+.form input[type="date"]::-moz-placeholder,
+.form input[type="file"]::-moz-placeholder,
+.form .custom-select::-moz-placeholder,
+.form .custom-check-select::-moz-placeholder {
   color: #8b8a8a;
 }
-.form input[type=text]::placeholder,
-.form input[type=password]::placeholder,
-.form input[type=email]::placeholder,
-.form input[type=date]::placeholder,
-.form input[type=file]::placeholder,
+.form input[type="text"]::placeholder,
+.form input[type="password"]::placeholder,
+.form input[type="email"]::placeholder,
+.form input[type="date"]::placeholder,
+.form input[type="file"]::placeholder,
 .form .custom-select::placeholder,
 .form .custom-check-select::placeholder {
   color: #8b8a8a;
 }
-.form input[type=text]:focus,
-.form input[type=password]:focus,
-.form input[type=email]:focus,
-.form input[type=date]:focus,
-.form input[type=file]:focus,
+.form input[type="text"]:focus,
+.form input[type="password"]:focus,
+.form input[type="email"]:focus,
+.form input[type="date"]:focus,
+.form input[type="file"]:focus,
 .form .custom-select:focus,
 .form .custom-check-select:focus {
   border-color: #fb6580;
@@ -1007,7 +1063,7 @@ input:-webkit-autofill:active {
   width: 20px;
   height: 20px;
   -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
   margin-top: 1px;
 }
 @media screen and (max-width: 820px) {
@@ -1296,7 +1352,7 @@ input:-webkit-autofill:active {
   width: 16px;
   height: 16px;
   -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
 }
 .app_sidebar .title {
   color: #fff;
@@ -1318,7 +1374,7 @@ input:-webkit-autofill:active {
   width: 20px;
   height: 20px;
   -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
 }
 .app_sidebar a.active {
   color: #fb6580;
@@ -1391,7 +1447,12 @@ input:-webkit-autofill:active {
 }
 .artist_wrapper .overlay {
   background: rgb(0, 0, 0);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.071) 25%, rgba(0, 0, 0, 0.35) 50%, rgba(8, 0, 3, 0.7) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.071) 25%,
+    rgba(0, 0, 0, 0.35) 50%,
+    rgba(8, 0, 3, 0.7) 100%
+  );
   width: 100%;
   height: 100%;
   border-radius: 0.4rem;
@@ -1498,7 +1559,7 @@ input:-webkit-autofill:active {
   height: 22px;
   width: 22px;
   -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
   cursor: pointer;
 }
 .app_main .page_flex {
@@ -1898,7 +1959,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   height: 20px;
   width: 20px;
   -o-object-fit: scale-down;
-     object-fit: scale-down;
+  object-fit: scale-down;
   margin-right: 0.5rem;
 }
 .profile_header ._action .drop_down.active {
@@ -1928,9 +1989,9 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   width: 100%;
   height: 250px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: center;
-     object-position: center;
+  object-position: center;
 }
 @media (max-width: 768px) {
   .profile_header .cover img {
@@ -1940,7 +2001,11 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 .profile_header .cover::after {
   content: "";
   background: rgb(43, 38, 39);
-  background: linear-gradient(0deg, rgba(251, 101, 128, 0) 0%, rgba(8, 1, 4, 0.678) 100%);
+  background: linear-gradient(
+    0deg,
+    rgba(251, 101, 128, 0) 0%,
+    rgba(8, 1, 4, 0.678) 100%
+  );
   width: 100%;
   height: 40%;
   position: absolute;
@@ -1986,7 +2051,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   width: 145px;
   height: 145px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 100%;
 }
 .profile_wrapper .avatar #change_avatar {
@@ -2058,7 +2123,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   height: 15px;
   width: 20px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   cursor: pointer;
   margin-right: 0.25rem;
 }
@@ -2197,7 +2262,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .app_posts .posted_user .left .name {
   color: #fff;
@@ -2216,7 +2281,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   width: 17px;
   height: 17px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   margin-left: 0.25rem;
 }
 .app_posts .posted_user .left .uname {
@@ -2326,6 +2391,33 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 .toast.success {
   color: #0fb381;
   border-color: #0fb381;
+}
+
+.video-preview {
+  position: relative;
+  width: 100%;
+  padding-top: 65%;
+  cursor: pointer;
+  margin: 0.7rem 0 1.1rem;
+  background-color: #2f2f4b;
+  border-radius: 0.25rem;
+}
+.video-preview .video-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.video-preview p {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  text-align: center;
 }
 
 .video-preview {

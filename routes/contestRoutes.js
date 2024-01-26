@@ -35,11 +35,7 @@ router.get("/contests", async function (req, res) {
       const profileData = profileResponse.data.result;
       const userId = profileData._id;
 
-      if (
-        !profileData.name &&
-        !profileData.name.first_name &&
-        !profileData.name.last_name
-      ) {
+      if (!profileData.full_name) {
         return res.redirect("/new-profile");
       }
       return res.render("contests", {

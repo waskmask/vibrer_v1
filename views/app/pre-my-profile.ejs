@@ -28,6 +28,10 @@
         width: 0;
         height: 0;
       }
+      .toast.error {
+        color: rgb(179, 15, 15);
+        border-color: rgb(179, 15, 15);
+      }
     </style>
   </head>
   <body class="body-dark _pr">
@@ -58,48 +62,71 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-
+            <% if(profileData.user_type === 'Artist'){ %>
             <li
               class="<%= (path == '/contests') ? 'active' : '' %>"
               onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
+            <% } %>
           </ul>
         </div>
 
         <div class="app_right_menu">
           <div class="profile">
             <div class="head hphead">
+              <!-- <img
+                class="icon"
+                src="/public/images/icons/user-icon-light.svg"
+                alt="Icon"
+              /> -->
+              <% if (profileData.profile_img === '') { %>
               <img
                 src="/public/images/default-avatar.png"
                 alt="Default Avatar"
                 class="avatar"
               />
+              <% } else { %>
+              <img
+                src="<%- profileData.profile_img %>"
+                alt="User Profile Image"
+                class="avatar"
+              />
+              <% } %>
             </div>
             <div class="drop_down hpdd">
               <div class="_profile">
+                <% if (profileData.profile_img === '') { %>
                 <img
                   src="/public/images/default-avatar.png"
                   alt="Default Avatar"
                 />
-
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                />
+                <% } %>
                 <div class="name">
-                  <span>Waseem Mohammed</span>
-
+                  <span><%- profileData.full_name %></span>
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="uname" id="username">@waskmask</div>
+                <div class="uname" id="username">
+                  @<%- profileData.username %>
+                </div>
               </div>
 
               <div class="_menu">
                 <ul>
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="/app/pre-my-profile">
                       <img
                         src="/public/images/icons/user_icon.svg"
                         alt="Icon"
@@ -154,7 +181,11 @@
               <form action="">
                 <input type="file" name="profile_cover" id="profile_cover" />
               </form>
-              <img src="/uploads/coverDemo.jpeg" alt="Cover" id="my_cover" />
+              <img
+                src="<%= profileData.profile_cover %>"
+                alt="Cover"
+                id="my_cover"
+              />
             </div>
           </div>
 
@@ -162,7 +193,7 @@
             <div class="_profile_left">
               <div class="avatar">
                 <img
-                  src="/uploads/profileDemo.png"
+                  src="<%= profileData.profile_img %>"
                   id="p_avatar"
                   alt="avatar"
                 />
@@ -179,14 +210,19 @@
               </div>
               <div class="profile_top_details">
                 <div class="name">
-                  <span>Nathan Steve</span>
+                  <span><%- profileData.full_name %></span>
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
-                <div class="info">Singer, Song writer, Music director</div>
+                <div class="info">
+                  <%= profileData.artist_categories.map(category =>
+                  category.name).join(', ') %>
+                </div>
               </div>
             </div>
 
@@ -201,83 +237,64 @@
             <div class="_tab_content active" id="userInfo">
               <div class="profile_top_details">
                 <div class="name">
-                  <span>Nathan Steve</span>
+                  <span><%- profileData.full_name %></span>
+                  <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"
                     src="/public/images/icons/verified-badge.svg"
                     alt="Verified"
                   />
+                  <% } %>
                 </div>
                 <div class="info mt-1">
                   <div class="g_age">
                     <img
-                      src="/public/images/icons/gender-male.svg"
+                      src="/public/images/icons/gender-<%= profileData.gender.toLowerCase() %>.svg"
                       alt="Gender"
-                      title="Male"
+                      title="%= profileData.gender %>"
                     />
-                    <div>32,</div>
+                    <% function calculateAge(dateOfBirth) { const birthDate =
+                    new Date(dateOfBirth); const currentDate = new Date(); let
+                    age = currentDate.getFullYear() - birthDate.getFullYear();
+                    if ( currentDate.getMonth() < birthDate.getMonth() ||
+                    (currentDate.getMonth() === birthDate.getMonth() &&
+                    currentDate.getDate() < birthDate.getDate()) ) { age--; }
+                    return age; } %>
+                    <div><%= calculateAge(profileData.date_of_birth) %>,</div>
                   </div>
-                  <span>Frankfurt, Germany</span>
+                  <span
+                    ><%= profileData.city %>, <%= profileData.country %></span
+                  >
                 </div>
               </div>
 
               <div class="title mt-3">Username:</div>
-              <div class="data">waskmask</div>
+              <div class="data"><%= profileData.username %></div>
 
               <div class="title mt-3">Genre:</div>
-              <div class="data">Pop, R&B, HipHop</div>
+              <div class="data">
+                <%= profileData.genres.map(genre => genre.name).join(', ') %>
+              </div>
 
               <div class="title mt-3">Other links:</div>
               <div class="p_social_links mt-2">
+                <% for (let platform in profileData.link) { %>
                 <div class="link">
-                  <div class="title">Instagram</div>
-                  <a href="" target="_blank"
-                    ><img
-                      src="/public/images/icons/instagram_link.svg"
-                      alt="instagram link"
-                  /></a>
+                  <div class="title">
+                    <%= platform.charAt(0).toUpperCase() + platform.slice(1) %>
+                  </div>
+                  <a href="<%= profileData.link[platform] %>" target="_blank">
+                    <img
+                      src="/public/images/icons/<%= platform %>_link.svg"
+                      alt="<%= platform %> link"
+                    />
+                  </a>
                 </div>
-                <div class="link">
-                  <div class="title">YouTube</div>
-                  <a href="" target="_blank"
-                    ><img
-                      src="/public/images/icons/Youtube_link.svg"
-                      alt="youtube link"
-                  /></a>
-                </div>
-                <div class="link">
-                  <div class="title">Facebook</div>
-                  <a href="" target="_blank"
-                    ><img
-                      src="/public/images/icons/facebook_link.svg"
-                      alt="facebook link"
-                  /></a>
-                </div>
-                <div class="link">
-                  <div class="title">Twitter</div>
-                  <a href="" target="_blank"
-                    ><img
-                      src="/public/images/icons/twitter_link.svg"
-                      alt="twitter link"
-                  /></a>
-                </div>
-                <div class="link">
-                  <div class="title">Website</div>
-                  <a href="" target="_blank"
-                    ><img
-                      src="/public/images/icons/website_link.svg"
-                      alt="website link"
-                  /></a>
-                </div>
+                <% } %>
               </div>
 
               <div class="title mt-3">Bio:</div>
-              <div class="data">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. A
-                aspernatur facilis repellendus deleniti mollitia ratione? Autem,
-                ab a. Unde repudiandae quae quis, placeat neque incidunt cumque
-                velit delectus tempora possimus.
-              </div>
+              <div class="data"><%= profileData.bio %></div>
 
               <div class="p_gallery mt-4 mb-3">
                 <div class="title">Gallery:</div>
@@ -297,22 +314,15 @@
                 </form>
               </div>
               <div class="p_gallery_data" id="galleryData">
+                <% profileData.gallery.forEach(image => { %>
                 <div class="item">
-                  <div class="remove">+</div>
-                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
+                  <div class="remove" data-gallery-id="<%= image._id %>">+</div>
+                  <img src="<%= image.media_url %>" alt="<%= image.title %>" />
                 </div>
-                <div class="item">
-                  <div class="remove">+</div>
-                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
-                </div>
-                <div class="item">
-                  <div class="remove">+</div>
-                  <img src="/uploads/coverDemo.jpeg" alt="gallery" />
-                </div>
+                <% }); %>
               </div>
             </div>
           </div>
-          <!-- app main end -->
         </div>
       </div>
     </main>
@@ -323,42 +333,8 @@
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
     <script src="/public/js/Youtube.min.js?v=2.0"></script>
+    <script src="/public/js/config.js?v=2.0"></script>
 
-    <script>
-      var players = [];
-
-      var videoElements = document.querySelectorAll(".video-js");
-
-      for (var i = 0; i < videoElements.length; i++) {
-        var player = videojs(videoElements[i]);
-
-        // Store the player instance in the array
-        players.push(player);
-
-        // Add event listener to each player
-        player.on("play", function () {
-          pauseOtherPlayers(this);
-        });
-        player.on("seeking", function () {
-          player.muted(true);
-        });
-
-        player.on("seeked", function () {
-          player.muted(false);
-        });
-      }
-      function pauseVideo() {
-        player.pause();
-      }
-      // Function to pause all players except the currently playing one
-      function pauseOtherPlayers(currentPlayer) {
-        players.forEach(function (player) {
-          if (player !== currentPlayer) {
-            player.pause();
-          }
-        });
-      }
-    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var headElement = document.getElementById("myProfile_options");
@@ -426,18 +402,81 @@
     </script>
     <script>
       function triggerFileInput() {
-        document.getElementById("profile_cover").click();
+        const profileCoverInput = document.getElementById("profile_cover");
 
-        document.getElementById("profile_cover").onchange = function (event) {
+        profileCoverInput.click();
+
+        profileCoverInput.onchange = function (event) {
           if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
+            const reader = new FileReader();
+
             reader.onload = function (e) {
               document.getElementById("my_cover").src = e.target.result;
-              showToastSuccess("Cover image uploaded successfully!");
+              const file = event.target.files[0];
+              uploadCoverPhotoToServer(file, "profile_cover");
             };
+
             reader.readAsDataURL(event.target.files[0]);
           }
         };
+      }
+
+      function uploadCoverPhotoToServer(file, column) {
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+        const formData = new FormData();
+        formData.append("profile_cover_image", file);
+
+        fetch(apiUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              const coverImage = data.result;
+              saveCoverImageURL(coverImage, column);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! ${error}`);
+          });
+      }
+
+      function saveCoverImageURL(coverImageURL, column) {
+        const apiUrlSaveCoverPhoto = `${API_URL}update/appUserSpecificColumn`;
+
+        const payload = {
+          id: "<%- profileData._id %>",
+          column: column,
+          value: coverImageURL,
+        };
+
+        fetch(apiUrlSaveCoverPhoto, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              if (column === "profile_cover") {
+                showToastSuccess("Cover image uploaded successfully!");
+              } else {
+                showToastSuccess("Avatar image uploaded successfully!");
+              }
+            } else {
+              showToastError(`Error! ${data.message}`);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! Something went wrong`);
+          });
       }
 
       function triggerAvatarInput() {
@@ -448,7 +487,8 @@
             var reader = new FileReader();
             reader.onload = function (e) {
               document.getElementById("p_avatar").src = e.target.result;
-              showToastSuccess("Avatar uploaded successfully!");
+              const file = event.target.files[0];
+              uploadCoverPhotoToServer(file, "profile_img");
             };
             reader.readAsDataURL(event.target.files[0]);
           }
@@ -467,16 +507,42 @@
                 const item = document.createElement("div");
                 item.className = "item";
                 item.innerHTML = `
-                <div class="remove">+</div>
+                <!--div class="remove">+</div-->
                 <img src="${e.target.result}" alt="gallery" />
               `;
                 galleryData.appendChild(item);
-                showToastSuccess("image uploaded successfully!");
+                const file = event.target.files[0];
+                uploadGalleryImageToServer(file);
               };
               reader.readAsDataURL(file);
             });
           }
         };
+      }
+
+      function uploadGalleryImageToServer(file) {
+        const apiUrl = `${API_URL}upload/gallery-image`;
+        const formData = new FormData();
+        formData.append("gallery_img", file);
+
+        fetch(apiUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 1) {
+              showToastSuccess("image uploaded successfully!");
+            } else {
+              showToastError(`Error! ${data.message}`);
+            }
+          })
+          .catch((error) => {
+            showToastError(`Error! ${error}`);
+          });
       }
 
       function showToastSuccess(message) {
@@ -496,17 +562,84 @@
           toast.classList.remove("show");
         }, 2000);
       }
+      function showToastError(message) {
+        let toast = document.querySelector(".toast");
+
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.className = "toast error";
+          document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+
       document
         .getElementById("galleryData")
         .addEventListener("click", function (event) {
           if (event.target.classList.contains("remove")) {
-            removeItem(event.target);
+            const galleryId = event.target.getAttribute("data-gallery-id");
+            removeItem(event.target, galleryId);
           }
         });
 
-      function removeItem(element) {
-        element.parentElement.remove();
-        showToastSuccess("Image removed from gallery");
+      function removeItem(element, galleryId) {
+        const url = `${API_URL}remove/gallery-image/${galleryId}`;
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Check the API response and handle success
+            element.parentElement.remove();
+            showToastSuccess("Image removed from gallery");
+          })
+          .catch((error) => {
+            console.error("Error removing gallery image:", error);
+            showToastError("Failed to remove image from gallery");
+          });
+      }
+    </script>
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
       }
     </script>
   </body>

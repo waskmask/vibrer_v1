@@ -5,6 +5,17 @@ window.addEventListener("DOMContentLoaded", function () {
     const checkOptions = customCheckSelect.querySelector(".check-options");
     const closeOptions = customCheckSelect.querySelector(".close-options");
     const hiddenField = customCheckSelect.querySelector('input[type="hidden"]');
+    const attributeExists = hiddenField.hasAttribute("selectedValues");
+    let selectedValuesArray = [];
+    let selectedItemsArray = [];
+
+    if (attributeExists) {
+      const alreadyselectedValues = hiddenField.getAttribute("value");
+      selectedValuesArray = alreadyselectedValues.split(",");
+
+      const alreadyselectedItems = hiddenField.getAttribute("selectedValues");
+      selectedItemsArray = alreadyselectedItems.split(",");
+    }
     const checkboxContainerInputs = customCheckSelect.querySelectorAll(
       ".checkbox-container input"
     );

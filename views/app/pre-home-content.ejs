@@ -48,8 +48,8 @@
             </li>
             <% if(profileData.user_type === 'Artist'){ %>
             <li
-              class="<%= (path == '/contest') ? 'active' : '' %>"
-              onclick="toPreMyContests('<%= path %>', '<%= onGoingContestsData.result._id %>')"
+              class="<%= (path == '/contests') ? 'active' : '' %>"
+              onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
@@ -93,10 +93,7 @@
                 />
                 <% } %>
                 <div class="name">
-                  <span
-                    ><%- profileData.name.first_name %> <%-
-                    profileData.name.last_name %></span
-                  >
+                  <span><%- profileData.full_name %></span>
                   <% if(profileData.verified === true){ %>
                   <img
                     class="app_v_badge"

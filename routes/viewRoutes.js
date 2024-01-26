@@ -18,11 +18,7 @@ router.get("/", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("index", {
@@ -47,11 +43,7 @@ router.get("/road-map", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("road-map", {
@@ -77,11 +69,7 @@ router.get("/project", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("project-view", {
@@ -106,11 +94,7 @@ router.get("/privacy", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("privacy", {
@@ -135,11 +119,7 @@ router.get("/terms", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("terms", {
@@ -164,11 +144,7 @@ router.get("/cookies", async (req, res) => {
 
     const profileData = profileResponse.data.result;
 
-    if (
-      !profileData.name &&
-      !profileData.name.first_name &&
-      !profileData.name.last_name
-    ) {
+    if (!profileData.full_name) {
       return res.redirect("/new-profile");
     }
     return res.render("use-of-cookies", {

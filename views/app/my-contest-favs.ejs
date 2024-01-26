@@ -118,10 +118,7 @@
                   </div>
                   <div class="info">
                     <div class="title">
-                      <span
-                        ><%- participants.user_id.name.first_name %> <%-
-                        participants.user_id.name.last_name %></span
-                      >
+                      <span><%- participants.user_id.full_name %></span>
                       <% if(participants.user_id.verified){ %>
                       <img
                         src="/public/images/icons/verified-badge.svg"
