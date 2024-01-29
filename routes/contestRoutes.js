@@ -7,7 +7,7 @@ router.get("/contests", async function (req, res) {
     const onGoingContestsResponse = await axios.post(
       `${process.env.API_URL}all/contest`,
       {
-        type: "ongoing",
+        type: "Active",
       }
     );
 

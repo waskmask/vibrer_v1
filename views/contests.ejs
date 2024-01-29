@@ -20,7 +20,7 @@
     <%- include('partials/header'); %>
 
     <main>
-      <section class="contests bg-dark">
+      <section class="contests bg-dark" style="padding-bottom: 10px">
         <div class="layout">
           <% if (onGoingContestsData.result && onGoingContestsData.result.length
           > 0) { %>
@@ -43,28 +43,13 @@
               />
             </div>
           </div>
-          <% }); } %> <% if (upComingContestsData.result &&
-          upComingContestsData.result.length > 0) { %>
-          <div class="title" style="margin-top: 60px">
-            Upcoming contests (<%- upComingContestsData.result.length %>)
-          </div>
-
-          <div class="contests-wrapper" onclick="toContest()">
-            <% upComingContestsData.result.forEach(upComingContests => { %>
-            <div class="contest">
-              <div class="status upcoming">Upcoming</div>
-              <img
-                class="hinm"
-                src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.xl  %>"
-                alt="images"
-              />
-              <img
-                class="hinb"
-                src="<%- ADMIN_URL %>uploads/<%- upComingContests.banner.m  %>"
-                alt="images"
-              />
-            </div>
-            <% }); %>
+          <% }); } %>
+        </div>
+      </section>
+      <section class="contests bg-dark">
+        <div class="layout">
+          <div class="title">Upcoming contests</div>
+          <div class="contests-wrapper">
             <div class="contest">
               <div class="status upcoming">Upcoming</div>
               <img
@@ -99,7 +84,6 @@
               alt="images" />
             </div>
           </div>
-          <% } %>
         </div>
       </section>
     </main>
