@@ -218,8 +218,8 @@
               </div>
             </div>
             <div id="dateInputWrapper">
+              <label for="dob" class="i_label">Date of Birth</label>
               <div class="date-input w-100">
-                <label for="dob" class="i_label">Date of Birth</label>
                 <input
                   type="date"
                   name="date_of_birth"
@@ -439,29 +439,34 @@
 
     <script>
       //   date
+      document.addEventListener("DOMContentLoaded", (event) => {
+        function calculateMaxYear() {
+          const currentDate = new Date();
+          const maxYear = currentDate.getFullYear() - 14;
+          return maxYear;
+        }
 
-      function calculateMaxYear() {
-        const currentDate = new Date();
-        const maxYear = currentDate.getFullYear() - 14;
-        return maxYear;
-      }
+        const maxYear = calculateMaxYear();
 
-      const maxYear = calculateMaxYear();
-
-      new dateDropper({
-        selector: "#dob",
-        format: "y-mm-dd",
-        lang: "en",
-        showArrowsOnHover: true,
-        overlay: false,
-        expandable: false,
-        expandedOnly: false,
-        doubleView: false,
-        startFromMonday: false,
-        maxYear: maxYear.toString(),
-        minYear: "1900",
-        // jump: "10",
-        range: false,
+        const dobInput = document.getElementById("dob");
+        const dobValue = dobInput.value;
+        new dateDropper({
+          selector: "#dob",
+          format: "y-mm-dd",
+          lang: "en",
+          showArrowsOnHover: true,
+          overlay: false,
+          expandable: false,
+          expandedOnly: false,
+          doubleView: false,
+          startFromMonday: false,
+          maxYear: maxYear.toString(),
+          minYear: "1900",
+          // jump: "10",
+          range: false,
+          current: document.getElementById("dob").value,
+          defaultDate: dobValue,
+        });
       });
 
       var quill = new Quill("#bio", {
