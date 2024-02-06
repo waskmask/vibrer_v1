@@ -181,22 +181,34 @@
               <form action="">
                 <input type="file" name="profile_cover" id="profile_cover" />
               </form>
+              <% if (profileData.profile_cover === '') { %>
+              <img src="/uploads/cover_img1.jpeg" alt="Cover" id="my_cover" />
+              <% } else { %>
               <img
                 src="<%= profileData.profile_cover %>"
                 alt="Cover"
                 id="my_cover"
               />
+              <% } %>
             </div>
           </div>
 
           <div class="profile_wrapper">
             <div class="_profile_left">
               <div class="avatar">
+                <% if (profileData.profile_img === '') { %>
                 <img
-                  src="<%= profileData.profile_img %>"
+                  src="/public/images/default-avatar.png"
+                  alt="Default Avatar"
                   id="p_avatar"
-                  alt="avatar"
                 />
+                <% } else { %>
+                <img
+                  src="<%- profileData.profile_img %>"
+                  alt="User Profile Image"
+                  id="p_avatar"
+                />
+                <% } %>
                 <div id="change_avatar" onclick="triggerAvatarInput()">
                   <img src="/public/images/icons/camera.svg" alt="camera" />
                   <form action="">

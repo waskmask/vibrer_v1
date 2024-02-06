@@ -448,25 +448,21 @@
 
         const maxYear = calculateMaxYear();
 
-        const dobInput = document.getElementById("dob");
-        const dobValue = dobInput.value;
-        new dateDropper({
-          selector: "#dob",
-          format: "y-mm-dd",
-          lang: "en",
-          showArrowsOnHover: true,
-          overlay: false,
-          expandable: false,
-          expandedOnly: false,
-          doubleView: false,
-          startFromMonday: false,
-          maxYear: maxYear.toString(),
-          minYear: "1900",
-          // jump: "10",
-          range: false,
-          current: document.getElementById("dob").value,
-          defaultDate: dobValue,
-        });
+      new dateDropper({
+        selector: "#dob",
+        format: "y-mm-dd",
+        lang: "en",
+        showArrowsOnHover: true,
+        overlay: false,
+        expandable: false,
+        expandedOnly: false,
+        doubleView: false,
+        startFromMonday: false,
+        maxYear: maxYear.toString(),
+        minYear: "1900",
+        // jump: "10",
+        range: false,
+        defaultDate: "<%- profileData.date_of_birth %>", // Example default date
       });
 
       var quill = new Quill("#bio", {
