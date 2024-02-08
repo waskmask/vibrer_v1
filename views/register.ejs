@@ -193,10 +193,15 @@
                 : "Please enter a valid email";
             }
 
-            if (!isStrongPassword(password)) {
+            // if (!isStrongPassword(password)) {
+            //   isValid = false;
+            //   customErrors.password =
+            //     "Password must be strong and contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
+            // }
+            if (password.length < 6) {
               isValid = false;
               customErrors.password =
-                "Password must be strong and contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
+                "Password must be at least 6 characters long.";
             }
 
             if (password !== confirmPassword) {
@@ -276,7 +281,7 @@
       function isStrongPassword(password) {
         // Check for strong password criteria
         const strongPasswordRegex =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/;
         return strongPasswordRegex.test(password);
       }
     </script>
