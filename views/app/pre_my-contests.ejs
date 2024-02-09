@@ -361,7 +361,7 @@
               <a target="_blank" href="/cookies">Cookie settings</a>
             </div>
             <div class="link">
-              <a target="_blank" href="/home">Vibrer Home page</a>
+              <a target="_blank" href="/">Vibrer Home page</a>
             </div>
           </div>
           <div class="social-icons">
@@ -588,7 +588,7 @@
 
           if (isValid) {
             const formData = new FormData(form);
-            formData.append("description", quill.getText()); // Assuming 'quill' is defined and holds the rich text editor content
+            formData.append("description", quill.getText());
 
             const genresArray = genresInput.split(",");
             formData.append("genres", genresArray);
@@ -675,7 +675,6 @@
               body: formData,
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
-                // Remove 'Content-Type': 'multipart/form-data' line; it's set automatically with the correct boundary by the browser
               },
             });
 
@@ -687,7 +686,6 @@
             }
 
             const responseData = await response.json();
-            console.log(responseData);
             if (responseData.status === 1) {
               successPop.textContent = "Entry submitted successfully.";
               successPop.classList.remove("d-none");
