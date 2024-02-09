@@ -41,7 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var closeModalButtons = document.querySelectorAll(".close-modal");
   closeModalButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      pauseVideo();
+      if (window.pauseVideo) {
+        window.pauseVideo();
+      }
       var modal = this.closest("._modal");
       if (modal) {
         closeModal(modal);

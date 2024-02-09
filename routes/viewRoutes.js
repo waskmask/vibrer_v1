@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const showProjectsController = require("../controllers/showProjectsController");
-
+const i18n = require("i18n");
 // Use router.get instead of app.get
 // Get Routes
 router.get("/", async (req, res) => {
@@ -22,12 +22,12 @@ router.get("/", async (req, res) => {
       return res.redirect("/new-profile");
     }
     return res.render("index", {
-      title: "Home",
+      title: i18n.__("Home"),
       path: "/",
       profileData: profileData,
     });
   } else {
-    return res.render("index", { title: "Home", path: "/" });
+    return res.render("index", { title: i18n.__("Home"), path: "/" });
   }
 });
 router.get("/road-map", async (req, res) => {

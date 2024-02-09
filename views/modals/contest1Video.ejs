@@ -7,11 +7,23 @@
     <div class="body contest-info">
       <div class="video-container-169">
         <video
-          id="my-video"
-          class="video-js vjs-default-skin"
           controls
-          data-setup='{"techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=-k9ZwELIC1k"}]}'
-        ></video>
+          class="video-js"
+          preload="auto"
+          width="640"
+          height="264"
+          data-setup="{}"
+          poster="/public/images/contest1.jpg"
+        >
+          <source
+            src="https://static.vibrer.app/mediavid/contest1promo1.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="https://static.vibrer.app/mediavid/contest1promo1.mp4"
+            type="video/webm"
+          />
+        </video>
       </div>
 
       <button class="btn btn-primary mt-3 mb-2 close-modal">Close</button>

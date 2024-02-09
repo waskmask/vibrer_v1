@@ -76,9 +76,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listeners
-  burger.addEventListener("click", showMenu);
-  closeMenu.addEventListener("click", hideMenu);
-  menuOverlay.addEventListener("click", hideMenu);
+  if (burger) {
+    burger.addEventListener("click", showMenu);
+  }
+
+  if (closeMenu) {
+    closeMenu.addEventListener("click", hideMenu);
+  }
+
+  if (menuOverlay) {
+    menuOverlay.addEventListener("click", hideMenu);
+  }
 
   const toTopButton = document.querySelector(".toTop");
 
@@ -97,8 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  toggleToTopButton(); // Check initial scroll position
-
-  window.addEventListener("scroll", toggleToTopButton);
-  toTopButton.addEventListener("click", scrollToTop);
+  if (toTopButton) {
+    toggleToTopButton(); // Check initial scroll position
+    window.addEventListener("scroll", toggleToTopButton);
+    toTopButton.addEventListener("click", scrollToTop);
+  }
 });

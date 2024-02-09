@@ -756,6 +756,7 @@ input:-webkit-autofill:active {
       outline: none;
     }
   }
+
   .custom-radio-label {
     display: flex;
     gap: 1rem;
@@ -781,6 +782,7 @@ input:-webkit-autofill:active {
     }
   }
 }
+
 .custom-select {
   position: relative;
   cursor: pointer;
@@ -2243,4 +2245,8 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     width: 80%;
     text-align: center;
   }
+}
+
+.vjs-poster {
+  background-size: cover;
 }

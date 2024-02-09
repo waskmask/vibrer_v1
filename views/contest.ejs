@@ -168,70 +168,7 @@
               </div>
             </div>
 
-            <div class="contestant">
-              <div class="head">
-                <video
-                  controls
-                  class="video-js"
-                  preload="auto"
-                  width="640"
-                  height="264"
-                  data-setup="{}"
-                >
-                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                  <source src="/uploads/inescapable.mp4" type="video/webm" />
-                  <p class="vjs-no-js">
-                    To view this video please enable JavaScript, and consider
-                    upgrading to a web browser that
-                    <a
-                      href="https://videojs.com/html5-video-support/"
-                      target="_blank"
-                      >supports HTML5 video</a
-                    >
-                  </p>
-                </video>
-              </div>
-              <div class="body">
-                <div class="top">
-                  <div class="user">
-                    <div class="img">
-                      <img src="/public/images/listening-to.jpg" alt="avatar" />
-                    </div>
-                    <div class="info">
-                      <div class="title">
-                        <span>Jessica Hub</span>
-                        <img
-                          src="/public/images/icons/verified-badge.svg"
-                          alt="Badge"
-                        />
-                      </div>
-                      <div class="uname">@jhub</div>
-                    </div>
-                  </div>
-
-                  <div class="addToFav">
-                    <img
-                      src="/public/images/icons/bookmark.svg"
-                      alt="Bookmark"
-                    />
-                  </div>
-                </div>
-
-                <div class="votes">
-                  <div class="count">
-                    <strong>Votes:</strong> <span>2036</span>
-                  </div>
-                  <div class="rank">
-                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
-                  </div>
-                </div>
-
-                <div class="cta">
-                  <button class="btn btn-outlined">Visit artist</button>
-                  <button class="btn btn-primary">Vote now</button>
-                </div>
-              </div>
-            </div>
+            
 
             <div class="contestant">
               <div class="head">
@@ -315,43 +252,46 @@
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
-    <script src="/public/js/Youtube.min.js?v=2.0"></script>
+    <!-- <script src="/public/js/Youtube.min.js?v=2.0"></script> -->
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/authForm.js?v=2.0"></script>
     <script>
-      var players = [];
+      document.addEventListener("DOMContentLoaded", function () {
+        var players = [];
 
-      var videoElements = document.querySelectorAll(".video-js");
+        var videoElements = document.querySelectorAll(".video-js");
+        for (var i = 0; i < videoElements.length; i++) {
+          (function (i) {
+            var player = videojs(videoElements[i]);
 
-      for (var i = 0; i < videoElements.length; i++) {
-        var player = videojs(videoElements[i]);
+            players.push(player);
 
-        // Store the player instance in the array
-        players.push(player);
+            player.on("play", function () {
+              pauseOtherPlayers(player);
+            });
+            player.on("seeking", function () {
+              this.muted(true);
+            });
+            player.on("seeked", function () {
+              this.muted(false);
+            });
+          })(i);
+        }
 
-        // Add event listener to each player
-        player.on("play", function () {
-          pauseOtherPlayers(this);
-        });
-        player.on("seeking", function () {
-          player.muted(true);
-        });
-
-        player.on("seeked", function () {
-          player.muted(false);
-        });
-      }
-      function pauseVideo() {
-        player.pause();
-      }
-      // Function to pause all players except the currently playing one
-      function pauseOtherPlayers(currentPlayer) {
-        players.forEach(function (player) {
-          if (player !== currentPlayer) {
+        window.pauseVideo = function () {
+          players.forEach(function (player) {
             player.pause();
-          }
-        });
-      }
+          });
+        };
+
+        function pauseOtherPlayers(currentPlayer) {
+          players.forEach(function (player) {
+            if (player !== currentPlayer) {
+              player.pause();
+            }
+          });
+        }
+      });
     </script>
 
     <script>

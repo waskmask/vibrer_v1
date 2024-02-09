@@ -15,6 +15,7 @@
     <link href="/public/style/quill.snow.css?v=2.0" rel="stylesheet" />
     <link rel="stylesheet" href="/public/style/modal.css?v=2.0" />
     <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=2.0" />
     <link rel="stylesheet" href="/public/style/contests.css?v=2.0" />
     <link href="/public/style/video-js.css?v=2.0" rel="stylesheet" />
   </head>
@@ -257,43 +258,37 @@
                 id="title"
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-3 file_input_wrapper">
+              <div class="small light mb-1">
+                Upload your singing video (maximum upload size is 512 MB).
+              </div>
+              <label class="label f-border" for="media_file">
+                Upload video
+              </label>
               <input
                 class="form-input"
                 type="file"
                 name="media_video"
                 id="media_file"
+                accept="video/*"
               />
               <div id="uploadProgress" class="progress-bar d-none">
                 <div class="progress-bar-fill"></div>
               </div>
+
+              <div class="sub pr-title d-none">Your video preview</div>
+              <div class="video-preview d-none">
+                <video
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                ></video>
+              </div>
             </div>
 
-            <div class="sub pr-title d-none">Your video preview</div>
-            <div class="video-preview d-none">
-              <video
-                controls
-                class="video-js"
-                preload="auto"
-                width="640"
-                height="264"
-                data-setup="{}"
-              >
-                <!-- <source src="/uploads/inescapable.mp4" type="video/mp4" />
-              <source src="/uploads/inescapable.mp4" type="video/webm" /> -->
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider
-                  upgrading to a web browser that
-                  <a
-                    href="https://videojs.com/html5-video-support/"
-                    target="_blank"
-                    >supports HTML5 video</a
-                  >
-                </p>
-              </video>
-            </div>
-
-            <div class="custom-select-wrapper mb-3">
+            <div class="custom-select-wrapper mb-3" id="selectWrapperErr">
               <div class="custom-check-select dfac" id="genre">
                 <div class="placeholder">Genre *</div>
                 <div class="check-options">
@@ -320,6 +315,7 @@
                       autocomplete="off"
                     />
                   </div>
+
                   <div class="divider w-100 mt-4"></div>
                   <div class="ccs-foter dfjcfe">
                     <button
@@ -338,7 +334,7 @@
               <div id="desc" style="height: auto; min-height: 100px"></div>
             </div>
             <div class="error-message mt-3 d-none"></div>
-            <div class="success-message mt-3 d-none">
+            <div class="form-success mt-3 mb-2 d-none">
               Your have posted as participate successfully.
             </div>
             <div class="mb-3">
@@ -395,8 +391,9 @@
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
+    <!-- <script src="/public/js/cookieBanner2.js"></script> -->
     <script src="/public/js/video.min.js?v=2.0"></script>
-    <script src="/public/js/Youtube.min.js?v=2.0"></script>
+
     <script src="/public/js/sweetalert2@11.js?v=2.0"></script>
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/check-select.js?v=2.0"></script>
@@ -435,201 +432,173 @@
           }
         });
       }
-      var quill = new Quill("#desc", {
-        modules: {
-          toolbar: false,
-        },
-        placeholder: "Description (optional)", //
-        theme: "snow",
-      });
+      var descElement = document.getElementById("desc");
+      if (descElement) {
+        var quill = new Quill("#desc", {
+          modules: {
+            toolbar: false,
+          },
+          placeholder: "Description (optional)", //
+          theme: "snow",
+        });
+      } else {
+        console.log("Everything with quill is good!");
+      }
     </script>
     <script>
       document
-        .getElementById("media_file")
-        .addEventListener("change", function (event) {
-          // Display the progress bar
-          var fileInput = event.target;
-          var files = fileInput.files;
+        .querySelectorAll('.file_input_wrapper input[type="file"]')
+        .forEach(function (fileInput) {
+          // Ensure we're targeting the specific input for video files
+          if (
+            fileInput.getAttribute("name") === "media_video" &&
+            fileInput.getAttribute("accept").includes("video/*")
+          ) {
+            fileInput.addEventListener("change", function (event) {
+              var files = event.target.files;
+              if (files.length === 0) return; // Exit if no file selected
 
-          var progressBar = document.getElementById("uploadProgress");
-          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
-          progressBar.classList.remove("d-none");
+              var file = files[0];
+              var wrapper = event.target.closest(".file_input_wrapper");
+              var label = wrapper.querySelector(".label");
+              var previewContainer = wrapper.querySelector(".video-preview");
+              var prTitle = wrapper.querySelector(".pr-title");
+              var progressBar = wrapper.querySelector(".progress-bar");
+              var progressBarFill =
+                progressBar.querySelector(".progress-bar-fill");
+              var errorDiv = wrapper.querySelector(".form-alert.error"); // Selector for the error message div
 
-          // Simulate file upload progress
-          var uploadPercentage = 0;
-          var simulateUpload = setInterval(function () {
-            if (uploadPercentage >= 100) {
-              clearInterval(simulateUpload);
+              // Clear previous error message if present
+              if (errorDiv) {
+                errorDiv.remove();
+              }
 
-              // Hide the progress bar
-              progressBar.classList.add("d-none");
+              // Check if file size exceeds the maximum allowed size (512 MB)
+              if (file.size > 512 * 1024 * 1024) {
+                // Create and display an error message
+                var errorMsg = document.createElement("div");
+                errorMsg.classList.add("form-alert", "error");
+                errorMsg.textContent =
+                  "File size exceeds the maximum limit of 512 MB.";
+                wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
 
-              // Update the video source and display it
-              var videoElement = document.querySelector(".video-preview video");
-              var videoSource = videoElement.getElementsByTagName("source");
-              if (files.length > 0) {
-                var file = files[0];
+                // Reset label, preview, and progress bar to default state
+                label.textContent = "Upload video";
+                label.classList.remove("text-white");
+                prTitle.classList.add("d-none");
+                previewContainer.classList.add("d-none");
+                progressBar.classList.add("d-none");
+                return; // Exit to prevent further processing
+              }
 
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                  if (file.type === "video/mp4") {
-                    videoElement.innerHTML +=
-                      '<source src="' + e.target.result + '" type="video/mp4">';
-                  } else if (file.type === "video/webm") {
-                    videoElement.innerHTML +=
-                      '<source src="' +
-                      e.target.result +
-                      '" type="video/webm">';
+              // Update label text with file name, handling long names
+              label.textContent =
+                file.name.length > 25
+                  ? "..." + file.name.slice(-23)
+                  : file.name;
+              label.classList.add("text-white", files.length > 0);
+
+              // Reset preview and progress bar for new file upload
+              progressBar.classList.remove("d-none");
+              progressBarFill.style.width = "0%";
+              progressBarFill.textContent = "0%";
+              previewContainer.innerHTML = "";
+              prTitle.classList.remove("d-none");
+
+              var uploadPercentage = 0;
+              var simulateUpload = setInterval(function () {
+                if (uploadPercentage >= 100) {
+                  clearInterval(simulateUpload);
+                  progressBar.classList.add("d-none");
+
+                  if (file.type === "video/quicktime") {
+                    previewContainer.innerHTML =
+                      "<p>Preview not available for this video format. For a better experience, please upload an MP4 video.</p>";
+                    previewContainer.classList.remove("d-none");
+                  } else {
+                    // For supported formats, initialize Video.js player
+                    var blobUrl = URL.createObjectURL(file);
+                    var newVideoHtml = `
+              <video id="my_video_player" class="video-js" preload="auto" width="640" height="264" data-setup="{}" controls>
+                <source src="${blobUrl}" type="${file.type}">
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                </p>
+              </video>
+            `;
+                    previewContainer.innerHTML = newVideoHtml;
+                    previewContainer.classList.remove("d-none");
+                    videojs(document.getElementById("my_video_player"));
                   }
-                };
-
-                // Read the file as data URL
-                reader.readAsDataURL(file);
-
-                // videoSource[0].src = "/uploads/your-uploaded-video.mp4"; // Static URL for demonstration
-                // videoSource[1].src = "/uploads/your-uploaded-video.webm"; // Static URL for demonstration
-                videoElement.load();
-                videoElement.addEventListener("canplay", function () {
-                  videoElement.play();
-                });
-                videoElement.autoplay = true;
-                videoElement.controls = true;
-              }
-
-              if (file.type === "video/webm" || file.type === "video/mp4") {
-                // Display the video player and title
-                document
-                  .querySelector(".video-preview")
-                  .classList.remove("d-none");
-                document.querySelector(".pr-title").classList.remove("d-none");
-              }
-            } else {
-              uploadPercentage += 5; // Incrementing the percentage by 5
-              progressBarFill.style.width = uploadPercentage + "%";
-              progressBarFill.textContent = uploadPercentage + "%";
-            }
-          }, 200); // Adjust the interval time as needed
+                } else {
+                  uploadPercentage += 5;
+                  progressBarFill.style.width = uploadPercentage + "%";
+                  progressBarFill.textContent = uploadPercentage + "%";
+                }
+              }, 200);
+            });
+          }
         });
-
+    </script>
+    <script>
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("mediaPostForm");
+        if (!form) {
+          return;
+        }
         const btn = document.querySelector(".submitBtn");
-        const successPop = document.querySelector(".success-message");
+        const successPop = document.querySelector(".form-success");
         const errorPop = document.querySelector(".error-message");
+        const selectWrapperErr = document.getElementById("selectWrapperErr");
 
-        // Disable HTML5 validation
         form.setAttribute("novalidate", "");
 
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          // Change button text to "Submitting..."
           btn.textContent = "Submitting, please wait..";
           btn.disabled = true;
 
-          // Implement the timeout function
-          setTimeout(async () => {
-            let isValid = true;
-            let customErrors = {};
+          let isValid = true;
+          let customErrors = {};
 
+          const titleInput = document.getElementById("title").value.trim();
+          if (!titleInput) {
+            isValid = false;
+            customErrors.title = "Please enter a title";
+          }
+
+          const genresInput = document.querySelector('[name="genres"]').value;
+          if (!genresInput) {
+            isValid = false;
+            customErrors.genres = "Please select a genre";
+          }
+
+          const media_video = document.getElementById("media_file").files[0];
+          if (!media_video) {
+            isValid = false;
+            customErrors.media_video = "Please choose a video file";
+          } else if (!isValidVideoFile(media_video)) {
+            isValid = false;
+            customErrors.media_video =
+              "Please choose a valid video file (MP4, WebM, avi, mov, mkv, flv)";
+          }
+
+          clearPreviousErrors();
+
+          if (isValid) {
             const formData = new FormData(form);
-            formData.append("description", quill.getText());
+            formData.append("description", quill.getText()); // Assuming 'quill' is defined and holds the rich text editor content
 
-            const media_video = document.getElementById("media_file").files[0];
-
-            if (!media_video) {
-              isValid = false;
-              customErrors.media_video = "Please choose a video file";
-            } else if (!isValidVideoFile(media_video)) {
-              isValid = false;
-              customErrors.media_video =
-                "Please choose a valid video file (MP4 or WebM)";
-            }
-
-            const genresInput = document.querySelector('[name="genres"]');
-            const genresArray = genresInput.value;
+            const genresArray = genresInput.split(",");
             formData.append("genres", genresArray);
 
-            // Clear previous error alerts
-            const prevAlerts = document.querySelectorAll(".form-alert");
-            prevAlerts.forEach((alert) => alert.remove());
-
-            if (isValid) {
-              // You can add your form submission logic here
-              const url = `${API_URL}add/MediaPost`;
-              try {
-                const response = await fetch(url, {
-                  method: "POST",
-                  headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                      "appUserToken"
-                    )}`,
-                  },
-                  body: formData,
-                });
-
-                const responseData = await response.json();
-                if (response.status === 201 || response.status === 200) {
-                  if (responseData.status === 1) {
-                    // Handle success
-                    successPop.style.display = "block";
-                    successPop.innerHTML = "Entry submitted successfully.";
-                    setTimeout(() => {
-                      // const loader = document.getElementById("loader");
-                      // loader.style.display = "block";
-                      successPop.style.display = "none";
-                      window.location.href = window.location.href;
-                    }, 5000);
-                    form.reset();
-                  } else {
-                    // Handle API response with an error status
-                    errorPop.style.display = "block";
-                    if (responseData.error) {
-                      responseData.message = responseData.error;
-                    }
-                    errorPop.innerHTML = responseData.message;
-                    setTimeout(() => {
-                      errorPop.style.display = "none";
-                    }, 5000);
-                  }
-                } else {
-                  // Handle HTTP error
-                  errorPop.style.display = "block";
-                  if (responseData.error) {
-                    responseData.message = responseData.error;
-                  }
-                  errorPop.innerHTML = responseData.message;
-                  setTimeout(() => {
-                    errorPop.style.display = "none";
-                  }, 5000);
-                }
-              } catch (err) {
-                // Handle fetch error
-                console.error("An error occurred", err);
-                errorPop.style.display = "block";
-                errorPop.innerHTML =
-                  "An error occurred while submitting the form.";
-                setTimeout(() => {
-                  errorPop.style.display = "none";
-                }, 5000);
-              }
-            } else {
-              for (const key in customErrors) {
-                const inputElement = form.querySelector(`[name="${key}"]`);
-                const alertDiv = document.createElement("div");
-                alertDiv.className = "form-alert error";
-                alertDiv.textContent = customErrors[key];
-                inputElement.parentNode.insertBefore(
-                  alertDiv,
-                  inputElement.nextSibling
-                );
-              }
-            }
-
-            // Reset the button text
+            submitForm(formData);
+          } else {
+            displayCustomErrors(customErrors);
             btn.textContent = "Submit";
             btn.disabled = false;
-          }, 1000); // 1-second delay
+          }
         });
 
         function isValidVideoFile(file) {
@@ -642,9 +611,105 @@
             ".m4v",
             ".flv",
           ];
-          const fileExtension = file.name.split(".").pop().toLowerCase();
+          const fileExtension = "." + file.name.split(".").pop().toLowerCase();
+          return allowedExtensions.includes(fileExtension);
+        }
 
-          return allowedExtensions.some((ext) => ext === `.${fileExtension}`);
+        function clearPreviousErrors() {
+          document
+            .querySelectorAll(".form-alert")
+            .forEach((alert) => alert.remove());
+        }
+
+        function displayCustomErrors(errors) {
+          for (const key in errors) {
+            if (key === "genres") {
+              // Create and insert the error message inside the selectWrapperErr for genres error
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "form-alert error";
+              alertDiv.textContent = errors[key];
+              selectWrapperErr.appendChild(alertDiv);
+            } else {
+              const inputElement = form.querySelector(`[name="${key}"]`);
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "form-alert error";
+              alertDiv.textContent = errors[key];
+              inputElement.parentNode.insertBefore(
+                alertDiv,
+                inputElement.nextSibling
+              );
+            }
+          }
+        }
+        document.getElementById("title").addEventListener("input", function () {
+          if (this.value.trim() !== "") {
+            clearErrorForElement(this);
+          }
+        });
+        function clearErrorForElement(element) {
+          const error =
+            element.nextSibling.className === "form-alert error"
+              ? element.nextSibling
+              : null;
+          if (error) {
+            error.parentNode.removeChild(error);
+          }
+        }
+
+        function clearErrorForGenreSelection() {
+          const error = selectWrapperErr.querySelector(".form-alert.error");
+          if (error) {
+            error.parentNode.removeChild(error);
+          }
+        }
+
+        async function submitForm(formData) {
+          for (var pair of formData.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+          }
+          const url = `${API_URL}add/MediaPost`;
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              body: formData,
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                // Remove 'Content-Type': 'multipart/form-data' line; it's set automatically with the correct boundary by the browser
+              },
+            });
+
+            if (!response.ok) {
+              const errorText = await response.text(); // Or response.json() if the server responds with JSON
+              throw new Error(
+                `Server responded with ${response.status}: ${errorText}`
+              );
+            }
+
+            const responseData = await response.json();
+            console.log(responseData);
+            if (responseData.status === 1) {
+              successPop.textContent = "Entry submitted successfully.";
+              successPop.classList.remove("d-none");
+              setTimeout(() => {
+                successPop.classList.add("d-none");
+                form.reset();
+                window.location.reload(); // Or any other success action
+              }, 2000);
+            } else {
+              throw new Error(responseData.message || "Submission failed.");
+            }
+          } catch (error) {
+            console.error("Submission error:", error);
+            errorPop.textContent =
+              error.message || "An error occurred while submitting the form.";
+            errorPop.classList.remove("d-none");
+            setTimeout(() => {
+              errorPop.classList.add("d-none");
+            }, 5000);
+          } finally {
+            btn.classList.add("d-none");
+          }
         }
       });
     </script>

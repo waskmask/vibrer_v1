@@ -428,7 +428,6 @@
     <script src="/public/js/general.js?v=2.0"></script>
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
-    <script src="/public/js/Youtube.min.js?v=2.0"></script>
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/select.js?v=2.0"></script>
     <script src="/public/js/check-select.js?v=2.0"></script>
@@ -448,29 +447,30 @@
 
         const maxYear = calculateMaxYear();
 
-      new dateDropper({
-        selector: "#dob",
-        format: "y-mm-dd",
-        lang: "en",
-        showArrowsOnHover: true,
-        overlay: false,
-        expandable: false,
-        expandedOnly: false,
-        doubleView: false,
-        startFromMonday: false,
-        maxYear: maxYear.toString(),
-        minYear: "1900",
-        // jump: "10",
-        range: false,
-        defaultDate: "<%- profileData.date_of_birth %>", // Example default date
-      });
+        new dateDropper({
+          selector: "#dob",
+          format: "y-mm-dd",
+          lang: "en",
+          showArrowsOnHover: true,
+          overlay: false,
+          expandable: false,
+          expandedOnly: false,
+          doubleView: false,
+          startFromMonday: false,
+          maxYear: maxYear.toString(),
+          minYear: "1900",
+          // jump: "10",
+          range: false,
+          defaultDate: "<%- profileData.date_of_birth %>", // Example default date
+        });
 
-      var quill = new Quill("#bio", {
-        modules: {
-          toolbar: false, // This hides the toolbar
-        },
-        placeholder: "Bio *",
-        theme: "snow",
+        var quill = new Quill("#bio", {
+          modules: {
+            toolbar: false, // This hides the toolbar
+          },
+          placeholder: "Bio *",
+          theme: "snow",
+        });
       });
     </script>
     <script>

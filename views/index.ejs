@@ -18,13 +18,23 @@
     <%- include('partials/header'); %>
 
     <main>
+      <!-- <select id="languageSwitcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+      </select> -->
+
       <section class="heroHome">
         <div class="layout">
           <div class="content">
             <img src="/public/images/bigStar.svg" alt="Star" />
-            <div class="title">
-              <span>VIBRER</span> <br />
-              SINGING CONTEST
+            <div class="title tcap">
+              <!-- <span> <%= __("vibrer") %></span>
+              <br />
+              <%= __("singing_contest") %> -->
+              <span> Vibrer</span>
+              <br />
+              Singing Contest
             </div>
             <div class="sub">
               Unleash Your Inner Vocal Star, Participate, Earn Public Votes, and
@@ -396,6 +406,7 @@
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
     <script src="/public/js/forms.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
 
     <script>
       const allElements = document.querySelectorAll("body *");
@@ -409,7 +420,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Your YouTube video ID
-        var videoID = "WFlYEXkcLJ8";
+        // var videoID = "WFlYEXkcLJ8";
 
         // The clickable div
         var clickableDiv = document.getElementById("videoPlay");
@@ -425,8 +436,9 @@
           overlay.style.display = "block";
 
           // Set the source for the iframe and autoplay
-          video.src =
-            "https://www.youtube.com/embed/" + videoID + "?autoplay=1";
+          video.src = "https://static.vibrer.app/mediavid/vibrer-promo-v1.mp4";
+
+          ("?autoplay=1");
         });
 
         // Hide overlay when clicked

@@ -192,6 +192,9 @@
   cursor: pointer;
   padding: 0.5rem;
 }
+.file_input_wrapper .f-border {
+  border: solid 1px #585858 !important;
+}
 .file_input_wrapper .form-input {
   display: none !important;
 }

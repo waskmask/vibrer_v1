@@ -1,9 +1,19 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const i18n = require("i18n");
+
+i18n.configure({
+  locales: ["en", "fr", "de", "tr", "es", "it", "ru", "pl", "cn"],
+  directory: __dirname + "/locales",
+  defaultLocale: "en",
+  queryParameter: "lang",
+  cookie: "i18n",
+});
 
 // Import controllers
 const notifyController = require("./controllers/notifyController");
@@ -42,9 +52,13 @@ app.use(
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   })
 );
 
+// middleware
+app.use(cookieParser());
+app.use(i18n.init);
 // Serve static files
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

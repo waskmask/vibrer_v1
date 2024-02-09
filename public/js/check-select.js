@@ -1,6 +1,14 @@
 window.addEventListener("DOMContentLoaded", function () {
   const customCheckSelects = document.querySelectorAll(".custom-check-select");
-
+  const selectWrapperErr = document.getElementById("selectWrapperErr");
+  if (selectWrapperErr) {
+    function clearErrorForGenreSelection() {
+      const error = selectWrapperErr.querySelector(".form-alert.error");
+      if (error) {
+        error.parentNode.removeChild(error);
+      }
+    }
+  }
   customCheckSelects.forEach(function (customCheckSelect) {
     const checkOptions = customCheckSelect.querySelector(".check-options");
     const closeOptions = customCheckSelect.querySelector(".close-options");
@@ -56,6 +64,9 @@ window.addEventListener("DOMContentLoaded", function () {
               <div class="item-name" data-value="${itemName}">${itemRealName}</div>
             </div>
           `;
+          if (selectWrapperErr) {
+            clearErrorForGenreSelection();
+          }
         } else {
           const index = selectedValues.indexOf(itemName);
           if (index > -1) {
