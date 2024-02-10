@@ -585,7 +585,7 @@
               formDataJSON[key] = value.trim(); // Trim each value
             });
 
-            formDataJSON.bio = quill.getText();
+            formDataJSON.bio = quill.root.innerHTML;
 
             const url = `${API_URL}update/appUser`;
 
