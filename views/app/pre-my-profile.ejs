@@ -290,7 +290,8 @@
 
               <div class="title mt-3">Other links:</div>
               <div class="p_social_links mt-2">
-                <% for (let platform in profileData.link) { %>
+                <% for (let platform in profileData.link) { %> <% if
+                (profileData.link[platform] !== "") { %>
                 <div class="link">
                   <div class="title">
                     <%= platform.charAt(0).toUpperCase() + platform.slice(1) %>
@@ -302,11 +303,11 @@
                     />
                   </a>
                 </div>
-                <% } %>
+                <% } %> <% } %>
               </div>
 
               <div class="title mt-3">Bio:</div>
-              <div class="data"><%= profileData.bio %></div>
+              <div class="data"><%- profileData.bio %></div>
 
               <div class="p_gallery mt-4 mb-3">
                 <div class="title">Gallery:</div>
