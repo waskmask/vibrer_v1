@@ -71,14 +71,13 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-            <% if(profileData.user_type === 'Artist'){ %>
+
             <li
-              class="<%= (path == '/contests') ? 'active' : '' %>"
+              class="<%= (path == '/contest') ? 'active' : '' %>"
               onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
-            <% } %>
           </ul>
         </div>
 
@@ -179,6 +178,8 @@
                 value="<%- profileData.username %>"
                 oninput="validateUsername(this.value)"
                 onblur="handleBlurEvent(this)"
+                minlength="3"
+                maxlength="20"
               />
               <div
                 id="usernameErrorMessage"
@@ -197,6 +198,8 @@
               autocomplete="off"
               required
               value="<%- profileData.full_name %>"
+              minlength="3"
+              maxlength="20"
             />
           </div>
           <div class="grid-2-sm g-3 mt-3">
@@ -257,6 +260,7 @@
               />
             </div>
           </div>
+          <% if(profileData.user_type === 'Artist'){ %>
 
           <div class="custom-select-wrapper mt-4 mb-4">
             <label for="artist_categories" class="i_label">I am a?</label>
@@ -307,7 +311,7 @@
             </div>
           </div>
 
-          <div class="custom-select-wrapper mb-4">
+          <div class="custom-select-wrapper">
             <label for="genres" class="i_label">Genre</label>
             <div class="custom-check-select dfac" id="genre">
               <div class="placeholder">Genre *</div>
@@ -353,8 +357,8 @@
               <% }); } %>
             </div>
           </div>
-
-          <div class="mb-3">
+          <% }%>
+          <div class="mb-3 mt-4">
             <label class="i_label">Bio</label>
             <div id="bio" style="height: auto; min-height: 100px">
               <%- profileData.bio %>
