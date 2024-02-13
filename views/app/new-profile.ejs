@@ -373,7 +373,7 @@
     <script src="/public/plugins/datedropper/datedropper-javascript.js?v=2.0"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
-    <script src="/public/js/config.js?v=2.0"></script>
+    <script src="/public/js/config.js?v=2.01"></script>
     <script>
       function toForgotPass() {
         window.location.href = "/forgot-password";
@@ -594,6 +594,10 @@
       });
     </script>
     <script>
+      const profileUserT = "<%= profileData.user_type %>";
+      const contestId = CONTEST_ID_1;
+    </script>
+    <script>
       window.addEventListener("DOMContentLoaded", (event) => {
         // Get all steps, buttons, and inputs
         const steps = Array.from(document.querySelectorAll(".step"));
@@ -727,6 +731,15 @@
               });
 
               const responseData = await response.json();
+
+              function getCookie(name) {
+                let cookieArray = document.cookie.split("; ");
+                let cookie = cookieArray.find((row) =>
+                  row.startsWith(name + "=")
+                );
+                return cookie ? cookie.split("=")[1] : null;
+              }
+
               if (response.status === 201 || response.status === 200) {
                 if (responseData.status === 1) {
                   // Handle success
@@ -734,8 +747,17 @@
                   successPop.innerHTML = "Profile completed successfully";
                   setTimeout(() => {
                     successPop.style.display = "none";
-                    window.location.href = "/app/pre-home";
-                  }, 5000);
+
+                    const intent = getCookie("intent");
+                    if (profileUserT === "Artist" && intent === "participate") {
+                      window.location.href =
+                        "/app/pre-participate/" + contestId;
+                    } else {
+                      window.location.href = "/app/pre-home";
+                    }
+                    document.cookie =
+                      "intent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                  }, 500);
                   form.reset();
                 } else {
                   // Handle API response with an error status

@@ -1857,3 +1857,23 @@ iframe {
     margin: 0.7rem 0;
   }
 }
+
+.mw600 {
+  max-width: 600px;
+}
+.languageNotice {
+  background-color: #ff000033;
+  border-radius: 0.25rem;
+  border: solid 1px #8f1f1f;
+  color: #ff8787;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  width: fit-content;
+}
+
+.languageNotice.light {
+  background-color: rgb(255, 80, 80);
+  color: $white;
+  border-color: rgb(245, 63, 63);
+}

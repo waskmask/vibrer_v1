@@ -1,7 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-
+// const i18n = require("i18n");
 // router.get("/app/home", async function (req, res) {
 //   try {
 //     if (!req.session.appUserToken) {
@@ -408,14 +408,20 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
         profileData: profileData,
       });
     } else {
-      res.render("app/pre_my-contests", {
-        title: "Participate",
-        path: "/contests",
-        isParticipated: isParticipated,
-        contestDetailsData: contestDetailsData,
-        genreData: genreData,
-        profileData: profileData,
-      });
+      const intentToParticipate = req.cookies.intent === "participate";
+      if (intentToParticipate && profileData.user_type === "Artist") {
+        res.clearCookie("intent"); // Clear the intent cookie
+        res.redirect("/app/pre-participate/" + contest_id);
+      } else {
+        res.render("app/pre_my-contests", {
+          title: "Participate",
+          path: "/contests",
+          isParticipated: isParticipated,
+          contestDetailsData: contestDetailsData,
+          genreData: genreData,
+          profileData: profileData,
+        });
+      }
     }
   } catch (error) {
     // Handle errors gracefully
@@ -554,9 +560,15 @@ router.get("/app/pre-contest", async function (req, res) {
   }
 });
 router.get("/imprint", function (req, res) {
+  // const language = req.cookies.i18n;
+  // let showImprintLangNotice = false;
+  // if (language && language !== "en") {
+  //   showImprintLangNotice = true;
+  // }
   res.render("imprint", {
     title: "Imprint",
     path: "/imprint",
+    // showImprintLangNotice: showImprintLangNotice,
   });
 });
 
@@ -641,6 +653,7 @@ router.get("/contest", async function (req, res) {
       return res.redirect("/new-profile");
     }
     return res.render("contest", {
+      // title: i18n.__("vscontest"),
       title: "Contest",
       path: "/contest",
       contestDetailData: contestDetailData,
@@ -659,6 +672,7 @@ router.get("/contest", async function (req, res) {
     }
     return res.render("contest", {
       title: "Contest",
+      // title: i18n.__("vscontest"),
       path: "/contest",
       contestDetailData: contestDetailData,
       ADMIN_URL: process.env.ADMIN_URL,

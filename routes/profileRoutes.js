@@ -17,9 +17,15 @@ router.get("/new-profile", async function (req, res) {
         }
       );
       const profileData = profileResponse.data.result;
-
+      const contest_id = process.env.PRE_CONTEST_ID;
       if (profileData.full_name) {
-        res.redirect("/app/pre-home");
+        const intentToParticipate = req.cookies.intent === "participate";
+        if (profileData.user_type === "Artist" && intentToParticipate) {
+          res.clearCookie("intent"); // Clear the intent cookie
+          res.redirect("/app/pre-participate/" + contest_id);
+        } else {
+          res.redirect("/app/pre-home");
+        }
       }
 
       const artistCategoriesapiResponse = await axios.get(
@@ -38,6 +44,7 @@ router.get("/new-profile", async function (req, res) {
           path: "/register",
           artistCategoriesData: artistCategoriesData,
           genreData: genreData,
+          profileData: profileData,
         });
       } else {
         res.render("app/new-profileFan", {
