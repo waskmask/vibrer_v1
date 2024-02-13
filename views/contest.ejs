@@ -45,7 +45,7 @@
               >
                 Learn more
               </button>
-              <button class="btn btn-primary" onclick="toRegister()">
+              <button class="btn btn-primary" onclick="toParticipate()">
                 Participate
               </button>
               <div
@@ -252,9 +252,14 @@
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
-    <!-- <script src="/public/js/Youtube.min.js?v=2.0"></script> -->
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/authForm.js?v=2.0"></script>
+    <script>
+      function toParticipate() {
+        document.cookie = "intent=participate;";
+        window.location.href = "/register";
+      }
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var players = [];
