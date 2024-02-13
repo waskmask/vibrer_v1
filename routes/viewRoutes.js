@@ -22,12 +22,17 @@ router.get("/", async (req, res) => {
       return res.redirect("/new-profile");
     }
     return res.render("index", {
-      title: i18n.__("Home"),
+      // title: i18n.__("Home"),
+      title: "Home",
       path: "/",
       profileData: profileData,
     });
   } else {
-    return res.render("index", { title: i18n.__("Home"), path: "/" });
+    return res.render("index", {
+      // title: i18n.__("Home"),
+      title: "Home",
+      path: "/",
+    });
   }
 });
 router.get("/road-map", async (req, res) => {
