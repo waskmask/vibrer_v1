@@ -71,14 +71,13 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-            <% if(profileData.user_type === 'Artist'){ %>
+
             <li
-              class="<%= (path == '/contests') ? 'active' : '' %>"
+              class="<%= (path == '/contest') ? 'active' : '' %>"
               onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
-            <% } %>
           </ul>
         </div>
 
@@ -179,6 +178,8 @@
                 value="<%- profileData.username %>"
                 oninput="validateUsername(this.value)"
                 onblur="handleBlurEvent(this)"
+                minlength="3"
+                maxlength="20"
               />
               <div
                 id="usernameErrorMessage"
@@ -197,6 +198,8 @@
               autocomplete="off"
               required
               value="<%- profileData.full_name %>"
+              minlength="3"
+              maxlength="20"
             />
           </div>
           <div class="grid-2-sm g-3 mt-3">
@@ -209,6 +212,7 @@
                   <div class="option" value="Female">Female</div>
                 </div>
                 <input
+                  id="gender"
                   type="hidden"
                   name="gender"
                   value="<%- profileData.gender %>"
@@ -256,6 +260,7 @@
               />
             </div>
           </div>
+          <% if(profileData.user_type === 'Artist'){ %>
 
           <div class="custom-select-wrapper mt-4 mb-4">
             <label for="artist_categories" class="i_label">I am a?</label>
@@ -306,7 +311,7 @@
             </div>
           </div>
 
-          <div class="custom-select-wrapper mb-4">
+          <div class="custom-select-wrapper">
             <label for="genres" class="i_label">Genre</label>
             <div class="custom-check-select dfac" id="genre">
               <div class="placeholder">Genre *</div>
@@ -352,9 +357,9 @@
               <% }); } %>
             </div>
           </div>
-
-          <div class="mb-3">
-            <label for="bio" class="i_label">Bio</label>
+          <% }%>
+          <div class="mb-3 mt-4">
+            <label class="i_label">Bio</label>
             <div id="bio" style="height: auto; min-height: 100px">
               <%- profileData.bio %>
             </div>
@@ -363,6 +368,7 @@
           <div class="mb-3">
             <label for="youtube" class="i_label">YouTube</label>
             <input
+              id="youtube"
               type="text"
               placeholder="YouTube"
               autocomplete="off"
@@ -373,6 +379,7 @@
           <div class="mb-3">
             <label for="instagram" class="i_label">Instagram</label>
             <input
+              id="instagram"
               type="text"
               placeholder="Instagram"
               autocomplete="off"
@@ -383,6 +390,7 @@
           <div class="mb-3">
             <label for="facebook" class="i_label">Facebook</label>
             <input
+              id="facebook"
               type="text"
               placeholder="Facebook"
               autocomplete="off"
@@ -393,6 +401,7 @@
           <div class="mb-3">
             <label for="twitter" class="i_label">Twitter</label>
             <input
+              id="twitter"
               type="text"
               placeholder="Twitter"
               autocomplete="off"
@@ -403,6 +412,7 @@
           <div class="mb-3">
             <label for="website" class="i_label">Website</label>
             <input
+              id="website"
               type="text"
               placeholder="Website"
               autocomplete="off"
@@ -471,40 +481,37 @@
           placeholder: "Bio *",
           theme: "snow",
         });
-      });
-    </script>
-    <script>
-      var autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("city-input")
-      );
 
-      autocomplete.setOptions({
-        types: ["(cities)"],
-        disableHistory: true,
-      });
-      autocomplete.addListener("place_changed", function () {
-        var place = autocomplete.getPlace();
-        var country, city;
+        var autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById("city-input")
+        );
 
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0];
-          if (addressType === "country") {
-            country = place.address_components[i].long_name;
-          } else if (
-            addressType === "locality" ||
-            addressType === "administrative_area_level_3"
-          ) {
-            city = place.address_components[i].long_name;
+        autocomplete.setOptions({
+          types: ["(cities)"],
+          disableHistory: true,
+        });
+        autocomplete.addListener("place_changed", function () {
+          var place = autocomplete.getPlace();
+          var country, city;
+
+          for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (addressType === "country") {
+              country = place.address_components[i].long_name;
+            } else if (
+              addressType === "locality" ||
+              addressType === "administrative_area_level_3"
+            ) {
+              city = place.address_components[i].long_name;
+            }
           }
-        }
 
-        if (country && city) {
-          document.getElementById("country-input").value = country;
-          document.getElementById("city-input").value = city;
-        }
-      });
+          if (country && city) {
+            document.getElementById("country-input").value = country;
+            document.getElementById("city-input").value = city;
+          }
+        });
 
-      window.addEventListener("DOMContentLoaded", (event) => {
         document
           .querySelector("#stepForm")
           .addEventListener("submit", async (e) => {
@@ -538,7 +545,7 @@
                 .split(",")
                 .map((category) => category.trim());
             }
-            formDataJSON.bio = quill.getText();
+            formDataJSON.bio = quill.root.innerHTML;
 
             const url = `${API_URL}update/appUser`;
 

@@ -68,6 +68,8 @@
                     name="full_name"
                     autocomplete="off"
                     required
+                    minlength="3"
+                    maxlength="20"
                   />
                 </div>
                 <div class="small white mt-1">
@@ -75,27 +77,6 @@
                 </div>
               </div>
               <div class="grid-2-sm">
-                <div>
-                  <input
-                    type="text"
-                    id="account_name"
-                    placeholder="Name *"
-                    name="account_name"
-                    autocomplete="off"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="text"
-                    id="lname"
-                    placeholder="Last name *"
-                    name="last_name"
-                    autocomplete="off"
-                    required
-                  />
-                </div>
                 <div class="genderInputWrapper">
                   <div class="custom-select dfac" id="gender-opt">
                     <div class="placeholder">Gender *</div>
@@ -729,7 +710,7 @@
                 .split(",")
                 .map((category) => category.trim());
             }
-            formDataJSON.bio = quill.getText();
+            formDataJSON.bio = quill.root.innerHTML;
 
             const url = `${API_URL}update/appUser`;
 

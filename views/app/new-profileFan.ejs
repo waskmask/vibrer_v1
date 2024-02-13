@@ -68,6 +68,8 @@
                     name="full_name"
                     autocomplete="off"
                     required
+                    minlength="3"
+                    maxlength="20"
                   />
                 </div>
                 <div class="small white mt-1">
@@ -585,7 +587,7 @@
               formDataJSON[key] = value.trim(); // Trim each value
             });
 
-            formDataJSON.bio = quill.getText();
+            formDataJSON.bio = quill.root.innerHTML;
 
             const url = `${API_URL}update/appUser`;
 

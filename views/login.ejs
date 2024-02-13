@@ -160,6 +160,8 @@
                 const responseData = await response.json();
                 if (response.status === 201 || response.status === 200) {
                   if (responseData.status === 1) {
+                    const loader = document.getElementById("loader");
+                    loader.style.display = "flex";
                     localStorage.setItem(
                       "appUserToken",
                       responseData.result.token
@@ -173,8 +175,8 @@
                         token: responseData.result.token,
                       }),
                     });
-                    form.reset();
                     window.location.href = "/new-profile";
+                    form.reset();
                   } else {
                     errorPop.style.display = "block";
                     errorPop.innerHTML = responseData.message;

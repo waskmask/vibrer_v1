@@ -62,14 +62,13 @@
             >
               <img src="/public/images/icons/home-icon.svg" alt="Icon" />
             </li>
-            <% if(profileData.user_type === 'Artist'){ %>
+
             <li
-              class="<%= (path == '/contests') ? 'active' : '' %>"
+              class="<%= (path == '/contest') ? 'active' : '' %>"
               onclick="toTheContest('<%- path %>')"
             >
               <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
             </li>
-            <% } %>
           </ul>
         </div>
 
@@ -282,15 +281,17 @@
 
               <div class="title mt-3">Username:</div>
               <div class="data"><%= profileData.username %></div>
+              <% if(profileData.user_type === 'Artist'){ %>
 
               <div class="title mt-3">Genre:</div>
               <div class="data">
                 <%= profileData.genres.map(genre => genre.name).join(', ') %>
               </div>
-
+              <% }%>
               <div class="title mt-3">Other links:</div>
               <div class="p_social_links mt-2">
-                <% for (let platform in profileData.link) { %>
+                <% for (let platform in profileData.link) { %> <% if
+                (profileData.link[platform] !== "") { %>
                 <div class="link">
                   <div class="title">
                     <%= platform.charAt(0).toUpperCase() + platform.slice(1) %>
@@ -302,11 +303,11 @@
                     />
                   </a>
                 </div>
-                <% } %>
+                <% } %> <% } %>
               </div>
 
               <div class="title mt-3">Bio:</div>
-              <div class="data"><%= profileData.bio %></div>
+              <div class="data"><%- profileData.bio %></div>
 
               <div class="p_gallery mt-4 mb-3">
                 <div class="title">Gallery:</div>

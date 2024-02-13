@@ -226,7 +226,7 @@
                 const responseData = await response.json();
                 if (response.status === 201 || response.status === 200) {
                   if (responseData.status === 1) {
-                    successPop.style.display = "block";
+                    // successPop.style.display = "block";
                     localStorage.setItem(
                       "appUserToken",
                       responseData.result.token
@@ -240,10 +240,9 @@
                         token: responseData.result.token,
                       }),
                     });
-                    setTimeout(() => {
-                      successPop.style.display = "none";
-                      window.location.href = "/new-profile";
-                    }, 5000);
+
+                    window.location.href = "/register-successfull";
+
                     form.reset();
                   } else {
                     errorPop.style.display = "block";
