@@ -333,7 +333,7 @@
             <div class="mb-4">
               <div id="desc" style="height: auto; min-height: 100px"></div>
             </div>
-            <div class="error-message mt-3 d-none"></div>
+            <div class="error-message mt-3 mb-2 d-none"></div>
             <div class="form-success mt-3 mb-2 d-none">
               Your have posted as participate successfully.
             </div>
@@ -684,26 +684,37 @@
 
             const responseData = await response.json();
             if (responseData.status === 1) {
+              btn.classList.add("d-none");
               successPop.textContent = "Entry submitted successfully.";
               successPop.classList.remove("d-none");
               setTimeout(() => {
                 successPop.classList.add("d-none");
                 form.reset();
-                window.location.reload(); // Or any other success action
+                window.location.reload();
               }, 2000);
             } else {
-              throw new Error(responseData.message || "Submission failed.");
+              btn.classList.remove("d-none");
+              btn.textContent = "Submit";
+              errorPop.textContent =
+                responseData.message ||
+                "An error occurred while submitting the form.";
+              errorPop.classList.remove("d-none");
+              errorPop.style.display = "block";
+              setTimeout(() => {
+                errorPop.classList.add("d-none");
+                errorPop.style.display = "none";
+              }, 5000);
             }
           } catch (error) {
             console.error("Submission error:", error);
             errorPop.textContent =
               error.message || "An error occurred while submitting the form.";
             errorPop.classList.remove("d-none");
+            errorPop.style.display = "block";
             setTimeout(() => {
               errorPop.classList.add("d-none");
+              errorPop.style.display = "none";
             }, 5000);
-          } finally {
-            btn.classList.add("d-none");
           }
         }
       });
