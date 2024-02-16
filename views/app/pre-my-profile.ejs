@@ -519,12 +519,11 @@
                 const item = document.createElement("div");
                 item.className = "item";
                 item.innerHTML = `
-                <!--div class="remove">+</div-->
-                <img src="${e.target.result}" alt="gallery" />
-              `;
+            <!--div class="remove">+</div-->
+            <img src="${e.target.result}" alt="gallery" />
+          `;
                 galleryData.appendChild(item);
-                const file = event.target.files[0];
-                uploadGalleryImageToServer(file);
+                uploadGalleryImageToServer(file); // Assuming uploadGalleryImageToServer is defined elsewhere
               };
               reader.readAsDataURL(file);
             });
