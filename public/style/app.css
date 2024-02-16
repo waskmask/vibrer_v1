@@ -282,6 +282,8 @@
 .auth-pages .form-wrapper .link {
   color: #fff;
   cursor: pointer;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .auth-pages .label {
   color: #8b8a8a;
@@ -909,6 +911,9 @@ input:-webkit-autofill:active {
   top: calc(100% + 1.25rem);
   left: 0;
   width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: auto;
   background-color: #2f2f4b;
   border-radius: 0.25rem;
   transition: all 0.3s ease-in-out;
@@ -1222,6 +1227,8 @@ input:-webkit-autofill:active {
 ._profile img {
   width: 60px;
   height: 60px;
+  -o-object-fit: cover;
+     object-fit: cover;
   border-radius: 50%;
   border: 2px solid #8b8a8a;
 }
@@ -1354,6 +1361,20 @@ input:-webkit-autofill:active {
 
 .cs-scroll:hover::-webkit-scrollbar-thumb {
   background: #0c1338;
+}
+
+.cs-scroll-light::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 0px;
+  background: #b9b9b9;
+}
+
+.cs-scroll-light::-webkit-scrollbar-thumb {
+  background: #696969;
+}
+
+.cs-scroll-light:hover::-webkit-scrollbar-thumb {
+  background: #696969;
 }
 
 .app_right {
