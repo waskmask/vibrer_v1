@@ -473,13 +473,13 @@
                 errorDiv.remove();
               }
 
-              // Check if file size exceeds the maximum allowed size (512 MB)
-              if (file.size > 512 * 1024 * 1024) {
+              // Check if file size exceeds the maximum allowed size (2 GB)
+              if (file.size > 2048 * 1024 * 1024) {
                 // Create and display an error message
                 var errorMsg = document.createElement("div");
                 errorMsg.classList.add("form-alert", "error");
                 errorMsg.textContent =
-                  "File size exceeds the maximum limit of 512 MB.";
+                  "File size exceeds the maximum limit of 2 GB.";
                 wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
 
                 // Reset label, preview, and progress bar to default state
