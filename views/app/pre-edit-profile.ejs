@@ -305,7 +305,9 @@
               profileData.artist_categories.length > 0) {
               profileData.artist_categories.forEach(selectedCategory => { %>
               <div class="item">
-                <div class="item-name"><%= selectedCategory.name %></div>
+                <div class="item-name" data-value="<%= selectedCategory._id %>">
+                  <%= selectedCategory.name %>
+                </div>
               </div>
               <% }); } %>
             </div>
@@ -352,7 +354,9 @@
               <% if (profileData.genres && profileData.genres.length > 0) {
               profileData.genres.forEach(genres => { %>
               <div class="item">
-                <div class="item-name"><%= genres.name %></div>
+                <div class="item-name" data-value="<%= genres._id %>">
+                  <%= genres.name %>
+                </div>
               </div>
               <% }); } %>
             </div>

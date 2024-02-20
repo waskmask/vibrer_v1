@@ -15,21 +15,17 @@ window.addEventListener("DOMContentLoaded", function () {
     const hiddenField = customCheckSelect.querySelector('input[type="hidden"]');
     const attributeExists = hiddenField.hasAttribute("selectedValues");
     let selectedValuesArray = [];
-    let selectedItemsArray = [];
 
     if (attributeExists) {
       const alreadyselectedValues = hiddenField.getAttribute("value");
       selectedValuesArray = alreadyselectedValues.split(",");
-
-      const alreadyselectedItems = hiddenField.getAttribute("selectedValues");
-      selectedItemsArray = alreadyselectedItems.split(",");
     }
     const checkboxContainerInputs = customCheckSelect.querySelectorAll(
       ".checkbox-container input"
     );
     const selectedItems = customCheckSelect.nextElementSibling;
 
-    const selectedValues = [];
+    const selectedValues = selectedValuesArray;
 
     customCheckSelect.addEventListener("click", function (event) {
       event.stopPropagation();
