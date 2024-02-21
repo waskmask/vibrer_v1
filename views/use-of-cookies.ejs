@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%- __('lang') %>">
   <head>
     <%- include('partials/head'); %>
     <meta
@@ -20,6 +20,11 @@
     <main>
       <section class="general">
         <div class="container layout">
+          <% if (showCookieLangNotice) { %>
+          <div class="languageNotice light mb-3 mw600">
+            <%= __("cookieLangNotice") %>
+          </div>
+          <% } %>
           <div id="cookie-info">
             <div class="title">Cookie Statement</div>
 
@@ -151,6 +156,7 @@
     <!-- javascript -->
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
     <script>
       function enableAnalytics() {
         console.log("Analytics enabled");

@@ -114,13 +114,13 @@
                         src="/public/images/icons/user_icon.svg"
                         alt="Icon"
                       />
-                      <span>My profile</span>
+                      <span><%- __("my_profile")%></span>
                     </a>
                   </li>
                   <li>
                     <a href="javascript:void(0)" onclick="logoutAppUser();">
                       <img src="/public/images/icons/log-off.svg" alt="Icon" />
-                      <span>Logout</span>
+                      <span><%- __("logout")%></span>
                     </a>
                   </li>
                 </ul>
@@ -139,18 +139,19 @@
             <div>
               <div class="sponsor">
                 <img src="/public/images/mod_light.svg" alt="Logo" />
-                <div>MOD presents</div>
+                <div><%= __("mod_presents") %></div>
               </div>
-              <div class="title"><%- onGoingContestsData.result.title %></div>
-              <div class="sub">
-                <!-- <%- onGoingContestsData.result.participates.length %>
+              <div class="title"><%= __("vscontest") %></div>
+              <div class="sub"><%- __("voting_notice") %></div>
+              <!--    <div class="sub">
+               <%- onGoingContestsData.result.participates.length %>
                 Participants • <% if (onGoingContestsData.result.endDays > 0) {
                 %> Ends in <%= onGoingContestsData.result.endDays %> days <% }
                 else { %> Over <%= Math.abs(onGoingContestsData.result.endDays)
-                %> days before <% } %> -->
+                %> days before <% } %> 
                 Voting will start from 1<sup>st</sup> March 2024 00:00 AM
                 (CEST).
-              </div>
+              </div>-->
             </div>
             <div class="cta">
               <button
@@ -158,15 +159,15 @@
                 data-toggle="_modal"
                 data-target="contest1Info"
               >
-                Learn more
+                <%= __("learn_more") %>
               </button>
               <% if(profileData.user_type === 'Artist'){ %>
               <button
                 class="btn btn-primary"
                 onclick="toPreMyContests('<%= path %>','<%- onGoingContestsData.result._id %>')"
               >
-                <% if (isParticipated) { %> View my Post <% } else { %>
-                Participate <% } %>
+                <% if (isParticipated) { %> View my Post <% } else { %> <%=
+                __("participate") %> <% } %>
               </button>
               <% } %>
               <div
@@ -179,42 +180,44 @@
             </div>
           </div>
         </section>
-        <div class="title mt-4 mb-3">Voting Begins In:</div>
+        <div class="title mt-4 mb-3"><%-__("vonting_begins")%></div>
         <div class="contestTimer" id="Contest1timer">
           <div class="t_card">
             <div class="title" id="days"></div>
-            <div class="_label">Days</div>
+            <div class="_label"><%-__("days")%></div>
           </div>
           <div class="t_card">
             <div class="title" id="hours"></div>
-            <div class="_label">Hours</div>
+            <div class="_label"><%-__("hours")%></div>
           </div>
           <div class="t_card">
             <div class="title" id="minutes"></div>
-            <div class="_label">Minutes</div>
+            <div class="_label"><%-__("minutes")%></div>
           </div>
           <div class="t_card">
             <div class="title" id="seconds"></div>
-            <div class="_label">Seconds</div>
+            <div class="_label"><%-__("seconds")%></div>
           </div>
         </div>
 
         <div class="temp_footer">
           <div class="top">
             <div class="link">
-              <a target="_blank" href="/imprint">Imprint</a>
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/privacy">Privacy policy</a>
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/terms">Terms of use</a>
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/cookies">Cookie settings</a>
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
             </div>
             <div class="link">
-              <a target="_blank" href="/">Vibrer Home page</a>
+              <a target="_blank" href="/"> <%= __("Home") %></a>
             </div>
           </div>
           <div class="social-icons">
@@ -231,9 +234,9 @@
               <img src="/public/images/instagram.svg" alt="Instagram icon"
             /></a>
           </div>
+
           <div class="bottom">
-            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
-            2024
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
           </div>
         </div>
       </div>

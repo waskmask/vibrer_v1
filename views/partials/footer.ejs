@@ -7,18 +7,12 @@
           src="/public/images/vibrer_light_logo.svg"
           alt="Logo"
         />
-        <div class="desc">
-          Join Vibrer's vibrant community to explore, connect, and share your
-          love for music. Unveil a world of melodies and connections.
-        </div>
+        <div class="desc"><%= __("footerDescription") %></div>
       </div>
       <div class="col">
-        <div class="desc">
-          Stay informed about Vibrer's upcoming launch by providing your
-          details.
-        </div>
+        <div class="desc"><%= __("footerStayInformed") %></div>
         <button class="btn btn-primary" onclick="scrollToGNForm()">
-          Subscribe to new letters
+          <%= __("subscribeButtonText") %>
         </button>
       </div>
       <div class="col">
@@ -33,15 +27,19 @@
             <img src="/public/images/instagram.svg" alt="Instagram icon"
           /></a>
         </div>
-        <div class="desc anc" onclick="toImprint()">Imprint</div>
-        <div class="desc anc" onclick="toPrivacy()">Privacy policy</div>
-        <div class="desc anc" onclick="toTerms()">Terms of use</div>
-        <div class="desc anc" onclick="toCookies()">Cookie settings</div>
+        <div class="desc anc" onclick="toImprint()"><%= __("imprint") %></div>
+        <div class="desc anc" onclick="toPrivacy()">
+          <%= __("privacyPolicy") %>
+        </div>
+        <div class="desc anc" onclick="toTerms()"><%= __("termsOfUse") %></div>
+        <div class="desc anc" onclick="toCookies()">
+          <%= __("cookieSettings") %>
+        </div>
       </div>
     </div>
 
     <div class="bottom-creds">
-      © 2024 All rights reserved | Vibrer Internet Content Provider L.L.C, UAE
+      <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
     </div>
   </div>
 </footer>

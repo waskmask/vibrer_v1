@@ -111,13 +111,13 @@
                         src="/public/images/icons/user_icon.svg"
                         alt="Icon"
                       />
-                      <span>My profile</span>
+                      <span><%- __("my_profile")%></span>
                     </a>
                   </li>
                   <li>
                     <a href="javascript:void(0)" onclick="logoutAppUser();">
                       <img src="/public/images/icons/log-off.svg" alt="Icon" />
-                      <span>Logout</span>
+                      <span><%- __("logout")%></span>
                     </a>
                   </li>
                 </ul>
@@ -142,7 +142,7 @@
           <div class="text white">
             Ends in <%- contestDetailsData.result.endDays %> days
           </div>
-          <div class="text primary mt-2">Your submission</div>
+          <div class="text primary mt-2"><%-__("your_entry")%></div>
           <div class="contestant">
             <div class="head">
               <video
@@ -181,11 +181,11 @@
               </div>
               <div class="votes">
                 <div class="count">
-                  <strong>Votes:</strong>
+                  <strong><%-__("votes")%></strong>
                   <span><%- participatedParticipantData.votes.length %></span>
                 </div>
                 <div class="rank">
-                  <strong>Current Rank:</strong>
+                  <strong><%-__("current_rank")%></strong>
                   <span><%- participatedParticipantData.rank %> </span>
                 </div>
               </div>
@@ -195,43 +195,32 @@
                   class="btn btn-outlined"
                   onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
                 >
-                  Withdraw
+                  <%-__("withdraw")%>
                 </button>
                 <button
                   class="btn btn-outlined d-none"
                   data-toggle="_modal"
                   data-target="shareModal"
                 >
-                  Share
+                  <%-__("share")%>
                 </button>
                 <button
                   class="btn btn-primary"
                   type="button"
                   onclick="toPreHome('<%= path %>')"
                 >
-                  Visit contest
+                  <%-__("view_contest")%>
                 </button>
               </div>
             </div>
           </div>
         </div>
         <% } else { %>
-        <div class="title mb-3">Enter the Vibrer Singing Contest Now!</div>
+        <div class="title mb-3"><%- __("contest_entry_title")%></div>
 
         <div class="app_form_container shadow">
-          <div class="sub mb-1">Submit Your Entry</div>
-          <div class="text white mb-2">
-            Enter the title of your song, upload your video, and make sure to
-            read the
-            <span
-              class="toggle primary"
-              data-toggle="_modal"
-              data-target="contest1tandc"
-            >
-              Terms and Conditions</span
-            >
-            before submitting.
-          </div>
+          <div class="sub mb-1"><%- __("submit_entry")%></div>
+          <div class="text white mb-2"><%- __("submit_entry_sub")%></div>
 
           <form
             class="form fborder"
@@ -253,17 +242,17 @@
               <input
                 class="form-input"
                 type="text"
-                placeholder="Entry video title"
+                placeholder=" <%- __('entry_title')%>"
                 name="title"
                 id="title"
               />
             </div>
             <div class="mb-3 file_input_wrapper">
               <div class="small light mb-1">
-                Upload your singing video (maximum upload size is 512 MB).
+                <%- __("entry_video_max_size")%>
               </div>
               <label class="label f-border" for="media_file">
-                Upload video
+                <%- __("upload_video")%>
               </label>
               <input
                 class="form-input"
@@ -273,10 +262,10 @@
                 accept="video/*"
               />
               <div id="uploadProgress" class="progress-bar d-none">
-                <div class="progress-bar-fill"></div>
+                <div class="progress-bar-fill">your_video_preview</div>
               </div>
 
-              <div class="sub pr-title d-none">Your video preview</div>
+              <div class="sub pr-title d-none"><%- __("upload_video")%></div>
               <div class="video-preview d-none">
                 <video
                   class="video-js"
@@ -290,13 +279,13 @@
 
             <div class="custom-select-wrapper mb-3" id="selectWrapperErr">
               <div class="custom-check-select dfac" id="genre">
-                <div class="placeholder">Genre *</div>
+                <div class="placeholder"><%= __("genre") %> *</div>
                 <div class="check-options">
                   <div class="check-list cs-scroll grid-2-sm">
                     <% if (genreData && genreData.length > 0) {
                     genreData.forEach(genre => { %>
                     <label class="checkbox-container">
-                      <%= genre.name %>
+                      <%= __("genres." + genre.name) %>
                       <input
                         type="checkbox"
                         value="<%= genre._id %>"
@@ -322,7 +311,7 @@
                       type="button"
                       class="btn btn-primary h-auto close-options"
                     >
-                      Done
+                      <%= __("done") %>
                     </button>
                   </div>
                 </div>
@@ -335,33 +324,46 @@
             </div>
             <div class="error-message mt-3 d-none"></div>
             <div class="form-success mt-3 mb-2 d-none">
-              Your have posted as participate successfully.
+              <%-__("entry_success")%>
             </div>
             <div class="mb-3">
               <button class="btn btn-primary submitBtn" type="submit">
-                Submit
+                <%-__("submit")%>
               </button>
             </div>
           </form>
+
+          <div class="whatsAppLink mb-2">
+            <div class="text"><%- __("whatsapp_support")%></div>
+            <div class="icon" onclick="toWhatsApp()">
+              <img
+                src="/public/images/icons/whatsapp_color.svg"
+                alt="whatsapp icon"
+              />
+              WhatsApp
+            </div>
+          </div>
         </div>
         <% } %>
 
         <div class="temp_footer">
           <div class="top">
             <div class="link">
-              <a target="_blank" href="/imprint">Imprint</a>
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/privacy">Privacy policy</a>
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/terms">Terms of use</a>
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/cookies">Cookie settings</a>
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
             </div>
             <div class="link">
-              <a target="_blank" href="/">Vibrer Home page</a>
+              <a target="_blank" href="/"> <%= __("Home") %></a>
             </div>
           </div>
           <div class="social-icons">
@@ -379,8 +381,7 @@
             /></a>
           </div>
           <div class="bottom">
-            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
-            2024
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
           </div>
         </div>
       </div>
@@ -399,6 +400,32 @@
     <script src="/public/js/check-select.js?v=2.0"></script>
     <script src="/public/js/config.js?v=2.0"></script>
     <script>
+      var localizedStrings = {
+        submitting: "<%= __('submitting_wait') %>",
+        descOpt: "<%= __('desc_optional') %>",
+        titleReq: "<%= __('title_required') %>",
+        genreReq: "<%= __('select_genres') %>",
+        chooseVideo: "<%= __('choose_video_file') %>",
+        submit: "<%= __('submit') %>",
+        entrySuccess: "<%= __('entry_success') %>",
+        errorProccess: "<%= __('error_processing') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        withdrawConfirmation: "<%= __('withdraw_confirmation') %>",
+        deleted: "<%= __('deleted') %>",
+        yesDelete: "<%= __('yes_delete') %>",
+        validVideo: "<%= __('valid_video') %>",
+        postDeleted: "<%= __('post_deleted') %>",
+        error: "<%= __('error') %>",
+        somethingWentWrong: "<%= __('somethig_went_wrong') %>",
+        fileSize2gb: "<%= __('file_exc_2gb') %>",
+        uploadVideo: "<%= __('upload_video') %>",
+        noPreview: "<%= __('no_preview_video') %>",
+      };
+      function toWhatsApp() {
+        window.open("https://wa.me/971529395823", "_blank");
+      }
       var players = [];
 
       var videoElements = document.querySelectorAll(".video-js");
@@ -438,7 +465,7 @@
           modules: {
             toolbar: false,
           },
-          placeholder: "Description (optional)", //
+          placeholder: localizedStrings.descOpt, //
           theme: "snow",
         });
       } else {
@@ -478,12 +505,11 @@
                 // Create and display an error message
                 var errorMsg = document.createElement("div");
                 errorMsg.classList.add("form-alert", "error");
-                errorMsg.textContent =
-                  "File size exceeds the maximum limit of 512 MB.";
+                errorMsg.textContent = localizedStrings.fileSize2gb;
                 wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
 
                 // Reset label, preview, and progress bar to default state
-                label.textContent = "Upload video";
+                label.textContent = localizedStrings.uploadVideo;
                 label.classList.remove("text-white");
                 prTitle.classList.add("d-none");
                 previewContainer.classList.add("d-none");
@@ -512,8 +538,8 @@
                   progressBar.classList.add("d-none");
 
                   if (file.type === "video/quicktime") {
-                    previewContainer.innerHTML =
-                      "<p>Preview not available for this video format. For a better experience, please upload an MP4 video.</p>";
+                    previewContainer.innerHTML = `<p>${localizedStrings.noPreview}</p>`;
+
                     previewContainer.classList.remove("d-none");
                   } else {
                     // For supported formats, initialize Video.js player
@@ -556,7 +582,7 @@
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          btn.textContent = "Submitting, please wait..";
+          btn.textContent = localizedStrings.submitting;
           btn.disabled = true;
 
           let isValid = true;
@@ -565,23 +591,22 @@
           const titleInput = document.getElementById("title").value.trim();
           if (!titleInput) {
             isValid = false;
-            customErrors.title = "Please enter a title";
+            customErrors.title = localizedStrings.titleReq;
           }
 
           const genresInput = document.querySelector('[name="genres"]').value;
           if (!genresInput) {
             isValid = false;
-            customErrors.genres = "Please select a genre";
+            customErrors.genres = localizedStrings.genreReq;
           }
 
           const media_video = document.getElementById("media_file").files[0];
           if (!media_video) {
             isValid = false;
-            customErrors.media_video = "Please choose a video file";
+            customErrors.media_video = localizedStrings.chooseVideo;
           } else if (!isValidVideoFile(media_video)) {
             isValid = false;
-            customErrors.media_video =
-              "Please choose a valid video file (MP4, WebM, avi, mov, mkv, flv)";
+            customErrors.media_video = localizedStrings.validVideo;
           }
 
           clearPreviousErrors();
@@ -596,7 +621,7 @@
             submitForm(formData);
           } else {
             displayCustomErrors(customErrors);
-            btn.textContent = "Submit";
+            btn.textContent = localizedStrings.submit;
             btn.disabled = false;
           }
         });
@@ -684,7 +709,7 @@
 
             const responseData = await response.json();
             if (responseData.status === 1) {
-              successPop.textContent = "Entry submitted successfully.";
+              successPop.textContent = localizedStrings.entrySuccess;
               successPop.classList.remove("d-none");
               setTimeout(() => {
                 successPop.classList.add("d-none");
@@ -692,12 +717,18 @@
                 window.location.reload(); // Or any other success action
               }, 2000);
             } else {
-              throw new Error(responseData.message || "Submission failed.");
+              btn.classList.remove("d-none");
+              errorPop.textContent =
+                error.message || localizedStrings.errorProccess;
+              errorPop.classList.remove("d-none");
+              setTimeout(() => {
+                errorPop.classList.add("d-none");
+              }, 5000);
             }
           } catch (error) {
             console.error("Submission error:", error);
             errorPop.textContent =
-              error.message || "An error occurred while submitting the form.";
+              error.message || localizedStrings.errorProccess;
             errorPop.classList.remove("d-none");
             setTimeout(() => {
               errorPop.classList.add("d-none");
@@ -713,13 +744,13 @@
       async function confirmDelete(postId) {
         try {
           const result = await Swal.fire({
-            title: "Are you sure?",
-            text: "Do you want to withdraw from this contest? You'll lose your votes, and you won't be able to revert this!",
+            title: localizedStrings.areYouSure,
+            text: localizedStrings.withdrawConfirmation,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#fb6580",
             cancelButtonColor: "#4b5891",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: localizedStrings.yesDelete,
           });
 
           if (result.isConfirmed) {
@@ -737,19 +768,27 @@
 
             if (response.ok) {
               await Swal.fire(
-                "Deleted!",
-                "Your post has been deleted.",
+                localizedStrings.deleted,
+                localizedStrings.postDeleted,
                 "success"
               );
               // Refresh page or update UI accordingly
               window.location.reload();
             } else {
-              await Swal.fire("Error!", "Something went wrong.", "error");
+              await Swal.fire(
+                localizedStrings.error,
+                localizedStrings.somethingWentWrong,
+                "error"
+              );
             }
           }
         } catch (error) {
           console.error("Error:", error);
-          Swal.fire("Error!", "Something went wrong.", "error");
+          Swal.fire(
+            localizedStrings.error,
+            localizedStrings.somethingWentWrong,
+            "error"
+          );
         }
       }
     </script>

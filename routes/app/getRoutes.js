@@ -1,7 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-// const i18n = require("i18n");
+const i18n = require("i18n");
 // router.get("/app/home", async function (req, res) {
 //   try {
 //     if (!req.session.appUserToken) {
@@ -344,7 +344,41 @@ const router = express.Router();
 //     });
 //   }
 // });
+// router.get("/app/report", function (req, res) {
+//   res.render("app/report", {
+//     title: "Report",
+//     path: "/report",
+//   });
+// });
 
+// router.get("/app/reports", function (req, res) {
+//   res.render("app/reports", {
+//     title: "Reports",
+//     path: "/reports",
+//     link: "allreports",
+//   });
+// });
+// router.get("/app/active-reports", function (req, res) {
+//   res.render("app/active-reports", {
+//     title: "Reports",
+//     path: "/reports",
+//     link: "active",
+//   });
+// });
+// router.get("/app/you-reported", function (req, res) {
+//   res.render("app/you-reported", {
+//     title: "You reported",
+//     path: "/reports",
+//     link: "youreported",
+//   });
+// });
+
+// router.get("/app/report-view", function (req, res) {
+//   res.render("app/report-view", {
+//     title: "report ID",
+//     path: "/reports",
+//   });
+// });
 router.get("/app/pre-participate/:contest_id", async function (req, res) {
   try {
     if (!req.session.appUserToken) {
@@ -560,53 +594,17 @@ router.get("/app/pre-contest", async function (req, res) {
   }
 });
 router.get("/imprint", function (req, res) {
-  // const language = req.cookies.i18n;
-  // let showImprintLangNotice = false;
-  // if (language && language !== "en") {
-  //   showImprintLangNotice = true;
-  // }
+  const language = req.cookies.i18n;
+  let showImprintLangNotice = false;
+  if (language && language !== "en") {
+    showImprintLangNotice = true;
+  }
   res.render("imprint", {
     title: "Imprint",
     path: "/imprint",
-    // showImprintLangNotice: showImprintLangNotice,
+    showImprintLangNotice: showImprintLangNotice,
   });
 });
-
-// router.get("/app/report", function (req, res) {
-//   res.render("app/report", {
-//     title: "Report",
-//     path: "/report",
-//   });
-// });
-
-// router.get("/app/reports", function (req, res) {
-//   res.render("app/reports", {
-//     title: "Reports",
-//     path: "/reports",
-//     link: "allreports",
-//   });
-// });
-// router.get("/app/active-reports", function (req, res) {
-//   res.render("app/active-reports", {
-//     title: "Reports",
-//     path: "/reports",
-//     link: "active",
-//   });
-// });
-// router.get("/app/you-reported", function (req, res) {
-//   res.render("app/you-reported", {
-//     title: "You reported",
-//     path: "/reports",
-//     link: "youreported",
-//   });
-// });
-
-// router.get("/app/report-view", function (req, res) {
-//   res.render("app/report-view", {
-//     title: "report ID",
-//     path: "/reports",
-//   });
-// });
 
 router.get("/contest", async function (req, res) {
   const contest_id = process.env.PRE_CONTEST_ID;
@@ -653,8 +651,7 @@ router.get("/contest", async function (req, res) {
       return res.redirect("/new-profile");
     }
     return res.render("contest", {
-      // title: i18n.__("vscontest"),
-      title: "Contest",
+      title: i18n.__("vscontest"),
       path: "/contest",
       contestDetailData: contestDetailData,
       ADMIN_URL: process.env.ADMIN_URL,
@@ -671,8 +668,7 @@ router.get("/contest", async function (req, res) {
       return res.redirect("/contests");
     }
     return res.render("contest", {
-      title: "Contest",
-      // title: i18n.__("vscontest"),
+      title: i18n.__("vscontest"),
       path: "/contest",
       contestDetailData: contestDetailData,
       ADMIN_URL: process.env.ADMIN_URL,

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <title>Unveiling Vibrer: Your Gateway to a Musical Odyssey</title>
     <meta
@@ -23,7 +23,13 @@
     <main>
       <section class="projects">
         <div class="layout">
-          <div class="title">Projects (<%= projects.length %>)</div>
+          <div class="title"><%= __("projects")%> (<%= projects.length %>)</div>
+          <% if (showProjectLangNotice) { %>
+          <div class="languageNotice mb-3 mw600">
+            <%= __("projectLangNotice") %>
+          </div>
+          <% } %>
+
           <div class="grid-p">
             <% projects.forEach(function(project) { %>
             <div class="col">
@@ -62,7 +68,7 @@
     </div>
     <!-- javascript -->
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
-
+    <script src="/public/js/languageSwitcher.js"></script>
     <script>
       function openProject(projectId) {
         // Navigate to the project-specific page

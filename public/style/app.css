@@ -2379,3 +2379,20 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 .vjs-poster {
   background-size: cover;
 }
+
+.footer-languagebar .app-languageSwitcher {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.footer-languagebar .app-languageSwitcher .item {
+  cursor: pointer;
+  color: #8b8a8a;
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+.footer-languagebar .app-languageSwitcher .item.active {
+  color: #fff;
+}

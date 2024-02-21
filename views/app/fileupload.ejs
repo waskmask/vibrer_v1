@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link href="/public/style/quill.snow.css?v=2.0" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/dist/font/font-fileuploader.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/dist/jquery.fileuploader.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/modules/avatar/css/jquery.fileuploader-theme-avatar.css"
+    />
+    <link rel="stylesheet" href="/public/style/app.css?v=2.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/public/plugins/file-uploader/dist/jquery.fileuploader.min.js"></script>
+    <script src="/public/plugins/file-uploader/modules/avatar/js/custom.js"></script>
+    <style>
+      :root {
+        --dd-radius: 4px !important;
+        --dd-shadow: 0 0 2.5em rgba(0, 0, 0, 0.1);
+        --dd-overlay: rgba(0, 0, 0, 0.75);
+        --dd-background: #ffffff;
+        --dd-text1: #080813;
+        --dd-text2: #ffffff;
+        --dd-primary: #f32377;
+        --dd-gradient: linear-gradient(45deg, #fb6580, #f32377) !important;
+        --dd-monthBackground: var(--dd-gradient);
+        --dd-monthText: var(--dd-text2);
+        --dd-monthBorder: transparent;
+        --dd-confirmButtonBackground: var(--dd-gradient);
+        --dd-confirmButtonText: var(--dd-text2);
+        --dd-selectedBackground: var(--dd-gradient);
+        --dd-selectedText: var(--dd-text2);
+      }
+      .dd__dropdown:not(.dd-inline).dd-shown {
+        transform: translateY(-5%) translateX(-50%) !important;
+      }
+    </style>
+  </head>
+
+  <body class="body-dark">
+    <!-- Loader -->
+    <%- include('../partials/loader'); %>
+    <main>
+      <section class="edit-profile layout">
+        <div class="profile_wrapper">
+          <div class="logo">
+            <img src="/public/images/vibrer_light_logo.svg" alt="Logo" />
+          </div>
+
+          <form
+            class="form"
+            id="stepForm"
+            action="javascript:void(0)"
+            method="post"
+            autocomplete="off"
+          >
+            <div class="step step-1">
+              <div class="mb-4 mt-4">
+                <input
+                  type="file"
+                  name="profile_img"
+                  data-fileuploader-default="/public/plugins/file-uploader/modules/avatar/images/default-avatar.png"
+                  class="profileImage"
+                />
+              </div>
+
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title">Profile Media</div>
+                <div class="sub">Complete your profile</div>
+              </div>
+              <div class="avatar-upload">
+                <input type="file" id="avatar" autocomplete="off" />
+              </div>
+              <!-- <input
+                type="hidden"
+                name="profile_img"
+                id="profile_img"
+                value=""
+              /> -->
+              <div class="small text-center mt-1 mb-4">
+                Choose profile photo
+              </div>
+              <div class="cover-upload">
+                <div class="cover-holder">
+                  <div class="label mb-0">
+                    Add a cover photo <span>Upload</span>
+                  </div>
+                </div>
+                <input type="file" id="coverImg" autocomplete="off" />
+              </div>
+              <input
+                type="hidden"
+                name="profile_cover"
+                id="profile_cover"
+                value=""
+              />
+              <div class="small mt-1">
+                To optimally fit, use an image of 800x300 pixels.
+              </div>
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary next-btn"
+                  data-action="next"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=2.0"></script>
+    <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/select.js?v=2.0"></script>
+    <script src="/public/js/check-select.js?v=2.0"></script>
+    <script src="/public/plugins/datedropper/datedropper-javascript.js?v=2.0"></script>
+    <script src="/public/js/quill.min.js?v=2.0"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
+    <script src="/public/js/config.js?v=2.0"></script>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        function initCoverUpload(coverUpload) {
+          const coverHolder = coverUpload.querySelector(".cover-holder");
+          const fileInput = coverUpload.querySelector('input[type="file"]');
+          const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.heic|\.heif)$/i;
+
+          coverHolder.addEventListener("click", function () {
+            fileInput.click();
+          });
+
+          fileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (!allowedExtensions.exec(file.name)) {
+              const alertDiv = document.createElement("div");
+              alertDiv.classList.add("form-alert");
+              alertDiv.classList.add("error");
+              alertDiv.classList.add("text-center");
+              alertDiv.classList.add("mb-2");
+              alertDiv.textContent =
+                "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
+              coverUpload.parentNode.insertBefore(alertDiv, coverUpload);
+              return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              coverHolder.innerHTML = '<div class="loader">Loading...</div>';
+              setTimeout(function () {
+                coverHolder.style.backgroundImage = `url(${e.target.result})`;
+                coverHolder.innerHTML =
+                  '<div class="label mb-0">Add a cover photo <span>Change</span></div>';
+                // Assuming apiUrl is the endpoint for cover photo upload
+                uploadCoverPhotoToServer(file);
+              }, 1000); // simulate loading time for the image
+            };
+            reader.readAsDataURL(file);
+          });
+        }
+
+        function uploadCoverPhotoToServer(file) {
+          const apiUrl = `${API_URL}upload/profile-cover-image`;
+          const formData = new FormData();
+          formData.append("profile_cover_image", file);
+
+          fetch(apiUrl, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 1) {
+                const coverImage = data.result;
+                document.getElementById("profile_cover").value = coverImage;
+              }
+            })
+            .catch((error) => {
+              console.error("Error uploading cover photo:", error);
+            });
+        }
+
+        const coverUploads = document.querySelectorAll(".cover-upload");
+        coverUploads.forEach((coverUpload) => {
+          initCoverUpload(coverUpload);
+        });
+      });
+    </script>
+    <script>
+      (function () {
+        const avatarUpload = document.querySelector(".avatar-upload");
+
+        const allowedExtensions = ["jpg", "jpeg", "png", "gif", "heic", "heif"];
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+
+        function uploadImageToServer(file) {
+          const formData = new FormData();
+          formData.append("profile_cover_image", file);
+
+          fetch(apiUrl, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 1) {
+                const profileImage = data.result;
+                document.getElementById("profile_img").value = profileImage;
+              }
+            })
+            .catch((error) => {
+              console.error("Error uploading image:", error);
+            });
+        }
+      })();
+    </script>
+  </body>
+</html>

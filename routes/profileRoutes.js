@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 require("dotenv").config();
+const i18n = require("i18n");
 
 router.get("/new-profile", async function (req, res) {
   if (!req.session.appUserToken) {
@@ -40,7 +41,7 @@ router.get("/new-profile", async function (req, res) {
 
       if (profileData.user_type === "Artist") {
         res.render("app/new-profile", {
-          title: "Register",
+          title: i18n.__("new_profile"),
           path: "/register",
           artistCategoriesData: artistCategoriesData,
           genreData: genreData,
@@ -48,7 +49,7 @@ router.get("/new-profile", async function (req, res) {
         });
       } else {
         res.render("app/new-profileFan", {
-          title: "Register",
+          title: i18n.__("new_profile"),
           path: "/register",
           artistCategoriesData: artistCategoriesData,
           genreData: genreData,
@@ -86,7 +87,7 @@ router.get("/register-successfull", async function (req, res) {
       res.redirect("/app/pre-home");
     } else {
       res.render("register-success", {
-        title: "Register Success",
+        title: i18n.__("registration_successful"),
         path: "/new-account",
       });
     }

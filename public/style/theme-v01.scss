@@ -374,6 +374,9 @@ header {
         object-position: center;
       }
     }
+    .item.active {
+      color: $white;
+    }
   }
 
   .dropdown.active {

@@ -28,34 +28,34 @@
             class="<%= (path == '/') ? 'active' : '' %>"
             href="<%= (path == '/') ? 'javascript:void(0)' : '/' %>"
           >
-            Home
+            <%= __("Home") %>
           </a>
         </li>
         <li>
           <a
             class="<%= (path == '/road-map') ? 'active' : '' %>"
             href="<%= (path == '/road-map') ? 'javascript:void(0)' : '/road-map' %>"
-            >Road Map</a
+            ><%= __("road_map") %></a
           >
         </li>
         <li>
           <a
             class="<%= (path == '/contests') ? 'active' : '' %>"
             href="<%= (path == '/contests') ? 'javascript:void(0)' : '/contests' %>"
-            >Contests</a
+            ><%= __("contests") %></a
           >
         </li>
         <li>
           <a
             class="<%= (path == '/Allprojects') ? 'active' : '' %>"
             href="<%= (path == '/Allprojects') ? 'javascript:void(0)' : '/projects' %>"
-            >Projects</a
+            ><%= __("projects") %></a
           >
         </li>
       </ul>
     </div>
     <div class="hcta">
-      <!-- <div class="languageSwitcher me-1">
+      <div class="languageSwitcher me-1">
         <div class="toggle">
           <img src="/public/flags/en.svg" alt="flag" />
         </div>
@@ -72,18 +72,30 @@
             <img src="/public/flags/de.svg" alt="flag" />
             <span><%= __("German") %></span>
           </div>
+          <div class="item" data-value="it">
+            <img src="/public/flags/it.svg" alt="flag" />
+            <span><%= __("Italian") %></span>
+          </div>
+          <div class="item" data-value="pt">
+            <img src="/public/flags/pt.svg" alt="flag" />
+            <span><%= __("Portuguese") %></span>
+          </div>
           <div class="item" data-value="tr">
             <img src="/public/flags/tr.svg" alt="flag" />
             <span><%= __("Turkish") %></span>
           </div>
         </div>
-      </div> -->
+      </div>
       <% if (typeof profileData !== 'undefined' && profileData) { %>
       <button class="btn btn-primary" onclick="toLogin()">App</button>
 
       <% } else { %>
-      <button class="btn btn-outlined" onclick="toRegister()">Sign up</button>
-      <button class="btn btn-primary" onclick="toLogin()">Login</button>
+      <button class="btn btn-outlined" onclick="toRegister()">
+        <%= __("sign_up")%>
+      </button>
+      <button class="btn btn-primary" onclick="toLogin()">
+        <%= __("login")%>
+      </button>
 
       <% } %>
     </div>

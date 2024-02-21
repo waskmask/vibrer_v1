@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <meta
       name="description"
@@ -22,10 +22,7 @@
           <img class="bg-img" src="/public/images/auth-pass.jpg" alt="Image" />
           <div class="overlay"></div>
           <div class="left-col">
-            <div class="title">
-              Vibrer is your one-stop destination for all things music, So what
-              are you waiting for?
-            </div>
+            <div class="title"><%=__("forgot_pass_text")%></div>
           </div>
           <div class="auth-col">
             <div class="form-wrapper">
@@ -34,12 +31,8 @@
                 src="/public/images/vibrer_light_logo.svg"
                 alt="Logo"
               />
-              <div class="title">Forgot password?</div>
-              <div class="sub">
-                To reset your password, please enter your registered email
-                address. We'll send a link to that email where you can reset
-                your password securely.
-              </div>
+              <div class="title"><%=__("forgot_password")%></div>
+              <div class="sub"><%=__("forgot_pass_sub")%></div>
               <div class="success-message mb-3">
                 We've just sent a reset link to your registered email address at
                 [your@email.com]. Kindly check your inbox and follow the
@@ -58,7 +51,7 @@
                   <input
                     class="form-input"
                     type="email"
-                    placeholder="Email address"
+                    placeholder="<%=__('email_address')%>"
                     name="email"
                     id="forgot-email"
                     required
@@ -71,7 +64,7 @@
                   class="btn btn-primary w-100 mt-4 submitBtn"
                   type="submit"
                 >
-                  Send Email
+                  <%=__('send_email')%>
                 </button>
               </form>
 
@@ -81,7 +74,7 @@
                     src="./public/images/icons/arrow-left-long-primary.svg"
                     alt="icon"
                   />
-                  Go back to login
+                  <%=__('go_back_login')%>
                 </a>
               </div>
             </div>
@@ -95,6 +88,14 @@
     <script src="/public/js/authForm.js?v=2.0"></script>
     <script src="/public/js/config.js?v=2.0"></script>
     <script>
+      var localizedStrings = {
+        emailIsRequired: "<%= __('email_is_required') %>",
+        emailMustBeValid: "<%= __('email_must_be_valid') %>",
+        loading: "<%= __('loading') %>",
+        sendEmail: "<%= __('send_email') %>",
+        userDoesntExist: "<%= __('email_user_doesnt_exist') %>",
+        forgotPassSuccess: "<%= __('fp_email_sent') %>",
+      };
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("forgotPasswordForm");
         const btn = document.querySelector(".submitBtn");
@@ -106,7 +107,7 @@
           e.preventDefault();
 
           // Change button text to "Sending..."
-          btn.textContent = "Loading...";
+          btn.textContent = localizedStrings.loading;
           btn.disabled = true;
 
           // Implement the timeout function
@@ -129,8 +130,8 @@
             ) {
               isValid = false;
               customErrors.email = !email
-                ? "Email is required"
-                : "Please enter a valid email";
+                ? localizedStrings.emailIsRequired
+                : localizedStrings.emailMustBeValid;
             }
 
             const prevAlerts = document.querySelectorAll(".form-alert");
@@ -150,7 +151,7 @@
                 if (response.status === 201 || response.status === 200) {
                   if (responseData.status === 1) {
                     successPop.style.display = "block";
-                    successPop.innerHTML = responseData.message;
+                    successPop.innerHTML = localizedStrings.forgotPassSuccess;
                     setTimeout(() => {
                       successPop.style.display = "none";
                     }, 5000);
@@ -158,16 +159,14 @@
                     form.reset();
                   } else {
                     errorPop.style.display = "block";
-                    errorPop.innerHTML =
-                      "Invalid email. Please enter a valid email address.";
+                    errorPop.innerHTML = localizedStrings.emailMustBeValid;
                     setTimeout(() => {
                       errorPop.style.display = "none";
                     }, 5000);
                   }
                 } else {
                   errorPop.style.display = "block";
-                  errorPop.innerHTML =
-                    "Invalid email. Please enter a valid email address.";
+                  errorPop.innerHTML = localizedStrings.userDoesntExist;
                   setTimeout(() => {
                     errorPop.style.display = "none";
                   }, 5000);
@@ -189,7 +188,7 @@
             }
 
             // Reset the button text
-            btn.textContent = "Send Email";
+            btn.textContent = localizedStrings.sendEmail;
             btn.disabled = false;
           }, 1000); // 1-second delay
         });

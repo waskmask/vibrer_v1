@@ -4,6 +4,11 @@ const axios = require("axios");
 exports.showProjects = async (req, res) => {
   try {
     const projects = await Project.find();
+    const language = req.cookies.i18n;
+    let showProjectLangNotice = false;
+    if (language && language !== "en") {
+      showProjectLangNotice = true;
+    }
     if (req.session.appUserToken) {
       const profileResponse = await axios.get(
         `${process.env.API_URL}getappUserProfile`,
@@ -24,12 +29,14 @@ exports.showProjects = async (req, res) => {
         title: "Projects",
         path: "/Allprojects",
         profileData: profileData,
+        showProjectLangNotice: showProjectLangNotice,
       });
     } else {
       return res.render("projects", {
         projects,
         title: "Projects",
         path: "/Allprojects",
+        showProjectLangNotice: showProjectLangNotice,
       }); // Sending projects to EJS
     }
   } catch (err) {

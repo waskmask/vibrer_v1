@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <meta
       name="description"
@@ -18,38 +18,32 @@
           <div class="logo">
             <img src="/public/images/vibrer_light_logo.svg" alt="logo" />
           </div>
-          <div class="title">Registration Successful!</div>
+          <div class="title"><%-__("registration_successful")%></div>
 
-          <div class="desc">
-            You have successfully registered, a verification email will be sent
-            to you shortly. If you do not receive it, please check your spam
-            folder.
-          </div>
+          <div class="desc"><%-__("rs_description")%></div>
 
-          <div class="highlight-msg">
-            In <span class="rTimer">15 seconds</span>, you will be automatically
-            redirected to complete your profile.
-          </div>
+          <div class="highlight-msg"><%-__("rs_highlight_message")%></div>
 
-          <div class="divOr">Alternatively, you can click to:</div>
+          <div class="divOr"><%-__("alternative_click")%></div>
           <button
             onclick="redirectToNewProfile()"
             class="btn btn-primary shadow"
           >
-            Create Your Profile Now
+            <%-__("create_profile_button")%>
           </button>
         </div>
       </section>
     </main>
 
     <!-- js -->
+    <script src="/public/js/languageSwitcher.js"></script>
     <script>
       window.onload = function () {
         var timeLeft = 15; // Time in seconds
         var timerElement = document.querySelector(".rTimer");
         var countdownTimer = setInterval(function () {
           timeLeft--;
-          timerElement.textContent = timeLeft + " seconds";
+          timerElement.textContent = timeLeft;
           if (timeLeft <= 0) {
             clearInterval(countdownTimer);
             window.location.href = "/new-profile";

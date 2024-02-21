@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
+    <script src="/public/js/languageSwitcher.js"></script>
     <meta
       name="description"
       content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
@@ -26,10 +27,7 @@
           />
           <div class="overlay"></div>
           <div class="left-col">
-            <div class="title">
-              Welcome to Vibrer, the ultimate music platform for talented
-              artists and passionate fans!
-            </div>
+            <div class="title"><%=__("signup_page_text")%></div>
           </div>
           <div class="auth-col">
             <div class="form-wrapper">
@@ -38,24 +36,24 @@
                 src="/public/images/vibrer_light_logo.svg"
                 alt="Logo"
               />
-              <div class="title">Create new account</div>
-              <div class="sub">Join the music revolution.</div>
+              <div class="title"><%=__("create_new_account")%></div>
+              <div class="sub"><%=__("signup_sub")%></div>
               <form
                 action="javascript:void(0)"
                 id="registrationForm"
                 method="POST"
                 autocomplete="off"
               >
-                <div class="label text-white">I'm an?</div>
+                <div class="label text-white"><%=__("im_an")%>?</div>
                 <div class="custom-radio-label">
                   <div
                     class="label active"
                     onclick="handleRadioClick(this, 'Artist')"
                   >
-                    Artist
+                    <%=__("artist")%>
                   </div>
                   <div class="label" onclick="handleRadioClick(this, 'Fan')">
-                    Fan
+                    <%=__("fan")%>
                   </div>
                 </div>
                 <!-- Hidden input field to store the selected value -->
@@ -70,7 +68,7 @@
                   <input
                     class="form-input"
                     type="email"
-                    placeholder="Email address"
+                    placeholder=" <%=__('email_address')%>"
                     name="email"
                     id="registerEmail"
                     required
@@ -81,7 +79,7 @@
                   <input
                     class="form-input"
                     type="password"
-                    placeholder="Password"
+                    placeholder=" <%=__('password')%>"
                     name="password"
                     required
                     autocomplete="off"
@@ -96,7 +94,7 @@
                   <input
                     class="form-input"
                     type="password"
-                    placeholder="Confirm password"
+                    placeholder=" <%=__('confirm_password')%>"
                     id="confirmPassword"
                     name="confirmPassword"
                   />
@@ -105,11 +103,7 @@
                   </div>
                 </div>
 
-                <div class="notice mb-4">
-                  By signing up, I agree to the
-                  <a href="/privacy" target="_blank">Privacy Policy</a> and
-                  <a href="/terms" target="_blank">T&C</a>.
-                </div>
+                <div class="notice mb-4"><%-__('signup_agreement')%></div>
                 <div class="error-message mt-3 d-none"></div>
                 <div class="success-message mt-3 d-none">
                   You have successfully registered.
@@ -118,14 +112,14 @@
                   check spam folder.
                 </div>
                 <button class="btn btn-primary w-100 submitBtn" type="submit">
-                  Sign Up
+                  <%=__('sign_up')%>
                 </button>
               </form>
 
               <div class="text-white mt-4 dfac">
-                Do have an account?
+                <%=__('already_have_account')%>
                 <a class="link-primary dfac ms-1" href="/login"
-                  >Login
+                  ><%=__('login')%>
                   <img
                     src="/public/images/icons/arrow-right-long-primary.svg"
                     alt="icon"
@@ -139,6 +133,7 @@
     <!-- javascript -->
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
     <script src="/public/js/authForm.js?v=2.0"></script>
     <script src="/public/js/config.js?v=2.0"></script>
     <script>
@@ -155,6 +150,15 @@
         hiddenInput.value = value;
       }
 
+      var localizedStrings = {
+        emailIsRequired: "<%= __('email_is_required') %>",
+        emailMustBeValid: "<%= __('email_must_be_valid') %>",
+        passMustBeAtleast: "<%= __('password_must_be_at_least') %>",
+        passwordDidNotMatch: "<%= __('password_did_not_match') %>",
+        loading: "<%= __('loading') %>",
+        signUp: "<%= __('sign_up') %>",
+        emailAlreadyUsed: "<%= __('email_already_used') %>",
+      };
       document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("registrationForm");
         const btn = document.querySelector(".submitBtn");
@@ -166,7 +170,7 @@
           e.preventDefault();
 
           // Change button text to "Sending..."
-          btn.textContent = "Loading...";
+          btn.textContent = localizedStrings.loading;
           btn.disabled = true;
           // Implement the timeout function
           setTimeout(async () => {
@@ -189,24 +193,19 @@
             ) {
               isValid = false;
               customErrors.email = !email
-                ? "Email is required"
-                : "Please enter a valid email";
+                ? localizedStrings.emailIsRequired
+                : localizedStrings.emailMustBeValid;
             }
 
-            // if (!isStrongPassword(password)) {
-            //   isValid = false;
-            //   customErrors.password =
-            //     "Password must be strong and contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.";
-            // }
             if (password.length < 6) {
               isValid = false;
-              customErrors.password =
-                "Password must be at least 6 characters long.";
+              customErrors.password = localizedStrings.passMustBeAtleast;
             }
 
             if (password !== confirmPassword) {
               isValid = false;
-              customErrors.confirmPassword = "Passwords do not match";
+              customErrors.confirmPassword =
+                localizedStrings.passwordDidNotMatch;
             }
 
             // Clear previous error alerts
@@ -246,7 +245,7 @@
                     form.reset();
                   } else {
                     errorPop.style.display = "block";
-                    errorPop.innerHTML = responseData.message;
+                    errorPop.innerHTML = localizedStrings.emailAlreadyUsed;
                     setTimeout(() => {
                       errorPop.style.display = "none";
                     }, 5000);
@@ -271,7 +270,7 @@
             }
 
             // Reset the button text
-            btn.textContent = "Sign Up";
+            btn.textContent = localizedStrings.signUp;
             btn.disabled = false;
           }, 1000); // 1-second delay
         });

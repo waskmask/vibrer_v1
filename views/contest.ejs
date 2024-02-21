@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <meta
       name="description"
@@ -29,13 +29,10 @@
             <div>
               <div class="sponsor">
                 <img src="/public/images/mod_light.svg" alt="Logo" />
-                <div>MOD presents</div>
+                <div><%= __("mod_presents") %></div>
               </div>
-              <div class="title"><%- contestDetailData.result.title %></div>
-              <div class="sub">
-                Voting will start from 1<sup>st</sup> March 2024 00:00 AM
-                (CEST).
-              </div>
+              <div class="title"><%= __("vscontest") %></div>
+              <div class="sub"><%- __("voting_notice") %></div>
             </div>
             <div class="cta">
               <button
@@ -43,10 +40,10 @@
                 data-toggle="_modal"
                 data-target="contest1Info"
               >
-                Learn more
+                <%= __("learn_more") %>
               </button>
               <button class="btn btn-primary" onclick="toParticipate()">
-                Participate
+                <%= __("participate") %>
               </button>
               <div
                 class="playAd"
@@ -61,23 +58,23 @@
       </section>
       <section class="bg-dark participants">
         <div class="layout">
-          <div class="title mt-4 mb-3">Voting Begins In:</div>
+          <div class="title mt-4 mb-3"><%-__("vonting_begins")%></div>
           <div class="contestTimer" id="Contest1timer">
             <div class="t_card">
               <div class="title" id="days"></div>
-              <div class="_label">Days</div>
+              <div class="_label"><%-__("days")%></div>
             </div>
             <div class="t_card">
               <div class="title" id="hours"></div>
-              <div class="_label">Hours</div>
+              <div class="_label"><%-__("hours")%></div>
             </div>
             <div class="t_card">
               <div class="title" id="minutes"></div>
-              <div class="_label">Minutes</div>
+              <div class="_label"><%-__("minutes")%></div>
             </div>
             <div class="t_card">
               <div class="title" id="seconds"></div>
-              <div class="_label">Seconds</div>
+              <div class="_label"><%-__("seconds")%></div>
             </div>
           </div>
         </div>
@@ -250,8 +247,10 @@
 
     <!-- javascript -->
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
+    <!-- <script src="/public/js/Youtube.min.js?v=2.0"></script> -->
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/authForm.js?v=2.0"></script>
     <script>

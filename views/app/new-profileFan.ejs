@@ -56,15 +56,15 @@
             <!-- Step 1 -->
             <div class="step step-1">
               <div class="dfcolac mt-4 mb-4">
-                <div class="title">Personal Info</div>
-                <div class="sub">Add your information</div>
+                <div class="title"><%=__('presonal_info')%></div>
+                <div class="sub"><%=__('add_your_info')%></div>
               </div>
               <div class="mb-4">
                 <div>
                   <input
                     type="text"
                     id="full_name"
-                    placeholder="Full name *"
+                    placeholder="<%=__('full_name')%> *"
                     name="full_name"
                     autocomplete="off"
                     required
@@ -72,17 +72,15 @@
                     maxlength="20"
                   />
                 </div>
-                <div class="small white mt-1">
-                  Your full name will be publicly visible as your profile name.
-                </div>
+                <div class="small white mt-1"><%=__('full_name_notice')%></div>
               </div>
               <div class="grid-2-sm">
                 <div class="genderInputWrapper">
                   <div class="custom-select dfac" id="gender-opt">
-                    <div class="placeholder">Gender *</div>
+                    <div class="placeholder"><%=__('gender')%> *</div>
                     <div class="options">
-                      <div class="option" value="Male">Male</div>
-                      <div class="option" value="Female">Female</div>
+                      <div class="option" value="Male"><%=__('male')%></div>
+                      <div class="option" value="Female"><%=__('female')%></div>
                     </div>
                     <input
                       type="hidden"
@@ -99,7 +97,7 @@
                       type="date"
                       name="date_of_birth"
                       id="dob"
-                      placeholder="Date of Birth *"
+                      placeholder="<%=__('dob')%> *"
                       autocomplete="off"
                       required
                     />
@@ -108,22 +106,27 @@
                 <div>
                   <input
                     type="text"
-                    id="city"
+                    id="city-input"
                     name="city"
                     autocomplete="off"
-                    placeholder="City *"
+                    placeholder="<%=__('city')%> *"
                     required
                   />
                 </div>
-                <div>
-                  <input
-                    type="text"
-                    id="country"
-                    placeholder="Country *"
-                    name="country"
-                    autocomplete="off"
-                    required
-                  />
+                <div class="countryInputWrapper">
+                  <div class="custom-select dfac" id="country-opt">
+                    <div class="placeholder"><%=__('country')%> *</div>
+                    <%- include('partials/_countriesOptions') %>
+
+                    <input
+                      type="hidden"
+                      name="country"
+                      value=""
+                      id="country-input"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
               <div class="dfjcfe ac g-3 mt-4">
@@ -132,17 +135,16 @@
                   data-action="next"
                   class="btn btn-primary next-btn"
                 >
-                  Next
+                  <%=__('next')%>
                 </button>
               </div>
             </div>
-
             <!-- Step 2 -->
 
             <div class="step step-2">
               <div class="dfcolac mt-4 mb-4">
-                <div class="title">Profile Media</div>
-                <div class="sub">Complete your profile</div>
+                <div class="title"><%= __("profile_media") %></div>
+                <div class="sub"><%= __("complete_your_profile") %></div>
               </div>
               <div class="avatar-upload">
                 <input type="file" id="avatar" autocomplete="off" />
@@ -154,12 +156,13 @@
                 value=""
               />
               <div class="small text-center mt-1 mb-4">
-                Choose profile photo
+                <%= __("choose_profile_photo") %>
               </div>
               <div class="cover-upload">
                 <div class="cover-holder">
                   <div class="label mb-0">
-                    Add a cover photo <span>Upload</span>
+                    <%= __("add_cover_photo") %>
+                    <span> <%= __("upload") %></span>
                   </div>
                 </div>
                 <input type="file" id="coverImg" autocomplete="off" />
@@ -170,23 +173,21 @@
                 id="profile_cover"
                 value=""
               />
-              <div class="small mt-1">
-                To optimally fit, use an image of 800x300 pixels.
-              </div>
+              <div class="small mt-1"><%=__("cover_image_helper")%></div>
               <div class="dfjcb ac g-3 mt-4">
                 <button
                   class="btn btn-outlined"
                   data-action="back"
                   type="button"
                 >
-                  Back
+                  <%=__("back")%>
                 </button>
                 <button
                   type="button"
                   class="btn btn-primary next-btn"
                   data-action="next"
                 >
-                  Next
+                  <%=__("next")%>
                 </button>
               </div>
             </div>
@@ -194,8 +195,8 @@
             <!-- Step 3 -->
             <div class="step step-3">
               <div class="dfcolac mt-4 mb-4">
-                <div class="title">Profile Info</div>
-                <div class="sub">Complete final step</div>
+                <div class="title"><%=__("profile_info")%></div>
+                <div class="sub"><%=__("complete_final_step")%></div>
               </div>
 
               <div class="mb-4">
@@ -205,7 +206,7 @@
               <div class="mb-4">
                 <input
                   type="text"
-                  placeholder="YouTube"
+                  placeholder="<%=__('youtube')%>"
                   autocomplete="off"
                   name="youtube"
                 />
@@ -213,7 +214,7 @@
               <div class="mb-4">
                 <input
                   type="text"
-                  placeholder="Instagram"
+                  placeholder="<%=__('instagram')%>"
                   autocomplete="off"
                   name="instagram"
                 />
@@ -221,7 +222,7 @@
               <div class="mb-4">
                 <input
                   type="text"
-                  placeholder="Facebook"
+                  placeholder="<%=__('facebook')%>"
                   autocomplete="off"
                   name="facebook"
                 />
@@ -229,7 +230,7 @@
               <div class="mb-4">
                 <input
                   type="text"
-                  placeholder="Twitter"
+                  placeholder="<%=__('twitter')%>"
                   autocomplete="off"
                   name="twitter"
                 />
@@ -237,7 +238,7 @@
               <div class="mb-4">
                 <input
                   type="text"
-                  placeholder="Website"
+                  placeholder="<%=__('website')%>"
                   autocomplete="off"
                   name="website"
                 />
@@ -250,10 +251,13 @@
                   data-action="back"
                   type="button"
                 >
-                  Back
+                  <%=__("back")%>
                 </button>
-                <button type="submit" class="btn btn-primary next-btn">
-                  Finish
+                <button
+                  type="submit"
+                  class="btn btn-primary next-btn submitBtn"
+                >
+                  <%=__("finish")%>
                 </button>
               </div>
             </div>
@@ -542,7 +546,7 @@
 
           stepRequiredInputs.forEach((input) => {
             let wrapper = input.closest(
-              ".genderInputWrapper, #dateInputWrapper"
+              ".genderInputWrapper, #dateInputWrapper, .countryInputWrapper"
             );
             let errorDiv = wrapper
               ? wrapper.querySelector(".form-alert")

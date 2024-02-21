@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const i18n = require("i18n");
 
 router.get("/contests", async function (req, res) {
   try {
@@ -39,7 +40,7 @@ router.get("/contests", async function (req, res) {
         return res.redirect("/new-profile");
       }
       return res.render("contests", {
-        title: "Contest",
+        title: i18n.__("contests"),
         path: "/contest",
         onGoingContestsData: onGoingContestsData,
         upComingContestsData: upComingContestsData,
@@ -48,7 +49,7 @@ router.get("/contests", async function (req, res) {
       });
     } else {
       return res.render("contests", {
-        title: "Contest",
+        title: i18n.__("contests"),
         path: "/contest",
         onGoingContestsData: onGoingContestsData,
         upComingContestsData: upComingContestsData,

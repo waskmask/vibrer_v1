@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%- __('lang') %>">
   <head>
     <%- include('partials/head'); %>
     <meta
@@ -18,6 +18,11 @@
     <%- include('partials/header'); %>
     <section class="general">
       <div class="container layout">
+        <% if (showTermsLangNotice) { %>
+        <div class="languageNotice light mb-3 mw600">
+          <%= __("termsLangNotice") %>
+        </div>
+        <% } %>
         <div class="title">General terms and conditions</div>
         <br />
         <div class="subtitle">
@@ -369,5 +374,6 @@
 
     <!-- javascript -->
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
   </body>
 </html>

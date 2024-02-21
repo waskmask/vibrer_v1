@@ -109,13 +109,13 @@
                         src="/public/images/icons/user_icon.svg"
                         alt="Icon"
                       />
-                      <span>My profile</span>
+                      <span><%- __("my_profile")%></span>
                     </a>
                   </li>
                   <li>
                     <a href="javascript:void(0)" onclick="logoutAppUser();">
                       <img src="/public/images/icons/log-off.svg" alt="Icon" />
-                      <span>Logout</span>
+                      <span><%- __("logout")%></span>
                     </a>
                   </li>
                 </ul>
@@ -158,7 +158,7 @@
                 fans, you can vote your favorite artists from 1st March 2024.
 
                 <button class="btn btn-primary mt-3">
-                  CLick here to participate
+                  <%=__("click_to_participate")%>
                 </button>
               </div>
             </div>
@@ -314,19 +314,21 @@
         <div class="temp_footer">
           <div class="top">
             <div class="link">
-              <a target="_blank" href="/imprint">Imprint</a>
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/privacy">Privacy policy</a>
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/terms">Terms of use</a>
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
             </div>
             <div class="link">
-              <a target="_blank" href="/cookies">Cookie settings</a>
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
             </div>
             <div class="link">
-              <a target="_blank" href="/">Vibrer Home page</a>
+              <a target="_blank" href="/"> <%= __("Home") %></a>
             </div>
           </div>
           <div class="social-icons">
@@ -343,9 +345,32 @@
               <img src="/public/images/instagram.svg" alt="Instagram icon"
             /></a>
           </div>
+
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
           <div class="bottom">
-            © All rights reserved. Vibrer Internet Content Provider L.L.C UAE
-            2024
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
           </div>
         </div>
       </div>
@@ -357,6 +382,7 @@
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/app_language.js"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
     <script src="/public/js/sweetalert2@11.js?v=2.0"></script>

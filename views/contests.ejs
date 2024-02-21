@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <meta
       name="description"
@@ -24,13 +24,14 @@
         <div class="layout">
           <% if (onGoingContestsData.result && onGoingContestsData.result.length
           > 0) { %>
-          <div class="title">
-            Active contests (<%- onGoingContestsData.result.length %>)
+          <div class="title tcap">
+            <%=__("active_contests")%> (<%- onGoingContestsData.result.length
+            %>)
           </div>
           <% onGoingContestsData.result.forEach(onGoingContests => { %>
           <div class="contests-wrapper" onclick="toContest()">
             <div class="contest">
-              <div class="status active"><%- onGoingContests.status %></div>
+              <div class="status active tcap"><%- __("active") %></div>
               <img
                 class="hinm"
                 src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.xl  %>"
@@ -48,10 +49,10 @@
       </section>
       <section class="contests bg-dark">
         <div class="layout">
-          <div class="title">Upcoming contests</div>
+          <div class="title"><%= __("upcoming_contests")%></div>
           <div class="contests-wrapper">
             <div class="contest">
-              <div class="status upcoming">Upcoming</div>
+              <div class="status upcoming"><%- __("upcoming") %></div>
               <img
                 class="hinm"
                 src="/public/images/upcoming_contests/rapContest.jpg"
@@ -62,7 +63,7 @@
               alt="images" />
             </div>
             <div class="contest">
-              <div class="status upcoming">Upcoming</div>
+              <div class="status upcoming"><%- __("upcoming") %></div>
               <img
                 class="hinm"
                 src="/public/images/upcoming_contests/djContest.jpg"
@@ -73,7 +74,7 @@
               alt="images" />
             </div>
             <div class="contest">
-              <div class="status upcoming">Upcoming</div>
+              <div class="status upcoming"><%- __("upcoming") %></div>
               <img
                 class="hinm"
                 src="/public/images/upcoming_contests/singer-songwriter-contest.jpg"
@@ -103,6 +104,7 @@
     <!-- javascript -->
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
     <script src="/public/js/theme-v01node.js?v=2.0"></script>
+    <script src="/public/js/languageSwitcher.js"></script>
     <script>
       function toContest() {
         window.location.href = "/contest";

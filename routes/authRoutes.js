@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
-
+const i18n = require("i18n");
 router.get("/register", function (req, res) {
   if (req.session.appUserToken) {
     return res.redirect("/app/pre-home");
   }
-  return res.render("register", { title: "Register", path: "/register" });
+
+  return res.render("register", {
+    title: i18n.__("sign_up"),
+    path: "/register",
+  });
 });
 
 router.get("/login", (req, res) => {
@@ -13,12 +17,12 @@ router.get("/login", (req, res) => {
     return res.redirect("/app/pre-home");
   }
 
-  return res.render("login", { title: "Login", path: "/login" });
+  return res.render("login", { title: i18n.__("login"), path: "/login" });
 });
 
 router.get("/forgot-password", function (req, res) {
   res.render("forgotpass", {
-    title: "Forgot password",
+    title: i18n.__("forgot_password"),
     path: "/forgot-password",
   });
 });
@@ -28,7 +32,7 @@ router.get("/reset-password", function (req, res) {
     return res.redirect("/login");
   }
   return res.render("reset-password", {
-    title: "Reset password",
+    title: i18n.__("reset_password"),
     path: "/reset-password",
     token: req.query.token,
   });

@@ -453,6 +453,9 @@ header .menu-overlay {
   -o-object-position: center;
      object-position: center;
 }
+.languageSwitcher .dropdown .item.active {
+  color: #fff;
+}
 .languageSwitcher .dropdown.active {
   top: 45px;
   opacity: 1;

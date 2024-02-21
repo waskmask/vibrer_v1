@@ -54,16 +54,25 @@ window.addEventListener("DOMContentLoaded", function () {
 
     checkboxContainerInputs.forEach(function (input) {
       input.addEventListener("change", function () {
-        const itemName = this.value;
-        const itemRealName = this.getAttribute("data-value");
+        const checkbox = this; // 'this' refers to the input element that was interacted with
+        const itemName = checkbox.value;
 
-        if (this.checked) {
+        if (checkbox.checked) {
+          const label = checkbox.closest(".checkbox-container"); // Get the parent label element
+          let labelText = "";
+
+          // Check if the first child node is a text node and get its value
+          if (label.childNodes[0].nodeType === Node.TEXT_NODE) {
+            labelText = label.childNodes[0].nodeValue.trim();
+          }
+
           selectedValues.push(itemName);
           selectedItems.innerHTML += `
             <div class="item">
-              <div class="item-name" data-value="${itemName}">${itemRealName}</div>
+              <div class="item-name" data-value="${itemName}">${labelText}</div>
             </div>
           `;
+
           if (selectWrapperErr) {
             clearErrorForGenreSelection();
           }

@@ -235,3 +235,19 @@
      object-fit: contain;
   border-radius: 0.25rem;
 }
+
+.whatsAppLink {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #fff;
+}
+.whatsAppLink .icon {
+  color: #34f199;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.whatsAppLink .text {
+  font-size: 1rem;
+}

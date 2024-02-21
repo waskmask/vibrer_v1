@@ -6,13 +6,15 @@ const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const i18n = require("i18n");
+const acceptedLanguages = i18n.getLocales(); // Get the list of locales you support
 
 i18n.configure({
-  locales: ["en", "fr", "de", "tr", "es", "it", "ru", "pl", "cn"],
+  locales: ["en", "fr", "de", "tr", "es", "it", "ru", "pl", "cn", "pt"],
   directory: __dirname + "/locales",
   defaultLocale: "en",
   queryParameter: "lang",
   cookie: "i18n",
+  header: "accept-language",
 });
 
 // Import controllers
@@ -58,6 +60,14 @@ app.use(
 
 // middleware
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  const browserLang =
+    req.acceptsLanguages(acceptedLanguages) || i18n.getDefaultLocale();
+  i18n.setLocale(browserLang);
+  next();
+});
+
 app.use(i18n.init);
 // Serve static files
 app.use("/public", express.static(path.join(__dirname, "public")));

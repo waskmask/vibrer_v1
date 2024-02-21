@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%- __('lang') %>">
   <head>
     <meta
       name="description"
@@ -28,22 +28,18 @@
         <div class="layout">
           <div class="content">
             <img src="/public/images/bigStar.svg" alt="Star" />
-            <div class="title tcap">
+            <div class="title tup">
               <span> <%= __("vibrer") %></span>
               <br />
               <%= __("singing_contest") %>
             </div>
-            <div class="sub">
-              Unleash Your Inner Vocal Star, Participate, Earn Public Votes, and
-              Win a Reward of 5000 Euros, public voting will start from 1st
-              March 2024.
-            </div>
+            <div class="sub"><%= __("contest1_home_sub") %></div>
             <div class="cta">
               <button class="btn btn-primary" onclick="toContest();">
-                View Contest
+                <%= __("view_contest") %>
               </button>
               <button class="btn btn-outlined" onclick="learnMore()">
-                Learn more about Vibrer
+                <%= __("learn_mv") %>
               </button>
             </div>
           </div>
@@ -55,22 +51,15 @@
 
       <section class="layout" id="sec2">
         <div class="container">
-          <div class="title">What is Vibrer?</div>
+          <div class="title"><%= __("what_is_vibrer_q") %></div>
 
           <div class="grid">
             <div class="col">
               <div class="desc">
-                Vibrer is your ultimate destination for a musical journey like
-                no other. It's a dynamic platform that seamlessly blends the
-                world of music and social interaction. With Vibrer, you can
-                explore diverse genres, connect with talented artists, enjoy
-                live performances, and even participate in contests. Elevate
-                your passion for music and engage with a vibrant community of
-                music enthusiasts. Discover, connect, and experience music on a
-                whole new level with Vibrer.
-                <span class="toFeatures" onclick="scrollToFeatures() "
-                  >View features</span
-                >
+                <%= __("wiv_content") %>
+                <span class="toFeatures" onclick="scrollToFeatures() ">
+                  <%= __("view_features") %>
+                </span>
               </div>
 
               <div class="v-wrapper" id="videoPlay">
@@ -80,7 +69,7 @@
                   src="./public/images/play-button.svg"
                   alt="play button"
                 />
-                <div class="title">Watch Vibrer's short promo</div>
+                <div class="title"><%= __("view_short_promo") %></div>
               </div>
             </div>
             <div class="col">
@@ -90,9 +79,7 @@
                   alt="Vibrer's realm"
                 />
                 <div class="title">
-                  Melodies <br />
-                  Beyond Time: <br />
-                  Vibrer's Realm
+                  Melodies<br />Beyond Time:<br />Vibrer's Realm
                 </div>
               </div>
             </div>
@@ -103,33 +90,21 @@
         <div class="layout">
           <div class="container">
             <div class="left">
-              <div class="title">Who is Vibrer for?</div>
-              <div class="subtitle">
-                Built Exclusively for Music Industry Artists
-              </div>
-              <div class="desc">
-                Vibrer is a platform crafted for music enthusiasts and creators
-                alike. Whether you're an aspiring singer, a talented musician,
-                or a passionate dancer, Vibrer provides a space to showcase your
-                artistry, connect with fans, and unlock opportunities. Our
-                vibrant community offers a hub for discovering new talents,
-                enjoying live performances, and engaging with your favorite
-                artists. Whether you're seeking inspiration or aiming to amplify
-                your musical journey, Vibrer empowers you to express and
-                experience the magic of music like never before.
-              </div>
+              <div class="title"><%= __("who_is_vibrer_for_q") %></div>
+              <div class="subtitle"><%= __("wvf_sub") %></div>
+              <div class="desc"><%= __("wvf_desc") %></div>
             </div>
             <div class="right">
               <div class="imgWrapper">
-                <div class="title">Singers</div>
+                <div class="title tcap"><%= __("singers") %></div>
                 <img src="/public/images/singer.png" alt="Singer" />
               </div>
               <div class="imgWrapper">
-                <div class="title">Musicains</div>
+                <div class="title tcap"><%= __("musicians") %></div>
                 <img src="/public/images/musician.png" alt="Musician" />
               </div>
               <div class="imgWrapper">
-                <div class="title">Dancers</div>
+                <div class="title tcap"><%= __("dancers") %></div>
                 <img src="/public/images/dancer.png" alt="Dancer" />
               </div>
             </div>
@@ -140,31 +115,23 @@
       <section id="sec4">
         <div class="container">
           <div class="grid2">
-            <div class="title">
-              Explore Vibrer's <br />
-              Unique Features
-            </div>
-            <div class="mtitle">Explore Vibrer's Unique Features</div>
+            <div class="title"><%- __("exploreVF") %></div>
+            <div class="mtitle"><%- __("exploreVFM") %></div>
             <div class="card">
               <div class="icon">
-                <img src="/public/images/icons/music_pink.svg" alt="" />
+                <img
+                  src="/public/images/icons/music_pink.svg"
+                  alt="musicPink"
+                />
               </div>
-              <div class="sTitle">
-                Elevate your music experience with Vibrer's cutting-edge tools.
-              </div>
+              <div class="sTitle"><%- __("elevate_mj") %></div>
             </div>
           </div>
         </div>
         <div class="layout">
           <div class="grid3">
-            <div class="title">Dynamic social media inspired profile</div>
-            <div class="desc">
-              Craft a dynamic social media-inspired profile that not only
-              showcases your artistic essence but also connects you with fans.
-              This feature empowers you to thrive in the music community,
-              creating an immersive experience that goes beyond mere
-              functionality.
-            </div>
+            <div class="title"><%- __("dynamic_sm_title") %></div>
+            <div class="desc"><%- __("dynamic_sm_desc") %></div>
             <img src="/public/images/Gravity-Scene.png" alt="Gravity" />
           </div>
 
@@ -174,13 +141,9 @@
                 <img src="/public/images/icons/send_pink.svg" alt="" />
               </div>
               <div>
-                <div class="title">Share Your Passion</div>
+                <div class="title"><%- __("shareYourPassion") %></div>
 
-                <div class="desc">
-                  Amplify your presence by effortlessly sharing your music,
-                  videos, and creations with a global audience. Connect,
-                  inspire, and grow through vibrant content sharing on Vibrer.
-                </div>
+                <div class="desc"><%- __("shareYourPassionDesc") %></div>
               </div>
             </div>
             <div class="card">
@@ -188,12 +151,8 @@
                 <img src="/public/images/icons/fast-forward.svg" alt="icon" />
               </div>
               <div>
-                <div class="title">Browse and Connect</div>
-                <div class="desc">
-                  Explore a world of diverse musical talents and connect with
-                  like-minded enthusiasts. Discover new genres, follow your
-                  favorite artists, and build a vibrant community on Vibrer.
-                </div>
+                <div class="title"><%- __("browseAndConnect") %></div>
+                <div class="desc"><%- __("browseAndConnectDesc") %></div>
               </div>
             </div>
             <div class="card">
@@ -201,13 +160,9 @@
                 <img src="/public/images/icons/message-text-01.svg" alt="" />
               </div>
               <div>
-                <div class="title">Seamless Communication</div>
+                <div class="title"><%- __("seamlessCommunication") %></div>
 
-                <div class="desc">
-                  Engage in lively discussions, express your thoughts, and
-                  connect with artists and fans using Vibrer's intuitive inbuilt
-                  chat system.
-                </div>
+                <div class="desc"><%- __("seamlessCommunicationDesc") %></div>
               </div>
             </div>
             <div class="card">
@@ -215,13 +170,8 @@
                 <img src="/public/images/icons/live_concert.svg" alt="" />
               </div>
               <div>
-                <div class="title">Exclusive Live Concerts</div>
-                <div class="desc">
-                  Immerse yourself in extraordinary live performances by
-                  celebrated artists, available exclusively on Vibrer.
-                  Experience the energy of live music from the convenience of
-                  your device.
-                </div>
+                <div class="title"><%- __("exclusiveLiveConcerts") %></div>
+                <div class="desc"><%- __("exclusiveLiveConcertsDesc") %></div>
               </div>
             </div>
             <div class="card">
@@ -229,13 +179,8 @@
                 <img src="/public/images/icons/contest.svg" alt="" />
               </div>
               <div>
-                <div class="title">Online Contests</div>
-                <div class="desc">
-                  Participate in online contests on Vibrer. Step up to the
-                  challenge by participating in singing contests, dance-offs,
-                  and more, Showcase your artistry, secure votes, and win prizes
-                  on Vibrer.
-                </div>
+                <div class="title"><%- __("onlineContests") %></div>
+                <div class="desc"><%- __("onlineContestsDesc") %></div>
               </div>
             </div>
             <div class="card">
@@ -243,13 +188,8 @@
                 <img src="/public/images/icons/live_stream.svg" alt="" />
               </div>
               <div>
-                <div class="title">Live Streaming</div>
-
-                <div class="desc">
-                  Feel the beat in real-time with Vibrer's Live Streaming.
-                  Artists go live, fans connect, and virtual gifts flow, all at
-                  your fingertips.
-                </div>
+                <div class="title"><%- __("liveStreaming") %></div>
+                <div class="desc"><%- __("liveStreamingDesc") %></div>
               </div>
             </div>
           </div>
@@ -258,11 +198,8 @@
 
       <section id="gnform">
         <div class="container">
-          <div class="title">Subscribe to our news letter!</div>
-          <div class="subtitle">
-            Stay informed about Vibrer's upcoming launch by providing your
-            details. Join us on this musical adventure!
-          </div>
+          <div class="title"><%- __("subscribeTitle") %></div>
+          <div class="subtitle"><%- __("subscribeSub") %></div>
 
           <form id="mailingList">
             <div class="grid">
@@ -275,9 +212,10 @@
                 <input
                   class="form-input"
                   type="text"
-                  placeholder="First Name"
+                  placeholder="<%= __('firstName') %>"
                   name="firstName"
                 />
+
                 <div class="form-alert"></div>
               </div>
 
@@ -285,7 +223,7 @@
                 <input
                   class="form-input"
                   type="text"
-                  placeholder="Last Name"
+                  placeholder="<%= __('lastName') %>"
                   name="lastName"
                 />
               </div>
@@ -294,18 +232,18 @@
                   class="form-input"
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder="<%= __('email') %>"
                 />
               </div>
               <div class="col">
-                <button class="btn btn-primary ml-btn">Subscribe</button>
+                <button class="btn btn-primary ml-btn">
+                  <%= __("subscribe") %>
+                </button>
               </div>
             </div>
             <div class="desc">
-              By submitting this form, you agree to receive updates and
-              notifications from Vibrer. We respect your privacy and won't share
-              your information with third parties.
-              <a href="./privacy">Read our privacy policy</a>
+              <%- __("subscribeFormConsent") %>
+              <a href="./privacy"><%= __("readPrivacyLinkText") %></a>
             </div>
 
             <button
@@ -313,7 +251,7 @@
               class="btn btn-outlined"
               onclick="scrollToMoreFeatures()"
             >
-              Continue Exploring Features
+              <%= __("continueExploring") %>
               <img
                 class="img-right"
                 src="./public/images/arrow-down-circle.svg"
@@ -335,31 +273,17 @@
               />
             </div>
             <div class="col">
-              <div class="title">Vibrer's Social Hub</div>
-              <div class="desc">
-                Elevate your experience with Vibrer's integrated Social Hub
-                feature. Enhance your presence and empower creators to flourish
-                within a vibrant artistic community.
+              <div class="title"><%= __("socialHubTitle") %></div>
+              <div class="desc"><%= __("socialHubDescription") %></div>
+              <div class="desc icon">
+                <img src="./public/images/check-circle.svg" alt="Check" />
+                <div><%= __("socialHubFeature1") %></div>
               </div>
               <div class="desc icon">
                 <img src="./public/images/check-circle.svg" alt="Check" />
-                <div>
-                  Fans engage with music, videos, live streams, concerts,
-                  contests through likes, comments, playlist, bookmarks etc.
-                </div>
+                <div><%= __("socialHubFeature2") %></div>
               </div>
-              <div class="desc icon">
-                <img src="./public/images/check-circle.svg" alt="Check" />
-                <div>
-                  Artists can captivate their audience with Music, images,
-                  videos, polls and earn a passive income
-                </div>
-              </div>
-              <div class="desc">
-                Join Vibrer's interconnected community, where music enthusiasts
-                and creators unite to celebrate their passion and connect like
-                never before.
-              </div>
+              <div class="desc"><%= __("socialHubClosing") %></div>
             </div>
           </div>
         </div>
@@ -367,13 +291,8 @@
 
       <section class="layout" id="sec6">
         <div class="container">
-          <div class="title">Earn and manage funds through inbuilt wallet</div>
-          <div class="desc">
-            "Earn a passive income on Vibrer by sharing music videos and audio
-            files, participating in contests, performing live concerts, offering
-            one-to-one performances, and live streaming. Monetize your content
-            and build a stronger relationship with your audience.
-          </div>
+          <div class="title"><%= __("walletTitleStatic") %></div>
+          <div class="desc"><%= __("walletDescriptionStatic") %></div>
         </div>
         <img
           class="walletimg"
