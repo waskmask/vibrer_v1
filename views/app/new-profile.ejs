@@ -54,6 +54,7 @@
             autocomplete="off"
           >
             <!-- Step 1 -->
+
             <div class="step step-1">
               <div class="dfcolac mt-4 mb-4">
                 <div class="title"><%=__('presonal_info')%></div>
@@ -139,7 +140,7 @@
                 </button>
               </div>
             </div>
-
+            <% if(profileData.user_type === 'Artist'){%>
             <!-- Step 2 -->
             <div class="step step-2">
               <div class="dfcolac mt-4 mb-4">
@@ -241,6 +242,7 @@
                 </button>
               </div>
             </div>
+            <% }%>
             <!-- Step 3 -->
             <div class="step step-3">
               <div class="dfcolac mt-4 mb-4">
@@ -570,7 +572,7 @@
       new dateDropper({
         selector: "#dob",
         format: "y-mm-dd",
-        lang: "en",
+        lang: "<%= __('lang') %>",
         showArrowsOnHover: true,
         overlay: false,
         expandable: false,
@@ -741,7 +743,7 @@
 
             try {
               const response = await fetch(url, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem(

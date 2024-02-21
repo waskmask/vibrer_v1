@@ -540,5 +540,10 @@
   "fail_remove_gallery": "Bild konnte nicht entfernt werden",
   "image_remove_gallery": "Bild aus der Galerie entfernt",
   "edit_your_profile": "Bearbeite dein Profil",
-  "update_info": "Aktualisierte Informationen"
+  "update_info": "Aktualisierte Informationen",
+  "username_empty": "Benutzername darf nicht leer sein",
+  "username_taken": "Benutzername bereits vergeben",
+  "username_must_3": "Benutzername muss mindestens 3 Zeichen lang sein",
+  "username_validation": "Der Benutzername darf nur Buchstaben, Zahlen, Leerzeichen, Unterstriche, Bindestriche und Punkte enthalten",
+  "error_checking_username": "Fehler bei der Überprüfung der Verfügbarkeit des Benutzernamens:"
 }

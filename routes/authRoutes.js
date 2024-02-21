@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const router = express.Router();
 const i18n = require("i18n");
 router.get("/register", function (req, res) {
@@ -38,11 +39,34 @@ router.get("/reset-password", function (req, res) {
   });
 });
 
-router.get("/email-verified", function (req, res) {
-  res.render("email-verified", {
-    title: "Reset password",
-    path: "/reset-password",
-  });
+router.get("/email-verified", async function (req, res) {
+  if (!req.query.token) {
+    return res.redirect("/404");
+  }
+  const token = req.query.token;
+  try {
+    const tokenResponse = await axios.post(
+      `${process.env.API_URL}appUser/verification-code`,
+      {
+        token: token,
+      }
+    );
+    if (tokenResponse) {
+      if (tokenResponse.data.status === 1) {
+        res.render("email-verified", {
+          title: "Email verified",
+          path: "/email-verified",
+          tokenResponse: tokenResponse.data,
+        });
+      } else {
+        return res.redirect("/404");
+      }
+    } else {
+      return res.redirect("/500");
+    }
+  } catch (error) {
+    return res.redirect("/500");
+  }
 });
 
 module.exports = router;

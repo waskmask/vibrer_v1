@@ -322,7 +322,7 @@
             <div class="mb-4">
               <div id="desc" style="height: auto; min-height: 100px"></div>
             </div>
-            <div class="error-message mt-3 d-none"></div>
+            <div class="error-message mt-3 mb-2 d-none"></div>
             <div class="form-success mt-3 mb-2 d-none">
               <%-__("entry_success")%>
             </div>
@@ -345,7 +345,7 @@
           </div>
         </div>
         <% } %>
-
+        <!-- footer -->
         <div class="temp_footer">
           <div class="top">
             <div class="link">
@@ -380,6 +380,30 @@
               <img src="/public/images/instagram.svg" alt="Instagram icon"
             /></a>
           </div>
+
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
           <div class="bottom">
             <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
           </div>
@@ -391,6 +415,7 @@
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/app_language.js"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
     <!-- <script src="/public/js/cookieBanner2.js"></script> -->
     <script src="/public/js/video.min.js?v=2.0"></script>
@@ -500,8 +525,8 @@
                 errorDiv.remove();
               }
 
-              // Check if file size exceeds the maximum allowed size (512 MB)
-              if (file.size > 512 * 1024 * 1024) {
+              // Check if file size exceeds the maximum allowed size (2 GB)
+              if (file.size > 2048 * 1024 * 1024) {
                 // Create and display an error message
                 var errorMsg = document.createElement("div");
                 errorMsg.classList.add("form-alert", "error");
@@ -709,20 +734,23 @@
 
             const responseData = await response.json();
             if (responseData.status === 1) {
+              btn.classList.add("d-none");
               successPop.textContent = localizedStrings.entrySuccess;
               successPop.classList.remove("d-none");
               setTimeout(() => {
                 successPop.classList.add("d-none");
                 form.reset();
-                window.location.reload(); // Or any other success action
+                window.location.reload();
               }, 2000);
             } else {
               btn.classList.remove("d-none");
               errorPop.textContent =
                 error.message || localizedStrings.errorProccess;
               errorPop.classList.remove("d-none");
+              errorPop.style.display = "block";
               setTimeout(() => {
                 errorPop.classList.add("d-none");
+                errorPop.style.display = "none";
               }, 5000);
             }
           } catch (error) {
@@ -730,11 +758,11 @@
             errorPop.textContent =
               error.message || localizedStrings.errorProccess;
             errorPop.classList.remove("d-none");
+            errorPop.style.display = "block";
             setTimeout(() => {
               errorPop.classList.add("d-none");
+              errorPop.style.display = "none";
             }, 5000);
-          } finally {
-            btn.classList.add("d-none");
           }
         }
       });

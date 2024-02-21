@@ -55,6 +55,7 @@
           >
             <!-- Step 1 -->
             <div class="step step-1">
+              <p><%-profileData.user_type%></p>
               <div class="dfcolac mt-4 mb-4">
                 <div class="title"><%=__('presonal_info')%></div>
                 <div class="sub"><%=__('add_your_info')%></div>
@@ -471,7 +472,7 @@
       new dateDropper({
         selector: "#dob",
         format: "y-mm-dd",
-        lang: "en",
+        lang: "<%= __('lang') %>",
         showArrowsOnHover: true,
         overlay: false,
         expandable: false,

@@ -200,6 +200,7 @@
           </div>
         </div>
 
+        <!-- footer -->
         <div class="temp_footer">
           <div class="top">
             <div class="link">
@@ -235,6 +236,29 @@
             /></a>
           </div>
 
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
           <div class="bottom">
             <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
           </div>
@@ -248,6 +272,7 @@
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/app_language.js"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
     <script src="/public/js/sweetalert2@11.js?v=2.0"></script>

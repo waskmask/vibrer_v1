@@ -540,5 +540,10 @@
   "fail_remove_gallery": "Impossibile rimuovere l'immagine",
   "image_remove_gallery": "Immagine rimossa dalla galleria",
   "edit_your_profile": "Modifica il tuo profilo",
-  "update_info": "Informazioni aggiornate"
+  "update_info": "Informazioni aggiornate",
+  "username_empty": "Il nome utente non può essere vuoto",
+  "username_taken": "Nome utente già in uso",
+  "username_must_3": "Il nome utente deve essere lungo almeno 3 caratteri",
+  "username_validation": "Il nome utente può contenere solo alfabeti, numeri, spazi, trattini bassi, trattini e punti",
+  "error_checking_username": "Errore nella verifica della disponibilità del nome utente:"
 }

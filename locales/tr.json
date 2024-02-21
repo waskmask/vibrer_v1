@@ -540,5 +540,10 @@
   "fail_remove_gallery": "Resim kaldırılamadı",
   "image_remove_gallery": "Resim galeriden kaldırıldı",
   "edit_your_profile": "Profilinizi Düzenleyin",
-  "update_info": "Bilgiler güncellendi"
+  "update_info": "Bilgiler güncellendi",
+  "username_empty": "Kullanıcı adı boş olamaz",
+  "username_taken": "Kullanıcı adı zaten alınmış",
+  "username_must_3": "Kullanıcı adı en az 3 karakter uzunluğunda olmalıdır",
+  "username_validation": "Kullanıcı adı yalnızca alfabeler, sayılar, boşluklar, alt çizgiler, tireler ve noktalar içerebilir",
+  "error_checking_username": "Kullanıcı adı kullanılabilirliği kontrolünde hata:"
 }

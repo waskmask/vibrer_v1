@@ -39,22 +39,23 @@ router.get("/new-profile", async function (req, res) {
       const artistCategoriesData = artistCategoriesapiResponse.data.result;
       const genreData = genreApiResponse.data.result;
 
-      if (profileData.user_type === "Artist") {
-        res.render("app/new-profile", {
-          title: i18n.__("new_profile"),
-          path: "/register",
-          artistCategoriesData: artistCategoriesData,
-          genreData: genreData,
-          profileData: profileData,
-        });
-      } else {
-        res.render("app/new-profileFan", {
-          title: i18n.__("new_profile"),
-          path: "/register",
-          artistCategoriesData: artistCategoriesData,
-          genreData: genreData,
-        });
-      }
+      // if (profileData.user_type === "Artist") {
+      res.render("app/new-profile", {
+        title: i18n.__("new_profile"),
+        path: "/register",
+        artistCategoriesData: artistCategoriesData,
+        genreData: genreData,
+        profileData: profileData,
+      });
+      // } else {
+      //   res.render("app/new-profileFan", {
+      //     title: i18n.__("new_profile"),
+      //     path: "/register",
+      //     artistCategoriesData: artistCategoriesData,
+      //     genreData: genreData,
+      //     profileData: profileData,
+      //   });
+      // }
     } catch (error) {
       console.error("Error fetching data from API:", error);
 

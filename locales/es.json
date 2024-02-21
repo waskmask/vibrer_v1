@@ -540,5 +540,10 @@
   "fail_remove_gallery": "No se pudo eliminar la imagen",
   "image_remove_gallery": "Imagen eliminada de la galería",
   "edit_your_profile": "Edita tu perfil",
-  "update_info": "Información actualizada"
+  "update_info": "Información actualizada",
+  "username_empty": "El nombre de usuario no puede estar vacío",
+  "username_taken": "El nombre de usuario ya está tomado",
+  "username_must_3": "El nombre de usuario debe tener al menos 3 caracteres",
+  "username_validation": "El nombre de usuario solo puede contener alfabetos, números, espacios, guiones bajos, guiones y puntos",
+  "error_checking_username": "Error al comprobar la disponibilidad del nombre de usuario:"
 }

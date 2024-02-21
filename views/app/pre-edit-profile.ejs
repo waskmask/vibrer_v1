@@ -180,6 +180,7 @@
                 onblur="handleBlurEvent(this)"
                 minlength="3"
                 maxlength="20"
+                class="tlow"
               />
               <div
                 id="usernameErrorMessage"
@@ -236,30 +237,34 @@
               </div>
             </div>
             <div>
-              <label for="city-input" class="i_label"><%- __("city")%></label>
               <input
                 type="text"
                 id="city-input"
                 name="city"
                 autocomplete="off"
-                placeholder="<%- __('city')%> *"
+                placeholder="<%=__('city')%> *"
                 required
+                class="tcap"
                 value="<%- profileData.city %>"
               />
             </div>
-            <div>
-              <label for="country-input" class="i_label"
-                ><%- __('country')%></label
-              >
-              <input
-                type="text"
-                id="country-input"
-                placeholder="<%- __('country')%> *"
-                name="country"
-                autocomplete="off"
-                required
-                value="<%- profileData.country %>"
-              />
+            <div class="countryInputWrapper">
+              <div class="custom-select dfac" id="country-opt">
+                <div class="placeholder selected">
+                  <% var countryKey = profileData.country.toLowerCase(); %> <%-
+                  __(''+countryKey) %>
+                </div>
+                <%- include('partials/_countriesOptions') %>
+
+                <input
+                  type="hidden"
+                  name="country"
+                  value="<%- profileData.country %>"
+                  id="country-input"
+                  autocomplete="off"
+                  required
+                />
+              </div>
             </div>
           </div>
           <% if(profileData.user_type === 'Artist'){ %>
@@ -307,7 +312,7 @@
               profileData.artist_categories.length > 0) {
               profileData.artist_categories.forEach(selectedCategory => { %>
               <div class="item">
-                <div class="item-name">
+                <div class="item-name" data-value="<%= selectedCategory._id %>">
                   <%= __("artist_categories." + selectedCategory.name) %>
                 </div>
               </div>
@@ -356,7 +361,9 @@
               <% if (profileData.genres && profileData.genres.length > 0) {
               profileData.genres.forEach(genres => { %>
               <div class="item">
-                <div class="item-name"><%= __("genres." + genres.name) %></div>
+                <div class="item-name" data-value="<%= genres._id %>">
+                  <%= __("genres." + genres.name) %>
+                </div>
               </div>
               <% }); } %>
             </div>
@@ -435,6 +442,77 @@
             </button>
           </div>
         </form>
+
+        <button
+          class="btn mt-4"
+          onclick="window.location.href='/app/pre-my-profile';"
+        >
+          <%-__('my_profile')%>
+        </button>
+
+        <!-- footer -->
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
+            </div>
+            <div class="link">
+              <a target="_blank" href="/"> <%= __("Home") %></a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom">
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
+          </div>
+        </div>
         <!-- app main end -->
       </div>
     </main>
@@ -442,6 +520,7 @@
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=2.0"></script>
     <script src="/public/js/general.js?v=2.0"></script>
+    <script src="/public/js/app_language.js"></script>
     <script src="/public/js/_modal.js?v=2.0"></script>
     <script src="/public/js/video.min.js?v=2.0"></script>
     <script src="/public/js/cookieBanner.js?v=2.0"></script>
@@ -449,7 +528,7 @@
     <script src="/public/js/check-select.js?v=2.0"></script>
     <script src="/public/plugins/datedropper/datedropper-javascript.js?v=2.0"></script>
     <script src="/public/js/quill.min.js?v=2.0"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script> -->
     <script src="/public/js/config.js?v=2.0"></script>
 
     <script>
@@ -486,36 +565,6 @@
           },
           placeholder: " <%= __('bio') %> *",
           theme: "snow",
-        });
-
-        var autocomplete = new google.maps.places.Autocomplete(
-          document.getElementById("city-input")
-        );
-
-        autocomplete.setOptions({
-          types: ["(cities)"],
-          disableHistory: true,
-        });
-        autocomplete.addListener("place_changed", function () {
-          var place = autocomplete.getPlace();
-          var country, city;
-
-          for (var i = 0; i < place.address_components.length; i++) {
-            var addressType = place.address_components[i].types[0];
-            if (addressType === "country") {
-              country = place.address_components[i].long_name;
-            } else if (
-              addressType === "locality" ||
-              addressType === "administrative_area_level_3"
-            ) {
-              city = place.address_components[i].long_name;
-            }
-          }
-
-          if (country && city) {
-            document.getElementById("country-input").value = country;
-            document.getElementById("city-input").value = city;
-          }
         });
 
         document
@@ -557,7 +606,7 @@
 
             try {
               const response = await fetch(url, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${localStorage.getItem(
@@ -627,15 +676,11 @@
         );
 
         if (!username.trim()) {
-          displayError("Username cannot be empty");
+          displayError("<%-__('username_empty')%>");
         } else if (username.length < minLength) {
-          displayError(
-            `Username must be at least ${minLength} characters long`
-          );
+          displayError("<%-__('username_must_3')%>");
         } else if (!usernameRegex.test(username)) {
-          displayError(
-            "Username must only contain alphabets, numbers, spaces, underscores, hyphens, and dots"
-          );
+          displayError("<%-__('username_validation')%>");
         } else {
           clearError();
           if (isUserLeftInputBox) {
@@ -677,10 +722,10 @@
           const data = await response.json();
 
           if (data && data.status === 0 && data.result.is_exists) {
-            displayError("Username is already taken");
+            displayError("<%-__('username_taken')%>");
           }
         } catch (error) {
-          console.error("Error checking username availability:", error);
+          console.error("<%-__('error_checking_username')%>", error);
         }
       }
     </script>

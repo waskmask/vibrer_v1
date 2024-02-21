@@ -540,5 +540,10 @@
   "fail_remove_gallery": "Failed to remove the image",
   "image_remove_gallery": "Image removed fron gallery",
   "edit_your_profile": "Edit your profile",
-  "update_info": "Updated information"
+  "update_info": "Updated information",
+  "username_empty": "Username cannot be empty",
+  "username_taken": "Username already taken",
+  "username_must_3": "Username must be at least 3 characters long",
+  "username_validation": "Username must only contain alphabets, numbers, spaces, underscores, hyphens, and dots",
+  "error_checking_username": "Error checking username availability:"
 }

@@ -570,6 +570,9 @@ header {
 .tcap {
   text-transform: capitalize !important;
 }
+.tlow {
+  text-transform: lowercase !important;
+}
 
 .container {
   @include medium {
