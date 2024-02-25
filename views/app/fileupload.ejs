@@ -25,33 +25,30 @@
     />
     <link rel="stylesheet" href="/public/style/app.css?v=3.0" />
     <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"
+      integrity="sha512-k2WPPrSgRFI6cTaHHhJdc8kAXaRM4JBFEDo1pPGGlYiOyv4vnA0Pp0G5XMYYxgAPmtmv/IIaQA6n5fLAyJaFMA=="
       crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     ></script>
+    <script>
+      var i18n = {
+        lang: '<%= __("lang") %>',
+        edit: '<%= __("edit") %>',
+        upload: '<%= __("upload") %>',
+        delete: '<%= __("delete") %>',
+      };
+    </script>
     <script src="/public/plugins/file-uploader/dist/jquery.fileuploader.min.js"></script>
     <script src="/public/plugins/file-uploader/modules/avatar/js/custom.js"></script>
-    <style>
-      :root {
-        --dd-radius: 4px !important;
-        --dd-shadow: 0 0 2.5em rgba(0, 0, 0, 0.1);
-        --dd-overlay: rgba(0, 0, 0, 0.75);
-        --dd-background: #ffffff;
-        --dd-text1: #080813;
-        --dd-text2: #ffffff;
-        --dd-primary: #f32377;
-        --dd-gradient: linear-gradient(45deg, #fb6580, #f32377) !important;
-        --dd-monthBackground: var(--dd-gradient);
-        --dd-monthText: var(--dd-text2);
-        --dd-monthBorder: transparent;
-        --dd-confirmButtonBackground: var(--dd-gradient);
-        --dd-confirmButtonText: var(--dd-text2);
-        --dd-selectedBackground: var(--dd-gradient);
-        --dd-selectedText: var(--dd-text2);
-      }
-      .dd__dropdown:not(.dd-inline).dd-shown {
-        transform: translateY(-5%) translateX(-50%) !important;
-      }
-    </style>
+    <link rel="stylesheet" href="/public/style/customFile.css" />
+    <!-- Croppie CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css"
+    />
+
+    <!-- Croppie JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
   </head>
 
   <body class="body-dark">
@@ -72,19 +69,21 @@
             autocomplete="off"
           >
             <div class="step step-1">
-              <div class="mb-4 mt-4">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title">Profile Media</div>
+                <div class="sub">Complete your profile</div>
+              </div>
+              <div class="mb-4 mt-4" id="avatarWrap">
                 <input
                   type="file"
                   name="profile_img"
+                  accept="image/*"
+                  id="profile_img"
                   data-fileuploader-default="/public/plugins/file-uploader/modules/avatar/images/default-avatar.png"
                   class="profileImage"
                 />
               </div>
 
-              <div class="dfcolac mt-4 mb-4">
-                <div class="title">Profile Media</div>
-                <div class="sub">Complete your profile</div>
-              </div>
               <div class="avatar-upload">
                 <input type="file" id="avatar" autocomplete="off" />
               </div>
@@ -94,23 +93,35 @@
                 id="profile_img"
                 value=""
               /> -->
+
               <div class="small text-center mt-1 mb-4">
                 Choose profile photo
               </div>
+              <div class="crop-overlay"></div>
+              <div class="hidden-coverWrap d-none">
+                <input
+                  style="display: none"
+                  type="file"
+                  id="upload"
+                  accept="image/*"
+                />
+                <div id="croppie-container"></div>
+                <div class="d-flex">
+                  <button class="btn btn-sm btn-primary" id="uploadCover">
+                    Upload cover
+                  </button>
+                  <button class="btn btn-sm cancel-cover">Cancel</button>
+                </div>
+              </div>
+
               <div class="cover-upload">
                 <div class="cover-holder">
                   <div class="label mb-0">
                     Add a cover photo <span>Upload</span>
                   </div>
                 </div>
-                <input type="file" id="coverImg" autocomplete="off" />
               </div>
-              <input
-                type="hidden"
-                name="profile_cover"
-                id="profile_cover"
-                value=""
-              />
+
               <div class="small mt-1">
                 To optimally fit, use an image of 800x300 pixels.
               </div>
@@ -142,78 +153,160 @@
     <script src="/public/js/check-select.js?v=3.0"></script>
     <script src="/public/plugins/datedropper/datedropper-javascript.js?v=3.0"></script>
     <script src="/public/js/quill.min.js?v=3.0"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
     <script src="/public/js/config.js?v=3.0"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
     <script>
-      window.addEventListener("DOMContentLoaded", function () {
-        function initCoverUpload(coverUpload) {
-          const coverHolder = coverUpload.querySelector(".cover-holder");
-          const fileInput = coverUpload.querySelector('input[type="file"]');
-          const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.heic|\.heif)$/i;
+      const hiddenCoverWrap = document.querySelector(".hidden-coverWrap");
+      const togCoverInput = document.querySelector(".cover-holder");
+      const coveroverlay = document.querySelector(".crop-overlay");
+      const covInput = document.querySelector('input[id="upload"]');
+      let uploadCoverBtn = document.getElementById("uploadCover");
+      let croppieInstance = null; // Moved outside to be accessible globally
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.heic|\.heif)$/i;
+      // Function to initialize or reinitialize Croppie
+      function initializeCroppie() {
+        const viewportSize = adjustViewport();
+        if (croppieInstance) {
+          croppieInstance.destroy();
+        }
+        croppieInstance = new Croppie(
+          document.getElementById("croppie-container"),
+          {
+            enableExif: true,
+            viewport: {
+              width: viewportSize.width,
+              height: viewportSize.height,
+              type: "square",
+            },
+            boundary: {
+              width: viewportSize.width,
+              height: viewportSize.height,
+            },
+            showZoomer: true,
+          }
+        );
+      }
 
-          coverHolder.addEventListener("click", function () {
-            fileInput.click();
-          });
+      // Adjust viewport based on window size
+      function adjustViewport() {
+        const targetAspectRatio = 800 / 300;
+        let viewportWidth = Math.min(300, window.innerWidth - 20);
+        let viewportHeight = viewportWidth / targetAspectRatio;
 
-          fileInput.addEventListener("change", function (e) {
-            const file = e.target.files[0];
-            if (!allowedExtensions.exec(file.name)) {
-              const alertDiv = document.createElement("div");
-              alertDiv.classList.add("form-alert");
-              alertDiv.classList.add("error");
-              alertDiv.classList.add("text-center");
-              alertDiv.classList.add("mb-2");
-              alertDiv.textContent =
-                "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
-              coverUpload.parentNode.insertBefore(alertDiv, coverUpload);
-              return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              coverHolder.innerHTML = '<div class="loader">Loading...</div>';
-              setTimeout(function () {
-                coverHolder.style.backgroundImage = `url(${e.target.result})`;
-                coverHolder.innerHTML =
-                  '<div class="label mb-0">Add a cover photo <span>Change</span></div>';
-                // Assuming apiUrl is the endpoint for cover photo upload
-                uploadCoverPhotoToServer(file);
-              }, 1000); // simulate loading time for the image
-            };
-            reader.readAsDataURL(file);
-          });
+        const maxHeight = window.innerHeight - 100;
+        if (viewportHeight > maxHeight) {
+          viewportHeight = maxHeight;
+          viewportWidth = viewportHeight * targetAspectRatio;
         }
 
-        function uploadCoverPhotoToServer(file) {
-          const apiUrl = `${API_URL}upload/profile-cover-image`;
-          const formData = new FormData();
-          formData.append("profile_cover_image", file);
+        return { width: viewportWidth, height: viewportHeight };
+      }
 
-          fetch(apiUrl, {
+      // Trigger file input when cover-holder is clicked
+      togCoverInput.addEventListener("click", function () {
+        covInput.click();
+      });
+
+      // Handling image selection
+      covInput.addEventListener("change", function () {
+        const existingAlert = document.querySelector(".form-alert");
+        if (existingAlert) {
+          existingAlert.parentNode.removeChild(existingAlert);
+        }
+        const file = this.files[0];
+
+        // Validate file type
+        if (!allowedExtensions.exec(file.name)) {
+          const existingAlert = document.querySelector(".form-alert");
+          if (existingAlert) {
+            existingAlert.parentNode.removeChild(existingAlert); // Remove existing alerts if any
+          }
+          const alertDiv = document.createElement("div");
+          alertDiv.classList.add("form-alert", "error", "text-center", "mb-2");
+          alertDiv.textContent =
+            "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
+          togCoverInput.parentNode.insertBefore(
+            alertDiv,
+            togCoverInput.nextSibling
+          ); // Insert after togCoverInput
+          return;
+        }
+
+        // Proceed if file type is valid
+        hiddenCoverWrap.classList.remove("d-none");
+        coveroverlay.style.display = "block";
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          // Initialize or reinitialize Croppie with the selected image
+          initializeCroppie(); // Make sure you have this function defined as before
+          croppieInstance
+            .bind({
+              url: e.target.result,
+            })
+            .then(function () {
+              croppieInstance.setZoom(0);
+            });
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      // Submit cropped image
+      uploadCoverBtn.addEventListener("click", async function () {
+        uploadCoverBtn.innerText = "Uploading...";
+        const base64 = await croppieInstance.result({
+          type: "canvas",
+          size: { width: 800, height: 300 },
+          quality: 1,
+        });
+
+        const response = await fetch(base64);
+        const blob = await response.blob();
+        const formData = new FormData();
+        formData.append("profile_cover_image", blob, "cropped_image.png");
+
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+
+        try {
+          const uploadResponse = await fetch(apiUrl, {
             method: "POST",
             body: formData,
             headers: {
               Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
             },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.status === 1) {
-                const coverImage = data.result;
-                document.getElementById("profile_cover").value = coverImage;
-              }
-            })
-            .catch((error) => {
-              console.error("Error uploading cover photo:", error);
-            });
-        }
+          });
 
-        const coverUploads = document.querySelectorAll(".cover-upload");
-        coverUploads.forEach((coverUpload) => {
-          initCoverUpload(coverUpload);
-        });
+          if (!uploadResponse.ok) throw new Error("Upload failed");
+
+          const uploadResult = await uploadResponse.json();
+          console.log("Upload successful:", uploadResult);
+
+          hiddenCoverWrap.classList.add("d-none");
+          coveroverlay.style.display = "none";
+          togCoverInput.style.backgroundImage = `url(${base64})`;
+          togCoverInput.innerHTML =
+            '<div class="label mb-0">Add a cover photo <span>Change</span></div>';
+          uploadCoverBtn.innerText = "Upload cover";
+        } catch (error) {
+          console.error("Upload failed:", error);
+          uploadCoverBtn.innerText = "Upload cover";
+        }
       });
+
+      // Cancel and clear Croppie
+      document
+        .querySelector(".cancel-cover")
+        .addEventListener("click", function () {
+          if (croppieInstance) {
+            croppieInstance.bind({
+              url: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+            });
+          }
+          covInput.value = ""; // Clear file input
+          hiddenCoverWrap.classList.add("d-none");
+          coveroverlay.style.display = "none";
+        });
     </script>
     <script>
       (function () {

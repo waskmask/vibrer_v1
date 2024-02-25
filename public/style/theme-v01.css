@@ -407,7 +407,7 @@ header .menu-overlay {
 
 .languageSwitcher {
   position: relative;
-  z-index: 999999;
+  z-index: 998;
 }
 .languageSwitcher .toggle {
   height: 30px;
@@ -426,8 +426,9 @@ header .menu-overlay {
   top: 65px;
   background-color: #1e2750;
   color: #8b8a8a;
-  min-width: 150px;
-  padding: 0.65rem 0;
+  min-width: 220px;
+  padding: 0.65rem 0.45rem;
+  padding-top: 1rem;
   border-radius: 0.25rem;
   transition: all 0.2s ease-in-out;
   opacity: 0;
@@ -437,11 +438,11 @@ header .menu-overlay {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 0.25rem 1rem;
-  margin-bottom: 0.25rem;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
 }
 .languageSwitcher .dropdown .item:nth-last-child(1) {
-  margin-bottom: 0;
+  margin-bottom: 0.25;
 }
 .languageSwitcher .dropdown .item img {
   width: 20px;

@@ -51,7 +51,7 @@
                     placeholder="<%=__('email_address')%>"
                     name="email"
                     id="loginEmail"
-                    value=""
+                    value="waseem@gmail.com"
                   />
                 </div>
                 <div class="mb-3 passInputDiv">
@@ -61,7 +61,7 @@
                     placeholder="<%=__('password')%>"
                     name="password"
                     id="loginPassword"
-                    value=""
+                    value="123456"
                   />
                   <div class="passInput">
                     <img src="/public/images/icons/visibility.svg" alt="Icon" />
@@ -111,6 +111,26 @@
         login: "<%= __('login') %>",
       };
       document.addEventListener("DOMContentLoaded", function () {
+        const localToken = localStorage.getItem("appUserToken");
+        if (localToken) {
+          fetch("/store-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: localToken }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                history.back();
+                console.log("Token stored in session");
+              }
+            })
+            .catch((error) =>
+              console.error("Error storing token in session:", error)
+            );
+        }
+
         const form = document.getElementById("loginForm");
         const btn = document.querySelector(".submitBtn");
         const successPop = document.querySelector(".success-message");

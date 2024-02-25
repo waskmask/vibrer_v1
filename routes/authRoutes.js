@@ -13,7 +13,7 @@ router.get("/register", function (req, res) {
   });
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", async (req, res) => {
   if (req.session.appUserToken) {
     return res.redirect("/app/pre-home");
   }

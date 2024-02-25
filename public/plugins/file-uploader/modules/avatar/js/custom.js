@@ -1,6 +1,11 @@
-const API_URL = "https://vibrer.tech/";
+const APIURL = "https://vibrer.tech/";
 $(document).ready(function () {
   // enable fileupload plugin
+
+  let language = i18n.lang;
+  let edit = i18n.edit;
+  let upload = i18n.upload;
+  let deletE = i18n.delete;
   $('input[name="profile_img"]').fileuploader({
     limit: 2,
     extensions: ["image/*"],
@@ -46,7 +51,10 @@ $(document).ready(function () {
               item.remove();
             })
             .on("click", '[data-action="cancel"]', function (e) {
-              item.popup.close();
+              const closePop = $(".fileuploader-popup");
+              closePop.remove();
+              window.location.reload();
+              item.remove();
             })
             .on("click", '[data-action="save"]', function (e) {
               if (item.editor && !item.isSaving) {
@@ -96,7 +104,7 @@ $(document).ready(function () {
     editor: {
       maxWidth: 512,
       maxHeight: 512,
-      quality: 90,
+      quality: 100,
       cropper: {
         showGrid: false,
         ratio: "1:1",
@@ -163,37 +171,36 @@ $(document).ready(function () {
       },
     },
     upload: {
-      url: `${API_URL}upload/profile-cover-image`,
+      url: APIURL + "upload/profile-cover-image",
       data: null, // should be null
       type: "POST",
       enctype: "multipart/form-data",
       start: false,
       beforeSend: function (item, listEl, parentEl, newInputEl, inputEl) {
-        // item.upload.formData = new FormData();
+        var formData = new FormData();
+        if (item.editor && item.editor._blob) {
+          // Append the file/blob to formData with the correct field name.
+          formData.append("profile_cover_image", item.editor._blob, item.name);
+        } else if (item.file) {
+          // If there's no edited blob but there is a file, append the original file.
+          formData.append("profile_cover_image", item.file, item.name);
+        }
+        item.upload.formData = formData;
 
-        // if (item.editor && item.editor._blob) {
-        //   item.upload.data.fileuploader = 1;
-        //   item.upload.data.name = item.name;
-        //   item.upload.data.editing = item.uploaded;
+        // Set the Authorization header correctly.
+        item.upload.headers = {
+          Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+        };
 
-        //   item.upload.formData.append(
-        //     inputEl.attr("name"),
-        //     item.editor._blob,
-        //     item.name
-        //   );
-        // }
-        // if (item.editor && item.editor._blob) {
-        //   uploadImageToServer(item.editor._blob);
-        // }
-
-        // Return false to prevent the default upload behavior
-        return false;
-
+        // Hide UI elements as before and proceed with the upload.
         item.image.hide();
         item.html.removeClass("upload-complete");
         parentEl.find('[data-action="fileuploader-edit"]').hide();
         this.onProgress({ percentage: 0 }, item);
+        alert("Upload complete successfully uploaded successfully ");
+        return true; // Continue with the upload process.
       },
+
       onSuccess: function (
         result,
         item,
@@ -216,15 +223,16 @@ $(document).ready(function () {
           item.name = data.files[0].name;
         }
 
-        // if warnings
-        if (data.hasWarnings) {
-          for (var warning in data.warnings) {
-            alert(data.warnings[warning]);
-          }
+        // // if warnings
+        // if (data.hasWarnings && Object.keys(data.warnings).length > 0) {
+        //   // Iterate through and alert warnings only if they exist
+        //   for (var warning in data.warnings) {
+        //     alert(data.warnings[warning]);
+        //   }
 
-          item.html.removeClass("upload-successful").addClass("upload-failed");
-          return this.onError ? this.onError(item) : null;
-        }
+        //   item.html.removeClass("upload-successful").addClass("upload-failed");
+        //   return this.onError ? this.onError(item) : null;
+        // }
 
         delete item.isSaving;
         item.html.addClass("upload-complete").removeClass("is-image-waiting");
@@ -366,75 +374,14 @@ $(document).ready(function () {
           file: item.name,
         });
     },
-    captions: $.extend(true, {}, $.fn.fileuploader.languages["en"], {
-      edit: "Edit",
-      upload: "Upload",
-      remove: "Remove",
+
+    captions: $.extend(true, {}, $.fn.fileuploader.languages[language], {
+      edit: edit,
+      upload: upload,
+      remove: deletE,
       errors: {
         filesLimit: "Only 1 file is allowed to be uploaded.",
       },
     }),
   });
 });
-
-const allowedExtensions = ["jpg", "jpeg", "png", "gif", "heic", "heif"];
-const apiUrl = `${API_URL}upload/profile-cover-image`;
-
-fileInput.addEventListener("change", function () {
-  const file = this.files[0];
-  if (file) {
-    const fileExtension = file.name.split(".").pop().toLowerCase();
-    if (
-      !file.type.startsWith("image/") ||
-      !allowedExtensions.includes(fileExtension)
-    ) {
-      avatarError.innerHTML =
-        "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
-      return;
-    }
-
-    avatarError.innerHTML = "";
-
-    const reader = new FileReader();
-
-    // Show loader and hide preview when reading starts
-    loader.style.display = "block";
-    avatarPreview.style.display = "none";
-
-    reader.onloadend = function () {
-      // Hide loader when reading ends
-      loader.style.display = "none";
-
-      avatarHolder.style.backgroundImage = 'url("' + reader.result + '")';
-      changeAvatar.style.display = "block";
-
-      // Upload the image to the server
-      uploadImageToServer(file);
-    };
-
-    reader.readAsDataURL(file);
-  }
-});
-
-function uploadImageToServer(file) {
-  const formData = new FormData();
-  formData.append("profile_cover_image", file);
-
-  fetch(apiUrl, {
-    method: "POST",
-    body: formData,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === 1) {
-        const profileImage = data.result;
-        document.getElementById("profile_img").value = profileImage;
-      }
-    })
-    .catch((error) => {
-      console.error("Error uploading image:", error);
-    });
-}

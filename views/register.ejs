@@ -160,6 +160,26 @@
         emailAlreadyUsed: "<%= __('email_already_used') %>",
       };
       document.addEventListener("DOMContentLoaded", function () {
+        const localToken = localStorage.getItem("appUserToken");
+        if (localToken) {
+          fetch("/store-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: localToken }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                history.back();
+                console.log("Token stored in session");
+              }
+            })
+            .catch((error) =>
+              console.error("Error storing token in session:", error)
+            );
+        }
+
         const form = document.getElementById("registrationForm");
         const btn = document.querySelector(".submitBtn");
         const successPop = document.querySelector(".success-message");
