@@ -1827,13 +1827,23 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     left: 0;
     top: 0;
     width: 100%;
+    height: 250px;
     z-index: 0;
+    border-bottom: solid 1px #3e4782;
+
     img {
       width: 100%;
-      height: 250px;
+      height: 100%;
       object-fit: cover;
       object-position: center;
       @include tablet {
+        height: 250px;
+      }
+    }
+
+    @include phone {
+      height: 200px;
+      img {
         height: 200px;
       }
     }
@@ -1857,7 +1867,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 
 .profile_wrapper {
   padding: 0 1.2rem;
-  margin-top: -25px;
+  margin-top: 1rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -1865,13 +1875,29 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   z-index: 2;
   flex-wrap: wrap;
   gap: 1.5rem;
-  @include tablet {
+  @include phone {
     padding: 0;
-    margin-top: 16px;
+    margin-top: -115px;
   }
   ._profile_left {
     display: flex;
     align-items: center;
+    gap: 1rem;
+
+    @include phone {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .fileuploader-theme-avatar {
+    width: 145px;
+    height: 145px;
+
+    @include phone {
+      width: 165px;
+      height: 165px;
+    }
   }
   .avatar {
     padding: 0.3rem;
@@ -1916,11 +1942,21 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   }
 }
 .profile_top_details {
+  max-width: 280px;
+
+  @include phone {
+    max-width: 100%;
+  }
   img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: 2px solid $light;
+  }
+  .main_name span {
+    @include phone {
+      font-size: 1.4rem;
+    }
   }
   .name {
     display: flex;
@@ -1928,7 +1964,6 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     font-size: 1.2rem;
     font-weight: 500;
     color: $white;
-    margin-top: 0.75rem;
     max-width: 100%;
     span {
       white-space: nowrap;
@@ -1943,12 +1978,17 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
     }
   }
   .info {
-    color: $light;
+    color: $lgt;
     font-size: 1rem;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.5rem;
+
+    span {
+      margin-right: 0.5rem;
+      line-height: 1.5;
+      font-weight: 300;
+    }
     .g_age {
       display: flex;
       align-items: center;

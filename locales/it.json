@@ -545,5 +545,12 @@
   "username_taken": "Nome utente già in uso",
   "username_must_3": "Il nome utente deve essere lungo almeno 3 caratteri",
   "username_validation": "Il nome utente può contenere solo alfabeti, numeri, spazi, trattini bassi, trattini e punti",
-  "error_checking_username": "Errore nella verifica della disponibilità del nome utente:"
+  "error_checking_username": "Errore nella verifica della disponibilità del nome utente:",
+  "genres.R&B": "R&B",
+  "genres.Musics": "Musiche",
+  "genres.Artists": "Artisti",
+  "image_extentions": "Tipo di file non valido. Seleziona un file di immagine in questi formati (jpg, jpeg, png, gif, heic, heif).",
+  "uploading": "Caricamento in corso",
+  "error_uploading_cover": "Errore nel caricamento dell'immagine di copertina",
+  "error_uploading_profile": "Errore nel caricamento dell'immagine del profilo"
 }

@@ -1945,17 +1945,27 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   left: 0;
   top: 0;
   width: 100%;
+  height: 250px;
   z-index: 0;
+  border-bottom: solid 1px #3e4782;
 }
 .profile_header .cover img {
   width: 100%;
-  height: 250px;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
 }
 @media (max-width: 768px) {
+  .profile_header .cover img {
+    height: 250px;
+  }
+}
+@media (max-width: 576px) {
+  .profile_header .cover {
+    height: 200px;
+  }
   .profile_header .cover img {
     height: 200px;
   }
@@ -1974,7 +1984,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 
 .profile_wrapper {
   padding: 0 1.2rem;
-  margin-top: -25px;
+  margin-top: 1rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -1983,15 +1993,32 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   flex-wrap: wrap;
   gap: 1.5rem;
 }
-@media (max-width: 768px) {
+@media (max-width: 576px) {
   .profile_wrapper {
     padding: 0;
-    margin-top: 16px;
+    margin-top: -115px;
   }
 }
 .profile_wrapper ._profile_left {
   display: flex;
   align-items: center;
+  gap: 1rem;
+}
+@media (max-width: 576px) {
+  .profile_wrapper ._profile_left {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+.profile_wrapper .fileuploader-theme-avatar {
+  width: 145px;
+  height: 145px;
+}
+@media (max-width: 576px) {
+  .profile_wrapper .fileuploader-theme-avatar {
+    width: 165px;
+    height: 165px;
+  }
 }
 .profile_wrapper .avatar {
   padding: 0.3rem;
@@ -2037,11 +2064,24 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   }
 }
 
+.profile_top_details {
+  max-width: 280px;
+}
+@media (max-width: 576px) {
+  .profile_top_details {
+    max-width: 100%;
+  }
+}
 .profile_top_details img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
   border: 2px solid #8b8a8a;
+}
+@media (max-width: 576px) {
+  .profile_top_details .main_name span {
+    font-size: 1.4rem;
+  }
 }
 .profile_top_details .name {
   display: flex;
@@ -2049,7 +2089,6 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   font-size: 1.2rem;
   font-weight: 500;
   color: #fff;
-  margin-top: 0.75rem;
   max-width: 100%;
 }
 .profile_top_details .name span {
@@ -2064,12 +2103,16 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
   border: none;
 }
 .profile_top_details .info {
-  color: #8b8a8a;
+  color: #f2f2f2;
   font-size: 1rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+}
+.profile_top_details .info span {
+  margin-right: 0.5rem;
+  line-height: 1.5;
+  font-weight: 300;
 }
 .profile_top_details .info .g_age {
   display: flex;

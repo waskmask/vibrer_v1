@@ -545,5 +545,12 @@
   "username_taken": "Kullanıcı adı zaten alınmış",
   "username_must_3": "Kullanıcı adı en az 3 karakter uzunluğunda olmalıdır",
   "username_validation": "Kullanıcı adı yalnızca alfabeler, sayılar, boşluklar, alt çizgiler, tireler ve noktalar içerebilir",
-  "error_checking_username": "Kullanıcı adı kullanılabilirliği kontrolünde hata:"
+  "error_checking_username": "Kullanıcı adı kullanılabilirliği kontrolünde hata:",
+  "genres.R&B": "R&B",
+  "genres.Musics": "Müzikler",
+  "genres.Artists": "Sanatçılar",
+  "image_extentions": "Geçersiz dosya tipi. Lütfen bu formatlarda bir resim dosyası seçin (jpg, jpeg, png, gif, heic, heif).",
+  "uploading": "Yükleniyor",
+  "error_uploading_cover": "Kapak resmi yüklenirken hata",
+  "error_uploading_profile": "Profil resmi yüklenirken hata"
 }

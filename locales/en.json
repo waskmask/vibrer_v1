@@ -545,5 +545,12 @@
   "username_taken": "Username already taken",
   "username_must_3": "Username must be at least 3 characters long",
   "username_validation": "Username must only contain alphabets, numbers, spaces, underscores, hyphens, and dots",
-  "error_checking_username": "Error checking username availability:"
+  "error_checking_username": "Error checking username availability:",
+  "genres.R&B": "R&B",
+  "genres.Musics": "Musics",
+  "genres.Artists": "Artists",
+  "image_extentions": "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).",
+  "uploading": "Uploading",
+  "error_uploading_cover": "Error uploading cover image",
+  "error_uploading_profile": "Error uploading profile image"
 }

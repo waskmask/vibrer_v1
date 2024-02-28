@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+  </head>
+  <body>
+    <main>
+      <section
+        class="error-page"
+        style="background-image: url('/public/images/404.webp')"
+      >
+        <div class="wrapper">
+          <div class="title">401</div>
+          <div class="sub">Authorization token expired!</div>
+          <button
+            class="btn btn-primary shadow"
+            type="button"
+            onclick="toLogin()"
+          >
+            Vibrer Home page
+          </button>
+        </div>
+      </section>
+    </main>
+    <script>
+      function toLogin() {
+        window.location.href = "/login";
+      }
+      localStorage.removeItem("appUserToken");
+      document.addEventListener("DOMContentLoaded", async function () {
+        await fetch("/clear-token-in-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({}),
+        });
+      });
+    </script>
+  </body>
+</html>

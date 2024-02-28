@@ -545,5 +545,12 @@
   "username_taken": "Le nom d'utilisateur est déjà pris",
   "username_must_3": "Le nom d'utilisateur doit comporter au moins 3 caractères",
   "username_validation": "Le nom d'utilisateur ne peut contenir que des alphabets, des chiffres, des espaces, des tirets bas, des tirets et des points",
-  "error_checking_username": "Erreur lors de la vérification de la disponibilité du nom d'utilisateur:"
+  "error_checking_username": "Erreur lors de la vérification de la disponibilité du nom d'utilisateur:",
+  "genres.R&B": "R&B",
+  "genres.Musics": "Musiques",
+  "genres.Artists": "Artistes",
+  "image_extentions": "Type de fichier invalide. Veuillez sélectionner un fichier image dans ces formats (jpg, jpeg, png, gif, heic, heif).",
+  "uploading": "Téléchargement",
+  "error_uploading_cover": "Erreur lors du téléchargement de l'image de couverture",
+  "error_uploading_profile": "Erreur lors du téléchargement de l'image de profil"
 }

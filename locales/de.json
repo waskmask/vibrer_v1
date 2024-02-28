@@ -545,5 +545,12 @@
   "username_taken": "Benutzername bereits vergeben",
   "username_must_3": "Benutzername muss mindestens 3 Zeichen lang sein",
   "username_validation": "Der Benutzername darf nur Buchstaben, Zahlen, Leerzeichen, Unterstriche, Bindestriche und Punkte enthalten",
-  "error_checking_username": "Fehler bei der Überprüfung der Verfügbarkeit des Benutzernamens:"
+  "error_checking_username": "Fehler bei der Überprüfung der Verfügbarkeit des Benutzernamens:",
+  "genres.R&B": "R&B",
+  "genres.Musics": "Musik",
+  "genres.Artists": "Künstler",
+  "image_extentions": "Ungültiger Dateityp. Bitte wählen Sie eine Bilddatei in diesen Formaten aus (jpg, jpeg, png, gif, heic, heif).",
+  "uploading": "Hochladen",
+  "error_uploading_cover": "Fehler beim Hochladen des Coverbildes",
+  "error_uploading_profile": "Fehler beim Hochladen des Profilbildes"
 }
