@@ -114,7 +114,7 @@
                       </div>
                     </div>
 
-                    <div class="volume">
+                    <div class="volume d-none">
                       <input
                         type="range"
                         class="volumeControl"
@@ -128,13 +128,15 @@
                 </div>
                 <div class="mb-4">
                   <div class="file_input_wrapper">
-                    <label class="label" for="media_video">Upload video</label>
+                    <label class="label" for="media_video"
+                      >Upload Music (audio file)</label
+                    >
                     <input
                       class="form-input"
                       type="file"
                       name="media"
                       id="media_video"
-                      accept="video/*"
+                      accept="audio/*"
                     />
 
                     <div id="uploadProgress" class="progress-bar d-none">

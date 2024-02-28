@@ -101,7 +101,7 @@
   justify-content: space-between;
 }
 .audio-player .audio-body {
-  width: calc(100% - 35px);
+  width: calc(100% - 40px);
 }
 .audio-player .duration-wrapper {
   margin-top: 0.25rem;
@@ -112,19 +112,40 @@
   font-size: 0.7rem;
 }
 .audio-player .progress-container {
-  height: 4px;
+  height: 6px;
   width: 100%;
   background-color: #fff;
   border-radius: 0.25rem;
   margin-top: 0.75rem;
+  cursor: pointer;
 }
 .audio-player .progress-container .progress {
-  height: 4px;
-  border-radius: 0.25rem;
+  height: 6px;
+  border-radius: 0.25rem 0 0 0.25rem;
   background-color: #fb6580;
   width: -moz-max-content;
   width: max-content;
   max-width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+.audio-player .progress-container .progress::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: #fb6580;
+  position: absolute;
+  top: -3px;
+  right: 0;
+  border-radius: 6px;
+  margin-right: -10px;
+}
+.audio-player .progress-container .progress:hover::after {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  top: -5px;
+  margin-right: -13px;
 }
 .audio-player .playPauseBtn {
   height: 30px;

@@ -172,3 +172,22 @@
     font-size: 1rem;
   }
 }
+
+.shareWrapper {
+  padding: 1rem 1rem;
+  .s_media {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .share-btn {
+    background-color: transparent !important;
+    border: none;
+    padding: 0;
+    img {
+      width: 35px;
+    }
+  }
+}

@@ -148,13 +148,19 @@
               </div>
               <div class="body">
                 <div class="top">
-                  <div
-                    class="user"
-                    data-target="accountModal"
-                    data-toggle="_modal"
-                  >
+                  <div class="user">
                     <div class="img">
-                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
                     </div>
                     <div class="info">
                       <div class="title">
@@ -197,7 +203,7 @@
 
                 <div class="votes">
                   <div class="count">
-                    <strong>Votes:</strong>
+                    <strong><%-__('votes')%></strong>
                     <span
                       id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
                       ><%- participants.votes.length %></span
@@ -217,9 +223,9 @@
                   <button
                     class="btn btn-outlined"
                     data-target="accountModal"
-                    data-toggle="_modal"
+                    data-toggle="share_modal"
                   >
-                    Visit artist
+                    Share
                   </button>
                   <button
                     class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
@@ -320,7 +326,8 @@
 
     <%- include('../modals/contest1Info'); %>
     <!--  -->
-    <%- include('../modals/contest1Video'); %>
+
+    include('../modals/contest1Video'); %>
     <!-- javascript -->
     <script src="/public/js/redirections.js?v=3.0"></script>
     <script src="/public/js/general.js?v=3.0"></script>
@@ -328,6 +335,7 @@
     <script src="/public/js/Youtube.min.js?v=3.0"></script>
     <script src="/public/js/_modal.js?v=3.0"></script>
     <script src="/public/js/config.js?v=3.0"></script>
+
     <script>
       var players = [];
 

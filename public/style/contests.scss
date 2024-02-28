@@ -146,9 +146,9 @@
 
   .title {
     color: $white;
-    font-family: $dm;
-    font-weight: 700;
-    font-size: 1.4rem;
+    font-family: $roboto;
+    font-weight: 600;
+    font-size: 1.2rem;
   }
 
   .wrapper {
@@ -257,19 +257,23 @@
       width: fit-content;
       max-width: calc(100% - 30px);
       cursor: pointer;
-      .img img {
-        width: 45px;
-        height: 45px;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 25px;
-        border: solid 1px #02a83c68;
+      .img {
+        position: relative;
+        top: 2px;
+        img {
+          width: 40px;
+          height: 40px;
+          object-fit: cover;
+          object-position: center;
+          border-radius: 25px;
+          border: solid 1px #02a83c68;
+        }
       }
 
       .info {
         .title {
           font-weight: 400;
-          font-size: 1.2rem;
+          font-size: 1rem;
           font-family: $roboto;
           display: flex;
           align-items: flex-start;
@@ -291,6 +295,7 @@
           color: $light;
           font-size: 0.875rem;
           margin-top: 0.15rem;
+          text-transform: lowercase;
         }
       }
     }
@@ -302,6 +307,7 @@
       gap: 0.5rem;
       justify-content: space-between;
       color: $white;
+      font-size: 0.875rem;
       span {
         color: lighten($primary, 5%);
       }

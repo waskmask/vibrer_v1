@@ -62,55 +62,55 @@ const i18n = require("i18n");
 //   }
 // });
 
-// router.get("/app/contest-view/:id", async function (req, res) {
-//   const contest_id = req.params.id;
-//   if (!req.session.appUserToken) {
-//     return res.redirect("/login");
-//   }
+router.get("/app/contest-view/:id", async function (req, res) {
+  const contest_id = req.params.id;
+  if (!req.session.appUserToken) {
+    return res.redirect("/login");
+  }
 
-//   const profileResponse = await axios.get(
-//     `${process.env.API_URL}getappUserProfile`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${req.session.appUserToken}`,
-//       },
-//     }
-//   );
+  const profileResponse = await axios.get(
+    `${process.env.API_URL}getappUserProfile`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.appUserToken}`,
+      },
+    }
+  );
 
-//   const profileData = profileResponse.data.result;
-//   const userId = profileData._id;
+  const profileData = profileResponse.data.result;
+  const userId = profileData._id;
 
-//   const contestDetailResponse = await axios.get(
-//     `${process.env.API_URL}contest-details/${contest_id}`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${req.session.appUserToken}`,
-//       },
-//     }
-//   );
-//   const contestDetailData = contestDetailResponse.data;
-//   let isParticipated = false;
+  const contestDetailResponse = await axios.get(
+    `${process.env.API_URL}contest-details/${contest_id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${req.session.appUserToken}`,
+      },
+    }
+  );
+  const contestDetailData = contestDetailResponse.data;
+  let isParticipated = false;
 
-//   if (contestDetailData.result.participates) {
-//     const userIdExists = contestDetailData.result.participates.some(
-//       (participant) => participant.user._id === userId
-//     );
+  if (contestDetailData.result.participates) {
+    const userIdExists = contestDetailData.result.participates.some(
+      (participant) => participant.user._id === userId
+    );
 
-//     if (userIdExists) {
-//       isParticipated = true;
-//     }
-//   }
-//   if (contestDetailData.status === 0) {
-//     return res.redirect("/app/home");
-//   }
+    if (userIdExists) {
+      isParticipated = true;
+    }
+  }
+  if (contestDetailData.status === 0) {
+    return res.redirect("/app/home");
+  }
 
-//   res.render("app/contest-view", {
-//     title: "Contests",
-//     path: "/contests",
-//     contestDetailData: contestDetailData,
-//     isParticipated,
-//   });
-// });
+  res.render("app/contest-view", {
+    title: "Contests",
+    path: "/contests",
+    contestDetailData: contestDetailData,
+    isParticipated,
+  });
+});
 
 // router.get("/app/participate/:id", async function (req, res) {
 //   const contest_id = req.params.id;

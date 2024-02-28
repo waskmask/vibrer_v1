@@ -9,7 +9,7 @@
     justify-content: space-between;
   }
   .audio-body {
-    width: calc(100% - 35px);
+    width: calc(100% - 40px);
   }
 
   .duration-wrapper {
@@ -22,17 +22,41 @@
   }
 
   .progress-container {
-    height: 4px;
+    height: 6px;
     width: 100%;
     background-color: $white;
     border-radius: 0.25rem;
     margin-top: 0.75rem;
+    cursor: pointer;
     .progress {
-      height: 4px;
-      border-radius: 0.25rem;
+      height: 6px;
+      border-radius: 0.25rem 0 0 0.25rem;
       background-color: $primary;
       width: max-content;
       max-width: 100%;
+      position: relative;
+      cursor: pointer;
+      &::after {
+        content: "";
+        width: 12px;
+        height: 12px;
+        background-color: $primary;
+        position: absolute;
+        top: -3px;
+        right: 0;
+        border-radius: 6px;
+        margin-right: -10px;
+      }
+
+      &:hover {
+        &::after {
+          width: 16px;
+          height: 16px;
+          border-radius: 8px;
+          top: -5px;
+          margin-right: -13px;
+        }
+      }
     }
   }
 

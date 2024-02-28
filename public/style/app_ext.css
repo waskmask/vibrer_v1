@@ -251,3 +251,21 @@
 .whatsAppLink .text {
   font-size: 1rem;
 }
+
+.shareWrapper {
+  padding: 1rem 1rem;
+}
+.shareWrapper .s_media {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+}
+.shareWrapper .share-btn {
+  background-color: transparent !important;
+  border: none;
+  padding: 0;
+}
+.shareWrapper .share-btn img {
+  width: 35px;
+}

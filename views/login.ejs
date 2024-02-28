@@ -122,8 +122,12 @@
           })
             .then((response) => {
               if (response.ok) {
-                history.back();
                 console.log("Token stored in session");
+                if (window.history.length > 1) {
+                  history.back();
+                } else {
+                  window.location.href = "/app/pre-home"; // Fallback URL if no history is available
+                }
               }
             })
             .catch((error) =>

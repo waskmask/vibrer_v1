@@ -1,21 +1,53 @@
-<div class="_modal modal-dark" id="shareModal">
-  <div class="dialog">
+<div class="_modal d-block modal-dark" id="shareModal">
+  <div class="dialog" style="opacity: 1">
     <div class="head">
       <div class="title">Share this post!</div>
       <div class="close-modal">+</div>
     </div>
     <div class="body contest-info">
       <div class="shareWrapper">
-        <button
-          class="btn btn-whatsapp"
-          data-url="https://api.whatsapp.com/send?text=[POST_URL]"
-        >
-          <img class="img-left" src="/public/images/icons/whatsapp.svg" /> Share
-        </button>
-
-        <button class="btn btn-primary copy-url-btn" data-url="[POST_URL]">
-          Copy URL
-        </button>
+        <div class="s_media">
+          <button
+            class="btn share-btn"
+            onclick="shareOnWhatsapp()"
+            data-url="[POST_URL]"
+          >
+            <img src="/public/images/icons/whatsapp_share.svg" />
+          </button>
+          <button
+            class="btn share-btn"
+            onclick="shareOnInstagram()"
+            data-url="[POST_URL]"
+          >
+            <img src="/public/images/icons/instagram_share.svg" /></button
+          ><button
+            class="btn share-btn"
+            onclick="shareOnFacebook()"
+            data-url="[POST_URL]"
+          >
+            <img src="/public/images/icons/facebook_share.svg" /></button
+          ><button
+            class="btn share-btn"
+            onclick="shareOnTwitter()"
+            data-url="[POST_URL]"
+          >
+            <img src="/public/images/icons/x_share.svg" />
+          </button>
+        </div>
+        <div class="shareUrl">
+          <button
+            class="btn btn-promary"
+            onclick="copyUrl()"
+            data-url="[POST_URL]"
+          >
+            Copy URL
+          </button>
+          <div class="urlHolder">https:vibrer.com/app3423432324324324</div>
+        </div>
+        <div class="urlCopied">
+          Url copied
+          <img src="/public/images/icons/check_blue.svg" alt="check" />
+        </div>
       </div>
     </div>
   </div>
