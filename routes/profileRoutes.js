@@ -57,13 +57,15 @@ router.get("/new-profile", async function (req, res) {
       //   });
       // }
     } catch (error) {
-      console.error("Error fetching data from API:", error);
-
-      // res.status(500).send("Internal Server Error");
-      res.render("500", {
-        title: "500 Server error!",
-        path: "/500",
-      });
+      console.error("Error fetching profile:", error);
+      if (error.response.status && error.response.status === 401) {
+        return res.redirect("/401");
+      } else {
+        return res.render("500", {
+          title: "500 Server error!",
+          path: "/500",
+        });
+      }
     }
   }
 });
@@ -93,13 +95,15 @@ router.get("/register-successfull", async function (req, res) {
       });
     }
   } catch (error) {
-    console.error("Error fetching data from API:", error);
-
-    // res.status(500).send("Internal Server Error");
-    res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 

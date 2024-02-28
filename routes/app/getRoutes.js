@@ -460,11 +460,15 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
   } catch (error) {
     // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    // return res.status(500).send("Internal Server Error");
-    res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -522,12 +526,15 @@ router.get("/app/pre-home", async function (req, res) {
       profileData: profileData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -585,12 +592,15 @@ router.get("/app/pre-contest", async function (req, res) {
       profileData: profileData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 router.get("/imprint", function (req, res) {
@@ -728,12 +738,15 @@ router.get("/app/pre-my-profile", async function (req, res) {
       genreData: genreData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 router.get("/app/pre-edit-profile", async function (req, res) {
@@ -772,12 +785,15 @@ router.get("/app/pre-edit-profile", async function (req, res) {
       genreData: genreData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -810,6 +826,13 @@ router.get("/500", function (req, res) {
   res.render("500", {
     title: "500 Server error!",
     path: "/500",
+  });
+});
+
+router.get("/401", function (req, res) {
+  res.render("401", {
+    title: "Authorization token expired!",
+    path: "/401",
   });
 });
 

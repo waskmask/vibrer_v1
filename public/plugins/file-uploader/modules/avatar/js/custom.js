@@ -1,4 +1,4 @@
-const APIURL = "https://vibrer.tech/";
+const APIURL = API_URL;
 $(document).ready(function () {
   // enable fileupload plugin
 
@@ -178,6 +178,7 @@ $(document).ready(function () {
       start: false,
       beforeSend: function (item, listEl, parentEl, newInputEl, inputEl) {
         var formData = new FormData();
+        formData.append("type", "profile_img");
         if (item.editor && item.editor._blob) {
           // Append the file/blob to formData with the correct field name.
           formData.append("profile_cover_image", item.editor._blob, item.name);
@@ -197,7 +198,7 @@ $(document).ready(function () {
         item.html.removeClass("upload-complete");
         parentEl.find('[data-action="fileuploader-edit"]').hide();
         this.onProgress({ percentage: 0 }, item);
-        alert("Upload complete successfully uploaded successfully ");
+        // alert("Upload complete successfully uploaded successfully ");
         return true; // Continue with the upload process.
       },
 
@@ -370,8 +371,14 @@ $(document).ready(function () {
     },
     onRemove: function (item) {
       if (item.name && (item.appended || item.uploaded))
-        $.post("php/ajax_remove_file.php", {
-          file: item.name,
+        $.ajax({
+          url: APIURL + "remove/profile-cover-image",
+          type: "POST",
+          contentType: "application/json",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+          },
+          data: JSON.stringify({ type: "profile_img" }),
         });
     },
 
