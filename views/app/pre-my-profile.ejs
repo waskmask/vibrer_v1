@@ -500,6 +500,7 @@
           hiddenCoverWrap.classList.add("d-none");
           coveroverlay.style.display = "none";
           coverHolder.src = `${base64}`;
+          window.location.reload();
         } catch (error) {
           console.log("Upload failed:", error);
           showToastError(`<%- __('error_uploading_cover') %>`);
