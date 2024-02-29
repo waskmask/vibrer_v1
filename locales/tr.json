@@ -492,7 +492,7 @@
   "participate": "Katıl",
   "vib_sc_cp1": "Vibrer Şarkı Yarışması - <small>1. Bölüm</small>",
   "close": "Kapat",
-  "voting_notice": "Oylama 1 Mart 2024 00:00'dan itibaren başlayacak (CEST).",
+  "voting_notice": "Oylama 1 Mart 2024 23:59'dan itibaren başlayacak (CEST).",
   "contest_entry_title": "Şimdi Vibrer Şarkı Yarışmasına Girin!",
   "submit_entry": "Girişinizi gönderin",
   "submit_entry_sub": "Şarkınızın başlığını girin, videonuzu yükleyin ve göndermeden önce <span class=\"toggle primary\" data-toggle=\"_modal\" data-target=\"contest1tandc\">Şartlar ve Koşullar</span>ı okuduğunuzdan emin olun.",

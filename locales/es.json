@@ -492,7 +492,7 @@
   "participate": "Participar",
   "vib_sc_cp1": "Concurso de Canto de Vibrer – <small>Capítulo 1</small>",
   "close": "Cerrar",
-  "voting_notice": "La votación comienza el 1<sup>ro</sup> de marzo de 2024 a las 00:00 horas (CEST).",
+  "voting_notice": "La votación comienza el 1<sup>ro</sup> de marzo de 2024 a las 23:59 horas (CEST).",
   "contest_entry_title": "¡Participa ahora en el Concurso de Canto de Vibrer!",
   "submit_entry": "Enviar tu entrada",
   "submit_entry_sub": "Ingresa el título de tu canción, sube tu video y asegúrate de leer los <span class=\"toggle primary\" data-toggle=\"_modal\" data-target=\"contest1tandc\"> Términos y Condiciones</span> antes de enviar.",
