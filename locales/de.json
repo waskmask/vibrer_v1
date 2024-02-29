@@ -492,7 +492,7 @@
   "participate": "Teilnehmen",
   "vib_sc_cp1": "Vibrer-Gesangswettbewerb – <small>Kapitel 1</small>",
   "close": "Schließen",
-  "voting_notice": "Die Abstimmung beginnt am 1<sup>ten</sup> März 2024 um 00:00 Uhr (CEST).",
+  "voting_notice": "Die Abstimmung beginnt am 1<sup>ten</sup> März 2024 um 23:59 Uhr (CEST).",
   "contest_entry_title": "Enter the Vibrer Singing Contest Now!",
   "submit_entry": "Reiche deinen Eintrag ein",
   "submit_entry_sub": "Gebe den Titel deines Liedes ein, lade dein Video hoch und stelle sicher, dass du die <span class=\"toggle primary\" data-toggle=\"_modal\" data-target=\"contest1tandc\"> Allgemeinen Geschäftsbedingungen</span> vor der Einreichung liest.",
