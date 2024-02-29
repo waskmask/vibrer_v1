@@ -1,7 +1,8 @@
 Conditions for rendering entries on contest page:{
-    First render: show top 3 with most votes,
+    First render: show top 3 with most votes, 
     Second render: If user voted then show title "You voted" and render the entry,
-    Third render: Random entries on each time user load the page
+    Third render: Random entries on each time user load the page exclude least_quality:flase,
+    last: least quality content. 
     Least entry: we will mark the entry as least-quality, this we need to add in entry object, 
           least_entry: Boolean, admin can mark this entry as least_entry,
 }
