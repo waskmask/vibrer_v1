@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link href="/public/style/quill.snow.css?v=3.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.0" />
+    <link href="/public/style/video-js.css?v=3.0" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('./partials/pre-header'); %>
+
+    <main class="app_layout app_wrapper">
+      <!-- main body of the app -->
+      <div class="app_main preMain">
+        <div class="title mb-3">Report this post</div>
+        <div class="video-head">
+          <video
+            controls
+            class="video-js"
+            preload="auto"
+            width="640"
+            height="264"
+            data-setup="{}"
+          >
+            <source src="<%- singleEntryData.media %>" type="video/mp4" />
+            <source src="<%- singleEntryData.media %>" type="video/webm" />
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider
+              upgrading to a web browser that
+              <a href="https://videojs.com/html5-video-support/" target="_blank"
+                >supports HTML5 video</a
+              >
+            </p>
+          </video>
+          <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+        </div>
+
+        <div class="report-form mt-4">
+          <form
+            class="form fborder"
+            action="javascript:void(0)"
+            method="POST"
+            id="contestReportForm"
+            autocomplete="off"
+            enctype="multipart/form-data"
+          >
+            <input
+              type="hidden"
+              name="contest_id"
+              value="<%- singleEntryData.contest._id %>"
+            />
+            <input
+              type="hidden"
+              name="entry_id"
+              value="<%- singleEntryData._id %>"
+            />
+
+            <input type="hidden" name="content_type" value="Contest entry" />
+            <div class="flex-box g-1">
+              <label class="checkbox-container white">
+                Sexual content
+                <input
+                  type="radio"
+                  id="rr1"
+                  value="Sexual content"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+              <label class="checkbox-container white">
+                Spam or misleading
+                <input
+                  type="radio"
+                  id="rr2"
+                  value="Spam or misleading"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+              <label class="checkbox-container white">
+                Violent or repulsive content
+                <input
+                  type="radio"
+                  id="rr3"
+                  value="Violent or repulsive content"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Harassment or dangerous acts
+                <input
+                  type="radio"
+                  id="rr4"
+                  value="Harassment or dangerous acts"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Copyright / Ownership
+                <input
+                  type="radio"
+                  id="rr5"
+                  value="Copyright / Ownership"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Child abuse
+                <input
+                  type="radio"
+                  id="rr6"
+                  value="Child abuse"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Hateful or abusive content
+                <input
+                  type="radio"
+                  id="rr7"
+                  value="Hateful or abusive content"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Promotes terrorism
+                <input
+                  type="radio"
+                  id="rr8"
+                  value="Promotes terrorism"
+                  name="report_reason"
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+
+              <label class="checkbox-container white">
+                Other issue
+                <input
+                  type="radio"
+                  class="otherIssue"
+                  id="rr9"
+                  value="Other issue"
+                  name="report_reason"
+                  checked
+                />
+                <span class="radio-checkmark"></span>
+              </label>
+            </div>
+            <div class="mt-4 mb-4">
+              <div
+                id="other_issue"
+                style="height: auto; min-height: 100px"
+              ></div>
+            </div>
+
+            <div class="grid2md mb-3">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Company optional"
+                  name="company"
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Contact Email for user"
+                  name="contact_email"
+                  required
+                />
+              </div>
+            </div>
+            <div class="error-message mt-3 d-none"></div>
+            <div class="success-message mt-3 d-none">
+              You have successfully registered.
+              <br />
+              You will receive a verification email shortly, if not found, check
+              spam folder.
+            </div>
+            <button class="btn btn-primary mt-4 mb-5 submitBtn" type="submit">
+              Submit
+            </button>
+          </form>
+        </div>
+        <!-- app main end -->
+      </div>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=3.0"></script>
+    <script src="/public/js/general.js?v=3.0"></script>
+    <script src="/public/js/quill.min.js?v=3.0"></script>
+    <script src="/public/js/video.min.js?v=3.0"></script>
+    <script src="/public/js/config.js?v=3.0"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var quill = new Quill("#other_issue", {
+          modules: {
+            toolbar: false,
+          },
+          placeholder: "Describe the issue in detail *",
+          theme: "snow",
+        });
+
+        const form = document.getElementById("contestReportForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+        // Disable HTML5 validation
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = "Loading...";
+          btn.disabled = true;
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            formData.append("report_description", quill.getText());
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            // Validation
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const {
+              contest_id,
+              entry_id,
+              content_type,
+              report_reason,
+              report_description,
+              contact_email,
+            } = formDataJSON;
+
+            if (
+              !contact_email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                contact_email
+              )
+            ) {
+              isValid = false;
+              customErrors.contact_email = !contact_email
+                ? "Contact email is required"
+                : "Contact email is not valid";
+            }
+
+            // Clear previous error alerts
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}entry/submitReport`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    successPop.style.display = "block";
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  errorPop.style.display = "block";
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = "Submit";
+            btn.disabled = false;
+          }, 1000); // 1-second delay
+        });
+
+        const reportReasonRadios = document.querySelectorAll(
+          'input[name="report_reason"]'
+        );
+        const otherIssueInput = document.getElementById("other_issue");
+
+        // Function to show or hide other_issue based on selected report_reason
+        function toggleOtherIssue() {
+          if (this.value === "Other issue") {
+            otherIssueInput.style.display = "block";
+          } else {
+            otherIssueInput.style.display = "none";
+          }
+        }
+
+        // Add event listener to each radio button
+        reportReasonRadios.forEach(function (radio) {
+          radio.addEventListener("change", toggleOtherIssue);
+        });
+      });
+    </script>
+  </body>
+</html>
