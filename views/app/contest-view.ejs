@@ -19,7 +19,6 @@
   </head>
   <body class="body-dark _pr">
     <!-- loader -->
-    <!-- <%- include('../partials/loader'); %> -->
 
     <!-- header -->
     <%- include('partials/header'); %>
@@ -72,27 +71,18 @@
         </section>
 
         <section class="participants">
-          <% if (contestDetailData.result.participates &&
-          contestDetailData.result.participates.length > 0) { %> <% if
-          (contestDetailData.result.participates.length < 4) { %>
-          <div class="title mb-4 mt-4">All contestants</div>
-          <% } else { %>
-          <div class="title mb-4">Top 3 contestants</div>
-          <% } %>
-
+          <!-- Top Participants -->
+          <% if (participantsWithVotes && participantsWithVotes.length > 0) { %>
+          <div class="title mb-4">
+            Top <%- participantsWithVotes.length %> contestants
+          </div>
           <div class="wrapper-lg-6">
             <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
             "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
-            % 10] || suffixes[v] || suffixes[0]); }; if
-            (contestDetailData.result.participates &&
-            contestDetailData.result.participates.length > 0) { let c = 0; let
-            alreadyVoted = "";
-            contestDetailData.result.participates.forEach(participants => { c++;
-            if(c === 4) { %>
-          </div>
-          <div class="title mb-4 mt-4">All contestants</div>
-          <div class="wrapper-lg-6">
-            <% } %> %>
+            % 10] || suffixes[v] || suffixes[0]); }; if (participantsWithVotes
+            && participantsWithVotes.length > 0) { let c = 0; let alreadyVoted =
+            ""; participantsWithVotes.forEach(participants => { c++; %>
+
             <div class="contestant mb-3">
               <div class="report_dd">
                 <img
@@ -239,10 +229,497 @@
                 </div>
               </div>
             </div>
-            <% }); } %>
+
+            <% }); } %> <% } %>
           </div>
 
-          <% } %>
+          <!-- You Voted -->
+          <% if (youVoted && youVoted.length > 0) { %>
+          <div class="title mb-4">You voted</div>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if (youVoted &&
+            youVoted.length > 0) { let c = 0; let alreadyVoted = "";
+            youVoted.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+
+          <!-- Random Participants without least quality -->
+          <% if (participantsWithoutLeastQuality &&
+          participantsWithoutLeastQuality.length > 0) { %>
+          <div class="title mb-4">All Contestants</div>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithoutLeastQuality &&
+            participantsWithoutLeastQuality.length > 0) { let c = 0; let
+            alreadyVoted = "";
+            participantsWithoutLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <% if(participants.votes.length > 0) { %>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+
+          <!--  Participants with least quality -->
+          <% if (participantsWithLeastQuality &&
+          participantsWithLeastQuality.length > 0) { %>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithLeastQuality && participantsWithLeastQuality.length
+            > 0) { let c = 0; let alreadyVoted = "";
+            participantsWithLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <% if(participants.votes.length > 0) { %>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
         </section>
 
         <!-- app main end -->
