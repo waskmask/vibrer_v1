@@ -58,12 +58,11 @@
               </div>
               <div class="title"><%= __("vscontest") %></div>
               <div class="sub">
-                <%- contestDetailData.result.participates.length %>
-                <%-__('entries')%> • <% if (contestDetailData.result.endDays >
-                0) { %> <%-__('endsin')%> <%= contestDetailData.result.endDays
-                %> <%-__('days')%> <% } else { %> Over <%=
-                Math.abs(contestDetailData.result.endDays) %> days before <% }
-                %>
+                <%- activeEntries.length %> <%-__('entries')%> • <% if
+                (contestDetailData.result.endDays > 0) { %> <%-__('endsin')%>
+                <%= contestDetailData.result.endDays %> <%-__('days')%> <% }
+                else { %> Over <%= Math.abs(contestDetailData.result.endDays) %>
+                days before <% } %>
               </div>
             </div>
             <div class="cta">

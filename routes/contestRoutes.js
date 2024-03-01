@@ -118,6 +118,7 @@ router.get("/contest", async function (req, res) {
       path: "/contest",
       contestDetailData: contestDetailData,
       ADMIN_URL: process.env.ADMIN_URL,
+      activeEntries: activeEntries,
       participantsWithVotes: participantsWithVotes,
       participantsWithoutLeastQuality: shuffledParticipants,
       participantsWithLeastQuality: participantsWithLeastQuality,

@@ -800,6 +800,7 @@ router.get("/app/pre-contest", async function (req, res) {
       title: "Contest",
       path: "/contest",
       isParticipated,
+      activeEntries: activeEntries,
       contestDetailData: contestDetailsData,
       profileData: profileData,
       youVoted: participantsVotedByUser,
