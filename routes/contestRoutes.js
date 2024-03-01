@@ -82,7 +82,10 @@ router.get("/contest", async function (req, res) {
       return res.redirect("/contests");
     }
 
-    const sortedParticipants = contestDetailData.result.participates.sort(
+    const activeEntries = contestDetailData.result.participates.filter(
+      (participant) => participant.status === "Active"
+    );
+    const sortedParticipants = activeEntries.sort(
       (a, b) => b.votes.length - a.votes.length
     );
 

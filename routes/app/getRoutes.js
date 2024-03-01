@@ -757,8 +757,10 @@ router.get("/app/pre-contest", async function (req, res) {
     if (contestDetailData.status === 0) {
       return res.redirect("/app/home");
     }
-
-    const sortedParticipants = contestDetailData.result.participates.sort(
+    const activeEntries = contestDetailData.result.participates.filter(
+      (participant) => participant.status === "Active"
+    );
+    const sortedParticipants = activeEntries.sort(
       (a, b) => b.votes.length - a.votes.length
     );
 
