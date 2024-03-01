@@ -112,6 +112,68 @@ router.get("/app/contest-view/:id", async function (req, res) {
   });
 });
 
+router.get("/app/contest-entry/:contestId/:entryId", async function (req, res) {
+  const { contestId, entryId } = req.params;
+  const entryUrl = `https://vibrer.tech/contest-single-entry/${contestId}/${entryId}`;
+
+  let loggedIn = false;
+  let alreadyVoted = false;
+
+  let entryData;
+
+  try {
+    const response = await axios.get(entryUrl);
+    entryData = response.data;
+    console.log(entryData);
+  } catch (error) {
+    console.error("Error fetching entry:", error); // Log error details
+  }
+
+  if (!req.session.appUserToken) {
+    res.render("app/contest-entry", {
+      title: "Contests",
+      path: "/contests",
+      entryData: entryData,
+      alreadyVoted,
+      loggedIn,
+    });
+  } else {
+    try {
+      const profileResponse = await axios.get(
+        `${process.env.API_URL}getappUserProfile`,
+        {
+          headers: {
+            Authorization: `Bearer ${req.session.appUserToken}`,
+          },
+        }
+      );
+
+      const profileData = profileResponse.data.result;
+      const userId = profileData._id;
+
+      if (
+        entryData &&
+        entryData.result.votes.some((vote) => vote.user_id === userId)
+      ) {
+        alreadyVoted = true;
+      }
+
+      res.render("app/contest-entry", {
+        title: "Contests",
+        path: "/contests",
+        entryData: entryData, // This will be undefined if the above request fails
+        profileData: profileData,
+        userId,
+        alreadyVoted,
+        loggedIn: true,
+      });
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      // Handle error (e.g., render error page or send response)
+    }
+  }
+});
+
 // router.get("/app/participate/:id", async function (req, res) {
 //   const contest_id = req.params.id;
 //   if (!req.session.appUserToken) {
@@ -460,11 +522,15 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
   } catch (error) {
     // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    // return res.status(500).send("Internal Server Error");
-    res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -472,6 +538,15 @@ router.get("/app/pre-home", async function (req, res) {
   try {
     if (!req.session.appUserToken) {
       return res.redirect("/login");
+    } else {
+      // Check for the resUrl cookie
+      const resUrlCookie = req.cookies["resUrl"];
+      if (resUrlCookie) {
+        // Clear the resUrl cookie by setting its expiration date to the past
+        res.clearCookie("resUrl", { path: "/" }); // Adjust path/domain if needed
+        // Redirect to the resUrl and stop further execution
+        return res.redirect(resUrlCookie);
+      }
     }
     const contest_id = process.env.PRE_CONTEST_ID;
 
@@ -522,12 +597,15 @@ router.get("/app/pre-home", async function (req, res) {
       profileData: profileData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -585,12 +663,15 @@ router.get("/app/pre-contest", async function (req, res) {
       profileData: profileData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 router.get("/imprint", function (req, res) {
@@ -728,12 +809,15 @@ router.get("/app/pre-my-profile", async function (req, res) {
       genreData: genreData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 router.get("/app/pre-edit-profile", async function (req, res) {
@@ -772,12 +856,15 @@ router.get("/app/pre-edit-profile", async function (req, res) {
       genreData: genreData,
     });
   } catch (error) {
-    // Handle errors gracefully
     console.error("Error fetching profile:", error);
-    return res.render("500", {
-      title: "500 Server error!",
-      path: "/500",
-    });
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
   }
 });
 
@@ -810,6 +897,13 @@ router.get("/500", function (req, res) {
   res.render("500", {
     title: "500 Server error!",
     path: "/500",
+  });
+});
+
+router.get("/401", function (req, res) {
+  res.render("401", {
+    title: "Authorization token expired!",
+    path: "/401",
   });
 });
 

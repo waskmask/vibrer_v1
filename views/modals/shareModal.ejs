@@ -1,5 +1,5 @@
-<div class="_modal d-block modal-dark" id="shareModal">
-  <div class="dialog" style="opacity: 1">
+<div class="share_modal modal-dark" id="shareModal">
+  <div class="dialog">
     <div class="head">
       <div class="title">Share this post!</div>
       <div class="close-modal">+</div>
@@ -7,46 +7,25 @@
     <div class="body contest-info">
       <div class="shareWrapper">
         <div class="s_media">
-          <button
-            class="btn share-btn"
-            onclick="shareOnWhatsapp()"
-            data-url="[POST_URL]"
-          >
+          <button class="btn share-btn" onclick="shareOnWhatsapp('[POST_URL]')">
             <img src="/public/images/icons/whatsapp_share.svg" />
           </button>
-          <button
-            class="btn share-btn"
-            onclick="shareOnInstagram()"
-            data-url="[POST_URL]"
-          >
-            <img src="/public/images/icons/instagram_share.svg" /></button
-          ><button
-            class="btn share-btn"
-            onclick="shareOnFacebook()"
-            data-url="[POST_URL]"
-          >
-            <img src="/public/images/icons/facebook_share.svg" /></button
-          ><button
-            class="btn share-btn"
-            onclick="shareOnTwitter()"
-            data-url="[POST_URL]"
-          >
+          <button class="btn share-btn" onclick="shareOnFacebook('[POST_URL]')">
+            <img src="/public/images/icons/facebook_share.svg" />
+          </button>
+          <button class="btn share-btn" onclick="shareOnTwitter('[POST_URL]')">
             <img src="/public/images/icons/x_share.svg" />
           </button>
         </div>
-        <div class="shareUrl">
-          <button
-            class="btn btn-promary"
-            onclick="copyUrl()"
-            data-url="[POST_URL]"
-          >
-            Copy URL
-          </button>
-          <div class="urlHolder">https:vibrer.com/app3423432324324324</div>
-        </div>
-        <div class="urlCopied">
-          Url copied
-          <img src="/public/images/icons/check_blue.svg" alt="check" />
+        <div class="shareUrl dfac mt-3" onclick="copyUrl('[POST_URL]')">
+          <button class="btn btn-primary">Copy URL</button>
+          <div class="urlHolder dfac">
+            <span>[POST_URL]</span>
+          </div>
+          <div class="urlCopied dfac">
+            Url copied
+            <img src="/public/images/icons/check_blue.svg" alt="check" />
+          </div>
         </div>
       </div>
     </div>

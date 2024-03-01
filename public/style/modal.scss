@@ -1,6 +1,7 @@
 @import "./var";
 
-._modal {
+._modal,
+.share_modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -77,7 +78,8 @@
     }
   }
 }
-._modal.d-block {
+._modal.d-block,
+.share_modal.d-block {
   display: block;
 }
 
