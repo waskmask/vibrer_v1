@@ -10,10 +10,35 @@
       content="Vibrer singing contest music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
     />
     <%- include('partials/head'); %>
-    <link rel="stylesheet" href="/public/style/modal.css?v=3.0" />
-    <link rel="stylesheet" href="./public/style/contests.css?v=3.0" />
-    <link rel="stylesheet" href="/public/style/app.css?v=3.0" />
-    <link href="/public/style/video-js.css?v=3.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="./public/style/contests.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app_ext.css" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+
+    <style>
+      @media screen and (min-width: 1000px) {
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(3, 1fr) !important;
+        }
+      }
+      @media screen and (max-width: 999px) {
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: 1fr !important;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -32,7 +57,14 @@
                 <div><%= __("mod_presents") %></div>
               </div>
               <div class="title"><%= __("vscontest") %></div>
-              <div class="sub"><%- __("voting_notice") %></div>
+              <div class="sub">
+                <%- contestDetailData.result.participates.length %>
+                <%-__('entries')%> • <% if (contestDetailData.result.endDays >
+                0) { %> <%-__('endsin')%> <%= contestDetailData.result.endDays
+                %> <%-__('days')%> <% } else { %> Over <%=
+                Math.abs(contestDetailData.result.endDays) %> days before <% }
+                %>
+              </div>
             </div>
             <div class="cta">
               <button
@@ -56,35 +88,39 @@
           </div>
         </div>
       </section>
-      <section class="bg-dark participants">
-        <div class="layout">
-          <div class="title mt-4 mb-3"><%-__("vonting_begins")%></div>
-          <div class="contestTimer" id="Contest1timer">
-            <div class="t_card">
-              <div class="title" id="days"></div>
-              <div class="_label"><%-__("days")%></div>
-            </div>
-            <div class="t_card">
-              <div class="title" id="hours"></div>
-              <div class="_label"><%-__("hours")%></div>
-            </div>
-            <div class="t_card">
-              <div class="title" id="minutes"></div>
-              <div class="_label"><%-__("minutes")%></div>
-            </div>
-            <div class="t_card">
-              <div class="title" id="seconds"></div>
-              <div class="_label"><%-__("seconds")%></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- <section class="bg-dark participants">
+        <div class="layout"> -->
+      <section class="bg-dark participants onHome">
         <div class="layout">
-          <div class="title mb-4">Top 3 contestants</div>
-          <div class="wrapper">
-            <div class="contestant">
+          <!-- Top Participants -->
+          <% if (participantsWithVotes && participantsWithVotes.length > 0) { %>
+          <div class="title mb-4">
+            <%= __("top") %> <%- participantsWithVotes.length %> <%=
+            __("entries") %>
+          </div>
+          <div class="wrapper-lg-4">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if (participantsWithVotes
+            && participantsWithVotes.length > 0) { let c = 0; let alreadyVoted =
+            ""; participantsWithVotes.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __("report") %>
+                  </div>
+                </div>
+              </div>
               <div class="head">
                 <video
                   controls
@@ -94,8 +130,7 @@
                   height="264"
                   data-setup="{}"
                 >
-                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <source src="<%- participants.media %>" type="video/mp4" />
                   <p class="vjs-no-js">
                     To view this video please enable JavaScript, and consider
                     upgrading to a web browser that
@@ -106,79 +141,144 @@
                     >
                   </p>
                 </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
               </div>
               <div class="body">
                 <div class="top">
-                  <div
-                    class="user"
-                    data-target="accountModal"
-                    data-toggle="_modal"
-                  >
+                  <div class="user">
                     <div class="img">
-                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                      <% if (!participants.user.profile_img ||
+                      participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
                     </div>
                     <div class="info">
                       <div class="title">
-                        <span>Jessica Hub</span>
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
                         <img
                           src="/public/images/icons/verified-badge.svg"
                           alt="Badge"
                         />
+                        <% } %>
                       </div>
-                      <div class="uname">@jhub</div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
                     </div>
                   </div>
 
                   <div class="addToFav">
-                    <img
-                      src="/public/images/icons/bookmark.svg"
-                      alt="Bookmark"
-                    />
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
                   </div>
                 </div>
 
                 <div class="votes">
                   <div class="count">
-                    <strong>Votes:</strong> <span>2036</span>
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
                   </div>
                   <div class="rank">
-                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                    <strong> <%= __("current_rank") %>:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
                   </div>
                 </div>
 
                 <div class="cta">
                   <button
                     class="btn btn-outlined"
-                    data-target="accountModal"
-                    data-toggle="_modal"
+                    data-toggle="share_modal"
+                    data-target="shareModal"
+                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                   >
-                    Visit artist
+                    <%= __("share") %>
                   </button>
                   <button
                     class="btn btn-primary"
-                    data-target="accountModal"
-                    data-toggle="_modal"
+                    onclick="resdirectAfterLogin('/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>')"
                   >
-                    Vote now
+                    <%= __('vote_now') %>
                   </button>
                 </div>
               </div>
             </div>
 
-            
+            <% }); } %>
+          </div>
+          <% } %>
 
-            <div class="contestant">
+          <!-- Random Participants without least quality -->
+          <% if (participantsWithoutLeastQuality &&
+          participantsWithoutLeastQuality.length > 0) { %>
+          <div class="title mb-4 mt-3"><%= __('all_entries') %></div>
+          <div class="wrapper-lg-4">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithoutLeastQuality &&
+            participantsWithoutLeastQuality.length > 0) { let c = 0; let
+            alreadyVoted = "";
+            participantsWithoutLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __('report') %>
+                  </div>
+                </div>
+              </div>
               <div class="head">
                 <video
                   controls
                   class="video-js"
-                  preload="auto"
+                  preload="none"
                   width="640"
                   height="264"
                   data-setup="{}"
                 >
-                  <source src="/uploads/inescapable.mp4" type="video/mp4" />
-                  <source src="/uploads/inescapable.mp4" type="video/webm" />
+                  <source src="<%- participants.media %>" type="video/mp4" />
                   <p class="vjs-no-js">
                     To view this video please enable JavaScript, and consider
                     upgrading to a web browser that
@@ -194,46 +294,249 @@
                 <div class="top">
                   <div class="user">
                     <div class="img">
-                      <img src="/public/images/listening-to.jpg" alt="avatar" />
+                      <% if (!participants.user.profile_img
+                      ||participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
                     </div>
                     <div class="info">
                       <div class="title">
-                        <span>Jessica Hub</span>
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
                         <img
                           src="/public/images/icons/verified-badge.svg"
                           alt="Badge"
                         />
+                        <% } %>
                       </div>
-                      <div class="uname">@jhub</div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
                     </div>
                   </div>
 
                   <div class="addToFav">
-                    <img
-                      src="/public/images/icons/bookmark.svg"
-                      alt="Bookmark"
-                    />
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
                   </div>
                 </div>
 
                 <div class="votes">
                   <div class="count">
-                    <strong>Votes:</strong> <span>2036</span>
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
                   </div>
+                  <% if(participants.votes.length > 0) { %>
                   <div class="rank">
-                    <strong>Current Rank:</strong> <span>1<sup>st</sup></span>
+                    <strong><%= __('current_rank') %>:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
                   </div>
+                  <% } %>
                 </div>
 
                 <div class="cta">
-                  <button class="btn btn-outlined">Visit artist</button>
-                  <button class="btn btn-primary">Vote now</button>
+                  <button
+                    class="btn btn-outlined"
+                    data-toggle="share_modal"
+                    data-target="shareModal"
+                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                  >
+                    <%= __('share') %>
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    onclick="resdirectAfterLogin('/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __('vote_now') %>
+                  </button>
                 </div>
               </div>
             </div>
+
+            <% }); } %>
           </div>
+          <% } %>
+          <!--  Participants with least quality -->
+          <% if (participantsWithLeastQuality &&
+          participantsWithLeastQuality.length > 0) { %>
+          <div class="wrapper-lg-4">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithLeastQuality && participantsWithLeastQuality.length
+            > 0) { let c = 0; let alreadyVoted = "";
+            participantsWithLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __('report') %>
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <video
+                  controls
+                  class="video-js"
+                  preload="none"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (!participants.user.profile_img
+                      ||participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <% if(participants.votes.length > 0) { %>
+                  <div class="rank">
+                    <strong><%= __('current_rank') %>:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-toggle="share_modal"
+                    data-target="shareModal"
+                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                  >
+                    <%= __('share') %>
+                  </button>
+                  <button
+                    class="btn btn-primary"
+                    onclick="resdirectAfterLogin('/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __('vote_now') %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %>
+          </div>
+          <% } %>
         </div>
-      </section> -->
+      </section>
     </main>
 
     <!-- footer -->
@@ -244,15 +547,33 @@
     <%- include('modals/contest1Video'); %>
     <!--  -->
     <%- include('modals/accountModal'); %>
+    <!--  -->
+    <%- include('modals/shareModal'); %>
 
     <!-- javascript -->
-    <script src="/public/js/cookieBanner.js?v=3.0"></script>
-    <script src="/public/js/languageSwitcher.js"></script>
-    <script src="/public/js/theme-v01node.js?v=3.0"></script>
-    <script src="/public/js/video.min.js?v=3.0"></script>
-    <!-- <script src="/public/js/Youtube.min.js?v=3.0"></script> -->
-    <script src="/public/js/_modal.js?v=3.0"></script>
-    <script src="/public/js/authForm.js?v=3.0"></script>
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/video.min.js?v=3.1"></script>
+    <!-- <script src="/public/js/Youtube.min.js?v=3.1"></script> -->
+    <script src="/public/js/_modal.js?v=3.1"></script>
+    <script src="/public/js/_sharemodal.js?v=3.1"></script>
+    <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/authForm.js?v=3.1"></script>
+    <script>
+      function resdirectAfterLogin(redirectUrl) {
+        // Ensure this value is correctly populated
+        var cookieValue = encodeURIComponent(redirectUrl);
+        var cookieString =
+          "resUrl=" + cookieValue + "; path=/; Secure; SameSite=None;";
+
+        // Set or overwrite the 'resUrl' cookie
+        document.cookie = cookieString;
+
+        // Redirect to login page
+        window.location.href = "/login";
+      }
+    </script>
     <script>
       function toParticipate() {
         document.cookie = "intent=participate;";
@@ -297,7 +618,42 @@
         }
       });
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+          // First, close all dropdowns by removing the 'active' class
+          document
+            .querySelectorAll(".drop_down.active")
+            .forEach(function (activeDropdown) {
+              activeDropdown.classList.remove("active");
+            });
 
+          var reportIcon = event.target.closest(".reportIcon");
+
+          // If a report icon was clicked, toggle the active class on its corresponding dropdown
+          if (reportIcon) {
+            var dropdown = reportIcon
+              .closest(".report_dd")
+              ?.querySelector(".drop_down");
+            if (dropdown) {
+              dropdown.classList.add("active"); // Use add here since we've already cleared all active classes
+              event.stopPropagation(); // Prevent the event from bubbling up to the document level where it would close the dropdown immediately
+            }
+          }
+        });
+
+        // This additional listener ensures dropdowns close when clicking outside of them
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".report_dd")) {
+            document
+              .querySelectorAll(".drop_down.active")
+              .forEach(function (activeDropdown) {
+                activeDropdown.classList.remove("active");
+              });
+          }
+        });
+      });
+    </script>
     <script>
       // Set the date we're counting down to
       var countDownDate = new Date("Mar 1, 2024 23:59:59").getTime();

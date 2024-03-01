@@ -12,11 +12,11 @@
       content="music platform, music community, music discovery, artist connection, music enthusiasts"
     />
     <%- include('../partials/head'); %>
-    <link rel="stylesheet" href="/public/style/modal.css?v=3.0" />
-    <link rel="stylesheet" href="/public/style/app.css?v=3.0" />
-    <link rel="stylesheet" href="/public/style/app_ext.css?v=3.0" />
-    <link rel="stylesheet" href="/public/style/contests.css?v=3.0" />
-    <link href="/public/style/video-js.css?v=3.0" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
     <style>
       .contest-header .sponsor {
         font-size: 0.875rem;
@@ -42,7 +42,7 @@
             <div>
               <div class="sponsor">
                 <img src="/public/images/mod_light.svg" alt="Logo" />
-                <div>MOD presents</div>
+                <div><%= __('mod_presents') %></div>
               </div>
               <div class="title mb-0">
                 <%- entryData.result.contest.title %>
@@ -50,6 +50,8 @@
             </div>
           </div>
         </section>
+        <% if (loggedIn) { %>
+        <!-- header -->
         <div class="goback dfac mt-3" onclick="toAppContest()">
           <img
             class="icon"
@@ -57,8 +59,10 @@
             alt="icon"
           />
 
-          <div class="link_text">Visit contest / view all entries</div>
+          <div class="link_text"><%= __('visit_contest_or_entries') %></div>
         </div>
+        <% } %>
+
         <section class="participants" style="padding-top: 20px">
           <div class="contestant mb-3">
             <div class="report_dd">
@@ -68,8 +72,11 @@
                 class="reportIcon"
               />
               <div class="drop_down shadow">
-                <div class="report_link" data-id="1234125" data-from="contests">
-                  Report
+                <div
+                  class="report_link"
+                  onclick="resdirectAfterLogin('/app/contest-report/<%=entryData.result.contest._id%>/<%=entryData.result._id%>')"
+                >
+                  <%= __('report') %>
                 </div>
               </div>
             </div>
@@ -80,7 +87,7 @@
               >
                 <% let alreadyVotedValue = ""; %> <% if(alreadyVoted){
                 alreadyVotedValue = entryData.result.user._id;%>
-                <div class="yourVote">You voted</div>
+                <div class="yourVote"><%= __('you_voted') %></div>
                 <% } %>
               </div>
               <video
@@ -176,7 +183,7 @@
                   </span>
                 </div>
                 <div class="rank">
-                  <strong>Current Rank:</strong>
+                  <strong><%= __('current_rank') %>:</strong>
                   <% if(entryData.result.rank) { %>
 
                   <span
@@ -199,8 +206,11 @@
                 </button>
 
                 <% if(!loggedIn){ %>
-                <button class="btn btn-primary" onclick="resdirectAfterLogin()">
-                  Vote now
+                <button
+                  class="btn btn-primary"
+                  onclick="resdirectAfterLogin('/app/contest-entry/<%=entryData.result.contest._id%>/<%=entryData.result._id%>')"
+                >
+                  <%= __('vote_now') %>
                 </button>
                 <% } else {%>
 
@@ -210,8 +220,8 @@
                   id="submitVoteBtn<%- entryData.result.contest._id %><%- entryData.result.user._id %>"
                   onclick="addParticipateVote('<%- entryData.result.contest._id %>','<%- entryData.result.user._id %>');"
                 >
-                  <% if(alreadyVoted){ %> Remove vote <% } else { %> Vote now <%
-                  } %>
+                  <% if(alreadyVoted){ %> <%= __('remove_vote') %> <% } else {
+                  %> <%= __('vote_now') %> <% } %>
                 </button>
                 <% }%>
               </div>
@@ -290,17 +300,17 @@
 
     <%- include('../modals/shareModal'); %>
     <!-- javascript -->
-    <script src="/public/js/redirections.js?v=3.0"></script>
-    <script src="/public/js/general.js?v=3.0"></script>
-    <script src="/public/js/video.min.js?v=3.0"></script>
-    <script src="/public/js/_sharemodal.js"></script>
-    <script src="/public/js/sharePost.js"></script>
-    <script src="/public/js/config.js?v=3.0"></script>
+    <script src="/public/js/redirections.js?v=3.1"></script>
+    <script src="/public/js/general.js?v=3.1"></script>
+    <script src="/public/js/app_language.js?v=3.1"></script>
+    <script src="/public/js/video.min.js?v=3.1"></script>
+    <script src="/public/js/_sharemodal.js?v=3.1"></script>
+    <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
     <script>
-      function resdirectAfterLogin() {
-        var contestId =
-          "<%=entryData.result.contest._id%>/<%=entryData.result._id%>"; // Ensure this value is correctly populated
-        var cookieValue = "/app/contest-entry/" + encodeURIComponent(contestId);
+      function resdirectAfterLogin(redirectUrl) {
+        // Ensure this value is correctly populated
+        var cookieValue = encodeURIComponent(redirectUrl);
         var cookieString =
           "resUrl=" + cookieValue + "; path=/; Secure; SameSite=None;";
 
@@ -409,7 +419,7 @@
                   }
 
                   submitBtn.innerHTML = "Remove vote";
-                  voteBtn.innerHTML = `<div class="yourVote">You voted</div>`;
+                  voteBtn.innerHTML = `<div class="yourVote"><%= __('you_voted') %></div>`;
                   countVotes = +countVotes + 1;
                   document.getElementById(
                     "alreadyVoted" + contest_id + ""
@@ -419,7 +429,7 @@
                     window.location.href = "/app/pre-contest";
                   }, 1000);
                 } else {
-                  submitBtn.innerHTML = "Vote now";
+                  submitBtn.innerHTML = "<%= __('vote_now') %>";
                   voteBtn.innerHTML = "";
                   countVotes = +countVotes - 1;
                   document.getElementById(
@@ -521,20 +531,47 @@
         });
 
         // Find all elements with the class 'report_link'
-        document
-          .querySelectorAll(".report_link")
-          .forEach(function (reportLink) {
-            reportLink.addEventListener("click", function () {
-              var reportId = this.getAttribute("data-id");
-              if (reportId) {
-                window.open(
-                  "https://vibrer.com/report?id=" + reportId,
-                  "_blank"
-                );
-              }
-            });
-          });
+        // document
+        //   .querySelectorAll(".report_link")
+        //   .forEach(function (reportLink) {
+        //     reportLink.addEventListener("click", function () {
+        //       var reportId = this.getAttribute("data-id");
+        //       if (reportId) {
+        //         window.open(
+        //           "https://vibrer.com/report?id=" + reportId,
+        //           "_blank"
+        //         );
+        //       }
+        //     });
+        //   });
       });
+    </script>
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
+      }
     </script>
   </body>
 </html>
