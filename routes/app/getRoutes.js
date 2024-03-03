@@ -190,6 +190,10 @@ router.get("/app/contest-entry/:contestId/:entryId", async function (req, res) {
 
       const profileData = profileResponse.data.result;
       const userId = profileData._id;
+      const userFName = profileData.full_name;
+      if (!userFName || userFName === "") {
+        res.redirect("/new-profile");
+      }
 
       if (
         entryData &&
@@ -627,15 +631,6 @@ router.get("/app/pre-home", async function (req, res) {
   try {
     if (!req.session.appUserToken) {
       return res.redirect("/login");
-    } else {
-      // Check for the resUrl cookie
-      const resUrlCookie = req.cookies["resUrl"];
-      if (resUrlCookie) {
-        // Clear the resUrl cookie by setting its expiration date to the past
-        res.clearCookie("resUrl", { path: "/" }); // Adjust path/domain if needed
-        // Redirect to the resUrl and stop further execution
-        return res.redirect(resUrlCookie);
-      }
     }
     const contest_id = process.env.PRE_CONTEST_ID;
 
@@ -653,6 +648,15 @@ router.get("/app/pre-home", async function (req, res) {
 
     if (!profileData.full_name) {
       return res.redirect("/new-profile");
+    } else {
+      // Check for the resUrl cookie
+      const resUrlCookie = req.cookies["resUrl"];
+      if (resUrlCookie) {
+        // Clear the resUrl cookie by setting its expiration date to the past
+        res.clearCookie("resUrl", { path: "/" }); // Adjust path/domain if needed
+        // Redirect to the resUrl and stop further execution
+        return res.redirect(resUrlCookie);
+      }
     }
 
     const contestDetailsResponse = await axios.get(
