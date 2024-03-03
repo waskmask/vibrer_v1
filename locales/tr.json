@@ -575,5 +575,6 @@
   "other_issue": "Diğer Sorun",
   "invalid_email": "Geçersiz e-posta adresi",
   "already_reported": "Bu gönderiyi zaten bildirdiniz",
-  "visit_contest_or_entries": "Yarışmayı ziyaret et / tüm girişleri görüntüle"
+  "visit_contest_or_entries": "Yarışmayı ziyaret et / tüm girişleri görüntüle",
+  "contest_1_terms_conditions_6": "'Vibrer Şarkı Yarışması (Bölüm 1)'de, adil bir yarışma ve yarışmanın bütünlüğünü korumak için oylama başladıktan sonra katılımcılar girişlerini geri çekemezler. Bu kural, yarışmanın sorunsuz bir şekilde ilerlemesi ve tüm yarışmacıların taahhütlerini yerine getirmesi için hayati öneme sahiptir."
 }
