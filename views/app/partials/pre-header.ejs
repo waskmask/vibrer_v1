@@ -42,15 +42,15 @@
           <% if (!profileData.profile_img || profileData.profile_img === '') {
           %>
           <img
+            class="avatar"
             src="/public/images/default-avatar.png"
             alt="Default Avatar"
-            class="avatar"
           />
           <% } else { %>
           <img
+            class="avatar"
             src="<%- profileData.profile_img %>"
             alt="User Profile Image"
-            class="avatar"
           />
           <% } %>
         </div>
