@@ -576,5 +576,6 @@
   "invalid_email": "Geçersiz e-posta adresi",
   "already_reported": "Bu gönderiyi zaten bildirdiniz",
   "visit_contest_or_entries": "Yarışmayı ziyaret et / tüm girişleri görüntüle",
-  "contest_1_terms_conditions_6": "'Vibrer Şarkı Yarışması (Bölüm 1)'de, adil bir yarışma ve yarışmanın bütünlüğünü korumak için oylama başladıktan sonra katılımcılar girişlerini geri çekemezler. Bu kural, yarışmanın sorunsuz bir şekilde ilerlemesi ve tüm yarışmacıların taahhütlerini yerine getirmesi için hayati öneme sahiptir."
+  "contest_1_terms_conditions_6": "'Vibrer Şarkı Yarışması (Bölüm 1)'de, adil bir yarışma ve yarışmanın bütünlüğünü korumak için oylama başladıktan sonra katılımcılar girişlerini geri çekemezler. Bu kural, yarışmanın sorunsuz bir şekilde ilerlemesi ve tüm yarışmacıların taahhütlerini yerine getirmesi için hayati öneme sahiptir.",
+  "email_verify_for_vote": "Yarışmada oy kullanabilmek için e-posta adresinizi doğrulamanız gerekmektedir. Hesabınızı oluşturduktan sonra size bir doğrulama bağlantısı içeren bir e-posta gönderdik. Lütfen hem gelen kutunuzu hem de spam klasörünüzü kontrol edin."
 }

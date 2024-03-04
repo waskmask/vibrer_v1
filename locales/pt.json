@@ -576,5 +576,6 @@
   "invalid_email": "Endereço de email inválido",
   "already_reported": "Você já denunciou esta postagem",
   "visit_contest_or_entries": "Visitar concurso / ver todas as entradas",
-  "contest_1_terms_conditions_6": "No 'Concurso de Canto Vibrer (Capítulo 1)', os participantes não podem retirar sua inscrição uma vez que a votação tenha começado, para garantir a justiça e manter a integridade da competição. Esta regra é crucial para o fluxo suave do concurso e para manter os compromissos de todos os concorrentes."
+  "contest_1_terms_conditions_6": "No 'Concurso de Canto Vibrer (Capítulo 1)', os participantes não podem retirar sua inscrição uma vez que a votação tenha começado, para garantir a justiça e manter a integridade da competição. Esta regra é crucial para o fluxo suave do concurso e para manter os compromissos de todos os concorrentes.",
+  "email_verify_for_vote": "Para votar no concurso, você deve verificar seu endereço de e-mail. Enviamos a você um link de verificação por e-mail após a criação da sua conta. Por favor, verifique tanto a sua caixa de entrada quanto a pasta de spam."
 }

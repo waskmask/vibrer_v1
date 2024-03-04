@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="/public/style/app_ext.css" />
     <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
     <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+    <style>
+      .swal2-html-container {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
+    </style>
   </head>
   <body class="body-dark _pr">
     <!-- header -->
@@ -937,6 +943,20 @@
 
             const responseData = await response.json();
             if (response.status === 201 || response.status === 200) {
+              if (
+                responseData.status === 0 &&
+                responseData.message === "email_verify_for_vote"
+              ) {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "<%-__('email_verified_failed')%>",
+                  text: "<%-__('email_verify_for_vote')%>",
+                  showConfirmButton: true,
+                });
+                submitBtn.textContent = "<%-__('vote_now')%>";
+                return;
+              }
               if (responseData.status === 1) {
                 if (response.status === 201) {
                   Array.from(submitBtnAll).forEach((btn) => {
@@ -974,6 +994,8 @@
                 }
                 countVotesElement.innerHTML = countVotes;
               } else {
+                alert(responseData.message);
+                submitBtn.innerHTML = "<%= __('vote_now') %>";
               }
             } else {
             }

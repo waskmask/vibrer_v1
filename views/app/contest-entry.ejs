@@ -24,6 +24,10 @@
       .contest-header .sponsor img {
         width: 50px;
       }
+      .swal2-html-container {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
     </style>
   </head>
   <body class="body-dark _pr">
@@ -306,6 +310,7 @@
     <script src="/public/js/video.min.js?v=3.1"></script>
     <script src="/public/js/_sharemodal.js?v=3.1"></script>
     <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/sweetalert2@11.js?v=3.1"></script>
     <script src="/public/js/config.js?v=3.1"></script>
     <script>
       function resdirectAfterLogin(redirectUrl) {
@@ -378,7 +383,7 @@
         const alreadyVoted = document.getElementById(
           "alreadyVoted" + contest_id + ""
         ).value;
-        submitBtn.textContent = "Loading...";
+        submitBtn.textContent = "<%-__('loading')%>";
         setTimeout(async () => {
           const formData = {
             contest_id: contest_id,
@@ -397,6 +402,20 @@
 
             const responseData = await response.json();
             if (response.status === 201 || response.status === 200) {
+              if (
+                responseData.status === 0 &&
+                responseData.message === "email_verify_for_vote"
+              ) {
+                submitBtn.textContent = "<%-__('vote_now')%>";
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "<%-__('email_verified_failed')%>",
+                  text: "<%-__('email_verify_for_vote')%>",
+                  showConfirmButton: true,
+                });
+                return;
+              }
               if (responseData.status === 1) {
                 if (response.status === 201) {
                   Array.from(submitBtnAll).forEach((btn) => {
@@ -440,6 +459,7 @@
               } else {
               }
             } else {
+              alert(responseData.message);
             }
           } catch (err) {
             // Handle fetch error

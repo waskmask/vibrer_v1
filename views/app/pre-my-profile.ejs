@@ -122,7 +122,8 @@
               </div>
             </div>
             <div class="cover" id="coverHolder">
-              <% if (profileData.profile_cover === '') { %>
+              <% if (!profileData.profile_cover || profileData.profile_cover ===
+              '') { %>
               <img src="/uploads/cover_img1.jpeg" alt="Cover" id="my_cover" />
               <% } else { %>
               <img
