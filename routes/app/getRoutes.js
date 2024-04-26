@@ -597,16 +597,16 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
     const genreData = genreApiResponse.data.result;
 
     const contestDetailsResponse = await axios.get(
-      `${process.env.API_URL}contest-details/${contest_id}`,
+      `${process.env.API_URL}contest-details-all-participants/${contest_id}`,
       {
         headers: {
           Authorization: `Bearer ${req.session.appUserToken}`,
         },
       }
     );
+
     const contestDetailsData = contestDetailsResponse.data;
     let isParticipated = false;
-
     const userIdExists = contestDetailsData.result.participates.some(
       (participant) => participant.user._id === userId
     );
