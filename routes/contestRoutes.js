@@ -113,15 +113,46 @@ router.get("/contest", async function (req, res) {
 
     const shuffledParticipants = shuffle(participantsWithoutLeastQuality);
 
+    const participantsArray = [
+      {
+        participantData: participantsWithVotes.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+      {
+        participantData: shuffledParticipants.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+      {
+        participantData: participantsWithLeastQuality.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+    ];
+
     return res.render("contest", {
       title: i18n.__("vscontest"),
       path: "/contest",
       contestDetailData: contestDetailData,
       ADMIN_URL: process.env.ADMIN_URL,
       activeEntries: activeEntries,
-      participantsWithVotes: participantsWithVotes,
-      participantsWithoutLeastQuality: shuffledParticipants,
-      participantsWithLeastQuality: participantsWithLeastQuality,
+      participantsArray: participantsArray,
     });
   }
 });

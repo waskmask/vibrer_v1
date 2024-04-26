@@ -509,7 +509,7 @@
   "withdraw": "Withdraw",
   "share": "Share",
   "whatsapp_support": " If you have any difficulties contact us directly on:",
-  "desc_optional": "Beschreibung (optional)",
+  "desc_optional": "Description (optional)",
   "submitting_wait": "Submitting, please wait..",
   "title_required": "Title is required",
   "select_genres": "Select atleast 1 genre",
@@ -577,5 +577,9 @@
   "already_reported": "You have already reported this post",
   "visit_contest_or_entries": "Veiw contest / entries",
   "contest_1_terms_conditions_6": "In the 'Vibrer Singing Contest (Chapter 1)', participants cannot withdraw their entry once voting has started, to ensure fairness and maintain the integrity of the competition. This rule is crucial for a smooth contest flow and to uphold commitments from all contestants.",
-  "email_verify_for_vote": "To vote in the contest, you must verify your email address. We sent you a verification link via email after you created your account. Please check both your inbox and spam folder."
+  "email_verify_for_vote": "To vote in the contest, you must verify your email address. We sent you a verification link via email after you created your account. Please check both your inbox and spam folder.",
+  "preview": "Preview",
+  "genres.Pop New 1": "genres.Pop New 1",
+  "uppy_drag": "Drag and drop your video here or",
+  "browse": "Browse"
 }

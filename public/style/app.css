@@ -988,7 +988,7 @@ input:-webkit-autofill:active {
 
 .app_header {
   background-color: #1e2750;
-  z-index: 99;
+  z-index: 999999;
   position: sticky;
   top: 0;
   left: 0;

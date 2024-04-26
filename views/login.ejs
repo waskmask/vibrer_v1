@@ -124,7 +124,7 @@
               if (response.ok) {
                 console.log("Token stored in session");
                 if (window.history.length > 1) {
-                  history.back();
+                  window.history.back();
                 } else {
                   window.location.href = "/app/pre-home"; // Fallback URL if no history is available
                 }
