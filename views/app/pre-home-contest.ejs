@@ -806,6 +806,38 @@
           };
 
           document.body.appendChild(scriptElement);
+
+          var players = [];
+          var videoElements = document.querySelectorAll(".video-js");
+
+          for (var i = 0; i < videoElements.length; i++) {
+            var player = videojs(videoElements[i]);
+            players.push(player);
+
+            player.on("play", function () {
+              pauseOtherPlayers(this);
+            });
+            player.on("seeking", function () {
+              this.muted(true);
+            });
+            player.on("seeked", function () {
+              this.muted(false);
+            });
+          }
+
+          function pauseOtherPlayers(currentPlayer) {
+            players.forEach(function (player) {
+              if (player !== currentPlayer) {
+                player.pause();
+              }
+            });
+          }
+
+          function pauseAllVideos() {
+            players.forEach(function (player) {
+              player.pause();
+            });
+          }
         }
 
         setTimeout(function () {
