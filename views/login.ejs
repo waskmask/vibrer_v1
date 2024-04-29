@@ -100,6 +100,10 @@
     <script src="/public/js/authForm.js?v=3.1"></script>
     <script src="/public/js/config.js?v=3.1"></script>
     <script>
+      window.addEventListener("load", (event) => {
+        var focusInput = document.getElementById("loginEmail");
+        focusInput.focus();
+      });
       function toForgotPass() {
         window.location.href = "/forgot-password";
       }
