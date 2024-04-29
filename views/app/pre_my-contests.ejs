@@ -18,115 +18,49 @@
     <link rel="stylesheet" href="/public/style/app_ext.css?v=3.1" />
     <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
     <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+    <link
+      href="https://releases.transloadit.com/uppy/v3.23.0/uppy.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .uppy-Dashboard-files {
+        display: none !important;
+      }
+      .uppy-Dashboard-inner {
+        height: 100px !important;
+        border-color: #585858;
+        border-radius: 7px;
+      }
+      .uppy-Dashboard-AddFiles-title {
+        font-size: 16px;
+        margin-top: 19px;
+        color: #fff;
+      }
+      .uppy-Dashboard-innerWrap {
+        background-color: #2f2f4b;
+      }
+      .uppy-Dashboard-browse {
+        color: #ff9fc2;
+      }
+      [data-uppy-drag-drop-supported="true"] .uppy-Dashboard-AddFiles {
+        border: 1px dashed #585858;
+      }
+      .video-preview {
+        width: 100%;
+        max-width: 300px;
+        padding-top: 180px;
+      }
+      .uppy-StatusBar-actionCircleBtn {
+        display: none !important;
+      }
+    </style>
   </head>
   <body class="body-dark _pr">
     <!-- loader -->
     <%- include('../partials/loader'); %>
 
     <!-- header -->
-    <header class="app_header">
-      <nav class="app_layout">
-        <div class="app_start_menu">
-          <!-- Logo -->
-          <% if (path !== '/home') { %>
-          <div class="logo" onclick="toPreHome('<%= path %>')">
-            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
-          </div>
-          <% } else { %>
-          <div class="logo">
-            <img src="/public/images/vibrer_icon.svg" alt="Logo" />
-          </div>
-          <% } %>
-        </div>
-
-        <div class="app_middle_bar force_mobile">
-          <ul>
-            <li
-              class="<%= (path == '/home') ? 'active mdb_item' : 'mdb_item' %>"
-              onclick="toPreHome('<%= path %>')"
-            >
-              <img src="/public/images/icons/home-icon.svg" alt="Icon" />
-            </li>
-            <% if(profileData.user_type === 'Artist'){ %>
-            <li
-              class="<%= (path == '/contests') ? 'active' : '' %>"
-              onclick="toTheContest('<%- path %>')"
-            >
-              <img src="/public/images/icons/contest-icon.svg" alt="Icon" />
-            </li>
-            <% } %>
-          </ul>
-        </div>
-
-        <div class="app_right_menu">
-          <div class="profile">
-            <div class="head hphead">
-              <% if (profileData.profile_img === '') { %>
-              <img
-                src="/public/images/default-avatar.png"
-                alt="Default Avatar"
-                class="avatar"
-              />
-              <% } else { %>
-              <img
-                src="<%- profileData.profile_img %>"
-                alt="User Profile Image"
-                class="avatar"
-              />
-              <% } %>
-            </div>
-            <div class="drop_down hpdd">
-              <div class="_profile">
-                <% if (profileData.profile_img === '') { %>
-                <img
-                  src="/public/images/default-avatar.png"
-                  alt="Default Avatar"
-                />
-                <% } else { %>
-                <img
-                  src="<%- profileData.profile_img %>"
-                  alt="User Profile Image"
-                />
-                <% } %>
-                <div class="name">
-                  <span><%- profileData.full_name %></span>
-                  <% if(profileData.verified === true){ %>
-                  <img
-                    class="app_v_badge"
-                    src="/public/images/icons/verified-badge.svg"
-                    alt="Verified"
-                  />
-                  <% } %>
-                </div>
-                <div class="uname" id="username">
-                  @<%- profileData.username %>
-                </div>
-              </div>
-
-              <div class="_menu">
-                <ul>
-                  <li>
-                    <a href="/app/pre-my-profile">
-                      <img
-                        src="/public/images/icons/user_icon.svg"
-                        alt="Icon"
-                      />
-                      <span><%- __("my_profile")%></span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" onclick="logoutAppUser();">
-                      <img src="/public/images/icons/log-off.svg" alt="Icon" />
-                      <span><%- __("logout")%></span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <%- include('./partials/pre-header'); %>
 
     <main class="app_layout app_wrapper">
       <!-- main body of the app -->
@@ -148,7 +82,7 @@
               <video
                 controls
                 class="video-js"
-                preload="auto"
+                preload="metadata"
                 width="640"
                 height="264"
                 data-setup="{}"
@@ -182,7 +116,9 @@
               <div class="votes">
                 <div class="count">
                   <strong><%-__("votes")%></strong>
-                  <span><%- participatedParticipantData.votes.length %></span>
+                  <% let votes = participatedParticipantData.votes.length %> <%
+                  if (votes > 5) { %> <% votes += 50; %> <% } %>
+                  <span><%- votes %></span>
                 </div>
                 <div class="rank">
                   <strong><%-__("current_rank")%></strong>
@@ -191,12 +127,12 @@
               </div>
 
               <div class="cta">
-                <!-- <button
+                <!--button
                   class="btn btn-outlined"
                   onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
                 >
                   <%-__("withdraw")%>
-                </button> -->
+                </button-->
                 <button
                   class="btn btn-outlined"
                   data-toggle="share_modal"
@@ -248,35 +184,6 @@
                 id="title"
               />
             </div>
-            <div class="mb-3 file_input_wrapper">
-              <div class="small light mb-1">
-                <%- __("entry_video_max_size")%>
-              </div>
-              <label class="label f-border" for="media_file">
-                <%- __("upload_video")%>
-              </label>
-              <input
-                class="form-input"
-                type="file"
-                name="media_video"
-                id="media_file"
-                accept="video/*"
-              />
-              <div id="uploadProgress" class="progress-bar d-none">
-                <div class="progress-bar-fill">your_video_preview</div>
-              </div>
-
-              <div class="sub pr-title d-none"><%- __("upload_video")%></div>
-              <div class="video-preview d-none">
-                <video
-                  class="video-js"
-                  preload="auto"
-                  width="640"
-                  height="264"
-                  data-setup="{}"
-                ></video>
-              </div>
-            </div>
 
             <div class="custom-select-wrapper mb-3" id="selectWrapperErr">
               <div class="custom-check-select dfac" id="genre">
@@ -323,10 +230,47 @@
             <div class="mb-4">
               <div id="desc" style="height: auto; min-height: 100px"></div>
             </div>
+
+            <div class="mb-3 file_input_wrapper">
+              <div class="small light mb-1">
+                <%- __("entry_video_max_size")%>
+              </div>
+              <label class="label f-border" for="media_file">
+                <%- __("upload_video")%>
+              </label>
+            </div>
+
+            <input
+              class="form-input"
+              type="hidden"
+              name="media_video"
+              id="media_file"
+              accept="video/*"
+            />
+            <div class="mb-3 mt-3 file_input_wrapper_progress">
+              <div id="uploadProgress" class="progress-bar d-none">
+                <div class="progress-bar-fill"></div>
+              </div>
+              <div class="sub pr-title d-none"><%- __("preview")%></div>
+              <div class="video-preview d-none">
+                <video
+                  class="video-js"
+                  preload="metadata"
+                  width="640"
+                  height="264"
+                  autoplay="off"
+                  data-setup="{}"
+                ></video>
+              </div>
+            </div>
+
             <div class="error-message mt-3 mb-2 d-none"></div>
             <div class="form-success mt-3 mb-2 d-none">
               <%-__("entry_success")%>
             </div>
+            <div class="uppy-progress-bar-container"></div>
+            <div class="uppy-informer-container"></div>
+            <div class="uppy-status-bar-container d-none"></div>
             <div class="mb-3">
               <button class="btn btn-primary submitBtn" type="submit">
                 <%-__("submit")%>
@@ -503,101 +447,284 @@
       }
     </script>
     <script>
-      document
-        .querySelectorAll('.file_input_wrapper input[type="file"]')
-        .forEach(function (fileInput) {
-          // Ensure we're targeting the specific input for video files
-          if (
-            fileInput.getAttribute("name") === "media_video" &&
-            fileInput.getAttribute("accept").includes("video/*")
-          ) {
-            fileInput.addEventListener("change", function (event) {
-              var files = event.target.files;
-              if (files.length === 0) return; // Exit if no file selected
+      // document
+      //   .querySelectorAll('.file_input_wrapper input[type="file"]')
+      //   .forEach(function (fileInput) {
+      //     // Ensure we're targeting the specific input for video files
+      //     if (
+      //       fileInput.getAttribute("name") === "media_video" &&
+      //       fileInput.getAttribute("accept").includes("video/*")
+      //     ) {
+      //       fileInput.addEventListener("change", function (event) {
+      //         var files = event.target.files;
+      //         if (files.length === 0) return; // Exit if no file selected
 
-              var file = files[0];
-              var wrapper = event.target.closest(".file_input_wrapper");
-              var label = wrapper.querySelector(".label");
-              var previewContainer = wrapper.querySelector(".video-preview");
-              var prTitle = wrapper.querySelector(".pr-title");
-              var progressBar = wrapper.querySelector(".progress-bar");
-              var progressBarFill =
-                progressBar.querySelector(".progress-bar-fill");
-              var errorDiv = wrapper.querySelector(".form-alert.error"); // Selector for the error message div
+      //         var file = files[0];
+      //         var wrapper = event.target.closest(".file_input_wrapper");
+      //         var label = wrapper.querySelector(".label");
+      //         var previewContainer = wrapper.querySelector(".video-preview");
+      //         var prTitle = wrapper.querySelector(".pr-title");
+      //         var progressBar = wrapper.querySelector(".progress-bar");
+      //         var progressBarFill =
+      //           progressBar.querySelector(".progress-bar-fill");
+      //         var errorDiv = wrapper.querySelector(".form-alert.error"); // Selector for the error message div
 
-              // Clear previous error message if present
-              if (errorDiv) {
-                errorDiv.remove();
-              }
+      //         // Clear previous error message if present
+      //         if (errorDiv) {
+      //           errorDiv.remove();
+      //         }
 
-              // Check if file size exceeds the maximum allowed size (2 GB)
-              if (file.size > 2048 * 1024 * 1024) {
-                // Create and display an error message
-                var errorMsg = document.createElement("div");
-                errorMsg.classList.add("form-alert", "error");
-                errorMsg.textContent = localizedStrings.fileSize2gb;
-                wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
+      //         // Check if file size exceeds the maximum allowed size (2 GB)
+      //         if (file.size > 2048 * 1024 * 1024) {
+      //           // Create and display an error message
+      //           var errorMsg = document.createElement("div");
+      //           errorMsg.classList.add("form-alert", "error");
+      //           errorMsg.textContent = localizedStrings.fileSize2gb;
+      //           wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
 
-                // Reset label, preview, and progress bar to default state
-                label.textContent = localizedStrings.uploadVideo;
-                label.classList.remove("text-white");
-                prTitle.classList.add("d-none");
-                previewContainer.classList.add("d-none");
-                progressBar.classList.add("d-none");
-                return; // Exit to prevent further processing
-              }
+      //           // Reset label, preview, and progress bar to default state
+      //           label.textContent = localizedStrings.uploadVideo;
+      //           label.classList.remove("text-white");
+      //           prTitle.classList.add("d-none");
+      //           previewContainer.classList.add("d-none");
+      //           progressBar.classList.add("d-none");
+      //           return; // Exit to prevent further processing
+      //         }
 
-              // Update label text with file name, handling long names
-              label.textContent =
-                file.name.length > 25
-                  ? "..." + file.name.slice(-23)
-                  : file.name;
-              label.classList.add("text-white", files.length > 0);
+      //         // Update label text with file name, handling long names
+      //         label.textContent =
+      //           file.name.length > 25
+      //             ? "..." + file.name.slice(-23)
+      //             : file.name;
+      //         label.classList.add("text-white", files.length > 0);
 
-              // Reset preview and progress bar for new file upload
-              progressBar.classList.remove("d-none");
-              progressBarFill.style.width = "0%";
-              progressBarFill.textContent = "0%";
-              previewContainer.innerHTML = "";
-              prTitle.classList.remove("d-none");
+      //         // Reset preview and progress bar for new file upload
+      //         progressBar.classList.remove("d-none");
+      //         progressBarFill.style.width = "0%";
+      //         progressBarFill.textContent = "0%";
+      //         previewContainer.innerHTML = "";
+      //         prTitle.classList.remove("d-none");
 
-              var uploadPercentage = 0;
-              var simulateUpload = setInterval(function () {
-                if (uploadPercentage >= 100) {
-                  clearInterval(simulateUpload);
-                  progressBar.classList.add("d-none");
+      //         var uploadPercentage = 0;
+      //         var simulateUpload = setInterval(function () {
+      //           if (uploadPercentage >= 100) {
+      //             clearInterval(simulateUpload);
+      //             progressBar.classList.add("d-none");
 
-                  if (file.type === "video/quicktime") {
-                    previewContainer.innerHTML = `<p>${localizedStrings.noPreview}</p>`;
+      //             if (file.type === "video/quicktime") {
+      //               previewContainer.innerHTML = `<p>${localizedStrings.noPreview}</p>`;
 
-                    previewContainer.classList.remove("d-none");
-                  } else {
-                    // For supported formats, initialize Video.js player
-                    var blobUrl = URL.createObjectURL(file);
-                    var newVideoHtml = `
-              <video id="my_video_player" class="video-js" preload="auto" width="640" height="264" data-setup="{}" controls>
-                <source src="${blobUrl}" type="${file.type}">
-                <p class="vjs-no-js">
-                  To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                </p>
-              </video>
-            `;
-                    previewContainer.innerHTML = newVideoHtml;
-                    previewContainer.classList.remove("d-none");
-                    videojs(document.getElementById("my_video_player"));
-                  }
-                } else {
-                  uploadPercentage += 5;
-                  progressBarFill.style.width = uploadPercentage + "%";
-                  progressBarFill.textContent = uploadPercentage + "%";
-                }
-              }, 200);
-            });
-          }
-        });
+      //               previewContainer.classList.remove("d-none");
+      //             } else {
+      //               // For supported formats, initialize Video.js player
+      //               var blobUrl = URL.createObjectURL(file);
+      //               var newVideoHtml = `
+      //         <video id="my_video_player" class="video-js" preload="auto" width="640" height="264" data-setup="{}" controls>
+      //           <source src="${blobUrl}" type="${file.type}">
+      //           <p class="vjs-no-js">
+      //             To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+      //           </p>
+      //         </video>
+      //       `;
+      //               previewContainer.innerHTML = newVideoHtml;
+      //               previewContainer.classList.remove("d-none");
+      //               videojs(document.getElementById("my_video_player"));
+      //             }
+      //           } else {
+      //             uploadPercentage += 5;
+      //             progressBarFill.style.width = uploadPercentage + "%";
+      //             progressBarFill.textContent = uploadPercentage + "%";
+      //           }
+      //         }, 200);
+      //       });
+      //     }
+      //   });
     </script>
-    <script>
+    <% if(!isParticipated) { %>
+    <script type="module">
+      import {
+        Uppy,
+        Dashboard,
+        StatusBar,
+        ProgressBar,
+        Informer,
+        XHRUpload,
+      } from "https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs";
+
+      let uppySelectedFile;
+
       document.addEventListener("DOMContentLoaded", function () {
+        const uppy = new Uppy({
+          debug: true,
+          restrictions: {
+            maxFileSize: 2048 * 1024 * 1024, // 2 GB max file size
+            maxNumberOfFiles: 1, // Allow only one file to be uploaded
+            allowedFileTypes: ["video/*"], // Allowed file types
+          },
+        });
+
+        uppy
+          .use(Dashboard, {
+            inline: true,
+            target: ".file_input_wrapper",
+            replaceTargetContent: true,
+            showProgressDetails: true,
+            proudlyDisplayPoweredByUppy: false,
+            hideUploadButton: true,
+            locale: {
+              strings: {
+                dropPasteFiles:
+                  "Drag and drop your video here or %{browseFiles}",
+                browseFiles: "browse file",
+                cancelButton: "Cancel Upload",
+              },
+            },
+          })
+          .use(ProgressBar, {
+            target: ".uppy-progress-bar-container",
+          })
+          .use(Informer, {
+            target: ".uppy-informer-container",
+          })
+          .use(StatusBar, {
+            target: ".uppy-status-bar-container",
+          })
+          .use(XHRUpload, {
+            endpoint: `${API_URL}upload/MediaVideo`,
+            fieldName: "media_video",
+            formData: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+          .on("upload-success", (file, response) => {
+            // Handle successful upload
+            // console.log("File upload successful:", response);
+            // Do something with the response from the server
+          })
+          .on("upload-error", (file, error) => {
+            console.error(
+              `Error uploading file: ${file.name}`,
+              error,
+              response
+            );
+          });
+
+        // Event listener for when a file is selected
+        uppy.on("file-added", function (file) {
+          var wrapper = document.querySelector(".file_input_wrapper_progress");
+          var previewContainer = wrapper.querySelector(".video-preview");
+          var prTitle = wrapper.querySelector(".pr-title");
+          var progressBar = wrapper.querySelector(".progress-bar");
+          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
+
+          // Check if file size exceeds the maximum allowed size (2 GB)
+          if (file.size > 2048 * 1024 * 1024) {
+            // Display an error message
+            var errorDiv = wrapper.querySelector(".form-alert.error"); // Reuse this selector for consistency
+            if (errorDiv) {
+              errorDiv.remove();
+            }
+            var errorMsg = document.createElement("div");
+            errorMsg.classList.add("form-alert", "error");
+            errorMsg.textContent = localizedStrings.fileSize2gb;
+            wrapper.insertBefore(errorMsg, progressBar);
+
+            // Reset UI elements
+            resetUI();
+            return;
+          }
+
+          // Use a blob URL for the video preview, which avoids reading the file entirely into memory
+          const blobUrl = URL.createObjectURL(file.data);
+
+          // Setup initial UI state for file upload progress
+          setupInitialUI();
+
+          var uploadPercentage = 0;
+          var simulateUpload = setInterval(function () {
+            if (uploadPercentage >= 100) {
+              clearInterval(simulateUpload);
+              progressBar.classList.add("d-none");
+
+              setupVideoPreview(blobUrl, file.type);
+            } else {
+              uploadPercentage += 25;
+              progressBarFill.style.width = uploadPercentage + "%";
+              progressBarFill.textContent = uploadPercentage + "%";
+            }
+          }, 100);
+
+          function resetUI() {
+            prTitle.classList.add("d-none");
+            previewContainer.classList.add("d-none");
+            progressBar.classList.add("d-none");
+          }
+
+          function setupInitialUI() {
+            progressBar.classList.remove("d-none");
+            progressBarFill.style.width = "0%";
+            progressBarFill.textContent = "0%";
+            previewContainer.innerHTML = "";
+            prTitle.classList.remove("d-none");
+          }
+
+          function setupVideoPreview(blobUrl, fileType) {
+            var newVideoHtml = "";
+            if (fileType === "video/quicktime") {
+              newVideoHtml = `<p>${localizedStrings.noPreview}</p>`;
+            } else {
+              newVideoHtml = `
+            <video id="my_video_player" class="video-js" preload="metadata" width="640" height="264" data-setup="{}" controls>
+              <source src="${blobUrl}" type="${file.type}">
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+              </p>
+            </video>
+          `;
+            }
+
+            previewContainer.innerHTML = newVideoHtml;
+            previewContainer.classList.remove("d-none");
+
+            // Initialize the video.js player if necessary
+            if (fileType !== "video/quicktime") {
+              videojs(document.getElementById("my_video_player"));
+            }
+          }
+          uppySelectedFile = file;
+        });
+
+        // Event listener for when a file is removed
+        uppy.on("file-removed", function () {
+          const previewContainer = document.querySelector(".video-preview");
+          const prTitle = document.querySelector(".pr-title");
+
+          // Clear the preview container when file is removed
+          previewContainer.innerHTML = "";
+          previewContainer.classList.add("d-none");
+          prTitle.classList.add("d-none");
+          uppySelectedFile = "";
+        });
+
+        // Event listener for when the upload starts
+        uppy.on("upload", function () {
+          // Show progress bar and informer
+          document.querySelector(".uppy-progress-bar-container").style.display =
+            "block";
+          document.querySelector(".uppy-informer-container").style.display =
+            "block";
+        });
+
+        // Event listener for when the upload finishes
+        uppy.on("complete", function () {
+          // Hide progress bar and informer
+          document.querySelector(".uppy-progress-bar-container").style.display =
+            "none";
+          document.querySelector(".uppy-informer-container").style.display =
+            "none";
+        });
+
         const form = document.getElementById("mediaPostForm");
         if (!form) {
           return;
@@ -612,8 +739,13 @@
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
 
+          const uppyCancelBtn = document.querySelector(
+            ".uppy-DashboardContent-back"
+          );
+
           btn.textContent = localizedStrings.submitting;
           btn.disabled = true;
+          uppyCancelBtn.disabled = true;
 
           let isValid = true;
           let customErrors = {};
@@ -630,7 +762,9 @@
             customErrors.genres = localizedStrings.genreReq;
           }
 
-          const media_video = document.getElementById("media_file").files[0];
+          // const media_video = document.getElementById("media_file").files[0];
+          const media_video = uppySelectedFile;
+
           if (!media_video) {
             isValid = false;
             customErrors.media_video = localizedStrings.chooseVideo;
@@ -641,18 +775,44 @@
 
           clearPreviousErrors();
 
+          let mediaVideoFile;
           if (isValid) {
-            const formData = new FormData(form);
-            formData.append("description", quill.getText());
+            uppy.upload();
+            uppy.on("complete", (result) => {
+              // console.log("Upload complete:", result.successful, result.failed);
+              if (
+                result.successful[0].response &&
+                result.successful[0].response.status === 201
+              ) {
+                mediaVideoFile =
+                  result.successful[0].response.body.result.media;
 
-            const genresArray = genresInput.split(",");
-            formData.append("genres", genresArray);
+                const formData = new FormData(form);
+                formData.append("description", quill.getText());
 
-            submitForm(formData);
+                const genresArray = genresInput.split(",");
+                formData.append("genres", genresArray);
+                formData.append("media_video", mediaVideoFile);
+
+                submitForm(formData);
+              } else {
+                errorPop.textContent = result.failed[0].response.body.message;
+                errorPop.classList.remove("d-none");
+                errorPop.style.display = "block";
+                setTimeout(() => {
+                  errorPop.classList.add("d-none");
+                  errorPop.style.display = "none";
+                }, 5000);
+                return false;
+              }
+
+              return;
+            });
           } else {
             displayCustomErrors(customErrors);
             btn.textContent = localizedStrings.submit;
             btn.disabled = false;
+            uppyCancelBtn.disabled = false;
           }
         });
 
@@ -721,12 +881,20 @@
 
         async function submitForm(formData) {
           const url = `${API_URL}add/MediaPost`;
+          const formDataJSON = {};
+          for (const [key, value] of formData.entries()) {
+            formDataJSON[key] = key === "genres" ? value.split(",") : value;
+          }
+
+          // Convert JSON object to JSON string
+          const jsonData = JSON.stringify(formDataJSON);
 
           try {
             const response = await fetch(url, {
               method: "POST",
-              body: formData,
+              body: jsonData,
               headers: {
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
               },
             });
@@ -773,6 +941,7 @@
         }
       });
     </script>
+    <% } %>
 
     <script>
       async function confirmDelete(postId) {

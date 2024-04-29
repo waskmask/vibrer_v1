@@ -221,8 +221,9 @@
                 <%= profileData.genres.map(genre => __("genres." +
                 genre.name)).join(', ') %>
               </div>
-              <% }%> <% if(profileData.link && profileData.link.length > 0) { %>
-              <div class="title mt-3"><%- __("other_links")%>:</div>
+              <% }%> <% if (profileData.link &&
+              Object.keys(profileData.link).length > 0) { %>
+              <div class="title mt-3"><%- __("other_links") %>:</div>
               <div class="p_social_links mt-2">
                 <% for (let platform in profileData.link) { %> <% if
                 (profileData.link[platform] !== "") { %>
@@ -240,6 +241,7 @@
                 <% } %> <% } %>
               </div>
               <% } %>
+
               <!--  -->
               <% if(profileData.bio.replace(/<[^>]*>/g, '').trim() !== '') { %>
               <div class="title mt-3"><%- __("bio")%>:</div>

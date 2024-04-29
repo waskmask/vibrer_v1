@@ -2,6 +2,36 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const i18n = require("i18n");
+const AWS = require("aws-sdk");
+
+const s3 = new AWS.S3({
+  endpoint: process.env.END_POINT,
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  signatureVersion: "v4",
+  region: "auto", // Cloudflare R2 does not require a specific region
+  s3ForcePathStyle: true, // This forces the request to use path-style addressing
+});
+
+getFileFromR2 = (fileName) => {
+  const params = {
+    Bucket: process.env.MEDIA_BUCKET_NAME,
+    Key: fileName,
+  };
+
+  return s3.getObject(params).promise();
+};
+
+async function getFileToR2(key) {
+  const params = {
+    Bucket: process.env.MEDIA_BUCKET_NAME,
+    Key: key,
+    Expires: 3600,
+  };
+  let url = await s3.getSignedUrlPromise("getObject", params);
+  return url;
+}
+
 // router.get("/app/home", async function (req, res) {
 //   try {
 //     if (!req.session.appUserToken) {
@@ -567,16 +597,16 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
     const genreData = genreApiResponse.data.result;
 
     const contestDetailsResponse = await axios.get(
-      `${process.env.API_URL}contest-details/${contest_id}`,
+      `${process.env.API_URL}contest-details-all-participants/${contest_id}`,
       {
         headers: {
           Authorization: `Bearer ${req.session.appUserToken}`,
         },
       }
     );
+
     const contestDetailsData = contestDetailsResponse.data;
     let isParticipated = false;
-
     const userIdExists = contestDetailsData.result.participates.some(
       (participant) => participant.user._id === userId
     );
@@ -586,6 +616,15 @@ router.get("/app/pre-participate/:contest_id", async function (req, res) {
         contestDetailsData.result.participates.find(
           (participant) => participant.user._id === userId
         );
+
+      if (
+        !participatedParticipant.media.startsWith("http://") &&
+        !participatedParticipant.media.startsWith("https://")
+      ) {
+        participatedParticipant.media = await getFileToR2(
+          participatedParticipant.media
+        );
+      }
 
       res.render("app/pre_my-contests", {
         title: "Participate",
@@ -800,6 +839,50 @@ router.get("/app/pre-contest", async function (req, res) {
       contestDetailData.result.participates.filter((participant) =>
         hasUserVoted(participant)
       );
+
+    const participantsArray = [
+      {
+        participantData: participantsWithVotes.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+      {
+        participantData: participantsVotedByUser.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+      {
+        participantData: shuffledParticipants.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+      {
+        participantData: participantsWithLeastQuality.map(
+          ({ description, email, media, title, ...rest }) => ({
+            ...rest,
+            title: encodeURIComponent(title),
+            email: encodeURIComponent(email),
+            media: media,
+          })
+        ),
+      },
+    ];
+
     res.render("app/pre-home-contest", {
       title: "Contest",
       path: "/contest",
@@ -807,10 +890,7 @@ router.get("/app/pre-contest", async function (req, res) {
       activeEntries: activeEntries,
       contestDetailData: contestDetailsData,
       profileData: profileData,
-      youVoted: participantsVotedByUser,
-      participantsWithVotes: participantsWithVotes,
-      participantsWithoutLeastQuality: shuffledParticipants,
-      participantsWithLeastQuality: participantsWithLeastQuality,
+      participantsArray: participantsArray,
     });
   } catch (error) {
     console.error("Error fetching profile:", error);
