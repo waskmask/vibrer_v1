@@ -279,7 +279,7 @@
               placeholder="<%= __('youtube') %>"
               autocomplete="off"
               name="youtube"
-              value="<%- profileData.link.youtube %>"
+              value="<%= profileData.link && profileData.link.youtube ? profileData.link.youtube : '' %>"
             />
           </div>
           <div class="mb-3">
@@ -292,7 +292,7 @@
               placeholder="<%= __('instagram') %>"
               autocomplete="off"
               name="instagram"
-              value="<%- profileData.link.instagram %>"
+              value="<%- profileData.link && profileData.link.instagram ? profileData.link.instagram : '' %>"
             />
           </div>
           <div class="mb-3">
@@ -303,7 +303,7 @@
               placeholder="<%= __('facebook') %>"
               autocomplete="off"
               name="facebook"
-              value="<%- profileData.link.facebook %>"
+              value="<%- profileData.link && profileData.link.facebook ? profileData.link.facebook : '' %>"
             />
           </div>
           <div class="mb-3">
@@ -314,7 +314,7 @@
               placeholder="<%= __('twitter') %>"
               autocomplete="off"
               name="twitter"
-              value="<%- profileData.link.twitter %>"
+              value="<%- profileData.link && profileData.link.twitter ? profileData.link.twitter :'' %>"
             />
           </div>
           <div class="mb-3">
@@ -325,7 +325,7 @@
               placeholder="<%= __('website') %>"
               autocomplete="off"
               name="website"
-              value="<%- profileData.link.website %>"
+              value="<%- profileData.link && profileData.link.website ? profileData.link.website :'' %>"
             />
           </div>
           <div class="error-message mt-3 d-none"></div>
