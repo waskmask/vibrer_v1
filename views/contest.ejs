@@ -559,7 +559,11 @@
             votesDiv.classList.add("votes");
             const countDiv = document.createElement("div");
             countDiv.classList.add("count");
-            countDiv.innerHTML = `<strong><%-__('votes')%></strong><span id="countVotes<%- contestDetailData.result._id %>${participant.user._id}">${participant.votes.length}</span>`;
+            let totalVotes = participant.votes.length;
+            if (totalVotes > 5) {
+              totalVotes = totalVotes + 50;
+            }
+            countDiv.innerHTML = `<strong><%-__('votes')%></strong><span id="countVotes<%- contestDetailData.result._id %>${participant.user._id}">${totalVotes}</span>`;
             const rankDiv = document.createElement("div");
             rankDiv.classList.add("rank");
             rankDiv.innerHTML = `<strong><%= __("current_rank") %>:</strong><span>${participant.rank}<sup>${participantRank}</sup></span>`;
