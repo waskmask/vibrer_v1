@@ -184,7 +184,7 @@ async function getFileToR2(key) {
 
 router.get("/app/contest-entry/:contestId/:entryId", async function (req, res) {
   const { contestId, entryId } = req.params;
-  const entryUrl = `https://vibrer.tech/contest-single-entry/${contestId}/${entryId}`;
+  const entryUrl = `${process.env.API_URL}contest-single-entry/${contestId}/${entryId}`;
 
   let loggedIn = false;
   let alreadyVoted = false;
@@ -194,7 +194,6 @@ router.get("/app/contest-entry/:contestId/:entryId", async function (req, res) {
   try {
     const response = await axios.get(entryUrl);
     entryData = response.data;
-    console.log(entryData);
   } catch (error) {
     console.error("Error fetching entry:", error); // Log error details
   }
