@@ -1,9 +1,10 @@
 {
   "name": "vibrer-prelaunch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide.",
   "main": "app.js",
   "scripts": {
+    "start": "NODE_OPTIONS=--max-old-space-size=40960 node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
