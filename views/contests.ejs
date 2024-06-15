@@ -22,6 +22,33 @@
     <main>
       <section class="contests bg-dark" style="padding-bottom: 10px">
         <div class="layout">
+          <% if (archivedContestsData.result &&
+          archivedContestsData.result.length > 0) { %>
+          <div class="title tcap">
+            <%=__("completed")%> <%=__("contests")%> (<%-
+            archivedContestsData.result.length %>)
+          </div>
+          <% archivedContestsData.result.forEach(archivedContests => { %>
+          <div class="contests-wrapper" onclick="toContest()">
+            <div class="contest">
+              <div class="status inactive tcap"><%- __("completed") %></div>
+              <img
+                class="hinm"
+                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.xl  %>"
+                alt="images"
+              />
+              <img
+                class="hinb"
+                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.m  %>"
+                alt="images"
+              />
+            </div>
+          </div>
+          <% }); } %>
+        </div>
+      </section>
+      <section class="contests bg-dark" style="padding-bottom: 10px">
+        <div class="layout">
           <% if (onGoingContestsData.result && onGoingContestsData.result.length
           > 0) { %>
           <div class="title tcap">

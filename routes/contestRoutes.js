@@ -23,6 +23,15 @@ router.get("/contests", async function (req, res) {
 
     const upComingContestsData = upComingContestsResponse.data;
 
+    const archivedContestsResponse = await axios.post(
+      `${process.env.API_URL}all/contest`,
+      {
+        type: "Archived",
+      }
+    );
+
+    const archivedContestsData = archivedContestsResponse.data;
+
     if (req.session.appUserToken) {
       const profileResponse = await axios.get(
         `${process.env.API_URL}getappUserProfile`,
@@ -44,6 +53,7 @@ router.get("/contests", async function (req, res) {
         path: "/contest",
         onGoingContestsData: onGoingContestsData,
         upComingContestsData: upComingContestsData,
+        archivedContestsData: archivedContestsData,
         profileData: profileData,
         ADMIN_URL: process.env.ADMIN_URL,
       });
@@ -53,6 +63,7 @@ router.get("/contests", async function (req, res) {
         path: "/contest",
         onGoingContestsData: onGoingContestsData,
         upComingContestsData: upComingContestsData,
+        archivedContestsData: archivedContestsData,
         ADMIN_URL: process.env.ADMIN_URL,
       });
     }

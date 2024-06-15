@@ -581,5 +581,10 @@
   "preview": "Vista previa",
   "genres.Pop New 1": "genres.Pop New 1",
   "uppy_drag": "Arrastra y suelta tu vídeo aquí o",
-  "browse": "Explorar"
+  "browse": "Explorar",
+  "contest_ended": "Este concurso ha terminado",
+  "contest_ended2": "no puedes participar ahora",
+  "view_my_post": "Ver mi publicación",
+  "winners": "Ganadores",
+  "rank": "Rango"
 }

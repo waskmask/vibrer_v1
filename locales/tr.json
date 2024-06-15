@@ -581,5 +581,10 @@
   "preview": "Önizleme",
   "genres.Pop New 1": "genres.Pop New 1",
   "uppy_drag": "Videonuzu buraya sürükleyip bırakın veya",
-  "browse": "Göz at"
+  "browse": "Göz at",
+  "contest_ended": "Bu yarışma sona erdi",
+  "contest_ended2": "şimdi katılamazsınız",
+  "view_my_post": "Gönderimi görüntüle",
+  "winners": "Kazananlar",
+  "rank": "Rütbe"
 }

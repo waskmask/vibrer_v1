@@ -74,7 +74,10 @@
             </div>
           </div>
           <div class="text white">
-            Ends in <%- contestDetailsData.result.endDays %> days
+            <% if (contestDetailsData.result.endDays > 0 &&
+            contestDetailsData.result.status === 'Active') { %>
+            <%-__('endsin')%> <%= contestDetailsData.result.endDays %>
+            <%-__('days')%> <% } else { %> <%= __("contest_ended") %> <% } %>
           </div>
           <div class="text primary mt-2"><%-__("your_entry")%></div>
           <div class="contestant">
@@ -121,7 +124,12 @@
                   <span><%- votes %></span>
                 </div>
                 <div class="rank">
-                  <strong><%-__("current_rank")%></strong>
+                  <% if (contestDetailsData.result.endDays > 0 &&
+                  contestDetailsData.result.status === 'Active') { %>
+                  <strong> <%= __("current_rank") %>:</strong>
+                  <% } else { %>
+                  <strong> <%= __("rank") %>:</strong>
+                  <% } %>
                   <span><%- participatedParticipantData.rank %> </span>
                 </div>
               </div>
@@ -152,7 +160,8 @@
             </div>
           </div>
         </div>
-        <% } else { %>
+        <% } else { %> <% if (contestDetailsData.result.endDays > 0 &&
+        contestDetailsData.result.status === 'Active') { %>
         <div class="title mb-3"><%- __("contest_entry_title")%></div>
 
         <div class="app_form_container shadow">
@@ -289,7 +298,20 @@
             </div>
           </div>
         </div>
-        <% } %>
+        <% } else { %>
+        <section
+          class="error-page"
+          style="background-image: url('/public/images/404.webp')"
+        >
+          <div
+            class="wrapper"
+            style="background-color: #181a3270; padding: 15px"
+          >
+            <div class="title"><%- __("contest_ended")%></div>
+            <div class="sub"><%- __("contest_ended2")%></div>
+          </div>
+        </section>
+        <% } %> <% } %>
         <!-- footer -->
         <div class="temp_footer">
           <div class="top">

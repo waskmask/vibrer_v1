@@ -581,5 +581,10 @@
   "preview": "Pré-visualização",
   "genres.Pop New 1": "genres.Pop New 1",
   "uppy_drag": "Arraste e solte seu vídeo aqui ou",
-  "browse": "Navegar"
+  "browse": "Navegar",
+  "contest_ended": "Este concurso foi encerrado",
+  "contest_ended2": "não pode participar agora",
+  "view_my_post": "Ver minha publicação",
+  "winners": "Vencedores",
+  "rank": "Classificação"
 }

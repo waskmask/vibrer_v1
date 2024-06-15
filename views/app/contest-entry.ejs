@@ -186,7 +186,7 @@
                     <%- entryData.result.votes.length %>
                   </span>
                 </div>
-                <div class="rank">
+                <!-- <div class="rank">
                   <strong><%= __('current_rank') %>:</strong>
                   <% if(entryData.result.rank) { %>
 
@@ -196,7 +196,7 @@
                     >
                   </span>
                   <%}%>
-                </div>
+                </div> -->
               </div>
 
               <div class="cta">
@@ -216,8 +216,8 @@
                 >
                   <%= __('vote_now') %>
                 </button>
-                <% } else {%>
-
+                <% } else {%> <% if(entryData.result.contest.status == 'Active'
+                && entryData.result.contest.endDays > 0){ %>
                 <button
                   class="btn btn-primary submitVoteBtn<%- entryData.result.contest._id %>"
                   type="button"
@@ -227,7 +227,7 @@
                   <% if(alreadyVoted){ %> <%= __('remove_vote') %> <% } else {
                   %> <%= __('vote_now') %> <% } %>
                 </button>
-                <% }%>
+                <% }%> <% }%>
               </div>
             </div>
           </div>

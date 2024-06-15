@@ -777,13 +777,14 @@ router.get("/app/pre-contest", async function (req, res) {
     let isParticipated = false;
 
     if (contestDetailsData.result.participates) {
-      const userIdExists = contestDetailsData.result.participates.some(
-        (participant) => participant.user._id === userId
-      );
+      // const userIdExists = contestDetailsData.result.participates.some(
+      //   (participant) => participant.user._id === userId
+      // );
 
-      if (userIdExists) {
-        isParticipated = true;
-      }
+      // if (userIdExists) {
+      // isParticipated = true;
+      isParticipated = contestDetailsData.result.isParticipated;
+      // }
     }
 
     const contestDetailResponse = await axios.get(

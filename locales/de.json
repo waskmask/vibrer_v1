@@ -581,5 +581,10 @@
   "preview": "Vorschau",
   "genres.Pop New 1": "Genres.Pop New 1",
   "uppy_drag": "Ziehen Sie Ihr Video hierher oder",
-  "browse": "Durchsuchen"
+  "browse": "Durchsuchen",
+  "contest_ended": "Dieser Wettbewerb ist beendet",
+  "contest_ended2": "Sie können jetzt nicht teilnehmen",
+  "view_my_post": "Meinen Beitrag ansehen",
+  "winners": "Gewinner",
+  "rank": "Rang"
 }

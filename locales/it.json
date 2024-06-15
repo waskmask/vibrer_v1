@@ -581,5 +581,10 @@
   "preview": "Anteprima",
   "genres.Pop New 1": "genres.Pop New 1",
   "uppy_drag": "Trascina e rilascia il tuo video qui o",
-  "browse": "Sfoglia"
+  "browse": "Sfoglia",
+  "contest_ended": "Questo concorso è terminato",
+  "contest_ended2": "non puoi partecipare ora",
+  "view_my_post": "Visualizza il mio post",
+  "winners": "Vincitori",
+  "rank": "Classifica"
 }
