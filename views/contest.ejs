@@ -924,48 +924,45 @@
         // Increment the page number for pagination
         page += 1;
 
-        const localToken = localStorage.getItem("appUserToken");
-        if (localToken) {
-          try {
-            const response = await fetch(
-              `<%- API_URL %>contest-entries/<%- contest_id %>`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  limit: 9,
-                  offset: page,
-                  is_top_three_participants: false,
-                }),
-              }
-            );
-
-            // Parse the JSON response
-            const responseData = await response.json();
-
-            // Check if the response status is successful
-            if (responseData.status === 1) {
-              const participantData = responseData.result.participates;
-
-              // Check if the participantData array is empty
-              if (participantData.length === 0) {
-                allDataLoaded = true; // Set flag to true if no more data
-              } else {
-                // Render the participant data
-                renderParticipantData(participantData, "restEntriesContainer");
-              }
+        try {
+          const response = await fetch(
+            `<%- API_URL %>contest-entries/<%- contest_id %>`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                limit: 9,
+                offset: page,
+                is_top_three_participants: false,
+              }),
             }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          } finally {
-            // Set isLoading to false to indicate that the request is complete
-            isLoading = false;
+          );
 
-            // Hide loader
-            hideLoader();
+          // Parse the JSON response
+          const responseData = await response.json();
+
+          // Check if the response status is successful
+          if (responseData.status === 1) {
+            const participantData = responseData.result.participates;
+
+            // Check if the participantData array is empty
+            if (participantData.length === 0) {
+              allDataLoaded = true; // Set flag to true if no more data
+            } else {
+              // Render the participant data
+              renderParticipantData(participantData, "restEntriesContainer");
+            }
           }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          // Set isLoading to false to indicate that the request is complete
+          isLoading = false;
+
+          // Hide loader
+          hideLoader();
         }
       }
 
