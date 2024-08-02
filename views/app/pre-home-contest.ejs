@@ -238,8 +238,8 @@
                       <strong> <%= __("rank") %>:</strong>
                       <% } %>
                       <span
-                        ><%- participants.rank %><sup
-                          ><%- getOrdinalSuffix(participants.rank) %></sup
+                        ><%- (participants.rank) - 3 %><sup
+                          ><%- getOrdinalSuffix((participants.rank) - 3) %></sup
                         ></span
                       >
                     </div>
