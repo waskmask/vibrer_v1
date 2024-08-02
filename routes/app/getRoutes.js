@@ -763,32 +763,37 @@ router.get("/app/pre-contest", async function (req, res) {
       return res.redirect("/new-profile");
     }
 
-    const contestDetailsResponse = await axios.get(
-      `${process.env.API_URL}contest-details/${contest_id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${req.session.appUserToken}`,
-        },
-      }
-    );
+    // const contestDetailsResponse = await axios.get(
+    //   `${process.env.API_URL}contest-details/${contest_id}`,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${req.session.appUserToken}`,
+    //     },
+    //   }
+    // );
 
-    const contestDetailsData = contestDetailsResponse.data;
-    // const isParticipated = contestDetailsData.result.isParticipated;
-    let isParticipated = false;
+    // const contestDetailsData = contestDetailsResponse.data;
+    // // const isParticipated = contestDetailsData.result.isParticipated;
+    // let isParticipated = false;
 
-    if (contestDetailsData.result.participates) {
-      // const userIdExists = contestDetailsData.result.participates.some(
-      //   (participant) => participant.user._id === userId
-      // );
+    // if (contestDetailsData.result.participates) {
+    //   // const userIdExists = contestDetailsData.result.participates.some(
+    //   //   (participant) => participant.user._id === userId
+    //   // );
 
-      // if (userIdExists) {
-      // isParticipated = true;
-      isParticipated = contestDetailsData.result.isParticipated;
-      // }
-    }
-
-    const contestDetailResponse = await axios.get(
-      `${process.env.API_URL}contest-details/${contest_id}`,
+    //   // if (userIdExists) {
+    //   // isParticipated = true;
+    //   isParticipated = contestDetailsData.result.isParticipated;
+    //   // }
+    // }
+    let payload = {
+      limit: 10,
+      offset: 0,
+      is_top_three_participants: true,
+    };
+    const contestDetailResponse = await axios.post(
+      `${process.env.API_URL}auth/contest-entries/${contest_id}`,
+      payload,
       {
         headers: {
           Authorization: `Bearer ${req.session.appUserToken}`,
@@ -796,101 +801,107 @@ router.get("/app/pre-contest", async function (req, res) {
       }
     );
     const contestDetailData = contestDetailResponse.data;
+    const top3Participants = contestDetailData.result.top3Participants;
+    const participantsArray = contestDetailData.result.participates;
+    const activeEntries = contestDetailData.result.totalEntries;
 
     if (contestDetailData.status === 0) {
       return res.redirect("/app/home");
     }
-    const activeEntries = contestDetailData.result.participates.filter(
-      (participant) => participant.status === "Active"
-    );
-    const sortedParticipants = activeEntries.sort(
-      (a, b) => b.votes.length - a.votes.length
-    );
+    // const activeEntries = contestDetailData.result.participates.filter(
+    //   (participant) => participant.status === "Active"
+    // );
+    // const sortedParticipants = activeEntries.sort(
+    //   (a, b) => b.votes.length - a.votes.length
+    // );
 
-    const participantsWithVotes = sortedParticipants.filter(
-      (participant, index) => index < 3 && participant.votes.length > 0
-    );
-    const participantsWithoutVotes = sortedParticipants.filter(
-      (participant, index) => index >= 3 || participant.votes.length === 0
-    );
+    // const participantsWithVotes = sortedParticipants.filter(
+    //   (participant, index) => index < 3 && participant.votes.length > 0
+    // );
+    // const participantsWithoutVotes = sortedParticipants.filter(
+    //   (participant, index) => index >= 3 || participant.votes.length === 0
+    // );
 
-    const participantsWithLeastQuality = participantsWithoutVotes.filter(
-      (participant) => participant.least_quality
-    );
-    const participantsWithoutLeastQuality = participantsWithoutVotes.filter(
-      (participant) => !participant.least_quality
-    );
+    // const participantsWithLeastQuality = participantsWithoutVotes.filter(
+    //   (participant) => participant.least_quality
+    // );
+    // const participantsWithoutLeastQuality = participantsWithoutVotes.filter(
+    //   (participant) => !participant.least_quality
+    // );
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
+    // function shuffle(array) {
+    //   for (let i = array.length - 1; i > 0; i--) {
+    //     const j = Math.floor(Math.random() * (i + 1));
+    //     [array[i], array[j]] = [array[j], array[i]];
+    //   }
+    //   return array;
+    // }
 
-    const shuffledParticipants = shuffle(participantsWithoutLeastQuality);
+    // const shuffledParticipants = shuffle(participantsWithoutLeastQuality);
 
-    const hasUserVoted = (participant) => {
-      return participant.votes.some((vote) => vote.user_id === userId);
-    };
+    // const hasUserVoted = (participant) => {
+    //   return participant.votes.some((vote) => vote.user_id === userId);
+    // };
 
-    const participantsVotedByUser =
-      contestDetailData.result.participates.filter((participant) =>
-        hasUserVoted(participant)
-      );
+    // const participantsVotedByUser =
+    //   contestDetailData.result.participates.filter((participant) =>
+    //     hasUserVoted(participant)
+    //   );
 
-    const participantsArray = [
-      {
-        participantData: participantsWithVotes.map(
-          ({ description, email, media, title, ...rest }) => ({
-            ...rest,
-            title: encodeURIComponent(title),
-            email: encodeURIComponent(email),
-            media: media,
-          })
-        ),
-      },
-      {
-        participantData: participantsVotedByUser.map(
-          ({ description, email, media, title, ...rest }) => ({
-            ...rest,
-            title: encodeURIComponent(title),
-            email: encodeURIComponent(email),
-            media: media,
-          })
-        ),
-      },
-      {
-        participantData: shuffledParticipants.map(
-          ({ description, email, media, title, ...rest }) => ({
-            ...rest,
-            title: encodeURIComponent(title),
-            email: encodeURIComponent(email),
-            media: media,
-          })
-        ),
-      },
-      {
-        participantData: participantsWithLeastQuality.map(
-          ({ description, email, media, title, ...rest }) => ({
-            ...rest,
-            title: encodeURIComponent(title),
-            email: encodeURIComponent(email),
-            media: media,
-          })
-        ),
-      },
-    ];
+    // const participantsArray = [
+    //   {
+    //     participantData: participantsWithVotes.map(
+    //       ({ description, email, media, title, ...rest }) => ({
+    //         ...rest,
+    //         title: encodeURIComponent(title),
+    //         email: encodeURIComponent(email),
+    //         media: media,
+    //       })
+    //     ),
+    //   },
+    //   {
+    //     participantData: participantsVotedByUser.map(
+    //       ({ description, email, media, title, ...rest }) => ({
+    //         ...rest,
+    //         title: encodeURIComponent(title),
+    //         email: encodeURIComponent(email),
+    //         media: media,
+    //       })
+    //     ),
+    //   },
+    //   {
+    //     participantData: shuffledParticipants.map(
+    //       ({ description, email, media, title, ...rest }) => ({
+    //         ...rest,
+    //         title: encodeURIComponent(title),
+    //         email: encodeURIComponent(email),
+    //         media: media,
+    //       })
+    //     ),
+    //   },
+    //   {
+    //     participantData: participantsWithLeastQuality.map(
+    //       ({ description, email, media, title, ...rest }) => ({
+    //         ...rest,
+    //         title: encodeURIComponent(title),
+    //         email: encodeURIComponent(email),
+    //         media: media,
+    //       })
+    //     ),
+    //   },
+    // ];
 
     res.render("app/pre-home-contest", {
       title: "Contest",
       path: "/contest",
-      isParticipated,
+      isParticipated: contestDetailData.result.isParticipated,
       activeEntries: activeEntries,
-      contestDetailData: contestDetailsData,
+      contestDetailData: contestDetailData,
+      API_URL: process.env.API_URL,
+      contest_id: contest_id,
       profileData: profileData,
       participantsArray: participantsArray,
+      top3Participants: top3Participants,
     });
   } catch (error) {
     console.error("Error fetching profile:", error);
