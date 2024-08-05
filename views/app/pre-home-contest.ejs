@@ -18,17 +18,50 @@
     <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
     <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
     <style>
+      @media screen and (min-width: 1000px) {
+        .loadMoreButton {
+          display: none;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 50%; /* Center horizontally */
+          bottom: 0;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      @media screen and (max-width: 999px) {
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
       .swal2-html-container {
         font-size: 1rem !important;
         line-height: 1.6 !important;
-      }
-      #loadingIndicator {
-        display: none;
-        position: fixed; /* Stay in place while scrolling */
-        left: 50%; /* Center horizontally */
-        bottom: 0;
-        /* transform: translate(-50%, -50%); */
-        z-index: 1000;
       }
 
       #loadingIndicator img {
@@ -238,8 +271,8 @@
                       <strong> <%= __("rank") %>:</strong>
                       <% } %>
                       <span
-                        ><%- (participants.rank) - 3 %><sup
-                          ><%- getOrdinalSuffix((participants.rank) - 3) %></sup
+                        ><%- participants.rank %><sup
+                          ><%- getOrdinalSuffix(participants.rank) %></sup
                         ></span
                       >
                     </div>
@@ -411,10 +444,12 @@
                       <strong> <%= __("rank") %>:</strong>
                       <% } %>
                       <span
-                        ><%- participants.rank %><sup
-                          ><%- getOrdinalSuffix(participants.rank) %></sup
-                        ></span
-                      >
+                        ><%- (participants.rank) - 3 %>
+                        <span
+                          ><%- getOrdinalSuffix((participants.rank) - 3)
+                          %></span
+                        >
+                      </span>
                     </div>
                   </div>
 
@@ -447,6 +482,11 @@
             <% } %>
 
             <div id="restEntriesContainer"></div>
+            <div class="loadMoreButton" id="loadMoreButton">
+              <button class="btn btn-primary" onclick="loadMoreData()">
+                Load more
+              </button>
+            </div>
             <div id="loadingIndicator">
               <img src="../public/images/loader.gif" alt="Loading..." />
             </div>
@@ -973,7 +1013,9 @@
           ) {
             rankDiv.innerHTML = `<strong><%= __("current_rank") %>:</strong><span>${participant.rank}<sup>${participantRank}</sup></span>`;
           } else {
-            rankDiv.innerHTML = `<strong><%= __("rank") %>:</strong><span>${participant.rank}<sup>${participantRank}</sup></span>`;
+            rankDiv.innerHTML = `<strong><%= __("rank") %>:</strong><span>${participant.rank}
+              <span>${participantRank}</span>
+              </span>`;
           }
           votesDiv.appendChild(countDiv);
           votesDiv.appendChild(rankDiv);
@@ -1162,6 +1204,8 @@
               // Check if the participantData array is empty
               if (participantData.length === 0) {
                 allDataLoaded = true; // Set flag to true if no more data
+                document.getElementById("loadMoreButton").style.display =
+                  "none";
               } else {
                 // Render the participant data
                 renderParticipantData(participantData, "restEntriesContainer");
@@ -1179,13 +1223,30 @@
         }
       }
 
-      // Event listener for scroll event
-      window.addEventListener("scroll", () => {
-        // Check if scrolled to the bottom, no request is in progress, and not all data is loaded
-        if (isScrolledToBottom() && !isLoading && !allDataLoaded) {
+      // Function to handle loading more data (called by both scroll and button)
+      function loadMoreData() {
+        if (!isLoading && !allDataLoaded) {
           loadMoreContent();
         }
-      });
+      }
+
+      // Add scroll event listener only for desktop devices
+      function initializeScrollListener() {
+        // Example screen width threshold for mobile (768px and below is considered mobile)
+        const isDesktop = window.innerWidth > 999;
+
+        if (isDesktop) {
+          window.addEventListener("scroll", () => {
+            // Check if scrolled to the bottom, no request is in progress, and not all data is loaded
+            if (isScrolledToBottom() && !isLoading && !allDataLoaded) {
+              loadMoreContent();
+            }
+          });
+        }
+      }
+
+      // Initialize the scroll listener on page load
+      window.addEventListener("load", initializeScrollListener);
     </script>
   </body>
 </html>
