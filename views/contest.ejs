@@ -23,6 +23,9 @@
           gap: 1rem;
           grid-template-columns: repeat(3, 1fr) !important;
         }
+        .loadMoreButton {
+          display: none;
+        }
       }
       @media screen and (max-width: 999px) {
         .wrapper-lg-4 {
@@ -30,12 +33,20 @@
           gap: 1rem;
           grid-template-columns: repeat(2, 1fr) !important;
         }
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
       }
       @media screen and (max-width: 576px) {
         .wrapper-lg-4 {
           display: grid;
           gap: 1rem;
           grid-template-columns: 1fr !important;
+        }
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
         }
       }
       #loadingIndicator {
@@ -457,6 +468,11 @@
           <% } %>
 
           <div id="restEntriesContainer"></div>
+          <div class="loadMoreButton">
+            <button class="btn btn-primary" onclick="loadMoreData()">
+              Load more
+            </button>
+          </div>
           <div id="loadingIndicator">
             <img src="../public/images/loader.gif" alt="Loading..." />
           </div>
@@ -888,7 +904,7 @@
       // });
     </script>
     <script>
-      // Function to check if user has scrolled to the bottom
+      // Function to check if the user has scrolled to the bottom
       function isScrolledToBottom() {
         return (
           window.innerHeight + window.scrollY >= document.body.offsetHeight
@@ -926,7 +942,7 @@
 
         try {
           const response = await fetch(
-            `<%- API_URL %>contest-entries/<%- contest_id %>`,
+            "<%- API_URL %>contest-entries/<%- contest_id %>",
             {
               method: "POST",
               headers: {
@@ -966,13 +982,30 @@
         }
       }
 
-      // Event listener for scroll event
-      window.addEventListener("scroll", () => {
-        // Check if scrolled to the bottom, no request is in progress, and not all data is loaded
-        if (isScrolledToBottom() && !isLoading && !allDataLoaded) {
+      // Function to handle loading more data (called by both scroll and button)
+      function loadMoreData() {
+        if (!isLoading && !allDataLoaded) {
           loadMoreContent();
         }
-      });
+      }
+
+      // Add scroll event listener only for desktop devices
+      function initializeScrollListener() {
+        // Example screen width threshold for mobile (768px and below is considered mobile)
+        const isDesktop = window.innerWidth > 999;
+
+        if (isDesktop) {
+          window.addEventListener("scroll", () => {
+            // Check if scrolled to the bottom, no request is in progress, and not all data is loaded
+            if (isScrolledToBottom() && !isLoading && !allDataLoaded) {
+              loadMoreContent();
+            }
+          });
+        }
+      }
+
+      // Initialize the scroll listener on page load
+      window.addEventListener("load", initializeScrollListener);
     </script>
   </body>
 </html>
