@@ -37,6 +37,14 @@
           display: flex;
           justify-content: center;
         }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -10%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
       }
       @media screen and (max-width: 576px) {
         .wrapper-lg-4 {
@@ -47,6 +55,14 @@
         .loadMoreButton {
           display: flex;
           justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -10%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
         }
       }
       #loadingIndicator {
