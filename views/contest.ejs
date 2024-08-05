@@ -49,7 +49,7 @@
           display: none;
           position: fixed; /* Stay in place while scrolling */
           left: 40%; /* Center horizontally */
-          bottom: -5%;
+          bottom: -2%;
           /* transform: translate(-50%, -50%); */
           z-index: 1000;
         }
@@ -68,7 +68,7 @@
           display: none;
           position: fixed; /* Stay in place while scrolling */
           left: 40%; /* Center horizontally */
-          bottom: -5%;
+          bottom: -2%;
           /* transform: translate(-50%, -50%); */
           z-index: 1000;
         }
@@ -484,7 +484,7 @@
           <% } %>
 
           <div id="restEntriesContainer"></div>
-          <div class="loadMoreButton">
+          <div class="loadMoreButton" id="loadMoreButton">
             <button class="btn btn-primary" onclick="loadMoreData()">
               Load more
             </button>
@@ -982,6 +982,7 @@
             // Check if the participantData array is empty
             if (participantData.length === 0) {
               allDataLoaded = true; // Set flag to true if no more data
+              document.getElementById("loadMoreButton").style.display = none;
             } else {
               // Render the participant data
               renderParticipantData(participantData, "restEntriesContainer");
