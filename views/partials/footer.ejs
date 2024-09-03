@@ -1,0 +1,51 @@
+<footer class="<%= (path == '/') ? '' : 'dark-footer' %>">
+  <div class="container layout">
+    <div class="grid">
+      <div class="col">
+        <img
+          class="logo"
+          src="/public/images/vibrer_light_logo.svg"
+          alt="Logo"
+        />
+        <div class="desc"><%= __("footerDescription") %></div>
+      </div>
+      <div class="col">
+        <div class="desc"><%= __("footerStayInformed") %></div>
+        <button class="btn btn-primary" onclick="scrollToGNForm()">
+          <%= __("subscribeButtonText") %>
+        </button>
+      </div>
+      <div class="col">
+        <div class="social-icons">
+          <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+            <img
+              class="yti"
+              src="/public/images/youtube.svg"
+              alt="Youtube icon"
+          /></a>
+          <a href="https://www.instagram.com/vibrer_official/" target="_blank">
+            <img src="/public/images/instagram.svg" alt="Instagram icon"
+          /></a>
+        </div>
+        <div class="desc anc" onclick="toImprint()"><%= __("imprint") %></div>
+        <div class="desc anc" onclick="toPrivacy()">
+          <%= __("privacyPolicy") %>
+        </div>
+        <div class="desc anc" onclick="toTerms()"><%= __("termsOfUse") %></div>
+        <div class="desc anc" onclick="toCookies()">
+          <%= __("cookieSettings") %>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-creds">
+      <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
+    </div>
+  </div>
+</footer>
+
+<div class="toTop">
+  <button class="btn btn-primary">
+    <img src="/public/images/up-arrow.svg" alt="Arrow up" />
+  </button>
+</div>

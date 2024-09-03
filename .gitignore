@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+.env
+# Debug log from npm
+npm-debug.log
+
+uploads/inescapable.mp4
+
+vibrer_old_landingpage.zip

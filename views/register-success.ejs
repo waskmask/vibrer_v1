@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+  </head>
+  <body>
+    <main>
+      <section class="reg-success-section">
+        <div class="wrapper">
+          <div class="logo">
+            <img src="/public/images/vibrer_light_logo.svg" alt="logo" />
+          </div>
+          <div class="title"><%-__("registration_successful")%></div>
+
+          <div class="desc"><%-__("rs_description")%></div>
+
+          <div class="highlight-msg"><%-__("rs_highlight_message")%></div>
+
+          <div class="divOr"><%-__("alternative_click")%></div>
+          <button
+            onclick="redirectToNewProfile()"
+            class="btn btn-primary shadow"
+          >
+            <%-__("create_profile_button")%>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- js -->
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+    <script>
+      window.onload = function () {
+        var timeLeft = 15; // Time in seconds
+        var timerElement = document.querySelector(".rTimer");
+        var countdownTimer = setInterval(function () {
+          timeLeft--;
+          timerElement.textContent = timeLeft;
+          if (timeLeft <= 0) {
+            clearInterval(countdownTimer);
+            window.location.href = "/new-profile";
+          }
+        }, 1000);
+      };
+
+      function redirectToNewProfile() {
+        window.location.href = "/new-profile";
+      }
+    </script>
+  </body>
+</html>

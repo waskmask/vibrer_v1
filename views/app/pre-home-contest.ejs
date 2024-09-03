@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="Singing contest, music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app_ext.css" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+    <style>
+      @media screen and (min-width: 1000px) {
+        .loadMoreButton {
+          display: none;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 50%; /* Center horizontally */
+          bottom: 0;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      @media screen and (max-width: 999px) {
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      .swal2-html-container {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+      }
+
+      #loadingIndicator img {
+        width: 100px; /* Adjust size as needed */
+        height: 100px; /* Adjust size as needed */
+      }
+      .vjs-poster {
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body class="body-dark _pr">
+    <!-- header -->
+    <%- include('./partials/pre-header'); %>
+
+    <main class="app_layout app_wrapper" style="flex-direction: column">
+      <!-- main body of the app -->
+      <div class="app_main preMain" style="max-width: 800px">
+        <section class="contest-header" style="padding: 1.5rem">
+          <div class="wrapper" style="position: relative; z-index: 2">
+            <div>
+              <div class="sponsor">
+                <img src="/public/images/mod_light.svg" alt="Logo" />
+                <div><%= __("mod_presents") %></div>
+              </div>
+              <div class="title"><%= __("vscontest") %></div>
+              <div class="sub">
+                <%- activeEntries %> <%-__('entries')%> • <% if
+                (contestDetailData.result.endDays > 0 &&
+                contestDetailData.result.status === 'Active') { %>
+                <%-__('endsin')%> <%= contestDetailData.result.endDays %>
+                <%-__('days')%> <% } else { %> <%= __("contest_ended") %> <% }
+                %>
+              </div>
+            </div>
+            <div class="cta">
+              <button
+                class="btn btn-outlined"
+                data-toggle="_modal"
+                data-target="contest1Info"
+              >
+                <%= __("learn_more") %>
+              </button>
+              <% if(profileData.user_type === 'Artist'){ %>
+              <button
+                class="btn btn-primary"
+                onclick="toPreMyContests('<%= path %>','<%- contestDetailData.result._id %>')"
+              >
+                <% if (isParticipated) { %> <%= __("view_my_post") %> <% } else
+                { %> <% if (contestDetailData.result.endDays > 0 &&
+                contestDetailData.result.status === 'Active') { %> <%=
+                __("participate") %> <%} %> <% } %>
+              </button>
+              <% } %>
+              <div
+                class="playAd"
+                data-toggle="_modal"
+                data-target="contest1Video"
+              >
+                <img src="/public/images/icons/playIconWhite.svg" alt="Icon" />
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--  -->
+        <div>
+          <section class="participants w-100">
+            <!-- Top Participants -->
+            <% if ( top3Participants.length > 0) { %>
+            <div class="title mb-4">
+              <% if (contestDetailData.result.endDays > 0 &&
+              contestDetailData.result.status === 'Active') { %> <%= __("top")
+              %> <%= top3Participants.length.length %> <%= __("entries") %> <% }
+              else { %> <%= __("winners") %> <% } %>
+            </div>
+            <div class="wrapper-lg-6">
+              <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+              "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v -
+              20) % 10] || suffixes[v] || suffixes[0]); }; let c = 0; let
+              alreadyVoted = ""; top3Participants.forEach(participants => { c++;
+              %>
+              <div class="contestant mb-3">
+                <div class="report_dd">
+                  <img
+                    src="/public/images/icons/info_icon.svg"
+                    alt="Report"
+                    class="reportIcon"
+                  />
+                  <div class="drop_down shadow">
+                    <div
+                      class="report_link"
+                      onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                    >
+                      <%= __("report") %>
+                    </div>
+                  </div>
+                </div>
+                <div class="head">
+                  <div
+                    class="yourVote<%- contestDetailData.result._id %>"
+                    id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                  >
+                    <% if(participants.is_voted){ alreadyVoted =
+                    participants.user._id; %>
+                    <div class="yourVote"><%= __("you_voted") %></div>
+                    <% } %>
+                  </div>
+                  <video
+                    controls
+                    class="video-js"
+                    preload="none"
+                    width="640"
+                    height="264"
+                    poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
+                    data-setup="{}"
+                  >
+                    <source src="<%- participants.media %>" type="video/mp4" />
+                    <p class="vjs-no-js">
+                      To view this video please enable JavaScript, and consider
+                      upgrading to a web browser that
+                      <a
+                        href="https://videojs.com/html5-video-support/"
+                        target="_blank"
+                        >supports HTML5 video</a
+                      >
+                    </p>
+                  </video>
+                  <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                  <input
+                    type="hidden"
+                    id="alreadyVoted<%- contestDetailData.result._id %>"
+                    value="<%- alreadyVoted %>"
+                  />
+                </div>
+                <div class="body">
+                  <div class="top">
+                    <div class="user">
+                      <div class="img">
+                        <% if (!participants.user.profile_img ||
+                        participants.user.profile_img === '') { %>
+                        <img
+                          src="/public/images/default-avatar.png"
+                          alt="Default Avatar"
+                        />
+                        <% } else { %>
+                        <img
+                          src="<%- participants.user.profile_img %>"
+                          alt="avatar"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="info">
+                        <div class="title">
+                          <span><%- participants.user.full_name %></span>
+                          <% if(participants.user.verified){ %>
+                          <img
+                            src="/public/images/icons/verified-badge.svg"
+                            alt="Badge"
+                          />
+                          <% } %>
+                        </div>
+                        <div class="uname">
+                          @<%- participants.user.username %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="addToFav">
+                      <a
+                        href="javascript:void(0)"
+                        id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                      >
+                        <% if(participants.is_favourite){ %>
+                        <img
+                          src="/public/images/icons/bookmark1.svg"
+                          alt="Bookmark"
+                          id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        />
+                        <% } else { %>
+                        <img
+                          src="/public/images/icons/bookmark.svg"
+                          alt="Bookmark"
+                          id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        />
+                        <% } %>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="votes">
+                    <div class="count">
+                      <strong><%-__('votes')%></strong>
+                      <% let votes = participants.votes.length %> <% if (votes >
+                      5) { %> <% votes += 50; %> <% } %>
+                      <span
+                        id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        ><%- votes %></span
+                      >
+                    </div>
+                    <div class="rank">
+                      <% if (contestDetailData.result.endDays > 0 &&
+                      contestDetailData.result.status === 'Active') { %>
+                      <strong> <%= __("current_rank") %>:</strong>
+                      <% } else { %>
+                      <strong> <%= __("rank") %>:</strong>
+                      <% } %>
+                      <span
+                        ><%- participants.rank %><sup
+                          ><%- getOrdinalSuffix(participants.rank) %></sup
+                        ></span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="cta">
+                    <button
+                      class="btn btn-outlined"
+                      data-toggle="share_modal"
+                      data-target="shareModal"
+                      data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                    >
+                      <%= __("share") %>
+                    </button>
+                    <% if(contestDetailData.result.status == 'Active' &&
+                    contestDetailData.result.endDays > 0){ %>
+                    <button
+                      class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                      type="button"
+                      id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                    >
+                      <% if(participants.is_voted){ %> <%= __("remove_vote")
+                      %><% } else { %> <%= __('vote_now') %> <% } %>
+                    </button>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+            <% } %>
+
+            <!-- All Participants -->
+            <% if ( participantsArray.length > 0) { %>
+            <div class="title mb-4">
+              <div class="title mb-4"><%= __('all_entries') %></div>
+            </div>
+            <div class="wrapper-lg-6">
+              <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+              "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v -
+              20) % 10] || suffixes[v] || suffixes[0]); }; let c = 0; let
+              alreadyVoted = ""; participantsArray.forEach(participants => {
+              c++; if(c > 3){ %>
+              <div class="contestant mb-3">
+                <div class="report_dd">
+                  <img
+                    src="/public/images/icons/info_icon.svg"
+                    alt="Report"
+                    class="reportIcon"
+                  />
+                  <div class="drop_down shadow">
+                    <div
+                      class="report_link"
+                      onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                    >
+                      <%= __("report") %>
+                    </div>
+                  </div>
+                </div>
+                <div class="head">
+                  <div
+                    class="yourVote<%- contestDetailData.result._id %>"
+                    id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                  >
+                    <% if(participants.is_voted){ alreadyVoted =
+                    participants.user._id; %>
+                    <div class="yourVote"><%= __("you_voted") %></div>
+                    <% } %>
+                  </div>
+                  <video
+                    controls
+                    class="video-js"
+                    preload="none"
+                    width="640"
+                    height="264"
+                    data-setup="{}"
+                    poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
+                  >
+                    <source src="<%- participants.media %>" type="video/mp4" />
+                    <p class="vjs-no-js">
+                      To view this video please enable JavaScript, and consider
+                      upgrading to a web browser that
+                      <a
+                        href="https://videojs.com/html5-video-support/"
+                        target="_blank"
+                        >supports HTML5 video</a
+                      >
+                    </p>
+                  </video>
+                  <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                  <input
+                    type="hidden"
+                    id="alreadyVoted<%- contestDetailData.result._id %>"
+                    value="<%- alreadyVoted %>"
+                  />
+                </div>
+                <div class="body">
+                  <div class="top">
+                    <div class="user">
+                      <div class="img">
+                        <% if (!participants.user.profile_img ||
+                        participants.user.profile_img === '') { %>
+                        <img
+                          src="/public/images/default-avatar.png"
+                          alt="Default Avatar"
+                        />
+                        <% } else { %>
+                        <img
+                          src="<%- participants.user.profile_img %>"
+                          alt="avatar"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="info">
+                        <div class="title">
+                          <span><%- participants.user.full_name %></span>
+                          <% if(participants.user.verified){ %>
+                          <img
+                            src="/public/images/icons/verified-badge.svg"
+                            alt="Badge"
+                          />
+                          <% } %>
+                        </div>
+                        <div class="uname">
+                          @<%- participants.user.username %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="addToFav">
+                      <a
+                        href="javascript:void(0)"
+                        id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                      >
+                        <% if(participants.is_favourite){ %>
+                        <img
+                          src="/public/images/icons/bookmark1.svg"
+                          alt="Bookmark"
+                          id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        />
+                        <% } else { %>
+                        <img
+                          src="/public/images/icons/bookmark.svg"
+                          alt="Bookmark"
+                          id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        />
+                        <% } %>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="votes">
+                    <div class="count">
+                      <strong><%-__('votes')%></strong>
+                      <% let votes = participants.votes.length %> <% if (votes >
+                      5) { %> <% votes += 50; %> <% } %>
+                      <span
+                        id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                        ><%- votes %></span
+                      >
+                    </div>
+                    <div class="rank">
+                      <% if (contestDetailData.result.endDays > 0 &&
+                      contestDetailData.result.status === 'Active') { %>
+                      <strong> <%= __("current_rank") %>:</strong>
+                      <% } else { %>
+                      <strong> <%= __("rank") %>:</strong>
+                      <% } %>
+                      <span
+                        ><%- (participants.rank) - 3 %>
+                        <span
+                          ><%- getOrdinalSuffix((participants.rank) - 3)
+                          %></span
+                        >
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="cta">
+                    <button
+                      class="btn btn-outlined"
+                      data-toggle="share_modal"
+                      data-target="shareModal"
+                      data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                    >
+                      <%= __("share") %>
+                    </button>
+                    <% if(contestDetailData.result.status == 'Active' &&
+                    contestDetailData.result.endDays > 0){ %>
+                    <button
+                      class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                      type="button"
+                      id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                    >
+                      <% if(participants.is_voted){ %> <%= __("remove_vote")
+                      %><% } else { %> <%= __('vote_now') %> <% } %>
+                    </button>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <% } %> <% }); %>
+            </div>
+            <% } %>
+
+            <div id="restEntriesContainer"></div>
+            <div class="loadMoreButton" id="loadMoreButton">
+              <button class="btn btn-primary" onclick="loadMoreData()">
+                Load more
+              </button>
+            </div>
+            <div id="loadingIndicator">
+              <img src="../public/images/loader.gif" alt="Loading..." />
+            </div>
+          </section>
+        </div>
+
+        <!-- <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
+            </div>
+            <div class="link">
+              <a target="_blank" href="/"> <%= __("Home") %></a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom">
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
+          </div>
+        </div> -->
+      </div>
+    </main>
+
+    <%- include('../modals/contest1Info'); %>
+    <!--  -->
+    <%- include('../modals/contest1Video'); %> <%-
+    include('../modals/shareModal'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=3.1"></script>
+    <script src="/public/js/general.js?v=3.1"></script>
+    <script src="/public/js/app_language.js?v=3.1"></script>
+    <script src="/public/js/video.min.js?v=3.1"></script>
+    <script src="/public/js/sweetalert2@11.js?v=3.1"></script>
+    <script src="/public/js/_modal.js?v=3.1"></script>
+    <script src="/public/js/_sharemodal.js?v=3.1"></script>
+    <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/check-select.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+    <script>
+      function resdirectAfterLogin(redirectUrl) {
+        // Ensure this value is correctly populated
+        var cookieValue = encodeURIComponent(redirectUrl);
+        var cookieString =
+          "resUrl=" + cookieValue + "; path=/; Secure; SameSite=None;";
+
+        // Set or overwrite the 'resUrl' cookie
+        document.cookie = cookieString;
+
+        // Redirect to login page
+        window.location.href = "/login";
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+          // First, close all dropdowns by removing the 'active' class
+          document
+            .querySelectorAll(".drop_down.active")
+            .forEach(function (activeDropdown) {
+              activeDropdown.classList.remove("active");
+            });
+
+          var reportIcon = event.target.closest(".reportIcon");
+
+          // If a report icon was clicked, toggle the active class on its corresponding dropdown
+          if (reportIcon) {
+            var dropdown = reportIcon
+              .closest(".report_dd")
+              ?.querySelector(".drop_down");
+            if (dropdown) {
+              dropdown.classList.add("active"); // Use add here since we've already cleared all active classes
+              event.stopPropagation(); // Prevent the event from bubbling up to the document level where it would close the dropdown immediately
+            }
+          }
+        });
+
+        // This additional listener ensures dropdowns close when clicking outside of them
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".report_dd")) {
+            document
+              .querySelectorAll(".drop_down.active")
+              .forEach(function (activeDropdown) {
+                activeDropdown.classList.remove("active");
+              });
+          }
+        });
+      });
+    </script>
+    <script>
+      var players = [];
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+        players.push(player);
+
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          this.muted(true);
+        });
+        player.on("seeked", function () {
+          this.muted(false);
+        });
+      }
+
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+
+      function pauseAllVideos() {
+        players.forEach(function (player) {
+          player.pause();
+        });
+      }
+    </script>
+    <script>
+      async function addParticipateVote(participate_id, contest_id) {
+        const submitBtn = document.getElementById(
+          "submitVoteBtn" + contest_id + participate_id + ""
+        );
+        const voteBtn = document.getElementById(
+          "yourVote" + contest_id + participate_id + ""
+        );
+        const submitBtnAll = document.getElementsByClassName(
+          "submitVoteBtn" + contest_id + ""
+        );
+        const voteBtnAll = document.getElementsByClassName(
+          "yourVote" + contest_id + ""
+        );
+        let countVotes = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        ).innerHTML;
+        let countVotesElement = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        );
+        const alreadyVoted = document.getElementById(
+          "alreadyVoted" + contest_id + ""
+        ).value;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Loading...";
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}add/contestParticipateVote`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (
+                responseData.status === 0 &&
+                responseData.message === "email_verify_for_vote"
+              ) {
+                Swal.fire({
+                  position: "center",
+                  icon: "error",
+                  title: "<%-__('email_verified_failed')%>",
+                  text: "<%-__('email_verify_for_vote')%>",
+                  showConfirmButton: true,
+                });
+                submitBtn.disabled = false;
+                submitBtn.textContent = "<%-__('vote_now')%>";
+                return;
+              }
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  Array.from(submitBtnAll).forEach((btn) => {
+                    btn.innerHTML = "Vote now";
+                  });
+
+                  Array.from(voteBtnAll).forEach((btn) => {
+                    btn.innerHTML = "";
+                  });
+
+                  if (alreadyVoted !== "") {
+                    let countVotesAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    ).innerHTML;
+                    let countVotesElementAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    );
+                    countVotesAlready = +countVotesAlready - 1;
+                    countVotesElementAlready.innerHTML = countVotesAlready;
+                  }
+                  submitBtn.disabled = false;
+                  submitBtn.innerHTML = "<%= __('remove_vote') %>";
+                  voteBtn.innerHTML = `<div class="yourVote"><%= __('you_voted') %></div>`;
+                  countVotes = +countVotes + 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = participate_id;
+                } else {
+                  submitBtn.disabled = false;
+                  submitBtn.innerHTML = "<%= __('vote_now') %>";
+                  voteBtn.innerHTML = "";
+                  countVotes = +countVotes - 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = "";
+                }
+                countVotesElement.innerHTML = countVotes;
+              } else {
+                alert(responseData.message);
+                submitBtn.innerHTML = "<%= __('vote_now') %>";
+              }
+            } else {
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          }
+          // submitBtn.textContent = "Vote now";
+        }, 1000);
+      }
+
+      //   Add to favourite
+
+      async function addParticipateToFavourite(contest_id, participate_id) {
+        const favouriteIcon = document.getElementById(
+          "favouriteIcon" + contest_id + participate_id + ""
+        );
+        const favouriteBtn = document.getElementById(
+          "favouriteBtn" + contest_id + participate_id + ""
+        );
+
+        // Disable the button
+        favouriteBtn.disabled = true;
+
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}addContestParticipantToFavourite`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  favouriteIcon.src = "/public/images/icons/bookmark1.svg";
+                } else {
+                  favouriteIcon.src = "/public/images/icons/bookmark.svg";
+                }
+              } else {
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+              }
+            } else {
+              errorPop.style.display = "block";
+              if (responseData.error) {
+                responseData.message = responseData.error;
+              }
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          } finally {
+            // Enable the button after the API call is complete
+            favouriteBtn.disabled = false;
+          }
+        }, 1000);
+      }
+    </script>
+
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
+      }
+    </script>
+    <script>
+      const contestDetailData_status = "<%- contestDetailData.result.status %>";
+      const contestDetailData_endDays =
+        "<%- contestDetailData.result.endDays %>";
+      // document.addEventListener("DOMContentLoaded", function () {
+      //   let p = 0;
+      //   let participantsArray = `<%- JSON.stringify(participantsArray) %>`;
+
+      //   participantsArray = JSON.parse(participantsArray);
+
+      const getOrdinalSuffix = (number) => {
+        const suffixes = ["th", "st", "nd", "rd"];
+        const v = number % 100;
+        return suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0];
+      };
+
+      // Function to render participant data
+      function renderParticipantData(data, containerId) {
+        const container = document.getElementById(containerId);
+        const wrapperDiv = document.createElement("div");
+        wrapperDiv.classList.add("wrapper-lg-6");
+        let alreadyVoted = "";
+        data.forEach((participant) => {
+          if (participant.is_voted) {
+            alreadyVoted = participant.user._id;
+          }
+          let participantRank = getOrdinalSuffix("" + participant.rank + "");
+          const contestantDiv = document.createElement("div");
+          contestantDiv.classList.add("contestant", "mb-3");
+          // Render participant details here...
+          const reportDd = document.createElement("div");
+          reportDd.classList.add("report_dd");
+          const reportIcon = document.createElement("img");
+          reportIcon.src = "/public/images/icons/info_icon.svg";
+          reportIcon.alt = "Report";
+          reportIcon.classList.add("reportIcon");
+          const dropDown = document.createElement("div");
+          dropDown.classList.add("drop_down", "shadow");
+          const reportLink = document.createElement("div");
+          reportLink.classList.add("report_link");
+          reportLink.addEventListener("click", function () {
+            resdirectAfterLogin(
+              `/app/contest-report/<%=contestDetailData.result._id%>/${participant._id}`
+            );
+          });
+          reportLink.textContent = '<%= __("report") %>';
+          dropDown.appendChild(reportLink);
+          reportDd.appendChild(reportIcon);
+          reportDd.appendChild(dropDown);
+          const headDiv = document.createElement("div");
+          headDiv.classList.add("head");
+
+          const youVotedDiv = document.createElement("div");
+          youVotedDiv.classList.add(
+            "yourVote<%- contestDetailData.result._id %>"
+          );
+          youVotedDiv.id = `yourVote<%- contestDetailData.result._id %>${participant.user._id}`;
+
+          headDiv.appendChild(youVotedDiv);
+
+          if (participant.is_voted) {
+            alreadyVoted = participant.user._id;
+
+            const youVotedMessageDiv = document.createElement("div");
+            youVotedMessageDiv.classList.add("yourVote");
+            youVotedMessageDiv.textContent = `<%= __('you_voted') %>`;
+
+            youVotedDiv.appendChild(youVotedMessageDiv);
+          }
+
+          //Render video element
+          const videoElement = document.createElement("video");
+          videoElement.controls = true;
+          videoElement.classList.add("video-js");
+          videoElement.preload = "none";
+          videoElement.width = "640";
+          videoElement.height = "264";
+          videoElement.dataset.setup = "{}";
+          videoElement.poster =
+            participant.user.profile_img || "/public/images/default-avatar.png";
+          const sourceElement = document.createElement("source");
+          sourceElement.src = participant.media;
+          sourceElement.type = "video/mp4";
+          videoElement.appendChild(sourceElement);
+          const hiddenInput = document.createElement("input");
+          hiddenInput.type = "hidden";
+          hiddenInput.id = `alreadyVoted${participant._id}`;
+          hiddenInput.value = alreadyVoted;
+          headDiv.appendChild(videoElement);
+          headDiv.appendChild(hiddenInput);
+          //Render user info
+          const userInfoDiv = document.createElement("div");
+          userInfoDiv.classList.add("user");
+          const imgDiv = document.createElement("div");
+          imgDiv.classList.add("img");
+          const userImage = document.createElement("img");
+          userImage.src =
+            participant.user.profile_img || "/public/images/default-avatar.png";
+          userImage.alt = "Avatar";
+          const infoDiv = document.createElement("div");
+          infoDiv.classList.add("info");
+          const titleDiv = document.createElement("div");
+          titleDiv.classList.add("title");
+          titleDiv.innerHTML = `<span>${participant.user.full_name}</span>`;
+          if (participant.user.verified) {
+            const verifiedBadge = document.createElement("img");
+            verifiedBadge.src = "/public/images/icons/verified-badge.svg";
+            verifiedBadge.alt = "Badge";
+            titleDiv.appendChild(verifiedBadge);
+          }
+          const unameDiv = document.createElement("div");
+          unameDiv.classList.add("uname");
+          unameDiv.textContent = `@${participant.user.username}`;
+          imgDiv.appendChild(userImage);
+          infoDiv.appendChild(titleDiv);
+          infoDiv.appendChild(unameDiv);
+          userInfoDiv.appendChild(imgDiv);
+          userInfoDiv.appendChild(infoDiv);
+          //Render add to favorite button
+          const addToFavDiv = document.createElement("div");
+          addToFavDiv.classList.add("addToFav");
+          const favBtn = document.createElement("a");
+          favBtn.href = "javascript:void(0)";
+          favBtn.id = `favouriteBtn<%- contestDetailData.result._id %>${participant.user._id}`;
+          favBtn.addEventListener("click", function () {
+            addParticipateToFavourite(
+              "<%- contestDetailData.result._id %>",
+              "" + participant.user._id + ""
+            );
+          });
+          const favIcon = document.createElement("img");
+          if (participant.is_favourite) {
+            favIcon.src = "/public/images/icons/bookmark1.svg";
+          } else {
+            favIcon.src = "/public/images/icons/bookmark.svg";
+          }
+          favIcon.alt = "Bookmark";
+          favIcon.id = `favouriteIcon<%- contestDetailData.result._id %>${participant.user._id}`;
+          favBtn.appendChild(favIcon);
+          addToFavDiv.appendChild(favBtn);
+          const topDiv = document.createElement("div");
+          topDiv.classList.add("top");
+          topDiv.appendChild(userInfoDiv);
+          topDiv.appendChild(addToFavDiv);
+          //Render vote count and rank
+          const votesDiv = document.createElement("div");
+          votesDiv.classList.add("votes");
+          const countDiv = document.createElement("div");
+          countDiv.classList.add("count");
+          let totalVotes = participant.votes.length;
+          if (totalVotes > 5) {
+            totalVotes = totalVotes + 50;
+          }
+          countDiv.innerHTML = `<strong><%-__('votes')%></strong><span id="countVotes<%- contestDetailData.result._id %>${participant.user._id}">${totalVotes}</span>`;
+          const rankDiv = document.createElement("div");
+          rankDiv.classList.add("rank");
+          if (
+            contestDetailData_status == "Active" &&
+            contestDetailData_endDays > 0
+          ) {
+            rankDiv.innerHTML = `<strong><%= __("current_rank") %>:</strong><span>${participant.rank}<sup>${participantRank}</sup></span>`;
+          } else {
+            rankDiv.innerHTML = `<strong><%= __("rank") %>:</strong><span>${participant.rank}
+              <span>${participantRank}</span>
+              </span>`;
+          }
+          votesDiv.appendChild(countDiv);
+          votesDiv.appendChild(rankDiv);
+          //Render call-to-action buttons
+          const ctaDiv = document.createElement("div");
+          ctaDiv.classList.add("cta");
+          const shareBtn = document.createElement("button");
+          shareBtn.classList.add("btn", "btn-outlined");
+          shareBtn.dataset.toggle = "share_modal";
+          shareBtn.dataset.target = "shareModal";
+          shareBtn.dataset.url = `https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/${participant._id}`;
+          shareBtn.textContent = '<%= __("share") %>';
+          const voteBtn = document.createElement("button");
+          voteBtn.classList.add(
+            "btn",
+            "btn-primary",
+            `submitVoteBtn<%- contestDetailData.result._id %>`
+          );
+          voteBtn.type = "button";
+          voteBtn.id = `submitVoteBtn<%- contestDetailData.result._id %>${participant.user._id}`;
+          voteBtn.addEventListener("click", function () {
+            addParticipateVote(
+              "" + participant.user._id + "",
+              "<%- contestDetailData.result._id %>"
+            );
+          });
+          if (participant.is_voted) {
+            voteBtn.textContent = '<%= __("remove_vote") %>';
+          } else {
+            voteBtn.textContent = '<%= __("vote_now") %>';
+          }
+          ctaDiv.appendChild(shareBtn);
+          if (
+            contestDetailData_status == "Active" &&
+            contestDetailData_endDays > 0
+          ) {
+            ctaDiv.appendChild(voteBtn);
+          }
+          const bodyDiv = document.createElement("div");
+          bodyDiv.classList.add("body");
+          bodyDiv.appendChild(topDiv);
+          bodyDiv.appendChild(votesDiv);
+          bodyDiv.appendChild(ctaDiv);
+          contestantDiv.appendChild(reportDd);
+          contestantDiv.appendChild(headDiv);
+          contestantDiv.appendChild(bodyDiv);
+          container.appendChild(wrapperDiv);
+          wrapperDiv.appendChild(contestantDiv);
+        });
+        const scriptElement = document.createElement("script");
+        scriptElement.src = "/public/js/_shareModalLoaded.js?v=3.1";
+        scriptElement.onload = function () {
+          shareModalLoaded();
+        };
+
+        document.body.appendChild(scriptElement);
+
+        var players = [];
+        var videoElements = document.querySelectorAll(".video-js");
+
+        for (var i = 0; i < videoElements.length; i++) {
+          var player = videojs(videoElements[i]);
+          players.push(player);
+
+          player.on("play", function () {
+            pauseOtherPlayers(this);
+          });
+          player.on("seeking", function () {
+            this.muted(true);
+          });
+          player.on("seeked", function () {
+            this.muted(false);
+          });
+        }
+
+        function pauseOtherPlayers(currentPlayer) {
+          players.forEach(function (player) {
+            if (player !== currentPlayer) {
+              player.pause();
+            }
+          });
+        }
+
+        function pauseAllVideos() {
+          players.forEach(function (player) {
+            player.pause();
+          });
+        }
+      }
+
+      // setTimeout(function () {
+      //   participantsArray.forEach((participantObj, index) => {
+      //     if (index !== 0) {
+      //       if (
+      //         participantObj &&
+      //         participantObj.participantData &&
+      //         participantObj.participantData.length > 0
+      //       ) {
+      //         const container = document.getElementById(
+      //           "restEntriesContainer"
+      //         );
+      //         const titleDiv = document.createElement("div");
+      //         titleDiv.classList.add("title", "mb-4");
+      //         if (index === 1) {
+      //           titleDiv.innerHTML = `<%= __('you_voted') %>`;
+      //           container.appendChild(titleDiv);
+      //         } else if (index === 2) {
+      //           titleDiv.innerHTML = `<%= __('all_entries') %>`;
+      //           container.appendChild(titleDiv);
+      //         }
+
+      //         renderParticipantData(
+      //           participantObj.participantData,
+      //           "restEntriesContainer"
+      //         );
+      //       }
+      //     }
+      //   });
+      // }, 3000);
+      // });
+    </script>
+    <script>
+      // Function to check if user has scrolled to the bottom
+      function isScrolledToBottom() {
+        return (
+          window.innerHeight + window.scrollY >= document.body.offsetHeight
+        );
+      }
+
+      // Variables to track pagination and loading state
+      let page = 0;
+      let isLoading = false;
+      let allDataLoaded = false; // Flag to indicate if all data has been loaded
+
+      // Function to show loader
+      function showLoader() {
+        document.getElementById("loadingIndicator").style.display = "block";
+      }
+
+      // Function to hide loader
+      function hideLoader() {
+        document.getElementById("loadingIndicator").style.display = "none";
+      }
+
+      // Function to load more content
+      async function loadMoreContent() {
+        // Check if a request is already in progress or all data has been loaded
+        if (isLoading || allDataLoaded) return;
+
+        // Set isLoading to true to indicate that a request is in progress
+        isLoading = true;
+        // Show loader
+        showLoader();
+
+        // Increment the page number for pagination
+        page += 1;
+
+        try {
+          const localToken = localStorage.getItem("appUserToken");
+          if (localToken) {
+            const response = await fetch(
+              `<%- API_URL %>auth/contest-entries/<%- contest_id %>`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+                body: JSON.stringify({
+                  limit: 10,
+                  offset: page,
+                  is_top_three_participants: false,
+                }),
+              }
+            );
+
+            // Parse the JSON response
+            const responseData = await response.json();
+
+            // Check if the response status is successful
+            if (responseData.status === 1) {
+              const participantData = responseData.result.participates;
+
+              // Check if the participantData array is empty
+              if (participantData.length === 0) {
+                allDataLoaded = true; // Set flag to true if no more data
+                document.getElementById("loadMoreButton").style.display =
+                  "none";
+              } else {
+                // Render the participant data
+                renderParticipantData(participantData, "restEntriesContainer");
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          // Set isLoading to false to indicate that the request is complete
+          isLoading = false;
+
+          // Hide loader
+          hideLoader();
+        }
+      }
+
+      // Function to handle loading more data (called by both scroll and button)
+      function loadMoreData() {
+        if (!isLoading && !allDataLoaded) {
+          loadMoreContent();
+        }
+      }
+
+      // Add scroll event listener only for desktop devices
+      function initializeScrollListener() {
+        // Example screen width threshold for mobile (768px and below is considered mobile)
+        const isDesktop = window.innerWidth > 999;
+
+        if (isDesktop) {
+          window.addEventListener("scroll", () => {
+            // Check if scrolled to the bottom, no request is in progress, and not all data is loaded
+            if (isScrolledToBottom() && !isLoading && !allDataLoaded) {
+              loadMoreContent();
+            }
+          });
+        }
+      }
+
+      // Initialize the scroll listener on page load
+      window.addEventListener("load", initializeScrollListener);
+    </script>
+  </body>
+</html>

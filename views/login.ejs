@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <main>
+      <section class="auth auth-pages" id="login">
+        <div class="auth-container">
+          <img
+            class="bg-img"
+            src="/public/images/auth-register.jpg"
+            alt="Image"
+          />
+          <div class="overlay"></div>
+          <div class="left-col">
+            <div class="title"><%=__("login_page_text")%></div>
+          </div>
+          <div class="auth-col">
+            <div class="form-wrapper">
+              <img
+                class="logo"
+                src="/public/images/vibrer_light_logo.svg"
+                alt="Logo"
+              />
+              <div class="title"><%=__('welcome_back')%>!</div>
+              <div class="sub"><%=__('login_sub')%></div>
+              <form
+                action="javascript:void(0)"
+                id="loginForm"
+                method="POST"
+                autocomplete="off"
+                class="w-100"
+              >
+                <div class="mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="<%=__('email_address')%>"
+                    name="email"
+                    id="loginEmail"
+                    value=""
+                  />
+                </div>
+                <div class="mb-3 passInputDiv">
+                  <input
+                    class="form-input"
+                    type="password"
+                    placeholder="<%=__('password')%>"
+                    name="password"
+                    id="loginPassword"
+                    value=""
+                  />
+                  <div class="passInput">
+                    <img src="/public/images/icons/visibility.svg" alt="Icon" />
+                  </div>
+                </div>
+                <div class="link ta-end" onclick="toForgotPass()">
+                  <%=__('forgot_password')%>
+                </div>
+                <div class="error-message mt-3 d-none"></div>
+                <button
+                  class="btn btn-primary w-100 mt-4 submitBtn"
+                  type="submit"
+                >
+                  <%=__('login')%>
+                </button>
+              </form>
+
+              <div class="text-white mt-4 dfac">
+                <%=__('no_account')%>
+                <a class="link-primary dfac ms-1" href="/register"
+                  ><%=__('create_new')%>
+                  <img
+                    src="/public/images/icons/arrow-right-long-primary.svg"
+                    alt="icon"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <!-- <script src="/public/js/languageSwitcher.js?v=3.1"></script> -->
+    <script src="/public/js/authForm.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+    <script>
+      window.addEventListener("load", (event) => {
+        var focusInput = document.getElementById("loginEmail");
+        focusInput.focus();
+      });
+      function toForgotPass() {
+        window.location.href = "/forgot-password";
+      }
+      var localizedStrings = {
+        emailIsRequired: "<%= __('email_is_required') %>",
+        emailMustBeValid: "<%= __('email_must_be_valid') %>",
+        passIsRequired: "<%= __('password_require') %>",
+        loading: "<%= __('loading') %>",
+        login: "<%= __('login') %>",
+      };
+      document.addEventListener("DOMContentLoaded", function () {
+        const localToken = localStorage.getItem("appUserToken");
+        if (localToken) {
+          fetch("/store-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ token: localToken }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Token stored in session");
+                if (window.history.length > 1) {
+                  window.history.back();
+                } else {
+                  window.location.href = "/app/pre-home"; // Fallback URL if no history is available
+                }
+              }
+            })
+            .catch((error) =>
+              console.error("Error storing token in session:", error)
+            );
+        }
+
+        const form = document.getElementById("loginForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = localizedStrings.loading;
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const { email, password } = formDataJSON;
+
+            if (
+              !email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+            ) {
+              isValid = false;
+              customErrors.email = !email
+                ? localizedStrings.emailIsRequired
+                : localizedStrings.emailMustBeValid;
+            }
+            if (!password) {
+              isValid = false;
+              customErrors.password = localizedStrings.passIsRequired;
+            }
+
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}loginUser`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    const loader = document.getElementById("loader");
+                    loader.style.display = "flex";
+                    localStorage.setItem(
+                      "appUserToken",
+                      responseData.result.token
+                    );
+                    await fetch("/store-token-in-session", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        token: responseData.result.token,
+                      }),
+                    });
+                    window.location.href = "/new-profile";
+                    form.reset();
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  errorPop.style.display = "block";
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = localizedStrings.login;
+          }, 1000); // 1-second delay
+        });
+      });
+    </script>
+  </body>
+</html>

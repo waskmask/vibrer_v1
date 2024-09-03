@@ -1,0 +1,268 @@
+@import "./var";
+
+#userInfo {
+  .title {
+    font-size: 1rem;
+    color: $light;
+  }
+  .data {
+    color: $lgt;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+}
+
+.p_social_links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  .link {
+    position: relative;
+    .title {
+      display: none;
+      position: absolute;
+      top: -1.8rem;
+      color: $white !important;
+      padding: 0.25rem 0.45rem;
+      background-color: $black;
+      font-size: 0.75rem !important;
+    }
+    &:hover {
+      .title {
+        display: block;
+      }
+    }
+  }
+}
+
+.p_gallery {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.p_gallery_data {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  .item {
+    width: 100px;
+    height: 100px;
+    position: relative;
+
+    .remove {
+      background-color: $primary;
+      color: $white;
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+.tag_wrapper {
+  .tag_list {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+    .tags {
+      background-color: $primary;
+      padding: 0.25rem 0.75rem;
+      color: $white;
+      font-size: 0.875rem;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+  }
+}
+
+#cover_song_input {
+  display: none;
+}
+
+.file_input_wrapper {
+  .label {
+    background-color: $form;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .f-border {
+    border: solid 1px #585858 !important;
+  }
+  .form-input {
+    display: none !important;
+  }
+
+  .img_wrapper {
+    width: 100%;
+    height: auto !important;
+    max-height: 250px;
+    background-color: $form;
+    border-radius: 0.25rem;
+    position: relative;
+
+    p {
+      color: $primary;
+      text-align: center !important;
+      padding: 0.5rem 1rem;
+    }
+
+    .removeBanner {
+      background-color: $primary;
+      color: $white;
+      font-size: 1.1rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 1rem;
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      cursor: pointer;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 0.25rem;
+    }
+  }
+}
+
+.whatsAppLink {
+  display: flex;
+  align-items: center;
+
+  flex-wrap: wrap;
+  color: $white;
+  .icon {
+    color: #34f199;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .text {
+    font-size: 1rem;
+  }
+}
+
+.shareWrapper {
+  padding: 1rem 1rem;
+  .s_media {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .share-btn {
+    background-color: transparent !important;
+    border: none;
+    padding: 0;
+    img {
+      width: 35px;
+    }
+  }
+
+  .shareUrl {
+    position: relative;
+    width: 100%;
+    flex-wrap: nowrap;
+    .urlHolder {
+      border-radius: 0 0.25rem 0.25rem 0;
+      background-color: $form;
+      border: 1px solid $light;
+      border-left: 0;
+      width: calc(100% - 100px);
+      cursor: pointer;
+      font-size: 0.875rem;
+      height: 45px;
+      padding: 0.5rem;
+      span {
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .urlHolder.focus {
+      background-color: lighten($form, 5%);
+    }
+    .btn {
+      font-size: 0.75rem;
+      height: 45px;
+      width: 100px;
+      padding: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    @include phone {
+      .btn,
+      .urlHolder {
+        height: 40px;
+      }
+    }
+    .urlCopied {
+      position: absolute;
+      background-color: rgba(198, 218, 255, 0.98);
+      color: #0772c9;
+      border: 1px solid #23aaf8;
+      top: 8px;
+      right: 10px;
+      padding: 0.25rem 0.75rem;
+      gap: 0.5rem;
+      border-radius: 0.25rem;
+      opacity: 0;
+      transition: all 0.3s;
+      img {
+        height: 12px;
+      }
+    }
+    .urlCopied.show {
+      opacity: 1;
+      top: 6px;
+    }
+  }
+}
+
+.goback {
+  gap: 0.5rem;
+  width: fit-content;
+  cursor: pointer;
+  img.icon {
+    height: 1rem;
+  }
+  .link_text {
+    color: $white;
+  }
+}

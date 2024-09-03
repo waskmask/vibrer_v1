@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+  </head>
+  <body>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <!-- <select id="languageSwitcher" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+      </select> -->
+
+      <section class="heroHome">
+        <div class="layout">
+          <div class="content">
+            <img
+              src="/public/images/contest-2/c2-title-light-shadow.svg"
+              alt="Star"
+            />
+            <div class="title tup"><%= __("upcoming_contests") %></div>
+            <div class="sub"><%= __("contest2_home_sub") %></div>
+            <div class="cta">
+              <button class="btn btn-primary" onclick="toContest();">
+                <%= __("view_contest") %>
+              </button>
+              <button class="btn btn-outlined" onclick="learnMore()">
+                <%= __("learn_mv") %>
+              </button>
+            </div>
+          </div>
+          <!-- <div class="image">
+            <img src="/public/images/micHero.png" alt="Mic" />
+          </div> -->
+        </div>
+      </section>
+
+      <section class="layout" id="sec2">
+        <div class="container">
+          <div class="title"><%= __("what_is_vibrer_q") %></div>
+
+          <div class="grid">
+            <div class="col">
+              <div class="desc">
+                <%= __("wiv_content") %>
+                <span class="toFeatures" onclick="scrollToFeatures() ">
+                  <%= __("view_features") %>
+                </span>
+              </div>
+
+              <div class="v-wrapper" id="videoPlay">
+                <img src="./public/images/listening-to.jpg" alt="bg" />
+                <img
+                  class="play-btn"
+                  src="./public/images/play-button.svg"
+                  alt="play button"
+                />
+                <div class="title"><%= __("view_short_promo") %></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="img-wrapper">
+                <img
+                  src="./public/images/skeleton-music.jpg"
+                  alt="Vibrer's realm"
+                />
+                <div class="title">
+                  Melodies<br />Beyond Time:<br />Vibrer's Realm
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="sect3">
+        <div class="layout">
+          <div class="container">
+            <div class="left">
+              <div class="title"><%= __("who_is_vibrer_for_q") %></div>
+              <div class="subtitle"><%= __("wvf_sub") %></div>
+              <div class="desc"><%= __("wvf_desc") %></div>
+            </div>
+            <div class="right">
+              <div class="imgWrapper">
+                <div class="title tcap"><%= __("singers") %></div>
+                <img src="/public/images/singer.png" alt="Singer" />
+              </div>
+              <div class="imgWrapper">
+                <div class="title tcap"><%= __("musicians") %></div>
+                <img src="/public/images/musician.png" alt="Musician" />
+              </div>
+              <div class="imgWrapper">
+                <div class="title tcap"><%= __("dancers") %></div>
+                <img src="/public/images/dancer.png" alt="Dancer" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec4">
+        <div class="container">
+          <div class="grid2">
+            <div class="title"><%- __("exploreVF") %></div>
+            <div class="mtitle"><%- __("exploreVFM") %></div>
+            <div class="card">
+              <div class="icon">
+                <img
+                  src="/public/images/icons/music_pink.svg"
+                  alt="musicPink"
+                />
+              </div>
+              <div class="sTitle"><%- __("elevate_mj") %></div>
+            </div>
+          </div>
+        </div>
+        <div class="layout">
+          <div class="grid3">
+            <div class="title"><%- __("dynamic_sm_title") %></div>
+            <div class="desc"><%- __("dynamic_sm_desc") %></div>
+            <img src="/public/images/Gravity-Scene.png" alt="Gravity" />
+          </div>
+
+          <div class="grid5">
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/send_pink.svg" alt="" />
+              </div>
+              <div>
+                <div class="title"><%- __("shareYourPassion") %></div>
+
+                <div class="desc"><%- __("shareYourPassionDesc") %></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/fast-forward.svg" alt="icon" />
+              </div>
+              <div>
+                <div class="title"><%- __("browseAndConnect") %></div>
+                <div class="desc"><%- __("browseAndConnectDesc") %></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/message-text-01.svg" alt="" />
+              </div>
+              <div>
+                <div class="title"><%- __("seamlessCommunication") %></div>
+
+                <div class="desc"><%- __("seamlessCommunicationDesc") %></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/live_concert.svg" alt="" />
+              </div>
+              <div>
+                <div class="title"><%- __("exclusiveLiveConcerts") %></div>
+                <div class="desc"><%- __("exclusiveLiveConcertsDesc") %></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/contest.svg" alt="" />
+              </div>
+              <div>
+                <div class="title"><%- __("onlineContests") %></div>
+                <div class="desc"><%- __("onlineContestsDesc") %></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="icon">
+                <img src="/public/images/icons/live_stream.svg" alt="" />
+              </div>
+              <div>
+                <div class="title"><%- __("liveStreaming") %></div>
+                <div class="desc"><%- __("liveStreamingDesc") %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gnform">
+        <div class="container">
+          <div class="title"><%- __("subscribeTitle") %></div>
+          <div class="subtitle"><%- __("subscribeSub") %></div>
+
+          <form id="mailingList">
+            <div class="grid">
+              <input
+                type="hidden"
+                name="mailType"
+                value="Launch notifications"
+              />
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="<%= __('firstName') %>"
+                  name="firstName"
+                />
+
+                <div class="form-alert"></div>
+              </div>
+
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="<%= __('lastName') %>"
+                  name="lastName"
+                />
+              </div>
+              <div class="col">
+                <input
+                  class="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="<%= __('email') %>"
+                />
+              </div>
+              <div class="col">
+                <button class="btn btn-primary ml-btn">
+                  <%= __("subscribe") %>
+                </button>
+              </div>
+            </div>
+            <div class="desc">
+              <%- __("subscribeFormConsent") %>
+              <a href="./privacy"><%= __("readPrivacyLinkText") %></a>
+            </div>
+
+            <button
+              type="button"
+              class="btn btn-outlined"
+              onclick="scrollToMoreFeatures()"
+            >
+              <%= __("continueExploring") %>
+              <img
+                class="img-right"
+                src="./public/images/arrow-down-circle.svg"
+                alt="circle arrow"
+              />
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="layout" id="sec5">
+        <div class="container">
+          <div class="grid2">
+            <div class="col">
+              <img
+                class="social-hub"
+                src="./public/images/edited-for-vib.png"
+                alt="social hub image"
+              />
+            </div>
+            <div class="col">
+              <div class="title"><%= __("socialHubTitle") %></div>
+              <div class="desc"><%= __("socialHubDescription") %></div>
+              <div class="desc icon">
+                <img src="./public/images/check-circle.svg" alt="Check" />
+                <div><%= __("socialHubFeature1") %></div>
+              </div>
+              <div class="desc icon">
+                <img src="./public/images/check-circle.svg" alt="Check" />
+                <div><%= __("socialHubFeature2") %></div>
+              </div>
+              <div class="desc"><%= __("socialHubClosing") %></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="sec6">
+        <div class="container">
+          <div class="title"><%= __("walletTitleStatic") %></div>
+          <div class="desc"><%= __("walletDescriptionStatic") %></div>
+        </div>
+        <img
+          class="walletimg"
+          src="./public/images/wallet.png"
+          alt="Wallet image"
+        />
+      </section>
+    </main>
+    <%- include('partials/footer'); %>
+    <div id="overlay">
+      <!-- The popup content -->
+      <div id="popup">
+        <iframe id="video" src="" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <div class="success-pop">
+      <div class="header">
+        <div class="success-pop-title">Thank you!</div>
+        <div class="success-pop-close">+</div>
+      </div>
+      <div class="success-pop-desc">
+        You have been added to our mailing list.
+      </div>
+    </div>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/forms.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+
+    <script>
+      const allElements = document.querySelectorAll("body *");
+
+      allElements.forEach((el) => {
+        if (el.offsetWidth > document.documentElement.clientWidth) {
+          console.log("Overflowing element:", el);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Your YouTube video ID
+        // var videoID = "WFlYEXkcLJ8";
+
+        // The clickable div
+        var clickableDiv = document.getElementById("videoPlay");
+
+        // The overlay
+        var overlay = document.getElementById("overlay");
+
+        // The video iframe
+        var video = document.getElementById("video");
+
+        clickableDiv.addEventListener("click", function () {
+          // Show the overlay
+          overlay.style.display = "block";
+
+          // Set the source for the iframe and autoplay
+          video.src = "https://static.vibrer.app/mediavid/vibrer-promo-v1.mp4";
+
+          ("?autoplay=1");
+        });
+
+        // Hide overlay when clicked
+        overlay.addEventListener("click", function () {
+          overlay.style.display = "none";
+          // Stop the video
+          video.src = "";
+        });
+      });
+    </script>
+    <script>
+      function scrollToGNForm() {
+        const gnForm = document.getElementById("gnform");
+        if (gnForm) {
+          window.scrollTo({
+            top: gnForm.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      function scrollToFeatures() {
+        const sec4 = document.getElementById("sec4");
+        if (sec4) {
+          window.scrollTo({
+            top: sec4.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+      function scrollToMoreFeatures() {
+        const sec5 = document.getElementById("sec5");
+        if (sec5) {
+          window.scrollTo({
+            top: sec5.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+      function learnMore() {
+        const sec2 = document.getElementById("sec2");
+        if (sec2) {
+          window.scrollTo({
+            top: sec2.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+    </script>
+    <script>
+      function toContest() {
+        window.location.href = "/contest";
+      }
+    </script>
+  </body>
+</html>

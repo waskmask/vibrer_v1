@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <title><%= __('email_verified')%></title>
+    <meta
+      name="description"
+      content="Explore Vibrer's, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
+    />
+    <meta
+      name="keywords"
+      content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
+    />
+
+    <%- include('partials/head'); %>
+  </head>
+  <body class="bg-dark">
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+
+    <main>
+      <section class="email-verified">
+        <div class="cont">
+          <img src="/public/images/icons/emailVerified.svg" alt="Verified" />
+          <div class="title"><%= __('email_verified')%></div>
+          <div class="sub"><%= __('email_verified_sub')%></div>
+          <div class="desc"><%- __('redirectMessage')%></div>
+
+          <button class="btn btn-primary" onclick="toLogin()">
+            <%= __('login')%>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- javascript -->
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+    <script src="/public/js/forms.js?v=3.1"></script>
+
+    <script>
+      let timeLeft = 15;
+      const countdownElement = document.getElementById("countdown");
+
+      const countdownTimer = setInterval(function () {
+        timeLeft--;
+        countdownElement.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(countdownTimer);
+          window.location.href = "#"; // Replace with your actual login page URL
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

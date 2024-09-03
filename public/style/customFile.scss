@@ -1,0 +1,42 @@
+@import "./var";
+
+.fileuploader .fileuploader-theme-avatar {
+  width: 150px;
+  height: 150px;
+}
+#avatarWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fileuploader-theme-avatar .fileuploader-menu-open {
+  height: 25px;
+}
+
+.hidden-coverWrap {
+  background-color: $dl;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  //   width: 350px;
+
+  .d-flex {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+.crop-overlay {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.402);
+  left: 0;
+  top: 0;
+  z-index: 998;
+  display: none;
+}

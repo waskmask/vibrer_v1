@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+  </head>
+  <body>
+    <main>
+      <section
+        class="error-page"
+        style="background-image: url('/public/images/404.webp')"
+      >
+        <div class="wrapper">
+          <div class="title">500</div>
+          <div class="sub">Internal server error!</div>
+          <button
+            class="btn btn-primary shadow"
+            type="button"
+            onclick="toLogin()"
+          >
+            Go to login
+          </button>
+        </div>
+      </section>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(async function () {
+          try {
+            // Clear token from localStorage
+            localStorage.removeItem("appUserToken");
+
+            // Clear token from server session
+            await fetch("/clear-token-in-session", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              // You might need to send the token to the server for verification
+              // Add it to the body if required
+              body: JSON.stringify({
+                // token: getStoredTokenFromLocalStorage(),
+              }),
+            });
+
+            // Redirect to the logout page or any other desired action
+            window.location.href = "/login";
+          } catch (error) {
+            console.error("Error during logout:", error);
+            // Handle the error as needed
+          }
+        }, 2000);
+      });
+
+      function toLogin() {
+        window.location.href = "/login";
+      }
+    </script>
+  </body>
+</html>

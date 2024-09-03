@@ -1,0 +1,42 @@
+@import "./var";
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+
+  th {
+    text-align: start;
+    font-weight: 400;
+    font-size: 0.95rem;
+    padding: 0.7rem 0.75rem 0.7rem 0.25rem;
+  }
+  thead tr {
+    border-bottom: 1px solid $light;
+  }
+  td {
+    vertical-align: baseline;
+    padding: 0 0.75rem 0.7rem 0.25rem;
+    white-space: nowrap;
+  }
+
+  .flex-end {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .max80 {
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.table-light {
+  color: $white;
+  th {
+    color: $light;
+  }
+}

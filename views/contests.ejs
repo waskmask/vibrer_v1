@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="./public/style/contests.css?v=3.1" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <!-- Header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="contests bg-dark" style="padding-bottom: 10px">
+        <div class="layout">
+          <% if (archivedContestsData.result &&
+          archivedContestsData.result.length > 0) { %>
+          <div class="title tcap"><%=__("coming_soon")%></div>
+          <% archivedContestsData.result.forEach(archivedContests => { %>
+          <div class="contests-wrapper" onclick="toContest()">
+            <div class="contest">
+              <div class="status upcoming tcap"><%- __("upcoming") %></div>
+              <img
+                class="hinm"
+                src="https://static.vibrer.app/mediaImg/soundsOfnations-Web.webp"
+                alt="images"
+              />
+              <img
+                class="hinb"
+                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.m  %>"
+                alt="images"
+              />
+            </div>
+          </div>
+          <% }); } %>
+        </div>
+      </section>
+      <section class="contests bg-dark" style="padding-bottom: 10px">
+        <div class="layout">
+          <% if (archivedContestsData.result &&
+          archivedContestsData.result.length > 0) { %>
+          <div class="title tcap">
+            <%=__("completed")%> <%=__("contests")%> (<%-
+            archivedContestsData.result.length %>)
+          </div>
+          <% archivedContestsData.result.forEach(archivedContests => { %>
+          <div class="contests-wrapper" onclick="toContest()">
+            <div class="contest">
+              <div class="status inactive tcap"><%- __("completed") %></div>
+              <img
+                class="hinm"
+                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.xl  %>"
+                alt="images"
+              />
+              <img
+                class="hinb"
+                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.m  %>"
+                alt="images"
+              />
+            </div>
+          </div>
+          <% }); } %>
+        </div>
+      </section>
+      <section class="contests bg-dark" style="padding-bottom: 10px">
+        <div class="layout">
+          <% if (onGoingContestsData.result && onGoingContestsData.result.length
+          > 0) { %>
+          <div class="title tcap">
+            <%=__("active_contests")%> (<%- onGoingContestsData.result.length
+            %>)
+          </div>
+          <% onGoingContestsData.result.forEach(onGoingContests => { %>
+          <div class="contests-wrapper" onclick="toContest()">
+            <div class="contest">
+              <div class="status active tcap"><%- __("active") %></div>
+              <img
+                class="hinm"
+                src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.xl  %>"
+                alt="images"
+              />
+              <img
+                class="hinb"
+                src="<%- ADMIN_URL %>uploads/<%- onGoingContests.banner.m  %>"
+                alt="images"
+              />
+            </div>
+          </div>
+          <% }); } %>
+        </div>
+      </section>
+      <section class="contests bg-dark">
+        <div class="layout">
+          <div class="title"><%= __("upcoming_contests")%></div>
+          <div class="contests-wrapper">
+            <div class="contest">
+              <div class="status upcoming"><%- __("upcoming") %></div>
+              <img
+                class="hinm"
+                src="/public/images/upcoming_contests/rapContest.jpg"
+                alt="images"
+              />
+              <img class="hinb"
+              src="/public/images/upcoming_contests/rapContestMobile.jpg""
+              alt="images" />
+            </div>
+            <div class="contest">
+              <div class="status upcoming"><%- __("upcoming") %></div>
+              <img
+                class="hinm"
+                src="/public/images/upcoming_contests/djContest.jpg"
+                alt="images"
+              />
+              <img class="hinb"
+              src="/public/images/upcoming_contests/djContestMobile.jpg""
+              alt="images" />
+            </div>
+            <div class="contest">
+              <div class="status upcoming"><%- __("upcoming") %></div>
+              <img
+                class="hinm"
+                src="/public/images/upcoming_contests/singer-songwriter-contest.jpg"
+                alt="images"
+              />
+              <img class="hinb"
+              src="/public/images/upcoming_contests/singer-songwriter-contestMobile.jpg""
+              alt="images" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- footer -->
+    <%- include('partials/footer'); %>
+
+    <div class="success-pop">
+      <div class="header">
+        <div class="success-pop-title">Thank you!</div>
+        <div class="success-pop-close">+</div>
+      </div>
+      <div class="success-pop-desc">
+        You have been added to our mailing list.
+      </div>
+    </div>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+    <script>
+      function toContest() {
+        window.location.href = "/contest";
+      }
+    </script>
+  </body>
+</html>

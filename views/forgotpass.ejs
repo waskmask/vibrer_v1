@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <%- include('partials/loader'); %>
+    <main>
+      <section class="auth auth-pages" id="forgot-password">
+        <div class="auth-container">
+          <img class="bg-img" src="/public/images/auth-pass.jpg" alt="Image" />
+          <div class="overlay"></div>
+          <div class="left-col">
+            <div class="title"><%=__("forgot_pass_text")%></div>
+          </div>
+          <div class="auth-col">
+            <div class="form-wrapper">
+              <img
+                class="logo"
+                src="/public/images/vibrer_light_logo.svg"
+                alt="Logo"
+              />
+              <div class="title"><%=__("forgot_password")%></div>
+              <div class="sub"><%=__("forgot_pass_sub")%></div>
+              <div class="success-message mb-3">
+                We've just sent a reset link to your registered email address at
+                [your@email.com]. Kindly check your inbox and follow the
+                instructions to securely reset your password. If you don't find
+                the email in your inbox, please take a moment to look in your
+                spam folder as well.
+              </div>
+              <form
+                class="w-100"
+                action="javascript:void(0)"
+                id="forgotPasswordForm"
+                method="POST"
+                autocomplete="off"
+              >
+                <div class="mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="<%=__('email_address')%>"
+                    name="email"
+                    id="forgot-email"
+                    required
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="error-message mt-3 d-none"></div>
+                <div class="success-message mt-3 d-none"></div>
+                <button
+                  class="btn btn-primary w-100 mt-4 submitBtn"
+                  type="submit"
+                >
+                  <%=__('send_email')%>
+                </button>
+              </form>
+
+              <div class="mt-4 dfac">
+                <a class="link-primary dfac ms-1" href="/login">
+                  <img
+                    src="./public/images/icons/arrow-left-long-primary.svg"
+                    alt="icon"
+                  />
+                  <%=__('go_back_login')%>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/authForm.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+    <script>
+      var localizedStrings = {
+        emailIsRequired: "<%= __('email_is_required') %>",
+        emailMustBeValid: "<%= __('email_must_be_valid') %>",
+        loading: "<%= __('loading') %>",
+        sendEmail: "<%= __('send_email') %>",
+        userDoesntExist: "<%= __('email_user_doesnt_exist') %>",
+        forgotPassSuccess: "<%= __('fp_email_sent') %>",
+      };
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("forgotPasswordForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = localizedStrings.loading;
+          btn.disabled = true;
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const { email } = formDataJSON;
+
+            if (
+              !email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+            ) {
+              isValid = false;
+              customErrors.email = !email
+                ? localizedStrings.emailIsRequired
+                : localizedStrings.emailMustBeValid;
+            }
+
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}appUser/forgot-password`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    successPop.style.display = "block";
+                    successPop.innerHTML = localizedStrings.forgotPassSuccess;
+                    setTimeout(() => {
+                      successPop.style.display = "none";
+                    }, 5000);
+
+                    form.reset();
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = localizedStrings.emailMustBeValid;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  errorPop.style.display = "block";
+                  errorPop.innerHTML = localizedStrings.userDoesntExist;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = localizedStrings.sendEmail;
+            btn.disabled = false;
+          }, 1000); // 1-second delay
+        });
+      });
+    </script>
+  </body>
+</html>

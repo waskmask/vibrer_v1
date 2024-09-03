@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main class="app_layout app_wrapper">
+      <%- include('components/app-sidebar'); %>
+
+      <!-- main body of the app -->
+      <div class="app_main">
+        <section class="contest-header" style="padding: 1.5rem">
+          <div class="wrapper" style="position: relative; z-index: 2">
+            <div>
+              <div class="sponsor">
+                <img src="/public/images/mod_light.svg" alt="Logo" />
+                <div>MOD presents</div>
+              </div>
+              <div class="title"><%- contestDetailData.result.title %></div>
+              <div class="sub">
+                <%- contestDetailData.result.participates.length %> Participants
+                • <% if (contestDetailData.result.endDays > 0) { %> Ends in <%=
+                contestDetailData.result.endDays %> days <% } else { %> Over <%=
+                Math.abs(contestDetailData.result.endDays) %> days before <% }
+                %>
+              </div>
+            </div>
+            <div class="cta">
+              <button
+                class="btn btn-outlined"
+                data-toggle="_modal"
+                data-target="contest1Info"
+              >
+                Learn more
+              </button>
+              <a
+                class="btn btn-primary"
+                href="/app/participate/<%- contestDetailData.result._id %>"
+              >
+                <% if (isParticipated) { %> View my Post <% } else { %>
+                Participate <% } %>
+              </a>
+              <div
+                class="playAd"
+                data-toggle="_modal"
+                data-target="contest1Video"
+              >
+                <img src="/public/images/icons/playIconWhite.svg" alt="Icon" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="participants">
+          <!-- Top Participants -->
+          <% if (participantsWithVotes && participantsWithVotes.length > 0) { %>
+          <div class="title mb-4">
+            Top <%- participantsWithVotes.length %> contestants
+          </div>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if (participantsWithVotes
+            && participantsWithVotes.length > 0) { let c = 0; let alreadyVoted =
+            ""; participantsWithVotes.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+
+          <!-- You Voted -->
+          <% if (youVoted && youVoted.length > 0) { %>
+          <div class="title mb-4">You voted</div>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if (youVoted &&
+            youVoted.length > 0) { let c = 0; let alreadyVoted = "";
+            youVoted.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+
+          <!-- Random Participants without least quality -->
+          <% if (participantsWithoutLeastQuality &&
+          participantsWithoutLeastQuality.length > 0) { %>
+          <div class="title mb-4">All Contestants</div>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithoutLeastQuality &&
+            participantsWithoutLeastQuality.length > 0) { let c = 0; let
+            alreadyVoted = "";
+            participantsWithoutLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <% if(participants.votes.length > 0) { %>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+
+          <!--  Participants with least quality -->
+          <% if (participantsWithLeastQuality &&
+          participantsWithLeastQuality.length > 0) { %>
+          <div class="wrapper-lg-6">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; if
+            (participantsWithLeastQuality && participantsWithLeastQuality.length
+            > 0) { let c = 0; let alreadyVoted = "";
+            participantsWithLeastQuality.forEach(participants => { c++; %>
+
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    data-id="1234125"
+                    data-from="contests"
+                  >
+                    Report
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote">You voted</div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="auto"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="addParticipateToFavourite('<%- contestDetailData.result._id %>', '<%- participants.user._id %>');"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- participants.votes.length %></span
+                    >
+                  </div>
+                  <% if(participants.votes.length > 0) { %>
+                  <div class="rank">
+                    <strong>Current Rank:</strong>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                  <% } %>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-target="accountModal"
+                    data-toggle="share_modal"
+                  >
+                    Share
+                  </button>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="addParticipateVote('<%- participants.user._id %>','<%- contestDetailData.result._id %>');"
+                  >
+                    <% if(participants.is_voted){ %>Remove vote<% } else { %>
+                    Vote now <% } %>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <% }); } %> <% } %>
+          </div>
+        </section>
+
+        <!-- app main end -->
+      </div>
+
+      <!-- right side section of the app -->
+      <div class="app_right cs-scroll">
+        <div class="artists">
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/public/images/singer.png')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-id="user._id"
+            class="artist_wrapper mb-3"
+            style="background-image: url('/uploads/coverDemo.jpeg')"
+          >
+            <div class="overlay"></div>
+            <div class="_user">
+              <img src="/uploads/profileDemo.png" alt="User" />
+              <div class="info">
+                <div class="name">
+                  <span>Jessica Hub</span>
+                  <img
+                    class="app_v_badge"
+                    src="/public/images/icons/verified-badge.svg"
+                    alt="badge"
+                  />
+                </div>
+                <div class="uname">@jhub</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app_right_link">
+            <div class="link">View all</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('../modals/contest1Info'); %>
+    <!--  -->
+
+    include('../modals/contest1Video'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=3.1"></script>
+    <script src="/public/js/general.js?v=3.1"></script>
+    <script src="/public/js/video.min.js?v=3.1"></script>
+    <script src="/public/js/Youtube.min.js?v=3.1"></script>
+    <script src="/public/js/_modal.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+
+    <script>
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+
+      async function addParticipateVote(participate_id, contest_id) {
+        const submitBtn = document.getElementById(
+          "submitVoteBtn" + contest_id + participate_id + ""
+        );
+        const voteBtn = document.getElementById(
+          "yourVote" + contest_id + participate_id + ""
+        );
+        const submitBtnAll = document.getElementsByClassName(
+          "submitVoteBtn" + contest_id + ""
+        );
+        const voteBtnAll = document.getElementsByClassName(
+          "yourVote" + contest_id + ""
+        );
+        let countVotes = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        ).innerHTML;
+        let countVotesElement = document.getElementById(
+          "countVotes" + contest_id + participate_id + ""
+        );
+        const alreadyVoted = document.getElementById(
+          "alreadyVoted" + contest_id + ""
+        ).value;
+        submitBtn.textContent = "Loading...";
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}add/contestParticipateVote`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  Array.from(submitBtnAll).forEach((btn) => {
+                    btn.innerHTML = "Vote now";
+                  });
+
+                  Array.from(voteBtnAll).forEach((btn) => {
+                    btn.innerHTML = "";
+                  });
+
+                  if (alreadyVoted !== "") {
+                    let countVotesAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    ).innerHTML;
+                    let countVotesElementAlready = document.getElementById(
+                      "countVotes" + contest_id + alreadyVoted + ""
+                    );
+                    countVotesAlready = +countVotesAlready - 1;
+                    countVotesElementAlready.innerHTML = countVotesAlready;
+                  }
+
+                  submitBtn.innerHTML = "Remove vote";
+                  voteBtn.innerHTML = `<div class="yourVote">You voted</div>`;
+                  countVotes = +countVotes + 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = participate_id;
+                } else {
+                  submitBtn.innerHTML = "Vote now";
+                  voteBtn.innerHTML = "";
+                  countVotes = +countVotes - 1;
+                  document.getElementById(
+                    "alreadyVoted" + contest_id + ""
+                  ).value = "";
+                }
+                countVotesElement.innerHTML = countVotes;
+              } else {
+              }
+            } else {
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          }
+          // submitBtn.textContent = "Vote now";
+        }, 1000);
+      }
+
+      //   Add to favourite
+
+      async function addParticipateToFavourite(contest_id, participate_id) {
+        const favouriteIcon = document.getElementById(
+          "favouriteIcon" + contest_id + participate_id + ""
+        );
+        const favouriteBtn = document.getElementById(
+          "favouriteBtn" + contest_id + participate_id + ""
+        );
+
+        // Disable the button
+        favouriteBtn.disabled = true;
+
+        setTimeout(async () => {
+          const formData = {
+            contest_id: contest_id,
+            participate_id: participate_id,
+          };
+          const url = `${API_URL}addContestParticipantToFavourite`;
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            const responseData = await response.json();
+            if (response.status === 201 || response.status === 200) {
+              if (responseData.status === 1) {
+                if (response.status === 201) {
+                  favouriteIcon.src = "/public/images/icons/bookmark1.svg";
+                } else {
+                  favouriteIcon.src = "/public/images/icons/bookmark.svg";
+                }
+              } else {
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+              }
+            } else {
+              errorPop.style.display = "block";
+              if (responseData.error) {
+                responseData.message = responseData.error;
+              }
+            }
+          } catch (err) {
+            // Handle fetch error
+            console.error("An error occurred", err);
+          } finally {
+            // Enable the button after the API call is complete
+            favouriteBtn.disabled = false;
+          }
+        }, 1000);
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add click event listener to the entire document
+        document.addEventListener("click", function (event) {
+          var reportIcon = event.target.closest(".reportIcon");
+          var dropdown = event.target
+            .closest(".report_dd")
+            ?.querySelector(".drop_down");
+
+          // Check if a report icon was clicked
+          if (reportIcon) {
+            // Toggle the active class on the corresponding dropdown
+            dropdown.classList.toggle("active");
+          } else if (!event.target.closest(".drop_down")) {
+            // If the click was outside all dropdowns, close any active dropdown
+            document
+              .querySelectorAll(".drop_down.active")
+              .forEach(function (activeDropdown) {
+                activeDropdown.classList.remove("active");
+              });
+          }
+        });
+
+        // Find all elements with the class 'report_link'
+        document
+          .querySelectorAll(".report_link")
+          .forEach(function (reportLink) {
+            reportLink.addEventListener("click", function () {
+              var reportId = this.getAttribute("data-id");
+              if (reportId) {
+                window.open(
+                  "https://vibrer.com/report?id=" + reportId,
+                  "_blank"
+                );
+              }
+            });
+          });
+      });
+    </script>
+  </body>
+</html>

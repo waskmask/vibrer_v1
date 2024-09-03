@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="theme-color" content="#1e2750" />
+
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link href="/public/style/quill.snow.css?v=3.1" rel="stylesheet" />
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app_ext.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+    <link
+      href="https://releases.transloadit.com/uppy/v3.23.0/uppy.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .uppy-Dashboard-files {
+        display: none !important;
+      }
+      .uppy-Dashboard-inner {
+        height: 100px !important;
+        border-color: #585858;
+        border-radius: 7px;
+      }
+      .uppy-Dashboard-AddFiles-title {
+        font-size: 16px;
+        margin-top: 19px;
+        color: #fff;
+      }
+      .uppy-Dashboard-innerWrap {
+        background-color: #2f2f4b;
+      }
+      .uppy-Dashboard-browse {
+        color: #ff9fc2;
+      }
+      [data-uppy-drag-drop-supported="true"] .uppy-Dashboard-AddFiles {
+        border: 1px dashed #585858;
+      }
+      .video-preview {
+        width: 100%;
+        max-width: 300px;
+        padding-top: 180px;
+      }
+      .uppy-StatusBar-actionCircleBtn {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body class="body-dark _pr">
+    <!-- loader -->
+    <%- include('../partials/loader'); %>
+
+    <!-- header -->
+    <%- include('./partials/pre-header'); %>
+
+    <main class="app_layout app_wrapper">
+      <!-- main body of the app -->
+      <div class="app_main preMain">
+        <% if(isParticipated) { %>
+        <div class="myContestCard mt-3 mb-3 shadow">
+          <div class="flex-title">
+            <span><%- contestDetailsData.result.title %></span>
+            <div class="status active">
+              <%- contestDetailsData.result.status %>
+            </div>
+          </div>
+          <div class="text white">
+            <% if (contestDetailsData.result.endDays > 0 &&
+            contestDetailsData.result.status === 'Active') { %>
+            <%-__('endsin')%> <%= contestDetailsData.result.endDays %>
+            <%-__('days')%> <% } else { %> <%= __("contest_ended") %> <% } %>
+          </div>
+          <div class="text primary mt-2"><%-__("your_entry")%></div>
+          <div class="contestant">
+            <div class="head">
+              <video
+                controls
+                class="video-js"
+                preload="metadata"
+                width="640"
+                height="264"
+                data-setup="{}"
+              >
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/mp4"
+                />
+                <source
+                  src="<%- participatedParticipantData.media %>"
+                  type="video/webm"
+                />
+                <p class="vjs-no-js">
+                  To view this video please enable JavaScript, and consider
+                  upgrading to a web browser that
+                  <a
+                    href="https://videojs.com/html5-video-support/"
+                    target="_blank"
+                    >supports HTML5 video</a
+                  >
+                </p>
+              </video>
+            </div>
+            <div class="body">
+              <!-- inactive | active | review -->
+              <div
+                class="postStatus <%= (participatedParticipantData.status === 'Under Review') ? 'review' : (participatedParticipantData.status === 'Active') ? 'active' : 'inactive' %>"
+              >
+                <%- participatedParticipantData.status %>
+              </div>
+              <div class="votes">
+                <div class="count">
+                  <strong><%-__("votes")%></strong>
+                  <% let votes = participatedParticipantData.votes.length %> <%
+                  if (votes > 5) { %> <% votes += 50; %> <% } %>
+                  <span><%- votes %></span>
+                </div>
+                <div class="rank">
+                  <% if (contestDetailsData.result.endDays > 0 &&
+                  contestDetailsData.result.status === 'Active') { %>
+                  <strong> <%= __("current_rank") %>:</strong>
+                  <% } else { %>
+                  <strong> <%= __("rank") %>:</strong>
+                  <% } %>
+                  <span><%- participatedParticipantData.rank %> </span>
+                </div>
+              </div>
+
+              <div class="cta">
+                <!--button
+                  class="btn btn-outlined"
+                  onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
+                >
+                  <%-__("withdraw")%>
+                </button-->
+                <button
+                  class="btn btn-outlined"
+                  data-toggle="share_modal"
+                  data-target="shareModal"
+                  data-url="https://vibrer.app/app/contest-entry/<%=contestDetailsData.result._id%>/<%=participatedParticipantData._id%>"
+                >
+                  <%- __("share") %>
+                </button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  onclick="toPreHome('<%= path %>')"
+                >
+                  <%-__("view_contest")%>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } else { %> <% if (contestDetailsData.result.endDays > 0 &&
+        contestDetailsData.result.status === 'Active') { %>
+        <div class="title mb-3"><%- __("contest_entry_title")%></div>
+
+        <div class="app_form_container shadow">
+          <div class="sub mb-1"><%- __("submit_entry")%></div>
+          <div class="text white mb-2"><%- __("submit_entry_sub")%></div>
+
+          <form
+            class="form fborder"
+            action="javascript:void(0)"
+            method="POST"
+            id="mediaPostForm"
+            autocomplete="off"
+            enctype="multipart/form-data"
+          >
+            <div class="mb-3">
+              <input
+                type="hidden"
+                name="contest_id"
+                value="<%- contestDetailsData.result._id %>"
+                autocomplete="off"
+              />
+            </div>
+            <div class="mb-3">
+              <input
+                class="form-input"
+                type="text"
+                placeholder=" <%- __('entry_title')%>"
+                name="title"
+                id="title"
+              />
+            </div>
+
+            <div class="custom-select-wrapper mb-3" id="selectWrapperErr">
+              <div class="custom-check-select dfac" id="genre">
+                <div class="placeholder"><%= __("genre") %> *</div>
+                <div class="check-options">
+                  <div class="check-list cs-scroll grid-2-sm">
+                    <% if (genreData && genreData.length > 0) {
+                    genreData.forEach(genre => { %>
+                    <label class="checkbox-container">
+                      <%= __("genres." + genre.name) %>
+                      <input
+                        type="checkbox"
+                        value="<%= genre._id %>"
+                        data-value="<%= genre.name %>"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                    <% }); } %>
+                  </div>
+                  <div class="mb-3">
+                    <input
+                      type="hidden"
+                      id="genres"
+                      name="genres"
+                      value=""
+                      autocomplete="off"
+                    />
+                  </div>
+
+                  <div class="divider w-100 mt-4"></div>
+                  <div class="ccs-foter dfjcfe">
+                    <button
+                      type="button"
+                      class="btn btn-primary h-auto close-options"
+                    >
+                      <%= __("done") %>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="selected-items"></div>
+            </div>
+
+            <div class="mb-4">
+              <div id="desc" style="height: auto; min-height: 100px"></div>
+            </div>
+
+            <div class="mb-3 file_input_wrapper">
+              <div class="small light mb-1">
+                <%- __("entry_video_max_size")%>
+              </div>
+              <label class="label f-border" for="media_file">
+                <%- __("upload_video")%>
+              </label>
+            </div>
+
+            <input
+              class="form-input"
+              type="hidden"
+              name="media_video"
+              id="media_file"
+              accept="video/*"
+            />
+            <div class="mb-3 mt-3 file_input_wrapper_progress">
+              <div id="uploadProgress" class="progress-bar d-none">
+                <div class="progress-bar-fill"></div>
+              </div>
+              <div class="sub pr-title d-none"><%- __("preview")%></div>
+              <div class="video-preview d-none">
+                <video
+                  class="video-js"
+                  preload="metadata"
+                  width="640"
+                  height="264"
+                  autoplay="off"
+                  data-setup="{}"
+                ></video>
+              </div>
+            </div>
+
+            <div class="error-message mt-3 mb-2 d-none"></div>
+            <div class="form-success mt-3 mb-2 d-none">
+              <%-__("entry_success")%>
+            </div>
+            <div class="uppy-progress-bar-container"></div>
+            <div class="uppy-informer-container"></div>
+            <div class="uppy-status-bar-container d-none"></div>
+            <div class="mb-3">
+              <button class="btn btn-primary submitBtn" type="submit">
+                <%-__("submit")%>
+              </button>
+            </div>
+          </form>
+
+          <div class="whatsAppLink mb-2">
+            <div class="text"><%- __("whatsapp_support")%></div>
+            <div class="icon" onclick="toWhatsApp()">
+              <img
+                src="/public/images/icons/whatsapp_color.svg"
+                alt="whatsapp icon"
+              />
+              WhatsApp
+            </div>
+          </div>
+        </div>
+        <% } else { %>
+        <section
+          class="error-page"
+          style="background-image: url('/public/images/404.webp')"
+        >
+          <div
+            class="wrapper"
+            style="background-color: #181a3270; padding: 15px"
+          >
+            <div class="title"><%- __("contest_ended")%></div>
+            <div class="sub"><%- __("contest_ended2")%></div>
+          </div>
+        </section>
+        <% } %> <% } %>
+        <!-- footer -->
+        <div class="temp_footer">
+          <div class="top">
+            <div class="link">
+              <a target="_blank" href="/imprint"><%= __("imprint") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/privacy"> <%= __("privacyPolicy") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/terms"><%= __("termsOfUse") %></a>
+            </div>
+            <div class="link">
+              <a target="_blank" href="/cookies">
+                <%= __("cookieSettings") %></a
+              >
+            </div>
+            <div class="link">
+              <a target="_blank" href="/"> <%= __("Home") %></a>
+            </div>
+          </div>
+          <div class="social-icons">
+            <a href="https://www.youtube.com/@vibrer-official" target="_blank">
+              <img
+                class="yti"
+                src="/public/images/youtube.svg"
+                alt="Youtube icon"
+            /></a>
+            <a
+              href="https://www.instagram.com/vibrer_official/"
+              target="_blank"
+            >
+              <img src="/public/images/instagram.svg" alt="Instagram icon"
+            /></a>
+          </div>
+
+          <div class="footer-languagebar mt-3">
+            <div class="app-languageSwitcher me-1">
+              <div class="item" data-value="en">
+                <span><%= __("English") %></span>
+              </div>
+              <div class="item" data-value="fr">
+                <span><%= __("French") %></span>
+              </div>
+              <div class="item" data-value="de">
+                <span><%= __("German") %></span>
+              </div>
+              <div class="item" data-value="it">
+                <span><%= __("Italian") %></span>
+              </div>
+              <div class="item" data-value="pt">
+                <span><%= __("Portuguese") %></span>
+              </div>
+              <div class="item" data-value="tr">
+                <span><%= __("Turkish") %></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bottom">
+            <%- __("copyright").replace("{year}", new Date().getFullYear()) %>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <%- include('../modals/contest1tandc'); %>
+    <!--  -->
+    <%- include('../modals/shareModal'); %>
+    <!-- javascript -->
+    <script src="/public/js/redirections.js?v=3.1"></script>
+    <script src="/public/js/general.js?v=3.1"></script>
+    <script src="/public/js/app_language.js?v=3.1"></script>
+    <script src="/public/js/quill.min.js?v=3.1"></script>
+    <!-- <script src="/public/js/cookieBanner2.js?v=3.1"></script> -->
+    <script src="/public/js/video.min.js?v=3.1"></script>
+
+    <script src="/public/js/sweetalert2@11.js?v=3.1"></script>
+    <script src="/public/js/_modal.js?v=3.1"></script>
+    <script src="/public/js/_sharemodal.js?v=3.1"></script>
+    <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/check-select.js?v=3.1"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+    <script>
+      var localizedStrings = {
+        submitting: "<%= __('submitting_wait') %>",
+        descOpt: "<%= __('desc_optional') %>",
+        titleReq: "<%= __('title_required') %>",
+        genreReq: "<%= __('select_genres') %>",
+        chooseVideo: "<%= __('choose_video_file') %>",
+        submit: "<%= __('submit') %>",
+        entrySuccess: "<%= __('entry_success') %>",
+        errorProccess: "<%= __('error_processing') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        areYouSure: "<%= __('are_you_sure') %>",
+        withdrawConfirmation: "<%= __('withdraw_confirmation') %>",
+        deleted: "<%= __('deleted') %>",
+        yesDelete: "<%= __('yes_delete') %>",
+        validVideo: "<%= __('valid_video') %>",
+        postDeleted: "<%= __('post_deleted') %>",
+        error: "<%= __('error') %>",
+        somethingWentWrong: "<%= __('somethig_went_wrong') %>",
+        fileSize2gb: "<%= __('file_exc_2gb') %>",
+        uploadVideo: "<%= __('upload_video') %>",
+        noPreview: "<%= __('no_preview_video') %>",
+      };
+      function toWhatsApp() {
+        window.open("https://wa.me/971529395823", "_blank");
+      }
+      var players = [];
+
+      var videoElements = document.querySelectorAll(".video-js");
+
+      for (var i = 0; i < videoElements.length; i++) {
+        var player = videojs(videoElements[i]);
+
+        // Store the player instance in the array
+        players.push(player);
+
+        // Add event listener to each player
+        player.on("play", function () {
+          pauseOtherPlayers(this);
+        });
+        player.on("seeking", function () {
+          player.muted(true);
+        });
+
+        player.on("seeked", function () {
+          player.muted(false);
+        });
+      }
+      function pauseVideo() {
+        player.pause();
+      }
+      // Function to pause all players except the currently playing one
+      function pauseOtherPlayers(currentPlayer) {
+        players.forEach(function (player) {
+          if (player !== currentPlayer) {
+            player.pause();
+          }
+        });
+      }
+      var descElement = document.getElementById("desc");
+      if (descElement) {
+        var quill = new Quill("#desc", {
+          modules: {
+            toolbar: false,
+          },
+          placeholder: localizedStrings.descOpt, //
+          theme: "snow",
+        });
+      } else {
+        console.log("Everything with quill is good!");
+      }
+    </script>
+    <script>
+      // document
+      //   .querySelectorAll('.file_input_wrapper input[type="file"]')
+      //   .forEach(function (fileInput) {
+      //     // Ensure we're targeting the specific input for video files
+      //     if (
+      //       fileInput.getAttribute("name") === "media_video" &&
+      //       fileInput.getAttribute("accept").includes("video/*")
+      //     ) {
+      //       fileInput.addEventListener("change", function (event) {
+      //         var files = event.target.files;
+      //         if (files.length === 0) return; // Exit if no file selected
+
+      //         var file = files[0];
+      //         var wrapper = event.target.closest(".file_input_wrapper");
+      //         var label = wrapper.querySelector(".label");
+      //         var previewContainer = wrapper.querySelector(".video-preview");
+      //         var prTitle = wrapper.querySelector(".pr-title");
+      //         var progressBar = wrapper.querySelector(".progress-bar");
+      //         var progressBarFill =
+      //           progressBar.querySelector(".progress-bar-fill");
+      //         var errorDiv = wrapper.querySelector(".form-alert.error"); // Selector for the error message div
+
+      //         // Clear previous error message if present
+      //         if (errorDiv) {
+      //           errorDiv.remove();
+      //         }
+
+      //         // Check if file size exceeds the maximum allowed size (2 GB)
+      //         if (file.size > 2048 * 1024 * 1024) {
+      //           // Create and display an error message
+      //           var errorMsg = document.createElement("div");
+      //           errorMsg.classList.add("form-alert", "error");
+      //           errorMsg.textContent = localizedStrings.fileSize2gb;
+      //           wrapper.insertBefore(errorMsg, progressBar); // Insert the error message before the progress bar
+
+      //           // Reset label, preview, and progress bar to default state
+      //           label.textContent = localizedStrings.uploadVideo;
+      //           label.classList.remove("text-white");
+      //           prTitle.classList.add("d-none");
+      //           previewContainer.classList.add("d-none");
+      //           progressBar.classList.add("d-none");
+      //           return; // Exit to prevent further processing
+      //         }
+
+      //         // Update label text with file name, handling long names
+      //         label.textContent =
+      //           file.name.length > 25
+      //             ? "..." + file.name.slice(-23)
+      //             : file.name;
+      //         label.classList.add("text-white", files.length > 0);
+
+      //         // Reset preview and progress bar for new file upload
+      //         progressBar.classList.remove("d-none");
+      //         progressBarFill.style.width = "0%";
+      //         progressBarFill.textContent = "0%";
+      //         previewContainer.innerHTML = "";
+      //         prTitle.classList.remove("d-none");
+
+      //         var uploadPercentage = 0;
+      //         var simulateUpload = setInterval(function () {
+      //           if (uploadPercentage >= 100) {
+      //             clearInterval(simulateUpload);
+      //             progressBar.classList.add("d-none");
+
+      //             if (file.type === "video/quicktime") {
+      //               previewContainer.innerHTML = `<p>${localizedStrings.noPreview}</p>`;
+
+      //               previewContainer.classList.remove("d-none");
+      //             } else {
+      //               // For supported formats, initialize Video.js player
+      //               var blobUrl = URL.createObjectURL(file);
+      //               var newVideoHtml = `
+      //         <video id="my_video_player" class="video-js" preload="auto" width="640" height="264" data-setup="{}" controls>
+      //           <source src="${blobUrl}" type="${file.type}">
+      //           <p class="vjs-no-js">
+      //             To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+      //           </p>
+      //         </video>
+      //       `;
+      //               previewContainer.innerHTML = newVideoHtml;
+      //               previewContainer.classList.remove("d-none");
+      //               videojs(document.getElementById("my_video_player"));
+      //             }
+      //           } else {
+      //             uploadPercentage += 5;
+      //             progressBarFill.style.width = uploadPercentage + "%";
+      //             progressBarFill.textContent = uploadPercentage + "%";
+      //           }
+      //         }, 200);
+      //       });
+      //     }
+      //   });
+    </script>
+    <% if(!isParticipated) { %>
+    <script type="module">
+      import {
+        Uppy,
+        Dashboard,
+        StatusBar,
+        ProgressBar,
+        Informer,
+        XHRUpload,
+      } from "https://releases.transloadit.com/uppy/v3.21.0/uppy.min.mjs";
+
+      let uppySelectedFile;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const uppy = new Uppy({
+          debug: true,
+          restrictions: {
+            maxFileSize: 2048 * 1024 * 1024, // 2 GB max file size
+            maxNumberOfFiles: 1, // Allow only one file to be uploaded
+            allowedFileTypes: ["video/*"], // Allowed file types
+          },
+        });
+
+        uppy
+          .use(Dashboard, {
+            inline: true,
+            target: ".file_input_wrapper",
+            replaceTargetContent: true,
+            showProgressDetails: true,
+            proudlyDisplayPoweredByUppy: false,
+            hideUploadButton: true,
+            locale: {
+              strings: {
+                dropPasteFiles:
+                  "Drag and drop your video here or %{browseFiles}",
+                browseFiles: "browse file",
+                cancelButton: "Cancel Upload",
+              },
+            },
+          })
+          .use(ProgressBar, {
+            target: ".uppy-progress-bar-container",
+          })
+          .use(Informer, {
+            target: ".uppy-informer-container",
+          })
+          .use(StatusBar, {
+            target: ".uppy-status-bar-container",
+          })
+          .use(XHRUpload, {
+            endpoint: `${API_URL}upload/MediaVideo`,
+            fieldName: "media_video",
+            formData: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          })
+          .on("upload-success", (file, response) => {
+            // Handle successful upload
+            // console.log("File upload successful:", response);
+            // Do something with the response from the server
+          })
+          .on("upload-error", (file, error) => {
+            console.error(
+              `Error uploading file: ${file.name}`,
+              error,
+              response
+            );
+          });
+
+        // Event listener for when a file is selected
+        uppy.on("file-added", function (file) {
+          var wrapper = document.querySelector(".file_input_wrapper_progress");
+          var previewContainer = wrapper.querySelector(".video-preview");
+          var prTitle = wrapper.querySelector(".pr-title");
+          var progressBar = wrapper.querySelector(".progress-bar");
+          var progressBarFill = progressBar.querySelector(".progress-bar-fill");
+
+          // Check if file size exceeds the maximum allowed size (2 GB)
+          if (file.size > 2048 * 1024 * 1024) {
+            // Display an error message
+            var errorDiv = wrapper.querySelector(".form-alert.error"); // Reuse this selector for consistency
+            if (errorDiv) {
+              errorDiv.remove();
+            }
+            var errorMsg = document.createElement("div");
+            errorMsg.classList.add("form-alert", "error");
+            errorMsg.textContent = localizedStrings.fileSize2gb;
+            wrapper.insertBefore(errorMsg, progressBar);
+
+            // Reset UI elements
+            resetUI();
+            return;
+          }
+
+          // Use a blob URL for the video preview, which avoids reading the file entirely into memory
+          const blobUrl = URL.createObjectURL(file.data);
+
+          // Setup initial UI state for file upload progress
+          setupInitialUI();
+
+          var uploadPercentage = 0;
+          var simulateUpload = setInterval(function () {
+            if (uploadPercentage >= 100) {
+              clearInterval(simulateUpload);
+              progressBar.classList.add("d-none");
+
+              setupVideoPreview(blobUrl, file.type);
+            } else {
+              uploadPercentage += 25;
+              progressBarFill.style.width = uploadPercentage + "%";
+              progressBarFill.textContent = uploadPercentage + "%";
+            }
+          }, 100);
+
+          function resetUI() {
+            prTitle.classList.add("d-none");
+            previewContainer.classList.add("d-none");
+            progressBar.classList.add("d-none");
+          }
+
+          function setupInitialUI() {
+            progressBar.classList.remove("d-none");
+            progressBarFill.style.width = "0%";
+            progressBarFill.textContent = "0%";
+            previewContainer.innerHTML = "";
+            prTitle.classList.remove("d-none");
+          }
+
+          function setupVideoPreview(blobUrl, fileType) {
+            var newVideoHtml = "";
+            if (fileType === "video/quicktime") {
+              newVideoHtml = `<p>${localizedStrings.noPreview}</p>`;
+            } else {
+              newVideoHtml = `
+            <video id="my_video_player" class="video-js" preload="metadata" width="640" height="264" data-setup="{}" controls>
+              <source src="${blobUrl}" type="${file.type}">
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+              </p>
+            </video>
+          `;
+            }
+
+            previewContainer.innerHTML = newVideoHtml;
+            previewContainer.classList.remove("d-none");
+
+            // Initialize the video.js player if necessary
+            if (fileType !== "video/quicktime") {
+              videojs(document.getElementById("my_video_player"));
+            }
+          }
+          uppySelectedFile = file;
+        });
+
+        // Event listener for when a file is removed
+        uppy.on("file-removed", function () {
+          const previewContainer = document.querySelector(".video-preview");
+          const prTitle = document.querySelector(".pr-title");
+
+          // Clear the preview container when file is removed
+          previewContainer.innerHTML = "";
+          previewContainer.classList.add("d-none");
+          prTitle.classList.add("d-none");
+          uppySelectedFile = "";
+        });
+
+        // Event listener for when the upload starts
+        uppy.on("upload", function () {
+          // Show progress bar and informer
+          document.querySelector(".uppy-progress-bar-container").style.display =
+            "block";
+          document.querySelector(".uppy-informer-container").style.display =
+            "block";
+        });
+
+        // Event listener for when the upload finishes
+        uppy.on("complete", function () {
+          // Hide progress bar and informer
+          document.querySelector(".uppy-progress-bar-container").style.display =
+            "none";
+          document.querySelector(".uppy-informer-container").style.display =
+            "none";
+        });
+
+        const form = document.getElementById("mediaPostForm");
+        if (!form) {
+          return;
+        }
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".form-success");
+        const errorPop = document.querySelector(".error-message");
+        const selectWrapperErr = document.getElementById("selectWrapperErr");
+
+        form.setAttribute("novalidate", "");
+
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const uppyCancelBtn = document.querySelector(
+            ".uppy-DashboardContent-back"
+          );
+
+          btn.textContent = localizedStrings.submitting;
+          btn.disabled = true;
+          uppyCancelBtn.disabled = true;
+
+          let isValid = true;
+          let customErrors = {};
+
+          const titleInput = document.getElementById("title").value.trim();
+          if (!titleInput) {
+            isValid = false;
+            customErrors.title = localizedStrings.titleReq;
+          }
+
+          const genresInput = document.querySelector('[name="genres"]').value;
+          if (!genresInput) {
+            isValid = false;
+            customErrors.genres = localizedStrings.genreReq;
+          }
+
+          // const media_video = document.getElementById("media_file").files[0];
+          const media_video = uppySelectedFile;
+
+          if (!media_video) {
+            isValid = false;
+            customErrors.media_video = localizedStrings.chooseVideo;
+          } else if (!isValidVideoFile(media_video)) {
+            isValid = false;
+            customErrors.media_video = localizedStrings.validVideo;
+          }
+
+          clearPreviousErrors();
+
+          let mediaVideoFile;
+          if (isValid) {
+            uppy.upload();
+            uppy.on("complete", (result) => {
+              // console.log("Upload complete:", result.successful, result.failed);
+              if (
+                result.successful[0].response &&
+                result.successful[0].response.status === 201
+              ) {
+                mediaVideoFile =
+                  result.successful[0].response.body.result.media;
+
+                const formData = new FormData(form);
+                formData.append("description", quill.getText());
+
+                const genresArray = genresInput.split(",");
+                formData.append("genres", genresArray);
+                formData.append("media_video", mediaVideoFile);
+
+                submitForm(formData);
+              } else {
+                errorPop.textContent = result.failed[0].response.body.message;
+                errorPop.classList.remove("d-none");
+                errorPop.style.display = "block";
+                setTimeout(() => {
+                  errorPop.classList.add("d-none");
+                  errorPop.style.display = "none";
+                }, 5000);
+                return false;
+              }
+
+              return;
+            });
+          } else {
+            displayCustomErrors(customErrors);
+            btn.textContent = localizedStrings.submit;
+            btn.disabled = false;
+            uppyCancelBtn.disabled = false;
+          }
+        });
+
+        function isValidVideoFile(file) {
+          const allowedExtensions = [
+            ".mp4",
+            ".avi",
+            ".mov",
+            ".MOV",
+            ".mkv",
+            ".webm",
+            ".m4v",
+            ".flv",
+          ];
+          const fileExtension = "." + file.name.split(".").pop().toLowerCase();
+          return allowedExtensions.includes(fileExtension);
+        }
+
+        function clearPreviousErrors() {
+          document
+            .querySelectorAll(".form-alert")
+            .forEach((alert) => alert.remove());
+        }
+
+        function displayCustomErrors(errors) {
+          for (const key in errors) {
+            if (key === "genres") {
+              // Create and insert the error message inside the selectWrapperErr for genres error
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "form-alert error";
+              alertDiv.textContent = errors[key];
+              selectWrapperErr.appendChild(alertDiv);
+            } else {
+              const inputElement = form.querySelector(`[name="${key}"]`);
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "form-alert error";
+              alertDiv.textContent = errors[key];
+              inputElement.parentNode.insertBefore(
+                alertDiv,
+                inputElement.nextSibling
+              );
+            }
+          }
+        }
+        document.getElementById("title").addEventListener("input", function () {
+          if (this.value.trim() !== "") {
+            clearErrorForElement(this);
+          }
+        });
+        function clearErrorForElement(element) {
+          const error =
+            element.nextSibling.className === "form-alert error"
+              ? element.nextSibling
+              : null;
+          if (error) {
+            error.parentNode.removeChild(error);
+          }
+        }
+
+        function clearErrorForGenreSelection() {
+          const error = selectWrapperErr.querySelector(".form-alert.error");
+          if (error) {
+            error.parentNode.removeChild(error);
+          }
+        }
+
+        async function submitForm(formData) {
+          const url = `${API_URL}add/MediaPost`;
+          const formDataJSON = {};
+          for (const [key, value] of formData.entries()) {
+            formDataJSON[key] = key === "genres" ? value.split(",") : value;
+          }
+
+          // Convert JSON object to JSON string
+          const jsonData = JSON.stringify(formDataJSON);
+
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              body: jsonData,
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+              },
+            });
+
+            if (!response.ok) {
+              const errorText = await response.text(); // Or response.json() if the server responds with JSON
+              throw new Error(
+                `Server responded with ${response.status}: ${errorText}`
+              );
+            }
+
+            const responseData = await response.json();
+            if (responseData.status === 1) {
+              btn.classList.add("d-none");
+              successPop.textContent = localizedStrings.entrySuccess;
+              successPop.classList.remove("d-none");
+              setTimeout(() => {
+                successPop.classList.add("d-none");
+                form.reset();
+                window.location.reload();
+              }, 2000);
+            } else {
+              btn.classList.remove("d-none");
+              errorPop.textContent =
+                error.message || localizedStrings.errorProccess;
+              errorPop.classList.remove("d-none");
+              errorPop.style.display = "block";
+              setTimeout(() => {
+                errorPop.classList.add("d-none");
+                errorPop.style.display = "none";
+              }, 5000);
+            }
+          } catch (error) {
+            console.error("Submission error:", error);
+            errorPop.textContent =
+              error.message || localizedStrings.errorProccess;
+            errorPop.classList.remove("d-none");
+            errorPop.style.display = "block";
+            setTimeout(() => {
+              errorPop.classList.add("d-none");
+              errorPop.style.display = "none";
+            }, 5000);
+          }
+        }
+      });
+    </script>
+    <% } %>
+
+    <script>
+      async function confirmDelete(postId) {
+        try {
+          const result = await Swal.fire({
+            title: localizedStrings.areYouSure,
+            text: localizedStrings.withdrawConfirmation,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#fb6580",
+            cancelButtonColor: "#4b5891",
+            confirmButtonText: localizedStrings.yesDelete,
+          });
+
+          if (result.isConfirmed) {
+            const response = await fetch(
+              `${API_URL}remove/MediaPost/${postId}`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+              }
+            );
+
+            if (response.ok) {
+              await Swal.fire(
+                localizedStrings.deleted,
+                localizedStrings.postDeleted,
+                "success"
+              );
+              // Refresh page or update UI accordingly
+              window.location.reload();
+            } else {
+              await Swal.fire(
+                localizedStrings.error,
+                localizedStrings.somethingWentWrong,
+                "error"
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire(
+            localizedStrings.error,
+            localizedStrings.somethingWentWrong,
+            "error"
+          );
+        }
+      }
+    </script>
+    <script>
+      async function logoutAppUser() {
+        try {
+          // Clear token from localStorage
+          localStorage.removeItem("appUserToken");
+
+          // Clear token from server session
+          await fetch("/clear-token-in-session", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // You might need to send the token to the server for verification
+            // Add it to the body if required
+            body: JSON.stringify({
+              // token: getStoredTokenFromLocalStorage(),
+            }),
+          });
+
+          // Redirect to the logout page or any other desired action
+          window.location.href = "/login";
+        } catch (error) {
+          console.error("Error during logout:", error);
+          // Handle the error as needed
+        }
+      }
+    </script>
+  </body>
+</html>

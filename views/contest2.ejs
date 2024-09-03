@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="Vibrer singing contest music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('partials/head'); %>
+    <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
+    <link rel="stylesheet" href="./public/style/contests.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/app_ext.css" />
+    <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
+
+    <style>
+      @media screen and (min-width: 1000px) {
+        .wrapper-lg-2 {
+          display: grid;
+          gap: 1.5rem;
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(3, 1fr) !important;
+        }
+        .loadMoreButton {
+          display: none;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 50%; /* Center horizontally */
+          bottom: 0;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+      @media screen and (max-width: 999px) {
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        wrapper-lg-2 {
+          grid-template-columns: 1fr !important;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .wrapper-lg-4 {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: 1fr !important;
+        }
+        .loadMoreButton {
+          display: flex;
+          justify-content: center;
+        }
+        #loadingIndicator {
+          display: none;
+          position: fixed; /* Stay in place while scrolling */
+          left: 40%; /* Center horizontally */
+          bottom: -2%;
+          /* transform: translate(-50%, -50%); */
+          z-index: 1000;
+        }
+      }
+
+      #loadingIndicator img {
+        width: 100px; /* Adjust size as needed */
+        height: 100px; /* Adjust size as needed */
+      }
+      .vjs-poster {
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <!--%- include('partials/loader'); %-->
+    <!-- Header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="contest-2-header bg-dark">
+        <img src="/public/images/contest-2/c2-cpage-tweb.webp" alt="image" />
+        <img src="/public/images/contest-2/c2-cpage-med.webp" alt="image" />
+        <img src="/public/images/contest-2/c2-cpage-tmob.webp" alt="image" />
+      </section>
+
+      <section class="c2-1 c-content">
+        <div class="layout">
+          <div class="title">Vibrer Sounds of Nations D-A-CH</div>
+          <div class="sub">
+            A Premier Online Singing Contest for Germany, Austria, and
+            Switzerland.
+          </div>
+          <div class="strong primary mb-3 mt-3">Contest Overview</div>
+          <div class="text">
+            The Vibrer Sounds of Nations D-A-CH contest is a premier singing
+            competition open to talented singers from Germany, Austria, and
+            Switzerland. It is part of a larger global contest series organized
+            by Vibrer, aimed at discovering and promoting singing talent from
+            various regions worldwide.
+          </div>
+
+          <div class="wrapper-lg-2">
+            <div class="mt-4">
+              <div class="title mb-2">How It Works</div>
+              <div class="text" style="line-height: 1.7">
+                <strong>Registration: </strong> <br />
+                Opens on 1<sup>st</sup> November 2024. <br />
+
+                <strong>Submission:</strong> <br />
+                Participants submit their singing videos through the Vibrer app
+                or website. <br />
+
+                <strong>Voting:</strong> <br />
+                The Vibrer audience votes for their favorite performances.
+                <br />
+
+                <strong>Judging:</strong> <br />
+                Vibrer users will vote the best performance online. <br />
+
+                <strong>Finals:</strong> <br />
+                The finalists compete, and the winners are announced on November
+                1, 2024.
+              </div>
+            </div>
+
+            <div class="text mt-4" style="line-height: 1.7">
+              <div class="title mb-2">Prizes</div>
+              <strong>1st Prize:</strong> <br />
+              €5000 cash and promotional opportunities. <br />
+              <strong>2nd Prize:</strong> <br />
+              €2000 cash and promotional opportunities. <br />
+              <strong>3rd Prize:</strong> <br />
+              €1000 cash and promotional opportunities. <br /><br />
+              Additional Benefits: Collaboration opportunities, media exposure,
+              and a chance to compete in the global contest representing the
+              D-A-CH region.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-dark participants onHome">
+        <div class="layout">
+          <div class="wrapper-lg-2 c-content" style="align-items: center">
+            <div class="white mb-4">
+              <div class="title mb-2">Last contest by Vibrer</div>
+              <div class="sub">Vibrer Singing Contest (chapter 1)</div>
+              <br />
+              We have successfully completed the first Singing Contest on the
+              Vibrer Platform Online, With the support of our sponsor M.O.D
+              fashion, we gained 45,000 new users throughout the contest.
+            </div>
+            <div class="mb-4">
+              <img
+                src="/public/images/contest1.jpg"
+                style="width: 100%"
+                alt="images"
+              />
+            </div>
+          </div>
+          <!-- Top Participants -->
+          <% if ( top3Participants.length > 0) { %>
+          <div class="title mb-4">
+            <% if (contestDetailData.result.endDays > 0 &&
+            contestDetailData.result.status === 'Active') { %> <%= __("top") %>
+            <%= top3Participants.length.length %> <%= __("entries") %> <% } else
+            { %> <%= __("last_winners_c1") %> <% } %>
+          </div>
+          <div class="wrapper-lg-4">
+            <% const getOrdinalSuffix = (number) => { const suffixes = ["th",
+            "st", "nd", "rd"]; const v = number % 100; return (suffixes[(v - 20)
+            % 10] || suffixes[v] || suffixes[0]); }; let c = 0; let alreadyVoted
+            = ""; top3Participants.forEach(participants => { c++; %>
+            <div class="contestant mb-3">
+              <div class="report_dd">
+                <img
+                  src="/public/images/icons/info_icon.svg"
+                  alt="Report"
+                  class="reportIcon"
+                />
+                <div class="drop_down shadow">
+                  <div
+                    class="report_link"
+                    onclick="resdirectAfterLogin('/app/contest-report/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <%= __("report") %>
+                  </div>
+                </div>
+              </div>
+              <div class="head">
+                <div
+                  class="yourVote<%- contestDetailData.result._id %>"
+                  id="yourVote<%- contestDetailData.result._id %><%- participants.user._id %>"
+                >
+                  <% if(participants.is_voted){ alreadyVoted =
+                  participants.user._id; %>
+                  <div class="yourVote"><%= __("you_voted") %></div>
+                  <% } %>
+                </div>
+                <video
+                  controls
+                  class="video-js"
+                  preload="none"
+                  width="640"
+                  height="264"
+                  data-setup="{}"
+                  poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
+                >
+                  <source src="<%- participants.media %>" type="video/mp4" />
+                  <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider
+                    upgrading to a web browser that
+                    <a
+                      href="https://videojs.com/html5-video-support/"
+                      target="_blank"
+                      >supports HTML5 video</a
+                    >
+                  </p>
+                </video>
+                <!-- <img src="/public/images/icons/playIconWhite.svg" alt="Icon" /> -->
+                <input
+                  type="hidden"
+                  id="alreadyVoted<%- contestDetailData.result._id %>"
+                  value="<%- alreadyVoted %>"
+                />
+              </div>
+              <div class="body">
+                <div class="top">
+                  <div class="user">
+                    <div class="img">
+                      <% if (!participants.user.profile_img ||
+                      participants.user.profile_img === '') { %>
+                      <img
+                        src="/public/images/default-avatar.png"
+                        alt="Default Avatar"
+                      />
+                      <% } else { %>
+                      <img
+                        src="<%- participants.user.profile_img %>"
+                        alt="avatar"
+                      />
+                      <% } %>
+                    </div>
+                    <div class="info">
+                      <div class="title">
+                        <span><%- participants.user.full_name %></span>
+                        <% if(participants.user.verified){ %>
+                        <img
+                          src="/public/images/icons/verified-badge.svg"
+                          alt="Badge"
+                        />
+                        <% } %>
+                      </div>
+                      <div class="uname">
+                        @<%- participants.user.username %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addToFav">
+                    <a
+                      href="javascript:void(0)"
+                      id="favouriteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      onclick="resdirectAfterLogin('/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                    >
+                      <% if(participants.is_favourite){ %>
+                      <img
+                        src="/public/images/icons/bookmark1.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } else { %>
+                      <img
+                        src="/public/images/icons/bookmark.svg"
+                        alt="Bookmark"
+                        id="favouriteIcon<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      />
+                      <% } %>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="votes">
+                  <div class="count">
+                    <strong><%-__('votes')%></strong>
+                    <% let votes = participants.votes.length %> <% if (votes >
+                    5) { %> <% votes += 50; %> <% } %>
+                    <span
+                      id="countVotes<%- contestDetailData.result._id %><%- participants.user._id %>"
+                      ><%- votes %></span
+                    >
+                  </div>
+                  <div class="rank">
+                    <% if (contestDetailData.result.endDays > 0 &&
+                    contestDetailData.result.status === 'Active') { %>
+                    <strong> <%= __("current_rank") %>:</strong>
+                    <% } else { %>
+                    <strong> <%= __("rank") %>:</strong>
+                    <% } %>
+                    <span
+                      ><%- participants.rank %><sup
+                        ><%- getOrdinalSuffix(participants.rank) %></sup
+                      ></span
+                    >
+                  </div>
+                </div>
+
+                <div class="cta">
+                  <button
+                    class="btn btn-outlined"
+                    data-toggle="share_modal"
+                    data-target="shareModal"
+                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                  >
+                    <%= __("share") %>
+                  </button>
+                  <% if(contestDetailData.result.status == 'Active' &&
+                  contestDetailData.result.endDays > 0){ %>
+                  <button
+                    class="btn btn-primary submitVoteBtn<%- contestDetailData.result._id %>"
+                    type="button"
+                    id="submitVoteBtn<%- contestDetailData.result._id %><%- participants.user._id %>"
+                    onclick="resdirectAfterLogin('/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>')"
+                  >
+                    <% if(participants.is_voted){ %> <%= __("remove_vote") %><%
+                    } else { %> <%= __('vote_now') %> <% } %>
+                  </button>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+          <% } %>
+        </div>
+      </section>
+    </main>
+
+    <!-- footer -->
+    <%- include('partials/footer'); %>
+
+    <!--  -->
+    <%- include('modals/accountModal'); %>
+    <!--  -->
+    <%- include('modals/shareModal'); %>
+
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/video.min.js?v=3.1"></script>
+    <!-- <script src="/public/js/Youtube.min.js?v=3.1"></script> -->
+    <script src="/public/js/_modal.js?v=3.1"></script>
+    <script src="/public/js/_sharemodal.js?v=3.1"></script>
+    <script src="/public/js/sharePost.js?v=3.1"></script>
+    <script src="/public/js/authForm.js?v=3.1"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var players = [];
+
+        var videoElements = document.querySelectorAll(".video-js");
+        for (var i = 0; i < videoElements.length; i++) {
+          (function (i) {
+            var player = videojs(videoElements[i]);
+
+            players.push(player);
+
+            player.on("play", function () {
+              pauseOtherPlayers(player);
+            });
+            player.on("seeking", function () {
+              this.muted(true);
+            });
+            player.on("seeked", function () {
+              this.muted(false);
+            });
+          })(i);
+        }
+
+        window.pauseVideo = function () {
+          players.forEach(function (player) {
+            player.pause();
+          });
+        };
+
+        function pauseOtherPlayers(currentPlayer) {
+          players.forEach(function (player) {
+            if (player !== currentPlayer) {
+              player.pause();
+            }
+          });
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+          // First, close all dropdowns by removing the 'active' class
+          document
+            .querySelectorAll(".drop_down.active")
+            .forEach(function (activeDropdown) {
+              activeDropdown.classList.remove("active");
+            });
+
+          var reportIcon = event.target.closest(".reportIcon");
+
+          // If a report icon was clicked, toggle the active class on its corresponding dropdown
+          if (reportIcon) {
+            var dropdown = reportIcon
+              .closest(".report_dd")
+              ?.querySelector(".drop_down");
+            if (dropdown) {
+              dropdown.classList.add("active"); // Use add here since we've already cleared all active classes
+              event.stopPropagation(); // Prevent the event from bubbling up to the document level where it would close the dropdown immediately
+            }
+          }
+        });
+
+        // This additional listener ensures dropdowns close when clicking outside of them
+        document.addEventListener("click", function (event) {
+          if (!event.target.closest(".report_dd")) {
+            document
+              .querySelectorAll(".drop_down.active")
+              .forEach(function (activeDropdown) {
+                activeDropdown.classList.remove("active");
+              });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

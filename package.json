@@ -1,0 +1,50 @@
+{
+  "name": "vibrer-prelaunch",
+  "version": "1.0.1",
+  "description": "Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide.",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_OPTIONS=--max-old-space-size=40960 node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waskmask/vibrer_v1.git"
+  },
+  "keywords": [
+    "music",
+    "platform",
+    "prelaunch",
+    "music",
+    "community",
+    "music",
+    "discovery",
+    "artist",
+    "connection",
+    "music",
+    "enthusiasts"
+  ],
+  "author": "atommatic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waskmask/vibrer_v1/issues"
+  },
+  "homepage": "https://github.com/waskmask/vibrer_v1#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1608.0",
+    "axios": "^1.3.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "geoip-lite": "^1.4.7",
+    "i18n": "^0.15.1",
+    "install": "^0.13.0",
+    "mongoose": "^7.4.5",
+    "nodemailer": "^6.9.4",
+    "npm": "^10.2.5"
+  }
+}

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="description"
+      content="Join Vibrer's prelaunch and be the first to experience a revolutionary music platform. Connect, discover, and engage with artists and music enthusiasts worldwide."
+    />
+    <meta
+      name="keywords"
+      content="music platform, prelaunch, music community, music discovery, artist connection, music enthusiasts"
+    />
+    <%- include('../partials/head'); %>
+    <link href="/public/style/quill.snow.css?v=3.1" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/dist/font/font-fileuploader.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/dist/jquery.fileuploader.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/plugins/file-uploader/modules/avatar/css/jquery.fileuploader-theme-avatar.css"
+    />
+    <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"
+      integrity="sha512-k2WPPrSgRFI6cTaHHhJdc8kAXaRM4JBFEDo1pPGGlYiOyv4vnA0Pp0G5XMYYxgAPmtmv/IIaQA6n5fLAyJaFMA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/public/js/config.js?v=3.01"></script>
+    <script>
+      var i18n = {
+        lang: '<%= __("lang") %>',
+        edit: '<%= __("edit") %>',
+        upload: '<%= __("upload") %>',
+        delete: '<%= __("delete") %>',
+      };
+    </script>
+    <script src="/public/plugins/file-uploader/dist/jquery.fileuploader.min.js?v=3.1"></script>
+    <script src="/public/plugins/file-uploader/modules/avatar/js/custom.js?v=3.1"></script>
+    <link rel="stylesheet" href="/public/style/customFile.css" />
+    <!-- Croppie CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css"
+    />
+
+    <!-- Croppie JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js?v=3.1"></script>
+    <style>
+      :root {
+        --dd-radius: 4px !important;
+        --dd-shadow: 0 0 2.5em rgba(0, 0, 0, 0.1);
+        --dd-overlay: rgba(0, 0, 0, 0.75);
+        --dd-background: #ffffff;
+        --dd-text1: #080813;
+        --dd-text2: #ffffff;
+        --dd-primary: #f32377;
+        --dd-gradient: linear-gradient(45deg, #fb6580, #f32377) !important;
+        --dd-monthBackground: var(--dd-gradient);
+        --dd-monthText: var(--dd-text2);
+        --dd-monthBorder: transparent;
+        --dd-confirmButtonBackground: var(--dd-gradient);
+        --dd-confirmButtonText: var(--dd-text2);
+        --dd-selectedBackground: var(--dd-gradient);
+        --dd-selectedText: var(--dd-text2);
+      }
+      .dd__dropdown:not(.dd-inline).dd-shown {
+        transform: translateY(-5%) translateX(-50%) !important;
+      }
+    </style>
+  </head>
+
+  <body class="body-dark">
+    <!-- Loader -->
+    <%- include('../partials/loader'); %>
+    <main>
+      <section class="edit-profile layout">
+        <div class="profile_wrapper">
+          <div class="logo">
+            <img src="/public/images/vibrer_light_logo.svg" alt="Logo" />
+          </div>
+
+          <form
+            class="form"
+            id="stepForm"
+            action="javascript:void(0)"
+            method="post"
+            autocomplete="off"
+          >
+            <!-- Step 1 -->
+
+            <div class="step step-1">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title"><%=__('presonal_info')%></div>
+                <div class="sub"><%=__('add_your_info')%></div>
+              </div>
+              <div class="mb-4">
+                <div>
+                  <input
+                    type="text"
+                    id="full_name"
+                    placeholder="<%=__('full_name')%> *"
+                    name="full_name"
+                    autocomplete="off"
+                    required
+                    minlength="3"
+                    maxlength="20"
+                  />
+                </div>
+                <div class="small white mt-1"><%=__('full_name_notice')%></div>
+              </div>
+              <div class="grid-2-sm">
+                <div class="genderInputWrapper">
+                  <div class="custom-select dfac" id="gender-opt">
+                    <div class="placeholder"><%=__('gender')%> *</div>
+                    <div class="options">
+                      <div class="option" value="Male"><%=__('male')%></div>
+                      <div class="option" value="Female"><%=__('female')%></div>
+                    </div>
+                    <input
+                      type="hidden"
+                      name="gender"
+                      value=""
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+                <div id="dateInputWrapper">
+                  <div class="date-input w-100">
+                    <input
+                      type="date"
+                      name="date_of_birth"
+                      id="dob"
+                      placeholder="<%=__('dob')%> *"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    id="city-input"
+                    name="city"
+                    autocomplete="off"
+                    placeholder="<%=__('city')%> *"
+                    required
+                  />
+                </div>
+                <div class="countryInputWrapper">
+                  <div class="custom-select dfac" id="country-opt">
+                    <div class="placeholder"><%=__('country')%> *</div>
+                    <%- include('partials/_countriesOptions') %>
+
+                    <input
+                      type="hidden"
+                      name="country"
+                      value=""
+                      id="country-input"
+                      autocomplete="off"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="dfjcfe ac g-3 mt-4">
+                <button
+                  type="button"
+                  data-action="next"
+                  class="btn btn-primary next-btn"
+                >
+                  <%=__('next')%>
+                </button>
+              </div>
+            </div>
+            <% if(profileData.user_type === 'Artist'){%>
+            <!-- Step 2 -->
+            <div class="step step-2">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title"><%= __("account_info") %></div>
+                <div class="sub"><%= __("complete_your_information") %></div>
+              </div>
+              <div class="custom-select-wrapper mb-4">
+                <div class="custom-check-select dfac" id="artists">
+                  <div class="placeholder"><%= __("im_a") %>? *</div>
+                  <div class="check-options">
+                    <div class="check-list grid-2-sm">
+                      <% artistCategoriesData.forEach(artistCategory => { %>
+                      <label class="checkbox-container">
+                        <%= __("artist_categories." + artistCategory.name) %>
+                        <input
+                          type="checkbox"
+                          value="<%= artistCategory._id %>"
+                          data-value="<%= artistCategory.name %>"
+                        />
+                        <span class="checkmark"></span>
+                      </label>
+                      <% }); %>
+                    </div>
+
+                    <input
+                      type="hidden"
+                      id="artist_categories"
+                      name="artist_categories"
+                      value=""
+                      autocomplete="off"
+                    />
+                    <div class="divider w-100 mt-4"></div>
+                    <div class="ccs-foter dfjcfe">
+                      <button
+                        class="btn btn-primary h-auto close-options"
+                        type="button"
+                      >
+                        <%= __("done") %>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="selected-items"></div>
+              </div>
+
+              <div class="custom-select-wrapper">
+                <div class="custom-check-select dfac" id="genre">
+                  <div class="placeholder"><%= __("genre") %> *</div>
+                  <div class="check-options">
+                    <div class="check-list grid-2-sm">
+                      <% if (genreData && genreData.length > 0) {
+                      genreData.forEach(genre => { %>
+                      <label class="checkbox-container">
+                        <%= __("genres." + genre.name) %>
+                        <input
+                          type="checkbox"
+                          value="<%= genre._id %>"
+                          data-value="<%= genre.name %>"
+                        />
+                        <span class="checkmark"></span>
+                      </label>
+                      <% }); } %>
+                    </div>
+                    <input
+                      type="hidden"
+                      id="genres"
+                      name="genres"
+                      value=""
+                      autocomplete="off"
+                    />
+                    <div class="divider w-100 mt-4"></div>
+                    <div class="ccs-foter dfjcfe">
+                      <button
+                        class="btn btn-primary h-auto close-options"
+                        type="button"
+                      >
+                        <%= __("done") %>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="selected-items"></div>
+              </div>
+
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  <%= __("back") %>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary next-btn"
+                  data-action="next"
+                >
+                  <%= __("next") %>
+                </button>
+              </div>
+            </div>
+            <% }%>
+            <!-- Step 3 -->
+            <div class="step step-3">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title"><%= __("profile_media") %></div>
+                <div class="sub"><%= __("complete_your_profile") %></div>
+              </div>
+              <div class="mb-4 mt-4" id="avatarWrap">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="profile_img"
+                  name="profile_img"
+                  data-fileuploader-default="<%- profileData.profile_img && profileData.profile_img !== '' ? profileData.profile_img : '/public/plugins/file-uploader/modules/avatar/images/default-avatar.png' %>"
+                  class="profileImage"
+                />
+              </div>
+
+              <div class="crop-overlay"></div>
+              <div class="hidden-coverWrap d-none">
+                <input
+                  style="display: none"
+                  type="file"
+                  id="upload"
+                  accept="image/*"
+                />
+                <div id="croppie-container"></div>
+                <div class="d-flex">
+                  <button
+                    class="btn btn-sm btn-primary"
+                    id="uploadCover"
+                    type="button"
+                  >
+                    Upload cover
+                  </button>
+                  <button class="btn btn-sm cancel-cover" type="button">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+
+              <div class="cover-upload">
+                <% if (profileData.profile_cover && profileData.profile_cover
+                !== '') { %>
+                <div
+                  class="cover-holder"
+                  style="background: url('<%- profileData.profile_cover %>')"
+                >
+                  <div class="label mb-0">
+                    <%= __("add_cover_photo") %>
+                    <span> <%= __("upload") %></span>
+                  </div>
+                </div>
+                <% } else { %>
+                <div class="cover-holder">
+                  <div class="label mb-0">
+                    <%= __("add_cover_photo") %>
+                    <span> <%= __("upload") %></span>
+                  </div>
+                </div>
+                <% } %>
+              </div>
+
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  <%=__("back")%>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary next-btn"
+                  data-action="next"
+                >
+                  <%=__("next")%>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step step-4">
+              <div class="dfcolac mt-4 mb-4">
+                <div class="title"><%=__("profile_info")%></div>
+                <div class="sub"><%=__("complete_final_step")%></div>
+              </div>
+
+              <div class="mb-4">
+                <div id="bio" style="height: auto; min-height: 100px"></div>
+              </div>
+
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="<%=__('youtube')%>"
+                  autocomplete="off"
+                  name="youtube"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="<%=__('instagram')%>"
+                  autocomplete="off"
+                  name="instagram"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="<%=__('facebook')%>"
+                  autocomplete="off"
+                  name="facebook"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="<%=__('twitter')%>"
+                  autocomplete="off"
+                  name="twitter"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="text"
+                  placeholder="<%=__('website')%>"
+                  autocomplete="off"
+                  name="website"
+                />
+              </div>
+              <div class="error-message mt-3 d-none"></div>
+              <div class="success-message mt-3 d-none"></div>
+              <div class="dfjcb ac g-3 mt-4">
+                <button
+                  class="btn btn-outlined"
+                  data-action="back"
+                  type="button"
+                >
+                  <%=__("back")%>
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary next-btn submitBtn"
+                >
+                  <%=__("finish")%>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+    <!-- javascript -->
+    <script src="/public/js/cookieBanner.js?v=3.1"></script>
+    <script src="/public/js/general.js?v=3.1"></script>
+    <script src="/public/js/select.js?v=3.1"></script>
+    <script src="/public/js/check-select.js?v=3.1"></script>
+    <script src="/public/plugins/datedropper/datedropper-javascript.js?v=3.1"></script>
+    <!-- <script src="/public/js/languageSwitcher.js?v=3.1"></script> -->
+    <script src="/public/js/quill.min.js?v=3.1"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+
+    <script>
+      const hiddenCoverWrap = document.querySelector(".hidden-coverWrap");
+      const togCoverInput = document.querySelector(".cover-holder");
+      const coveroverlay = document.querySelector(".crop-overlay");
+      const covInput = document.querySelector('input[id="upload"]');
+      let uploadCoverBtn = document.getElementById("uploadCover");
+      let croppieInstance = null; // Moved outside to be accessible globally
+      const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.heic|\.heif)$/i;
+      // Function to initialize or reinitialize Croppie
+      function initializeCroppie() {
+        const viewportSize = adjustViewport();
+        if (croppieInstance) {
+          croppieInstance.destroy();
+        }
+        croppieInstance = new Croppie(
+          document.getElementById("croppie-container"),
+          {
+            enableExif: true,
+            viewport: {
+              width: viewportSize.width,
+              height: viewportSize.height,
+              type: "square",
+            },
+            boundary: {
+              width: viewportSize.width,
+              height: viewportSize.height,
+            },
+            showZoomer: true,
+          }
+        );
+      }
+
+      // Adjust viewport based on window size
+      function adjustViewport() {
+        const targetAspectRatio = 800 / 300;
+        let viewportWidth = Math.min(300, window.innerWidth - 20);
+        let viewportHeight = viewportWidth / targetAspectRatio;
+
+        const maxHeight = window.innerHeight - 100;
+        if (viewportHeight > maxHeight) {
+          viewportHeight = maxHeight;
+          viewportWidth = viewportHeight * targetAspectRatio;
+        }
+
+        return { width: viewportWidth, height: viewportHeight };
+      }
+
+      // Trigger file input when cover-holder is clicked
+      togCoverInput.addEventListener("click", function () {
+        covInput.click();
+      });
+
+      // Handling image selection
+      covInput.addEventListener("change", function () {
+        const existingAlert = document.querySelector(".form-alert");
+        if (existingAlert) {
+          existingAlert.parentNode.removeChild(existingAlert);
+        }
+        const file = this.files[0];
+
+        // Validate file type
+        if (!allowedExtensions.exec(file.name)) {
+          const existingAlert = document.querySelector(".form-alert");
+          if (existingAlert) {
+            existingAlert.parentNode.removeChild(existingAlert); // Remove existing alerts if any
+          }
+          const alertDiv = document.createElement("div");
+          alertDiv.classList.add("form-alert", "error", "text-center", "mb-2");
+          alertDiv.textContent =
+            "Invalid file type. Please select an image file from these formats (jpg, jpeg, png, gif, heic, heif).";
+          togCoverInput.parentNode.insertBefore(
+            alertDiv,
+            togCoverInput.nextSibling
+          ); // Insert after togCoverInput
+          return;
+        }
+
+        // Proceed if file type is valid
+        hiddenCoverWrap.classList.remove("d-none");
+        coveroverlay.style.display = "block";
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          // Initialize or reinitialize Croppie with the selected image
+          initializeCroppie(); // Make sure you have this function defined as before
+          croppieInstance
+            .bind({
+              url: e.target.result,
+            })
+            .then(function () {
+              croppieInstance.setZoom(0);
+            });
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      // Submit cropped image
+      uploadCoverBtn.addEventListener("click", async function () {
+        uploadCoverBtn.innerText = "Uploading...";
+        const base64 = await croppieInstance.result({
+          type: "canvas",
+          size: { width: 800, height: 300 },
+          quality: 1,
+        });
+
+        const response = await fetch(base64);
+        const blob = await response.blob();
+        const formData = new FormData();
+        formData.append("type", "profile_cover");
+        formData.append("profile_cover_image", blob, "cropped_image.png");
+
+        const apiUrl = `${API_URL}upload/profile-cover-image`;
+
+        try {
+          const uploadResponse = await fetch(apiUrl, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("appUserToken")}`,
+            },
+          });
+
+          if (!uploadResponse.ok) throw new Error("Upload failed");
+
+          const uploadResult = await uploadResponse.json();
+          console.log("Upload successful:", uploadResult);
+
+          hiddenCoverWrap.classList.add("d-none");
+          coveroverlay.style.display = "none";
+          togCoverInput.style.backgroundImage = `url(${base64})`;
+          togCoverInput.innerHTML =
+            '<div class="label mb-0">Add a cover photo <span>Change</span></div>';
+          uploadCoverBtn.innerText = "Upload cover";
+        } catch (error) {
+          console.error("Upload failed:", error);
+          uploadCoverBtn.innerText = "Upload cover";
+        }
+      });
+
+      // Cancel and clear Croppie
+      document
+        .querySelector(".cancel-cover")
+        .addEventListener("click", function () {
+          if (croppieInstance) {
+            croppieInstance.bind({
+              url: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+            });
+          }
+          covInput.value = ""; // Clear file input
+          hiddenCoverWrap.classList.add("d-none");
+          coveroverlay.style.display = "none";
+        });
+    </script>
+
+    <script>
+      //   date
+
+      function calculateMaxYear() {
+        const currentDate = new Date();
+        const maxYear = currentDate.getFullYear() - 14;
+        return maxYear;
+      }
+
+      const maxYear = calculateMaxYear();
+
+      new dateDropper({
+        selector: "#dob",
+        format: "y-mm-dd",
+        lang: "<%= __('lang') %>",
+        showArrowsOnHover: true,
+        overlay: false,
+        expandable: false,
+        expandedOnly: false,
+        doubleView: false,
+        startFromMonday: false,
+        maxYear: maxYear.toString(),
+        minYear: "1900",
+        // jump: "10",
+        range: false,
+      });
+
+      var localizedStrings = {
+        bioString: "<%= __('bio') %>",
+        requiredField: "<%= __('require_field') %>",
+        loading: "<%= __('loading') %>",
+        profileCompletedSuccess: "<%= __('profileCompletedSuccess') %>",
+        finish: "<%= __('finish') %>",
+        artistCategoryreq: "<%= __('artist_category_empty') %>",
+        genreReq: "<%= __('genre_empty') %>",
+      };
+      var quill = new Quill("#bio", {
+        modules: {
+          toolbar: false, // This hides the toolbar
+        },
+        placeholder: localizedStrings.bioString,
+        theme: "snow",
+      });
+    </script>
+    <script>
+      const profileUserT = "<%= profileData.user_type %>";
+      const contestId = CONTEST_ID_1;
+    </script>
+    <script>
+      window.addEventListener("DOMContentLoaded", (event) => {
+        // Get all steps, buttons, and inputs
+        const steps = Array.from(document.querySelectorAll(".step"));
+        const nextButtons = Array.from(
+          document.querySelectorAll('button[data-action="next"]')
+        );
+        const backButtons = Array.from(
+          document.querySelectorAll('button[data-action="back"]')
+        );
+        const requiredInputs = Array.from(
+          document.querySelectorAll("input[required], select[required]")
+        );
+
+        // Initialize steps
+        steps.forEach((step, index) => {
+          step.style.display = index === 0 ? "block" : "none";
+        });
+
+        // Next button functionality
+        nextButtons.forEach((button, index) => {
+          button.addEventListener("click", () => {
+            const currentStep = steps[index];
+            if (checkRequiredInputs(currentStep)) {
+              currentStep.style.display = "none";
+              steps[index + 1].style.display = "block";
+            }
+          });
+        });
+
+        // Back button functionality
+        backButtons.forEach((button, index) => {
+          button.addEventListener("click", () => {
+            steps[index + 1].style.display = "none";
+            steps[index].style.display = "block";
+          });
+        });
+
+        function clearError(inputElement) {
+          let wrapper = inputElement.closest(
+            ".genderInputWrapper, #dateInputWrapper, .countryInputWrapper"
+          );
+          let errorDiv = wrapper
+            ? wrapper.querySelector(".form-alert")
+            : inputElement.nextElementSibling;
+
+          if (errorDiv && errorDiv.classList.contains("error")) {
+            errorDiv.textContent = ""; // Clear the text content of the error message
+            errorDiv.classList.remove("error"); // Optionally remove the error class to hide the error message
+          }
+        }
+
+        // Hide error message when user starts typing/selecting
+        requiredInputs.forEach((input) => {
+          input.addEventListener("input", () => {
+            clearError(input);
+          });
+        });
+
+        // Check required inputs in a step
+        function checkRequiredInputs(step) {
+          let allValid = true;
+          const stepRequiredInputs = Array.from(
+            step.querySelectorAll("input[required], select[required]")
+          );
+
+          stepRequiredInputs.forEach((input) => {
+            let wrapper = input.closest(
+              ".genderInputWrapper, #dateInputWrapper, .countryInputWrapper"
+            );
+            let errorDiv = wrapper
+              ? wrapper.querySelector(".form-alert")
+              : input.nextElementSibling;
+
+            if (!errorDiv) {
+              errorDiv = document.createElement("div");
+              errorDiv.classList.add("form-alert");
+              if (wrapper) {
+                wrapper.appendChild(errorDiv);
+              } else {
+                input.insertAdjacentElement("afterend", errorDiv);
+              }
+            }
+
+            if (input.value.trim() === "") {
+              errorDiv.textContent = localizedStrings.requiredField;
+              errorDiv.classList.add("error");
+              allValid = false;
+            } else {
+              errorDiv.textContent = "";
+              errorDiv.classList.remove("error");
+            }
+          });
+
+          return allValid;
+        }
+
+        // Stop form from being submitted normally
+        document
+          .querySelector("#stepForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const errorPop = document.querySelector(".error-message");
+            const successPop = document.querySelector(".success-message");
+            const btn = document.querySelector(".submitBtn");
+
+            btn.textContent = localizedStrings.loading;
+            btn.disabled = true;
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Convert FormData to JSON
+            const formDataJSON = {};
+            formData.forEach((value, key) => {
+              console.log(key);
+              console.log(value);
+              if (
+                key !== "fileuploader-list-profile_img" &&
+                key !== "profile_img" &&
+                key !== "profile_img[]"
+              ) {
+                formDataJSON[key] = value.trim();
+              }
+            });
+            delete formDataJSON["fileuploader-list-profile_img"];
+            delete formDataJSON["profile_img"];
+            delete formDataJSON["profile_img[]"];
+
+            const genresString = formDataJSON.genres;
+            if (genresString) {
+              formDataJSON.genres = genresString
+                .split(",")
+                .map((genre) => genre.trim());
+            }
+
+            const artistCategoriesString = formDataJSON.artist_categories;
+            if (artistCategoriesString) {
+              formDataJSON.artist_categories = artistCategoriesString
+                .split(",")
+                .map((category) => category.trim());
+            }
+            formDataJSON.bio = quill.root.innerHTML;
+
+            const url = `${API_URL}update/appUser`;
+
+            try {
+              const response = await fetch(url, {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "appUserToken"
+                  )}`,
+                },
+                body: JSON.stringify(formDataJSON),
+              });
+
+              const responseData = await response.json();
+
+              function getCookie(name) {
+                let cookieArray = document.cookie.split("; ");
+                let cookie = cookieArray.find((row) =>
+                  row.startsWith(name + "=")
+                );
+                return cookie ? cookie.split("=")[1] : null;
+              }
+
+              if (response.status === 201 || response.status === 200) {
+                if (responseData.status === 1) {
+                  // Handle success
+                  successPop.style.display = "block";
+                  successPop.innerHTML =
+                    localizedStrings.profileCompletedSuccess;
+                  setTimeout(() => {
+                    successPop.style.display = "none";
+
+                    const intent = getCookie("intent");
+                    if (profileUserT === "Artist" && intent === "participate") {
+                      window.location.href =
+                        "/app/pre-participate/" + contestId;
+                    } else {
+                      window.location.href = "/app/pre-home";
+                    }
+                    document.cookie =
+                      "intent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                  }, 500);
+                  form.reset();
+                } else {
+                  // Handle API response with an error status
+                  errorPop.style.display = "block";
+                  if (responseData.error) {
+                    responseData.message = responseData.error;
+                  }
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } else {
+                // Handle HTTP error
+                errorPop.style.display = "block";
+                if (responseData.error) {
+                  responseData.message = responseData.error;
+                }
+                errorPop.innerHTML = responseData.message;
+                setTimeout(() => {
+                  errorPop.style.display = "none";
+                }, 5000);
+              }
+              btn.textContent = localizedStrings.finish;
+              btn.disabled = false;
+            } catch (err) {
+              // Handle fetch error
+              console.error("An error occurred", err);
+              btn.textContent = localizedStrings.finish;
+              btn.disabled = false;
+            }
+          });
+      });
+    </script>
+    <!-- <script>
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("city-input")
+      );
+
+      autocomplete.setOptions({
+        types: ["(cities)"],
+        disableHistory: true,
+      });
+      autocomplete.addListener("place_changed", function () {
+        var place = autocomplete.getPlace();
+        var country, city;
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (addressType === "country") {
+            country = place.address_components[i].long_name;
+          } else if (
+            addressType === "locality" ||
+            addressType === "administrative_area_level_3"
+          ) {
+            city = place.address_components[i].long_name;
+          }
+        }
+
+        if (country && city) {
+          document.getElementById("country-input").value = country;
+          document.getElementById("city-input").value = city;
+        }
+      });
+    </script> -->
+  </body>
+</html>
