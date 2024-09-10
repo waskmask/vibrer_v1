@@ -111,55 +111,40 @@
 
       <section class="c2-1 c-content">
         <div class="layout">
-          <div class="title">Vibrer Sounds of Nations D-A-CH</div>
-          <div class="sub">
-            A Premier Online Singing Contest for Germany, Austria, and
-            Switzerland.
+          <div class="title"><%- __('contest_title') %></div>
+          <div class="sub"><%- __('contest_subtitle') %></div>
+          <div class="strong primary mb-3 mt-3">
+            <%- __('contest_overview_title') %>
           </div>
-          <div class="strong primary mb-3 mt-3">Contest Overview</div>
-          <div class="text">
-            The Vibrer Sounds of Nations D-A-CH contest is a premier singing
-            competition open to talented singers from Germany, Austria, and
-            Switzerland. It is part of a larger global contest series organized
-            by Vibrer, aimed at discovering and promoting singing talent from
-            various regions worldwide.
-          </div>
+          <div class="text"><%- __('contest_overview_text') %></div>
 
           <div class="wrapper-lg-2">
             <div class="mt-4">
-              <div class="title mb-2">How It Works</div>
+              <div class="title mb-2"><%- __('how_it_works_title') %></div>
               <div class="text" style="line-height: 1.7">
-                <strong>Registration: </strong> <br />
-                Opens on 1<sup>st</sup> November 2024. <br />
+                <strong><%- __('how_it_works_registration') %></strong> <br />
+                <%- __('how_it_works_registration_details') %> <br /><br />
 
-                <strong>Submission:</strong> <br />
-                Participants submit their singing videos through the Vibrer app
-                or website. <br />
+                <strong><%- __('how_it_works_submission') %></strong> <br />
+                <%- __('how_it_works_submission_details') %> <br /><br />
 
-                <strong>Voting:</strong> <br />
-                The Vibrer audience votes for their favorite performances.
-                <br />
+                <strong><%- __('how_it_works_voting') %></strong> <br />
+                <%- __('how_it_works_voting_details') %> <br /><br />
 
-                <strong>Judging:</strong> <br />
-                Vibrer users will vote the best performance online. <br />
+                <strong><%- __('how_it_works_judging') %></strong> <br />
+                <%- __('how_it_works_judging_details') %> <br /><br />
 
-                <strong>Finals:</strong> <br />
-                The finalists compete, and the winners are announced on November
-                1, 2024.
+                <strong><%- __('how_it_works_finals') %></strong> <br />
+                <%- __('how_it_works_finals_details') %> <br />
               </div>
             </div>
 
             <div class="text mt-4" style="line-height: 1.7">
-              <div class="title mb-2">Prizes</div>
-              <strong>1st Prize:</strong> <br />
-              €5000 cash and promotional opportunities. <br />
-              <strong>2nd Prize:</strong> <br />
-              €2000 cash and promotional opportunities. <br />
-              <strong>3rd Prize:</strong> <br />
-              €1000 cash and promotional opportunities. <br /><br />
-              Additional Benefits: Collaboration opportunities, media exposure,
-              and a chance to compete in the global contest representing the
-              D-A-CH region.
+              <div class="title mb-2"><%- __('prizes_title') %></div>
+              <strong><%- __('prizes_first') %></strong> <br />
+              <strong><%- __('prizes_second') %></strong> <br />
+              <strong><%- __('prizes_third') %></strong> <br /><br />
+              <%- __('prizes_additional_benefits') %>
             </div>
           </div>
         </div>
@@ -169,12 +154,10 @@
         <div class="layout">
           <div class="wrapper-lg-2 c-content" style="align-items: center">
             <div class="white mb-4">
-              <div class="title mb-2">Last contest by Vibrer</div>
-              <div class="sub">Vibrer Singing Contest (chapter 1)</div>
+              <div class="title mb-2"><%- __('last_contest_title') %></div>
+              <div class="sub"><%- __('last_contest_subtitle') %></div>
               <br />
-              We have successfully completed the first Singing Contest on the
-              Vibrer Platform Online, With the support of our sponsor M.O.D
-              fashion, we gained 45,000 new users throughout the contest.
+              <%- __('last_contest_description') %>
             </div>
             <div class="mb-4">
               <img
@@ -360,6 +343,161 @@
           <% } %>
         </div>
       </section>
+      <section class="contest-form">
+        <div class="layout">
+          <div class="form-wrapper">
+            <div class="title text-center white mb-4">
+              <%=__("inq_sponsor_artist")%>
+            </div>
+            <form action="javascript:void(0)" autocomplete="off">
+              <div class="mx-auto">
+                <div class="label text-white mb-2"><%=__("i_want_to")%></div>
+                <div class="custom-radio-label text-center">
+                  <div
+                    class="label active"
+                    onclick="handleRadioClick(this, 'Sponsor')"
+                  >
+                    <%=__("sponsor")%>
+                  </div>
+                  <div
+                    class="label"
+                    onclick="handleRadioClick(this, 'Participate')"
+                  >
+                    <%=__("participate")%>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid">
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="<%=__('firstName')%>"
+                    name="firstName"
+                  />
+                </div>
+
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="<%=__('lastName')%>"
+                    name="lastName"
+                  />
+                </div>
+              </div>
+
+              <div class="col mb-3" id="if_company">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="<%=__('companyName')%>"
+                  name="company"
+                  id="company"
+                />
+              </div>
+
+              <div class="grid">
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="email"
+                    placeholder="<%=__('email')%>"
+                    name="email"
+                  />
+                </div>
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="tel"
+                    placeholder="<%=__('message')%>"
+                    name="phone"
+                  />
+                </div>
+              </div>
+
+              <div class="grid">
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="<%=__('city')%>"
+                    name="city"
+                    id="city-input"
+                  />
+                </div>
+                <div class="col mb-3">
+                  <input
+                    class="form-input"
+                    type="text"
+                    placeholder="<%=__('country')%>"
+                    name="country"
+                    id="country-input"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="col">
+                <textarea
+                  name="message"
+                  class="form-input"
+                  rows="3"
+                  placeholder="<%=__('message')%> <%=__('optional')%>"
+                ></textarea>
+              </div>
+
+              <div id="if_artist">
+                <div class="mb-2 mt-3"><%=__('c2_interview')%></div>
+                <div class="grid-auto">
+                  <div class="mb-2">
+                    <label class="checkbox-container">
+                      <%=__('yes')%>
+                      <input
+                        type="radio"
+                        value="123"
+                        name="interview"
+                        id="yes"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                  <div class="mb-2">
+                    <label class="checkbox-container">
+                      <%=__('no')%>
+                      <input
+                        type="radio"
+                        value="123"
+                        name="interview"
+                        id="no"
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="desc mt-1"><%=__('term_submiting')%></div>
+
+              <div class="success-message mt-3 d-none">
+                <%=__('term_submiting')%>
+              </div>
+
+              <div class="col mt-4">
+                <button class="btn btn-primary w200 ml-btn">Send</button>
+              </div>
+            </form>
+            <a
+              href="/public/pdf/Sounds-of-Nations-DACH-sponsor-<%-__('son_pro')%>.pdf"
+              class="btn w200 ml-btn mt-3 w-auto"
+              target="_blank"
+            >
+              <%=__('download_sponsor')%>
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- footer -->
@@ -454,6 +592,17 @@
           }
         });
       });
+    </script>
+
+    <script>
+      function handleRadioClick(clickedElement, value) {
+        // Remove the "active" class from all label elements
+        const allLabels = document.querySelectorAll(".label");
+        allLabels.forEach((label) => label.classList.remove("active"));
+
+        // Add the "active" class to the clicked label element
+        clickedElement.classList.add("active");
+      }
     </script>
   </body>
 </html>

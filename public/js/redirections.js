@@ -14,6 +14,7 @@ function toContest(currentPath) {
     window.location.href = "/app/contest-view";
   }
 }
+
 function toAppContest(currentPath) {
   if (currentPath !== "/contests") {
     window.location.href = "/app/pre-contest";

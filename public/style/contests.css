@@ -809,3 +809,38 @@
   padding: 50px 0;
   margin-top: -0.5rem;
 }
+
+.contest-form {
+  background-color: #080d27;
+  padding: 0 0 50px;
+  color: #fff;
+}
+.contest-form .form-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contest-form a {
+  color: #fb6580;
+}
+.contest-form .checkbox-container {
+  color: #fff;
+}
+.contest-form .checkmark {
+  border: 1px solid #959595;
+}
+.contest-form .checkbox-container input:checked ~ .checkmark {
+  background-color: #fb6580;
+  border-color: #fb6580;
+}
+.contest-form .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 576px) {
+  .contest-form .grid {
+    grid-template-columns: 1fr;
+  }
+}

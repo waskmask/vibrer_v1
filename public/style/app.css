@@ -103,6 +103,25 @@
   font-weight: 600;
 }
 
+.title {
+  font-size: 2rem;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+@media (max-width: 576px) {
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+.grid-auto {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
 .auth .auth-wrapper {
   width: 100%;
   max-width: 400px;
@@ -140,6 +159,11 @@
 .auth._dark .link {
   color: #fff;
   cursor: pointer;
+}
+
+.w-auto {
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .passInputDiv {
@@ -1624,6 +1648,16 @@ input:-webkit-autofill:active {
 
 .light {
   color: #8b8a8a;
+}
+
+.mw-450 {
+  width: 100%;
+  max-width: 450px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .d-none {
