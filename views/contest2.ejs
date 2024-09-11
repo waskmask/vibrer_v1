@@ -349,7 +349,18 @@
             <div class="title text-center white mb-4">
               <%=__("inq_sponsor_artist")%>
             </div>
-            <form action="javascript:void(0)" autocomplete="off">
+            <form
+              action="javascript:void(0)"
+              id="InquiryForm"
+              method="POST"
+              autocomplete="off"
+            >
+              <input
+                type="hidden"
+                name="inq_type"
+                value="Sponsor"
+                id="inq_type"
+              />
               <div class="mx-auto">
                 <div class="label text-white mb-2"><%=__("i_want_to")%></div>
                 <div class="custom-radio-label text-center">
@@ -374,7 +385,7 @@
                     class="form-input"
                     type="text"
                     placeholder="<%=__('firstName')%>"
-                    name="firstName"
+                    name="first_name"
                   />
                 </div>
 
@@ -383,12 +394,12 @@
                     class="form-input"
                     type="text"
                     placeholder="<%=__('lastName')%>"
-                    name="lastName"
+                    name="last_name"
                   />
                 </div>
               </div>
 
-              <div class="col mb-3" id="if_company">
+              <div class="col mb-3 if_sponser">
                 <input
                   class="form-input"
                   type="text"
@@ -411,7 +422,7 @@
                   <input
                     class="form-input"
                     type="tel"
-                    placeholder="<%=__('message')%>"
+                    placeholder="<%=__('phone')%>"
                     name="phone"
                   />
                 </div>
@@ -448,7 +459,7 @@
                 ></textarea>
               </div>
 
-              <div id="if_artist">
+              <div class="if_artist" style="display: none">
                 <div class="mb-2 mt-3"><%=__('c2_interview')%></div>
                 <div class="grid-auto">
                   <div class="mb-2">
@@ -456,8 +467,8 @@
                       <%=__('yes')%>
                       <input
                         type="radio"
-                        value="123"
                         name="interview"
+                        value="true"
                         id="yes"
                       />
                       <span class="checkmark"></span>
@@ -468,9 +479,10 @@
                       <%=__('no')%>
                       <input
                         type="radio"
-                        value="123"
                         name="interview"
+                        value="false"
                         id="no"
+                        checked
                       />
                       <span class="checkmark"></span>
                     </label>
@@ -478,14 +490,20 @@
                 </div>
               </div>
 
-              <div class="desc mt-1"><%=__('term_submiting')%></div>
+              <div class="desc mt-1"><%-__('term_submiting')%></div>
 
               <div class="success-message mt-3 d-none">
-                <%=__('term_submiting')%>
+                <%=__('request_success')%>
               </div>
+              <div class="error-message mt-3 d-none"></div>
 
               <div class="col mt-4">
-                <button class="btn btn-primary w200 ml-btn">Send</button>
+                <button
+                  class="btn btn-primary w200 ml-btn submitBtn"
+                  type="submit"
+                >
+                  Send
+                </button>
               </div>
             </form>
             <a
@@ -518,7 +536,39 @@
     <script src="/public/js/_sharemodal.js?v=3.1"></script>
     <script src="/public/js/sharePost.js?v=3.1"></script>
     <script src="/public/js/authForm.js?v=3.1"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ijUxSISsbNS29gjv8onur04fqQ8zets&libraries=places"></script>
+    <script src="/public/js/config.js?v=3.1"></script>
+    <script>
+      var autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("city-input")
+      );
 
+      autocomplete.setOptions({
+        types: ["(cities)"],
+        disableHistory: true,
+      });
+      autocomplete.addListener("place_changed", function () {
+        var place = autocomplete.getPlace();
+        var country, city;
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          if (addressType === "country") {
+            country = place.address_components[i].long_name;
+          } else if (
+            addressType === "locality" ||
+            addressType === "administrative_area_level_3"
+          ) {
+            city = place.address_components[i].long_name;
+          }
+        }
+
+        if (country && city) {
+          document.getElementById("country-input").value = country;
+          document.getElementById("city-input").value = city;
+        }
+      });
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var players = [];
@@ -602,7 +652,166 @@
 
         // Add the "active" class to the clicked label element
         clickedElement.classList.add("active");
+
+        let inq_type = document.getElementById("inq_type");
+
+        if (value === "Sponsor") {
+          inq_type.value = "Sponsor";
+          let activeElements = document.querySelectorAll(".if_sponser");
+          activeElements.forEach((element) => {
+            element.style.display = "block";
+          });
+
+          let hideElements = document.querySelectorAll(".if_artist");
+          hideElements.forEach((element) => {
+            element.style.display = "none";
+          });
+        } else {
+          inq_type.value = "Participate";
+          let activeElements = document.querySelectorAll(".if_artist");
+          activeElements.forEach((element) => {
+            element.style.display = "block";
+          });
+
+          let hideElements = document.querySelectorAll(".if_sponser");
+          hideElements.forEach((element) => {
+            element.style.display = "none";
+          });
+        }
       }
+
+      var localizedStrings = {
+        emailIsRequired: "<%= __('email_is_required') %>",
+        emailMustBeValid: "<%= __('email_must_be_valid') %>",
+        loading: "<%= __('loading') %>",
+        require_field: "<%= __('require_field') %>",
+      };
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("InquiryForm");
+        const btn = document.querySelector(".submitBtn");
+        const successPop = document.querySelector(".success-message");
+        const errorPop = document.querySelector(".error-message");
+
+        form.setAttribute("novalidate", "");
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Change button text to "Sending..."
+          btn.textContent = localizedStrings.loading;
+
+          // Implement the timeout function
+          setTimeout(async () => {
+            let isValid = true;
+            let customErrors = {};
+
+            const formData = new FormData(form);
+            const formDataJSON = Object.fromEntries(formData.entries());
+
+            for (const key in formDataJSON) {
+              formDataJSON[key] = formDataJSON[key].trim();
+            }
+
+            const {
+              inq_type,
+              first_name,
+              last_name,
+              email,
+              company,
+              phone,
+              city,
+              country,
+              message,
+              interview,
+            } = formDataJSON;
+
+            if (!first_name) {
+              isValid = false;
+              customErrors.first_name = localizedStrings.require_field;
+            }
+
+            if (!last_name) {
+              isValid = false;
+              customErrors.last_name = localizedStrings.require_field;
+            }
+            if (!phone) {
+              isValid = false;
+              customErrors.phone = localizedStrings.require_field;
+            }
+            if (!city) {
+              isValid = false;
+              customErrors.city = localizedStrings.require_field;
+            }
+            if (!country) {
+              isValid = false;
+              customErrors.country = localizedStrings.require_field;
+            }
+            if (
+              !email ||
+              !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+            ) {
+              isValid = false;
+              customErrors.email = !email
+                ? localizedStrings.emailIsRequired
+                : localizedStrings.emailMustBeValid;
+            }
+
+            const prevAlerts = document.querySelectorAll(".form-alert");
+            prevAlerts.forEach((alert) => alert.remove());
+
+            if (isValid) {
+              const url = `${API_URL}add/inquiry`;
+              try {
+                const response = await fetch(url, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formDataJSON),
+                });
+                const responseData = await response.json();
+                if (response.status === 201 || response.status === 200) {
+                  if (responseData.status === 1) {
+                    form.reset();
+                    successPop.style.display = "block";
+                    // setTimeout(() => {
+                    //   successPop.style.display = "none";
+                    // }, 5000);
+                  } else {
+                    errorPop.style.display = "block";
+                    errorPop.innerHTML = responseData.message;
+                    setTimeout(() => {
+                      errorPop.style.display = "none";
+                    }, 5000);
+                  }
+                } else {
+                  errorPop.style.display = "block";
+                  errorPop.innerHTML = responseData.message;
+                  setTimeout(() => {
+                    errorPop.style.display = "none";
+                  }, 5000);
+                }
+              } catch (err) {
+                console.error("An error occurred", err);
+              }
+            } else {
+              for (const key in customErrors) {
+                const inputElement = form.querySelector(`[name="${key}"]`);
+                const alertDiv = document.createElement("div");
+                alertDiv.className = "form-alert error";
+                alertDiv.textContent = customErrors[key];
+                inputElement.parentNode.insertBefore(
+                  alertDiv,
+                  inputElement.nextSibling
+                );
+              }
+            }
+
+            // Reset the button text
+            btn.textContent = "Send";
+          }, 1000); // 1-second delay
+        });
+      });
     </script>
   </body>
 </html>
