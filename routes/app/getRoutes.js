@@ -479,41 +479,218 @@ router.get("/app/contest-entry/:contestId/:entryId", async function (req, res) {
 //     });
 //   }
 // });
-// router.get("/app/report", function (req, res) {
-//   res.render("app/report", {
-//     title: "Report",
-//     path: "/report",
-//   });
-// });
+router.get("/app/report", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
 
-// router.get("/app/reports", function (req, res) {
-//   res.render("app/reports", {
-//     title: "Reports",
-//     path: "/reports",
-//     link: "allreports",
-//   });
-// });
-// router.get("/app/active-reports", function (req, res) {
-//   res.render("app/active-reports", {
-//     title: "Reports",
-//     path: "/reports",
-//     link: "active",
-//   });
-// });
-// router.get("/app/you-reported", function (req, res) {
-//   res.render("app/you-reported", {
-//     title: "You reported",
-//     path: "/reports",
-//     link: "youreported",
-//   });
-// });
+    const profileData = profileResponse.data.result;
 
-// router.get("/app/report-view", function (req, res) {
-//   res.render("app/report-view", {
-//     title: "report ID",
-//     path: "/reports",
-//   });
-// });
+    if (!profileData.full_name) {
+      return res.redirect("/new-profile");
+    }
+
+    const reportsResponse = await axios.get(
+      `${process.env.API_URL}entry/getReports`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const reportsData = reportsResponse.data.result;
+
+    res.render("app/reports", {
+      title: "Reports",
+      path: "/reports",
+      link: "allreports",
+      reportsData: reportsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
+  }
+
+  res.render("app/report", {
+    title: "Report",
+    path: "/report",
+  });
+});
+
+router.get("/app/reports", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+
+    if (!profileData.full_name) {
+      return res.redirect("/new-profile");
+    }
+
+    const reportsResponse = await axios.get(
+      `${process.env.API_URL}entry/getReports`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const reportsData = reportsResponse.data.result;
+
+    res.render("app/reports", {
+      title: "Reports",
+      path: "/reports",
+      link: "allreports",
+      reportsData: reportsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
+  }
+});
+router.get("/app/active-reports", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+
+    if (!profileData.full_name) {
+      return res.redirect("/new-profile");
+    }
+
+    const reportsResponse = await axios.get(
+      `${process.env.API_URL}entry/getReports?status=Active`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const reportsData = reportsResponse.data.result;
+    res.render("app/active-reports", {
+      title: "Reports",
+      path: "/reports",
+      link: "active",
+      reportsData: reportsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
+  }
+});
+router.get("/app/you-reported", async function (req, res) {
+  try {
+    if (!req.session.appUserToken) {
+      return res.redirect("/login");
+    }
+    const profileResponse = await axios.get(
+      `${process.env.API_URL}getappUserProfile`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const profileData = profileResponse.data.result;
+
+    if (!profileData.full_name) {
+      return res.redirect("/new-profile");
+    }
+
+    const reportsResponse = await axios.get(
+      `${process.env.API_URL}entry/reported`,
+      {
+        headers: {
+          Authorization: `Bearer ${req.session.appUserToken}`,
+        },
+      }
+    );
+
+    const reportsData = reportsResponse.data.result;
+
+    res.render("app/you-reported", {
+      title: "You reported",
+      path: "/reports",
+      link: "youreported",
+      reportsData: reportsData,
+      profileData: profileData,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    if (error.response.status && error.response.status === 401) {
+      return res.redirect("/401");
+    } else {
+      return res.render("500", {
+        title: "500 Server error!",
+        path: "/500",
+      });
+    }
+  }
+});
+
+router.get("/app/report-view", function (req, res) {
+  res.render("app/report-view", {
+    title: "report ID",
+    path: "/reports",
+  });
+});
 
 router.get(
   "/app/contest-report/:contestId/:entryId",

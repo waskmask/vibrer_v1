@@ -68,6 +68,11 @@
               name="entry_id"
               value="<%- singleEntryData._id %>"
             />
+            <input
+              type="hidden"
+              name="reported_user_id"
+              value="<%- singleEntryData.user._id %>"
+            />
 
             <input type="hidden" name="content_type" value="Contest entry" />
             <div class="flex-box g-1">
