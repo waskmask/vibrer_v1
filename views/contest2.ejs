@@ -774,9 +774,9 @@
                   if (responseData.status === 1) {
                     form.reset();
                     successPop.style.display = "block";
-                    // setTimeout(() => {
-                    //   successPop.style.display = "none";
-                    // }, 5000);
+                    setTimeout(() => {
+                      successPop.style.display = "none";
+                    }, 5000);
                   } else {
                     errorPop.style.display = "block";
                     errorPop.innerHTML = responseData.message;
