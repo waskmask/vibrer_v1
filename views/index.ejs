@@ -10,6 +10,17 @@
       content="music platform, music community, music discovery, artist connection, music enthusiasts"
     />
     <%- include('partials/head'); %>
+    <style>
+      .c-flags {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .c-flags img {
+        height: 35px;
+      }
+    </style>
   </head>
   <body>
     <!-- loader -->
@@ -41,6 +52,11 @@
                 <%= __("learn_mv") %>
               </button>
             </div>
+          </div>
+          <div class="c-flags">
+            <img src="/public/flags/de.svg" alt="Germany" />
+            <img src="/public/flags/at.svg" alt="Austria" />
+            <img src="/public/flags/ch.svg" alt="Switzerland" />
           </div>
           <!-- <div class="image">
             <img src="/public/images/micHero.png" alt="Mic" />

@@ -93,6 +93,16 @@
         background-position: center;
         background-size: cover;
       }
+      .c-flags {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .c-flags img {
+        height: 35px;
+        border: solid 1px #434343;
+      }
     </style>
   </head>
 
@@ -111,6 +121,11 @@
 
       <section class="c2-1 c-content">
         <div class="layout">
+          <div class="c-flags mb-3">
+            <img src="/public/flags/de.svg" alt="Germany" />
+            <img src="/public/flags/at.svg" alt="Austria" />
+            <img src="/public/flags/ch.svg" alt="Switzerland" />
+          </div>
           <div class="title"><%- __('contest_title') %></div>
           <div class="sub"><%- __('contest_subtitle') %></div>
           <div class="strong primary mb-3 mt-3">
