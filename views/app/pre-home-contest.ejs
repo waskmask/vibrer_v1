@@ -283,7 +283,7 @@
                       class="btn btn-outlined"
                       data-toggle="share_modal"
                       data-target="shareModal"
-                      data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                      data-url="https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                     >
                       <%= __("share") %>
                     </button>
@@ -458,7 +458,7 @@
                       class="btn btn-outlined"
                       data-toggle="share_modal"
                       data-target="shareModal"
-                      data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                      data-url="https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                     >
                       <%= __("share") %>
                     </button>
@@ -1026,7 +1026,7 @@
           shareBtn.classList.add("btn", "btn-outlined");
           shareBtn.dataset.toggle = "share_modal";
           shareBtn.dataset.target = "shareModal";
-          shareBtn.dataset.url = `https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/${participant._id}`;
+          shareBtn.dataset.url = `https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/${participant._id}`;
           shareBtn.textContent = '<%= __("share") %>';
           const voteBtn = document.createElement("button");
           voteBtn.classList.add(
