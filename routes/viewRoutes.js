@@ -33,31 +33,31 @@ router.get("/", async (req, res) => {
     });
   }
 });
-router.get("/road-map", async (req, res) => {
-  if (req.session.appUserToken) {
-    const profileResponse = await axios.get(
-      `${process.env.API_URL}getappUserProfile`,
-      {
-        headers: {
-          Authorization: `Bearer ${req.session.appUserToken}`,
-        },
-      }
-    );
+// router.get("/road-map", async (req, res) => {
+//   if (req.session.appUserToken) {
+//     const profileResponse = await axios.get(
+//       `${process.env.API_URL}getappUserProfile`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${req.session.appUserToken}`,
+//         },
+//       }
+//     );
 
-    const profileData = profileResponse.data.result;
+//     const profileData = profileResponse.data.result;
 
-    if (!profileData.full_name) {
-      return res.redirect("/new-profile");
-    }
-    return res.render("road-map", {
-      title: "Road Map",
-      path: "/road-map",
-      profileData: profileData,
-    });
-  } else {
-    return res.render("road-map", { title: "Road Map", path: "/road-map" });
-  }
-});
+//     if (!profileData.full_name) {
+//       return res.redirect("/new-profile");
+//     }
+//     return res.render("road-map", {
+//       title: "Road Map",
+//       path: "/road-map",
+//       profileData: profileData,
+//     });
+//   } else {
+//     return res.render("road-map", { title: "Road Map", path: "/road-map" });
+//   }
+// });
 
 router.get("/project", async (req, res) => {
   if (req.session.appUserToken) {

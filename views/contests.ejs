@@ -26,7 +26,7 @@
           archivedContestsData.result.length > 0) { %>
           <div class="title tcap"><%=__("coming_soon")%></div>
           <% archivedContestsData.result.forEach(archivedContests => { %>
-          <div class="contests-wrapper" onclick="toContest()">
+          <div class="contests-wrapper" onclick="toContest2()">
             <div class="contest">
               <div class="status upcoming tcap"><%- __("upcoming") %></div>
               <img
@@ -36,7 +36,7 @@
               />
               <img
                 class="hinb"
-                src="<%- ADMIN_URL %>uploads/<%- archivedContests.banner.m  %>"
+                src="https://static.vibrer.app/mediaImg/c2-cpage-tmob.webp"
                 alt="images"
               />
             </div>
@@ -154,11 +154,14 @@
     </div>
     <!-- javascript -->
     <script src="/public/js/cookieBanner.js?v=3.1"></script>
-    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/theme-v01node.js?v=3.2"></script>
     <script src="/public/js/languageSwitcher.js?v=3.1"></script>
     <script>
       function toContest() {
         window.location.href = "/contest";
+      }
+      function toContest2() {
+        window.location.href = "/contest2";
       }
     </script>
   </body>
