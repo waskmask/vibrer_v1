@@ -70,7 +70,7 @@ router.post("/addApplicant/:projectId", async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: '"Vibrer" <subscriptions@vibrer.cloud>',
+      from: '"Vibrer" <subscription@vibrer.cloud>',
       to: req.body.email,
       subject: "Application Received",
       html: emailTemplate,
