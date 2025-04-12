@@ -173,10 +173,9 @@
                   <video
                     controls
                     class="video-js"
-                    preload="none"
+                    preload="metadata"
                     width="640"
                     height="264"
-                    poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
                     data-setup="{}"
                   >
                     <source src="<%- participants.media %>" type="video/mp4" />
@@ -285,7 +284,7 @@
                       data-target="shareModal"
                       data-url="https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                     >
-                      <%= __("share") %>
+                      <%= contestDetailData.result %> <%= __("share") %>
                     </button>
                     <% if(contestDetailData.result.status == 'Active' &&
                     contestDetailData.result.endDays > 0){ %>
@@ -346,11 +345,10 @@
                   <video
                     controls
                     class="video-js"
-                    preload="none"
+                    preload="metadata"
                     width="640"
                     height="264"
                     data-setup="{}"
-                    poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
                   >
                     <source src="<%- participants.media %>" type="video/mp4" />
                     <p class="vjs-no-js">
@@ -925,12 +923,12 @@
           const videoElement = document.createElement("video");
           videoElement.controls = true;
           videoElement.classList.add("video-js");
-          videoElement.preload = "none";
+          videoElement.preload = "metadata";
           videoElement.width = "640";
           videoElement.height = "264";
           videoElement.dataset.setup = "{}";
-          videoElement.poster =
-            participant.user.profile_img || "/public/images/default-avatar.png";
+          // videoElement.poster =
+          //   participant.user.profile_img || "/public/images/default-avatar.png";
           const sourceElement = document.createElement("source");
           sourceElement.src = participant.media;
           sourceElement.type = "video/mp4";

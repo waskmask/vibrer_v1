@@ -126,7 +126,8 @@
               <div class="top">
                 <div class="user">
                   <div class="img">
-                    <% if (entryData.result.user.profile_img === '') { %>
+                    <% if (!entryData.result.user.profile_img ||
+                    entryData.result.user.profile_img === '') { %>
                     <img
                       src="/public/images/default-avatar.png"
                       alt="Default Avatar"

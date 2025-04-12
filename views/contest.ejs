@@ -178,14 +178,15 @@
                   <div class="yourVote"><%= __("you_voted") %></div>
                   <% } %>
                 </div>
+                <!-- Add this if want to show profile image in poster video -->
+                <!-- poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>" -->
                 <video
                   controls
                   class="video-js"
-                  preload="none"
+                  preload="metadata"
                   width="640"
                   height="264"
                   data-setup="{}"
-                  poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
                 >
                   <source src="<%- participants.media %>" type="video/mp4" />
                   <p class="vjs-no-js">
@@ -347,14 +348,15 @@
                   <div class="yourVote"><%= __("you_voted") %></div>
                   <% } %>
                 </div>
+                <!-- Add this if want to show profile image in poster video -->
+                <!-- poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>" -->
                 <video
                   controls
                   class="video-js"
-                  preload="none"
+                  preload="metadata"
                   width="640"
                   height="264"
                   data-setup="{}"
-                  poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
                 >
                   <source src="<%- participants.media %>" type="video/mp4" />
                   <p class="vjs-no-js">
@@ -722,11 +724,11 @@
           const videoElement = document.createElement("video");
           videoElement.controls = true;
           videoElement.classList.add("video-js");
-          videoElement.preload = "none";
+          videoElement.preload = "metadata";
           videoElement.width = "640";
           videoElement.height = "264";
-          videoElement.poster =
-            participant.user.profile_img || "/public/images/default-avatar.png";
+          // videoElement.poster =
+          //   participant.user.profile_img || "/public/images/default-avatar.png";
           videoElement.dataset.setup = "{}";
           const sourceElement = document.createElement("source");
           sourceElement.src = participant.media;

@@ -224,11 +224,10 @@
                 <video
                   controls
                   class="video-js"
-                  preload="none"
+                  preload="metadata"
                   width="640"
                   height="264"
                   data-setup="{}"
-                  poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>"
                 >
                   <source src="<%- participants.media %>" type="video/mp4" />
                   <p class="vjs-no-js">

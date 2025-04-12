@@ -6,7 +6,7 @@ const i18n = require("i18n");
 
 router.get("/new-profile", async function (req, res) {
   if (!req.session.appUserToken) {
-    res.redirect("/login");
+    return res.redirect("/login");
   } else {
     try {
       const profileResponse = await axios.get(
@@ -19,13 +19,14 @@ router.get("/new-profile", async function (req, res) {
       );
       const profileData = profileResponse.data.result;
       const contest_id = process.env.PRE_CONTEST_ID;
+
       if (profileData.full_name) {
         const intentToParticipate = req.cookies.intent === "participate";
         if (profileData.user_type === "Artist" && intentToParticipate) {
-          res.clearCookie("intent"); // Clear the intent cookie
-          res.redirect("/app/pre-participate/" + contest_id);
+          res.clearCookie("intent");
+          return res.redirect("/app/pre-participate/" + contest_id);
         } else {
-          res.redirect("/app/pre-home");
+          return res.redirect("/app/pre-home");
         }
       }
 
@@ -39,26 +40,16 @@ router.get("/new-profile", async function (req, res) {
       const artistCategoriesData = artistCategoriesapiResponse.data.result;
       const genreData = genreApiResponse.data.result;
 
-      // if (profileData.user_type === "Artist") {
-      res.render("app/new-profile", {
+      return res.render("app/new-profile", {
         title: i18n.__("new_profile"),
         path: "/register",
-        artistCategoriesData: artistCategoriesData,
-        genreData: genreData,
-        profileData: profileData,
+        artistCategoriesData,
+        genreData,
+        profileData,
       });
-      // } else {
-      //   res.render("app/new-profileFan", {
-      //     title: i18n.__("new_profile"),
-      //     path: "/register",
-      //     artistCategoriesData: artistCategoriesData,
-      //     genreData: genreData,
-      //     profileData: profileData,
-      //   });
-      // }
     } catch (error) {
       console.error("Error fetching profile:", error);
-      if (error.response.status && error.response.status === 401) {
+      if (error.response?.status === 401) {
         return res.redirect("/401");
       } else {
         return res.render("500", {
