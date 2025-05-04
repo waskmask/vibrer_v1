@@ -135,17 +135,17 @@
               </div>
 
               <div class="cta">
-                <!--button
+                <button
                   class="btn btn-outlined"
                   onclick="confirmDelete('<%- contestDetailsData.result._id %>')"
                 >
                   <%-__("withdraw")%>
-                </button-->
+                </button>
                 <button
                   class="btn btn-outlined"
                   data-toggle="share_modal"
                   data-target="shareModal"
-                  data-url="https://vibrer.app/app/contest-entry/<%=contestDetailsData.result._id%>/<%=participatedParticipantData._id%>"
+                  data-url="https://vibrer.com/app/contest-entry/<%=contestDetailsData.result._id%>/<%=participatedParticipantData._id%>"
                 >
                   <%- __("share") %>
                 </button>

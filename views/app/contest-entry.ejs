@@ -126,7 +126,8 @@
               <div class="top">
                 <div class="user">
                   <div class="img">
-                    <% if (entryData.result.user.profile_img === '') { %>
+                    <% if (!entryData.result.user.profile_img ||
+                    entryData.result.user.profile_img === '') { %>
                     <img
                       src="/public/images/default-avatar.png"
                       alt="Default Avatar"
@@ -204,7 +205,7 @@
                   class="btn btn-outlined"
                   data-toggle="share_modal"
                   data-target="shareModal"
-                  data-url="https://vibrer.app/app/contest-entry/<%=entryData.result.contest._id%>/<%=entryData.result._id%>"
+                  data-url="https://vibrer.com/app/contest-entry/<%=entryData.result.contest._id%>/<%=entryData.result._id%>"
                 >
                   <%- __("share") %>
                 </button>

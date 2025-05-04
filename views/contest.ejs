@@ -178,9 +178,12 @@
                   <div class="yourVote"><%= __("you_voted") %></div>
                   <% } %>
                 </div>
+                <!-- Add this if want to show profile image in poster video -->
+                <!-- poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>" -->
                 <video
                   controls
                   class="video-js"
+                  preload="metadata"
                   preload="metadata"
                   width="640"
                   height="264"
@@ -290,7 +293,7 @@
                     class="btn btn-outlined"
                     data-toggle="share_modal"
                     data-target="shareModal"
-                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                    data-url="https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                   >
                     <%= __("share") %>
                   </button>
@@ -346,6 +349,8 @@
                   <div class="yourVote"><%= __("you_voted") %></div>
                   <% } %>
                 </div>
+                <!-- Add this if want to show profile image in poster video -->
+                <!-- poster="<%- participants.user.profile_img || '/public/images/default-avatar.png' %>" -->
                 <video
                   controls
                   class="video-js"
@@ -458,7 +463,7 @@
                     class="btn btn-outlined"
                     data-toggle="share_modal"
                     data-target="shareModal"
-                    data-url="https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
+                    data-url="https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/<%=participants._id%>"
                   >
                     <%= __("share") %>
                   </button>
@@ -723,7 +728,8 @@
           videoElement.preload = "metadata";
           videoElement.width = "640";
           videoElement.height = "264";
-
+          // videoElement.poster =
+          //   participant.user.profile_img || "/public/images/default-avatar.png";
           videoElement.dataset.setup = "{}";
           const sourceElement = document.createElement("source");
           sourceElement.src = participant.media;
@@ -817,7 +823,7 @@
           shareBtn.classList.add("btn", "btn-outlined");
           shareBtn.dataset.toggle = "share_modal";
           shareBtn.dataset.target = "shareModal";
-          shareBtn.dataset.url = `https://vibrer.app/app/contest-entry/<%=contestDetailData.result._id%>/${participant._id}`;
+          shareBtn.dataset.url = `https://vibrer.com/app/contest-entry/<%=contestDetailData.result._id%>/${participant._id}`;
           shareBtn.textContent = '<%= __("share") %>';
           const voteBtn = document.createElement("button");
           voteBtn.classList.add(
