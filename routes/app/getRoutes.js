@@ -940,6 +940,19 @@ router.get("/imprint", function (req, res) {
   });
 });
 
+router.get("/refund-policy", function (req, res) {
+  const language = req.cookies.i18n;
+  let showRefundLangNotice = false;
+  if (language && language !== "en") {
+    showRefundLangNotice = true;
+  }
+  res.render("refund-policy", {
+    title: "Refund policy",
+    path: "/refund",
+    showRefundLangNotice: showRefundLangNotice,
+  });
+});
+
 // my profile
 router.get("/app/my-profile", function (req, res) {
   res.render("app/my-profile", {

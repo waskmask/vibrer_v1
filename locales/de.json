@@ -114,6 +114,7 @@
   "vscontest": "Vibrer Singing Contest",
   "chapter": "Kapitel",
   "imprintLangNotice": "Das Impressum ist nur auf Englisch verfügbar.",
+  "showRefundLangNotice": "Das Refund-policy ist nur auf Englisch verfügbar.",
   "privacyLangNotice": "Die Datenschutzerklärung ist nur auf Englisch verfügbar.",
   "termsLangNotice": "Die Allgemeinen Geschäftsbedingungen sind nur auf Englisch verfügbar.",
   "cookieLangNotice": "Die Seite mit den Cookie-Einstellungen ist nur auf Englisch verfügbar.",
@@ -626,5 +627,6 @@
   "contest_overview_title": "Wettbewerbsübersicht",
   "contest_overview_text": "Der Vibrer Sounds of Nations D-A-CH Wettbewerb ist ein führender Gesangswettbewerb, der talentierten Sängern aus Deutschland, Österreich und der Schweiz offensteht. Er ist Teil einer globalen Wettbewerbsreihe, die von Vibrer organisiert wird und darauf abzielt, Gesangstalente aus verschiedenen Regionen der Welt zu entdecken und zu fördern.",
   "yes": "ja",
-  "no": "nein"
+  "no": "nein",
+  "refundPolicy": "Rückerstattungsrichtlinie"
 }

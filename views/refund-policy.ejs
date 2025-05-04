@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="<%- __('lang') %>">
+  <head>
+    <%- include('partials/head'); %>
+    <meta
+      name="description"
+      content="Explore Vibrer's roadmap, outlining our journey from concept to launch. Join us on this exciting adventure as we unveil innovative features, enrich the music experience, and bring artists and fans closer than ever."
+    />
+    <meta
+      name="keywords"
+      content="Vibrer roadmap, music platform roadmap, music innovation, feature unveiling, artist-fan connection"
+    />
+  </head>
+  <body>
+    <!-- loader -->
+    <%- include('partials/loader'); %>
+    <!-- header -->
+    <%- include('partials/header'); %>
+
+    <main>
+      <section class="general">
+        <div class="container layout">
+          <% if (showRefundLangNotice) { %>
+          <div class="languageNotice light mb-3 mw600">
+            <%= __("showRefundLangNotice") %>
+          </div>
+          <% } %>
+          <div class="title">
+            Refund Policy for Dreamscripts Technolgy Pvt Ltd.
+          </div>
+          Effective Date: 04.05.2025
+          <br /><br />
+
+          At Dreamscripts , we are committed to providing a fair and transparent
+          experience for all participants. Please read this Refund Policy
+          carefully before registering for competitions, submitting entries, or
+          purchasing services on our platform. <br /><br />
+
+          <strong>1. Registration Fees</strong><br /><br />
+          All registration fees paid by the participatant to participate in the
+          vibrer platform competitions are non refundable, unless: <br /><br />
+          <ul>
+            <li>The event is cancelled by us.</li>
+            <li>
+              A technical error occurred during payment processing resulting in
+              duplicate charges.
+            </li>
+            <li>
+              If he pays up for registration and does not upload his/her video
+              then he's entitled for a refund but if the video is uploaded and
+              then he thinks of not participating and wants to cancel his/her
+              registration the fees will not be refunded.
+            </li>
+          </ul>
+          <br /><br />
+          In the event of cancellation initiated by us, registered participants
+          will receive a full refund to the original payment method.
+          <br /><br />
+
+          <strong>2. Premium Services &amp; Subscriptions</strong> <br /><br />
+          For any premium features such as advanced profile listings, video
+          critiques, or priority audition slots: <br /><br />
+          <ul>
+            <li>
+              Refunds are not issued once the service has been used or accessed.
+            </li>
+            <li>
+              If you cancel within 24 hours of purchase and have not used the
+              service, you may be eligible for a partial or full refund, at our
+              discretion.
+            </li>
+          </ul>
+          <br /><br />
+          <strong>3. Event Tickets or Access Passes</strong>
+          <br /><br />
+          If we offer paid entry to livestreams, showcases, or virtual finals:
+          <ul>
+            <li>
+              Refunds are only issued if the event is cancelled or rescheduled
+              and you cannot attend the new date.
+            </li>
+            <li>
+              No refunds for missed attendance or last-minute cancellations by
+              user
+            </li>
+          </ul>
+          <br /><br />
+          <strong>4. Technical Issues</strong> <br /><br />
+          If you experience a technical problem (e.g., payment not processing
+          correctly, or inability to access content after purchase), please
+          contact our support team within 48 hours at
+          <strong>support@groupolamarca.com</strong>. We’ll work with you to
+          resolve the issue or issue a refund if warranted. <br /><br />
+
+          <strong>5. Disqualification or Ineligibility</strong>
+          <br /><br />
+          No refund will be provided if: <br /><br />
+          <ul>
+            <li>
+              A participant is disqualified for violating contest rules or
+              submitting fraudulent content.
+            </li>
+            <li>A participant withdraws voluntarily after registration.</li>
+          </ul>
+          <br /><br />
+          <strong>6. How to Request a Refund</strong> <br /><br />
+          To request a refund (if eligible), email us at
+          Supoort@groupolamarca.com with the following:
+          <br /><br />
+          <ul>
+            <li>Full name</li>
+            <li>Transaction ID or payment receipt</li>
+            <li>Reason for refund request</li>
+            <li>Date of purchase</li>
+          </ul>
+          <br /><br />
+          All refund requests will be reviewed within
+          <strong>7 business days</strong>, and we will notify you of the
+          outcome via email. <br /><br />
+          <strong>7. Changes to This Refund Policy</strong> <br /><br />
+          We reserve the right to update this Refund Policy at any time. Any
+          changes will be posted on this page with a revised effective date.
+          <br /><br />
+          <strong>Contact Us</strong><br /><br />
+          If you have questions about this policy, contact us at: <br />
+          <strong>Dreamscripts Techonolgy Pvt Ltd.</strong>
+          Email:
+          <a href="mailto:support@groupolamarca.com"
+            >support@groupolamarca.com</a
+          >
+          <br /><br />
+          <strong>Address:</strong> 7 th Floor, STPI, 30, Electronic City,
+          <br />
+          Udyog Vihar Phase-IV, Sec-18 <br />
+          Gurugram Haryana-122015, India
+        </div>
+      </section>
+    </main>
+
+    <%- include('partials/footer'); %>
+
+    <!-- javascript -->
+    <script src="/public/js/theme-v01node.js?v=3.1"></script>
+    <script src="/public/js/languageSwitcher.js?v=3.1"></script>
+  </body>
+</html>

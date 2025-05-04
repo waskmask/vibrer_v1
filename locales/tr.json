@@ -114,6 +114,7 @@
   "vscontest": "Vibrer Şarkı Yarışması",
   "chapter": "bölüm",
   "imprintLangNotice": "İzlenim yalnızca İngilizce olarak mevcuttur.",
+  "showRefundLangNotice": "Refund-policy yalnızca İngilizce olarak mevcuttur.",
   "privacyLangNotice": "Gizlilik politikası yalnızca İngilizce olarak mevcuttur.",
   "termsLangNotice": "Şartlar & koşullar yalnızca İngilizce olarak mevcuttur.",
   "cookieLangNotice": "Çerez ayarları sayfası yalnızca İngilizce olarak mevcuttur.",
@@ -626,5 +627,6 @@
   "contest_overview_title": "Yarışma Genel Bakış",
   "contest_overview_text": "Vibrer Nations D-A-CH Şarkı Yarışması, Almanya, Avusturya ve İsviçre'den yetenekli şarkıcılara açık birinci sınıf bir şarkı yarışmasıdır. Vibrer tarafından düzenlenen küresel bir yarışma serisinin parçasıdır ve dünya çapındaki çeşitli bölgelerden şarkı yeteneklerini keşfetmeyi ve tanıtmayı amaçlar.",
   "yes": "evet",
-  "no": "hayır"
+  "no": "hayır",
+  "refundPolicy": "İade politikası"
 }

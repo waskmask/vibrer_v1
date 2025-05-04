@@ -114,6 +114,7 @@
   "vscontest": "Concurso de Canto do Vibrer",
   "chapter": "capítulo",
   "imprintLangNotice": "O impresso está disponível apenas em inglês.",
+  "showRefundLangNotice": "Refund-policy está disponível apenas em inglês.",
   "privacyLangNotice": "A Política de Privacidade está disponível apenas em inglês.",
   "termsLangNotice": "Os Termos de Uso estão disponíveis apenas em inglês.",
   "cookieLangNotice": "As configurações de cookies estão disponíveis apenas em inglês.",
@@ -626,5 +627,6 @@
   "contest_overview_title": "Visão Geral do Concurso",
   "contest_overview_text": "O concurso Vibrer Sounds of Nations D-A-CH é uma competição de canto de primeira classe aberta a cantores talentosos da Alemanha, Áustria e Suíça. Faz parte de uma série global de concursos organizada pela Vibrer, com o objetivo de descobrir e promover talentos de canto de várias regiões do mundo.",
   "yes": "sim",
-  "no": "não"
+  "no": "não",
+  "refundPolicy": "Política de reembolso"
 }

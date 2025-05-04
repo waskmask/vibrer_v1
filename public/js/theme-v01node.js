@@ -47,6 +47,9 @@ function toPrivacy() {
 function toTerms() {
   window.location.href = "/terms";
 }
+function toRefund() {
+  window.location.href = "/refund-policy";
+}
 function toCookies() {
   window.location.href = "/cookies";
 }
