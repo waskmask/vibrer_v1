@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/public/style/modal.css?v=3.1" />
     <link rel="stylesheet" href="/public/style/app.css?v=3.1" />
     <link rel="stylesheet" href="/public/style/contests.css?v=3.1" />
+    <link rel="stylesheet" href="/public/style/concert.css?v=1.0" />
     <link href="/public/style/video-js.css?v=3.1" rel="stylesheet" />
   </head>
   <body class="body-dark _pr">
@@ -29,6 +30,57 @@
       <!-- main body of the app -->
       <div class="app_main preMain">
         <div class="app_posts">
+          <div class="post mt-4">
+            <div class="post_header">
+              <div class="posted_user">
+                <div class="left">
+                  <div class="avatar">
+                    <img src="/public/images/vibrer_icon.svg" alt="avatar" />
+                  </div>
+                  <div>
+                    <div class="name">
+                      <span>Vibrer</span>
+                      <img
+                        class="app_v_badge"
+                        src="/public/images/icons/verified-badge.svg"
+                        alt="Verified"
+                      />
+                    </div>
+                    <div class="uname">@vibrer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title">Live Singing Concert on Vibrer Chapter 1</div>
+              <div class="desc" onclick="toTheContest('<%- path %>')">
+                When you land on a sample web page or open an email template and
+                see content beginning with "lorem ipsum," the page creator
+                placed that apparent gibberish there on purpose. Page layouts
+                look better with something in each section. Web page designers,
+                content writers.
+              </div>
+            </div>
+            <div class="post_body concert_post">
+              <div class="media pointer">
+                <img class="" src="/public/images/concert.png" alt="concert" />
+                <button class="btn btn-primary">Buy a ticket</button>
+              </div>
+              <div class="action_wrapper">
+                <div class="header">
+                  <div class="info">
+                    <div class="title">Alicia Madlin</div>
+                    <div class="dot"></div>
+                    <div class="title">Live on: 21.03.2024 @21:30</div>
+                  </div>
+                  <div class="add_to_fav">
+                    <img
+                      src="/public/images/icons/sidebar/bookmark.svg"
+                      alt="fav"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="post mt-4">
             <div class="post_header">
               <div class="posted_user">
@@ -111,7 +163,7 @@
                     class="video-js vjs-default-skin"
                     controls
                     data-setup="{}"
-                    preload="auto"
+                    preload="false"
                   >
                     <source
                       src="https://static.vibrer.app/mediavid/vibrer-promo-v1.mp4"
@@ -159,7 +211,7 @@
                     class="video-js vjs-default-skin"
                     controls
                     data-setup="{}"
-                    preload="auto"
+                    preload="false"
                   >
                     <source
                       src="https://static.vibrer.app/mediavid/inescapable-by-vibrer.mp4"

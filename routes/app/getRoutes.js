@@ -2,16 +2,28 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const i18n = require("i18n");
-const AWS = require("aws-sdk");
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
-const s3 = new AWS.S3({
+const s3 = new S3Client({
   endpoint: process.env.END_POINT,
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  signatureVersion: "v4",
-  region: "auto", // Cloudflare R2 does not require a specific region
-  s3ForcePathStyle: true, // This forces the request to use path-style addressing
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  },
+  region: "auto", // Cloudflare R2
+  forcePathStyle: true,
 });
+// const AWS = require("aws-sdk");
+
+// const s3 = new AWS.S3({
+//   endpoint: process.env.END_POINT,
+//   accessKeyId: process.env.ACCESS_KEY_ID,
+//   secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//   signatureVersion: "v4",
+//   region: "auto", // Cloudflare R2 does not require a specific region
+//   s3ForcePathStyle: true, // This forces the request to use path-style addressing
+// });
 
 getFileFromR2 = (fileName) => {
   const params = {
@@ -929,12 +941,12 @@ router.get("/imprint", function (req, res) {
 });
 
 // my profile
-// router.get("/app/my-profile", function (req, res) {
-//   res.render("app/my-profile", {
-//     title: "My Profile",
-//     path: "/my-profile",
-//   });
-// });
+router.get("/app/my-profile", function (req, res) {
+  res.render("app/my-profile", {
+    title: "My Profile",
+    path: "/my-profile",
+  });
+});
 
 // edit profile
 // router.get("/app/edit-profile", function (req, res) {

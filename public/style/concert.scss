@@ -1,0 +1,36 @@
+@import "./var";
+@import "./fonts";
+
+.concert_post {
+  .media {
+    position: relative;
+
+    button {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+  }
+  .action_wrapper {
+    background-color: $dl;
+    margin-top: -0.27rem;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .info {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        .dot {
+          width: 0.4rem;
+          height: 0.4rem;
+          background-color: $white;
+          border-radius: 0.2rem;
+        }
+      }
+    }
+  }
+}

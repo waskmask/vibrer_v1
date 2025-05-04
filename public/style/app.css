@@ -1016,7 +1016,7 @@ input:-webkit-autofill:active {
 
 .app_header {
   background-color: #1e2750;
-  z-index: 999999;
+  z-index: 999997;
   position: sticky;
   top: 0;
   left: 0;
@@ -1310,7 +1310,7 @@ input:-webkit-autofill:active {
   top: 0;
   left: 0;
   opacity: 0.5;
-  z-index: 100;
+  z-index: 999998;
   display: none;
 }
 
@@ -1338,6 +1338,7 @@ input:-webkit-autofill:active {
 .app_sidebar .title {
   color: #fff;
   font-weight: 500;
+  font-size: 1rem;
 }
 .app_sidebar .link {
   margin: 1rem 0;
@@ -1363,7 +1364,7 @@ input:-webkit-autofill:active {
 
 @media (max-width: 820px) {
   .app_sidebar {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     height: 100vh;
@@ -1371,7 +1372,7 @@ input:-webkit-autofill:active {
     padding-bottom: 3rem;
     padding-left: 1.5rem;
     background-color: #1e2750;
-    z-index: 100;
+    z-index: 999999;
     transform: translateX(-100%);
     transition: all 0.3s ease-in-out;
   }
@@ -2034,7 +2035,7 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 @media (max-width: 576px) {
   .profile_wrapper {
     padding: 0;
-    margin-top: -115px;
+    margin-top: -40px;
   }
 }
 .profile_wrapper ._profile_left {
@@ -2478,4 +2479,11 @@ div:where(.swal2-container).swal2-center > .swal2-popup {
 }
 .footer-languagebar .app-languageSwitcher .item.active {
   color: #fff;
+}
+
+.add_to_fav {
+  cursor: pointer;
+}
+.add_to_fav img {
+  height: 20px;
 }
